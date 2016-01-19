@@ -2,6 +2,7 @@ package com.cb.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cb.domain.UserDomain;
 import com.cb.entity.User;
 import com.cb.service.IUserService;
 
@@ -22,7 +24,9 @@ public class UserController {
 	@RequestMapping("/getAllUser")
 	public String getAllUser(HttpServletRequest request){
 		
-		request.setAttribute("userList", userService.getAllUser());
+		List<UserDomain> userList=userService.getAllUser();
+		
+		request.setAttribute("userList", userList);
 		
 		return "/jobUser/index";
 	}
@@ -30,7 +34,8 @@ public class UserController {
 	@RequestMapping("/getUser")
 	public String getUser(String id,HttpServletRequest request){
 		
-		request.setAttribute("user", userService.getUser(id));
+		UserDomain userDomain=userService.getUser(id);
+		request.setAttribute("user", userDomain);
 	
 		return "/jobUser/editUser";
 	}
@@ -67,15 +72,15 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/updateUser")
-	public String updateUser(User user,HttpServletRequest request){
-		
-		if(userService.updateUser(user)){
-			user = userService.getUser(user.getId());
-			request.setAttribute("user", user);
-			return "redirect:/user/getAllUser";
-		}else{
-			return "/jobUser/error";
-		}
-	}
+//	@RequestMapping("/updateUser")
+//	public String updateUser(User user,HttpServletRequest request){
+//		
+//		if(userService.updateUser(user)){
+//			user = userService.getUser(user.getId());
+//			request.setAttribute("user", user);
+//			return "redirect:/user/getAllUser";
+//		}else{
+//			return "/jobUser/error";
+//		}
+//	}
 }

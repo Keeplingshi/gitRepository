@@ -1,8 +1,12 @@
 package com.cb.service.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
+
 import com.cb.dao.bean.UserDao;
+import com.cb.domain.UserDomain;
 import com.cb.entity.User;
 import com.cb.service.IUserService;
 
@@ -19,15 +23,30 @@ public class UserService implements IUserService{
 	}
 
 	@Override
-	public User getUser(String id) {
+	public UserDomain getUser(String id) {
 		// TODO Auto-generated method stub
-		return userDao.getUser(id);
+		
+		User user=userDao.getUser(id);
+		UserDomain userDomain=new UserDomain();
+		BeanUtils.copyProperties(user,userDomain);
+		
+		return userDomain;
 	}
 
 	@Override
-	public List<User> getAllUser() {
+	public List<UserDomain> getAllUser() {
 		// TODO Auto-generated method stub
-		return userDao.getAllUser();
+		
+		List<UserDomain> userDomains=new ArrayList<UserDomain>();
+		List<User> userList=userDao.getAllUser();
+		for(User user:userList)
+		{
+			UserDomain userDomain=new UserDomain();
+			BeanUtils.copyProperties(user,userDomain);
+			userDomains.add(userDomain);
+		}
+		
+		return userDomains;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.BeanUtils;
 
 import com.cb.dao.IUserDao;
 import com.cb.entity.User;
@@ -22,7 +23,6 @@ public class UserDao implements IUserDao{
 		String hql = "from User u where u.id=?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, id);
-		
 		return (User)query.uniqueResult();
 	}
 
@@ -31,7 +31,6 @@ public class UserDao implements IUserDao{
 		// TODO Auto-generated method stub
 		String hql = "from User";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		
 		return query.list();
 	}
 
@@ -47,7 +46,6 @@ public class UserDao implements IUserDao{
 		String hql = "delete User u where u.id = ?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, id);
-		
 		return (query.executeUpdate() > 0);
 	}
 
