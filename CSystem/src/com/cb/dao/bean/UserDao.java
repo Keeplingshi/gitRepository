@@ -26,11 +26,14 @@ public class UserDao implements IUserDao{
 		return (User)query.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAllUser() {
 		// TODO Auto-generated method stub
+		
 		String hql = "from User";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		
 		return query.list();
 	}
 
