@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cb.domain.UserDomain;
@@ -22,11 +23,10 @@ public class UserController {
 	private IUserService userService ;
 
 	@RequestMapping("/getAllUser")
-	public String getAllUser(HttpServletRequest request){
+	public String getAllUser(Model model){
 		
 		List<UserDomain> userList=userService.getAllUser();
-		
-		request.setAttribute("userList", userList);
+		model.addAttribute("userList", userList);
 		
 		return "/jobUser/index";
 	}
@@ -73,7 +73,7 @@ public class UserController {
 	}
 	
 //	@RequestMapping("/updateUser")
-//	public String updateUser(User user,HttpServletRequest request){
+//	public String updateUser(UserDomain user,HttpServletRequest request){
 //		
 //		if(userService.updateUser(user)){
 //			user = userService.getUser(user.getId());
