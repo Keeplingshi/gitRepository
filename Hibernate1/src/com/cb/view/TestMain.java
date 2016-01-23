@@ -2,6 +2,8 @@ package com.cb.view;
 
 import java.util.Date;
 
+import javax.management.RuntimeErrorException;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
@@ -55,7 +57,7 @@ public class TestMain {
 	 */
 	public static void updateEmployee(Integer id)
 	{
-		SessionFactory sessionFactory=MySessionFactory.getSessionFactory();
+/*		SessionFactory sessionFactory=MySessionFactory.getSessionFactory();
 		Session session=sessionFactory.openSession();
 		
 		Transaction transaction=session.beginTransaction();
@@ -64,7 +66,31 @@ public class TestMain {
 		//即修改id为1的雇员对象
 		Employee emp=(Employee)session.load(Employee.class, id);
 		emp.setName("修改名字");
-		transaction.commit();
+		transaction.commit();*/
+		
+		Session session=MySessionFactory.getSessionFactory().openSession();
+		Transaction transaction=null;
+		
+		try{
+			transaction=session.beginTransaction();
+			Employee emp=(Employee)session.load(Employee.class, id);
+			emp.setName("修改名字");
+			//设置异常，测试hibernate事务回滚
+			//int i=9/0;
+			
+			transaction.commit();
+			
+		}catch(Exception e){
+			if(transaction!=null){
+				transaction.rollback();
+			}
+			throw new RuntimeException(e.getMessage());
+		}finally{
+			//关闭session
+			if(session!=null&&session.isOpen()){
+				session.close();
+			}
+		}
 	}
 
 	/**
