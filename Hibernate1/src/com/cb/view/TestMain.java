@@ -1,9 +1,5 @@
 package com.cb.view;
 
-import java.util.Date;
-
-import javax.management.RuntimeErrorException;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
@@ -34,6 +30,46 @@ public class TestMain {
 //		Employee emp=(Employee) session.load(Employee.class, 1);
 //		System.out.println(emp.getName()+" "+emp.getEmail());
 //		session.close();
+		
+		getAndload();
+	}
+	
+	/**
+	 * get与load的区别
+	 * 如何选择使用哪个: 如果你确定DB中有这个对象就用load(),不确定就用get()（这样效率高）,通过id查找一个对象用load
+	 */
+	public static void getAndload() {
+		Session session = null;
+		try {
+			session = MySessionFactory.getSessionFactory().openSession();
+			
+			Employee emp = (Employee) session.get(Employee.class, 76);
+			System.out.println("get不报错，返回null      ："+emp);
+			Employee emp2 = (Employee) session.load(Employee.class, 76);
+			System.out.println("load报错                                           ："+emp2);
+			
+		}finally {
+
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
+	}
+
+	/**
+	 * //openSession()与getCurrentSession()的区别
+	 */
+	public static void sessionTest() {
+		//openSession()	获取一个新的session
+		Session session1=MySessionFactory.getSessionFactory().openSession();
+		Session session2=MySessionFactory.getSessionFactory().openSession();
+		System.out.println(session1.hashCode()+"\t"+session2.hashCode());
+		
+		//getCurrentSession()  获取一个线程内同一个session
+		//使用getCurrentSession();需要配置hibernate.cfg.xml文件
+		Session session3=MySessionFactory.getSessionFactory().getCurrentSession();
+		Session session4=MySessionFactory.getSessionFactory().getCurrentSession();
+		System.out.println(session3.hashCode()+"\t"+session4.hashCode());
 	}
 	
 	/**

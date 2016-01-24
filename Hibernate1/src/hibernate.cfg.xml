@@ -19,6 +19,7 @@
 	<!-- 配置显示hibernate生成的 sql ,特别说明，在开发阶段设为true利于调试，在使用项目则设为false-->
 	<property name="show_sql">true</property>
 	<property name="format_sql">true</property>
+	<property name="current_session_context_class">thread</property>
 	<!-- 配置数据库的方言/ -->
 	<property name="dialect">
 		org.hibernate.dialect.MySQLDialect
