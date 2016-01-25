@@ -1,11 +1,18 @@
 package com.cb.view;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.classic.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.cb.domain.Employee;
+import com.cb.util.HibernateUtil;
 import com.cb.util.MySessionFactory;
 
 public class TestMain {
@@ -31,7 +38,83 @@ public class TestMain {
 //		System.out.println(emp.getName()+" "+emp.getEmail());
 //		session.close();
 		
-		getAndload();
+//		getAndload();
+		
+//		queryTest();
+		
+//		criteriaTest();
+		
+	}
+
+	/**
+	 * Criteria的用法
+	 */
+	public static void criteriaTest() {
+		
+		Session session=HibernateUtil.getCurrentSession();
+		Transaction transaction = null;
+		
+		try{
+			transaction=session.beginTransaction();
+			
+			Criteria criteria=session.createCriteria(Employee.class);
+			//排序
+			criteria.addOrder(Order.asc("id"));
+			//添加过滤条件
+			criteria.add(Restrictions.eq("name", "cb"));
+			List<Employee> employeeList = criteria.list();
+			for(Employee employee:employeeList){
+				System.out.println(employee.getEmail());
+			}
+			
+			transaction.commit();
+		}catch(Exception e){
+			if(transaction!=null){
+				transaction.rollback();
+			}
+			throw new RuntimeException(e.getMessage());
+		}finally{
+			//关闭session
+			if(session!=null&&session.isOpen()){
+				session.close();
+			}
+		}
+	}
+
+	/**
+	 * Query的用法
+	 */
+	public static void queryTest() {
+		Session session=HibernateUtil.getCurrentSession();
+		Transaction transaction = null;
+		
+		try{
+			transaction=session.beginTransaction();
+			
+			//Employee是实体名，不是数据库中的表名，name可以使类的属性名或表的字段，但是按照hibernate规定，还是使用类的属性名
+			Query query=session.createQuery("from Employee where name='cb'");
+			
+//			//如果使用uniqueResult();查出两个值，则会报错，抛出异常
+//			Employee employee=(Employee) query.uniqueResult();
+//			System.out.println(employee.getEmail());
+			
+			List<Employee> employeeList=query.list();
+			for(Employee employee:employeeList){
+				System.out.println(employee.getEmail());
+			}
+			
+			transaction.commit();
+		}catch(Exception e){
+			if(transaction!=null){
+				transaction.rollback();
+			}
+			throw new RuntimeException(e.getMessage());
+		}finally{
+			//关闭session
+			if(session!=null&&session.isOpen()){
+				session.close();
+			}
+		}
 	}
 	
 	/**
