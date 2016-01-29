@@ -13,10 +13,23 @@ public class UIMain {
 		return "/csystem/index";
 	} 
 	
+	/**
+	 * 表格
+	 * @return
+	 */
 	@RequestMapping("/table")
 	public String doTable(){
 		
 		return "/csystem/table";
 	}
 	
+	/**
+	 * 登录
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public String doLogin(){
+		
+		return "/csystem/login";
+	}
 }
