@@ -6,14 +6,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-<!-- 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://localhost/jobsystem"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="root"></property>
-	</bean> -->
-	
 	<!-- 读取数据库配置文件 -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
 		<property name="locations">  
@@ -22,6 +14,7 @@
             </list>  
         </property>  
 	</bean> 
+	
 	<!-- c3p0配置数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" 
             destroy-method="close">
@@ -43,7 +36,6 @@
             <property name="maxIdleTime" value="${maxIdleTime}"></property> 
     </bean>
  
-	
 	<!-- 配置SessionFactory -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
