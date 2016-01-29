@@ -6,9 +6,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="userDao" class="com.cb.dao.bean.UserDao">
+ 	<bean id="userDao" class="com.cb.dao.bean.UserDao">
 		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>
+	</bean> 
 
 	<bean id="userServiceBase" class="com.cb.service.bean.UserService">
 		<property name="userDao" ref="userDao"></property>
@@ -18,4 +18,6 @@
 	<bean name="userService" parent="transactionProxy">
 		<property name="target" ref="userServiceBase"></property>
 	</bean>	
+	
+	
 </beans>

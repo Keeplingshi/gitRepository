@@ -53,5 +53,6 @@
 	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystem/websrc/main/webapp/WEB-INF/lib/spring-webmvc-3.2.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystem/websrc/main/webapp/WEB-INF/lib/spring-webmvc-portlet-3.2.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystem/websrc/main/webapp/WEB-INF/lib/standard-1.1.2.jar"/>
+	<classpathentry kind="lib" path="websrc/main/webapp/WEB-INF/lib/com.dc.base.4zhxy-1.1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="websrc/main/webapp/WEB-INF/classes"/>
 </classpath>
