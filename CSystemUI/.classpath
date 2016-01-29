@@ -19,26 +19,5 @@
 			<attribute name="owner.project.facets" value="jst.web.jstl"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-aop-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-aspects-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-beans-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-context-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-context-support-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-core-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-expression-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-instrument-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-instrument-tomcat-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-jdbc-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-jms-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-messaging-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-orm-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-oxm-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-test-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-tx-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-web-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-webmvc-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-webmvc-portlet-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Code/gitRepository/CSystemUI/websrc/com/main/WEB-INF/lib/spring-websocket-4.2.4.RELEASE.jar"/>
-	<classpathentry kind="output" path="websrc/com/main/WEB-INF/classes"/>
+	<classpathentry kind="output" path="websrc/main/webapp/WEB-INF/classes"/>
 </classpath>
