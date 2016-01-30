@@ -50,7 +50,7 @@
 
 											<div class="space-6"></div>
 
-											<form id="formId" action="${pageContext.request.contextPath}/login" method="post" >
+											<form id="formId" action="${pageContext.request.contextPath}/loginauthentic" method="post" >
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
