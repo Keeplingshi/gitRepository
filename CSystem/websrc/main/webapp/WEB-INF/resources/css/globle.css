@@ -26,4 +26,3 @@ input[type="button"],.btnStyle {font-family:"Microsoft YaHei",微软雅黑,"Micr
 .btn_list_records{background:url(../images/basetheme/list/records.gif) left center no-repeat; text-indent:18px;}/*入库记录或者会议纪要*/
 .btn_list_attend{background:url(../images/basetheme/list/attend.gif) left center no-repeat; text-indent:18px;}/*出席情况*/
 .btn_list_message{background:url(../images/basetheme/list/message.gif) left center no-repeat; text-indent:18px;}/*发送短信*/
-
