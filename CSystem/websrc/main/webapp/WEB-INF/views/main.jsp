@@ -3,7 +3,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<!-- basic styles -->
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/bootstrap.min.css" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/font-awesome.min.css" rel="stylesheet"/>
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/ace.min.css" rel="stylesheet"/>
@@ -89,23 +88,6 @@
 				</div>
 
 				<div class="main-content">
-					<div class="breadcrumbs" id="breadcrumbs">
-						<ul class="breadcrumb" style="margin-top: 8px">
-							<li>
-								<i class="icon-home home-icon"></i>
-								<a href="#">首页</a>
-							</li>
-							<li class="active">控制台</li>
-						</ul>
-
-						<div class="nav-search" id="nav-search">
-							<span class="input-icon">
-								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-								<i class="icon-search nav-search-icon"></i>
-							</span>
-						</div>
-					</div>
-					
 					<div id="content_page"></div>
 				</div>
 			</div>
