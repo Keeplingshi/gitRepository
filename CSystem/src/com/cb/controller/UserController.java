@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-	@RequestMapping("/getAllUser")
+	@RequestMapping("/userList")
 	public String getAllUser(Model model){
 		
-		return "/jobsystem/userList";
+		return "/user/userList";
 	}
 }

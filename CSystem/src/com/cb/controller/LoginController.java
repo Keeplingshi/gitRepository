@@ -30,7 +30,7 @@ public class LoginController {
     /** 
      * 用户登录 
      */
-    @RequestMapping(value="/loginauthentic", method=RequestMethod.POST)  
+    @RequestMapping("/main")  
     public String login(HttpServletRequest request){  
         String resultPageURL = InternalResourceViewResolver.FORWARD_URL_PREFIX + "/";  
         String username = request.getParameter("username");  

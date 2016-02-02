@@ -87,8 +87,8 @@
         <property name="filterChainDefinitions">  
             <value> 
                 /login=anon
-                /loginauthentic=anon
-                /user/**=authc,perms[admin]  
+                /main=anon
+                /user/**t=authc,perms[admin:manage]
             </value>  
         </property>  
     </bean>  

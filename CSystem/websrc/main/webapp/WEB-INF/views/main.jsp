@@ -7,6 +7,7 @@
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/bootstrap.min.css" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/font-awesome.min.css" rel="stylesheet"/>
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/ace.min.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ace/assets\css\cyrillic.css" />
 
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/jquery-2.0.3.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/bootstrap.min.js"></script>
@@ -66,14 +67,20 @@
 			<div class="main-container-inner">
 				<div class="sidebar" id="sidebar">
 					<ul class="nav nav-list">
-						<li class="active">
-							<a href="#">
+						<li>
+							<a href="javascript:void(0);">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text"> 菜单 </span>
+							</a>
+						</li>
+						<li id="user_manage">
+							<a href="javascript:void(0);">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text"> 账户管理 </span>
 							</a>
 						</li>
-						<li>
-							<a href="#">
+						<li id="job_manage">
+							<a href="javascript:void(0);">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text"> 就业管理 </span>
 							</a>
@@ -92,24 +99,33 @@
 						</ul>
 
 						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="icon-search nav-search-icon"></i>
-								</span>
-							</form>
+							<span class="input-icon">
+								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+								<i class="icon-search nav-search-icon"></i>
+							</span>
 						</div>
 					</div>
-
+					
+					<div id="content_page"></div>
 				</div>
-
 			</div>
 
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="icon-double-angle-up icon-only bigger-110"></i>
 			</a>
 		</div>
-	 
-</body>
+	</body>
+	
+	<script>
+	
+		$("#user_manage").click(function(){
+			$(this).addClass("active");
+			$.post("${pageContext.request.contextPath}/user/userList", function(result){
+				$("#content_page").html(result);
+			});
+		});
+	
+	</script>
+	
 </html>
 
