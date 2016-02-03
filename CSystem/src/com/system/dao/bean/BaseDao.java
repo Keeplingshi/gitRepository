@@ -9,9 +9,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.system.dao.IBaseDao;
 
+@Repository
 public class BaseDao<T> implements IBaseDao<T> {
 
 	@Autowired
@@ -43,7 +45,7 @@ public class BaseDao<T> implements IBaseDao<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public T doGetById(Serializable id) {
+	public T getById(Serializable id) {
 		// TODO Auto-generated method stub
 		if (id == null){
 			return null;
@@ -65,10 +67,10 @@ public class BaseDao<T> implements IBaseDao<T> {
 	}
 
 	@Override
-	public void doDeleteById(Serializable id) {
+	public void deleteById(Serializable id) {
 		// TODO Auto-generated method stub
 		
-		T t=doGetById(id);
+		T t=getById(id);
 		if(t!=null){
 			delete(t);
 		}
@@ -76,7 +78,7 @@ public class BaseDao<T> implements IBaseDao<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> doGetFilterList() {
+	public List<T> getFilterList() {
 		// TODO Auto-generated method stub
 		
 		Criteria criteria=getSession().createCriteria(entityClass);
@@ -84,6 +86,4 @@ public class BaseDao<T> implements IBaseDao<T> {
 		return criteria.list();
 	}
 
-
-	
 }

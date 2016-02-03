@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.cb.entity.User;
+import com.cb.domain.UserDomain;
 import com.cb.service.bean.UserService;
 
 @Controller
@@ -18,9 +18,9 @@ public class UserController {
 	@Resource private UserService userService;
 	
 	@RequestMapping("/userList")
-	public String getAllUser(Model model){
+	public String getAllUser(Model model) throws Exception{
 		
-		List<User> userList=userService.doGetFilterList();
+		List<UserDomain> userList=userService.doGetUserList();
 		model.addAttribute("userList", userList);
 		
 		return "/user/userList";

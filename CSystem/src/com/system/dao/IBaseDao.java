@@ -5,15 +5,15 @@ import java.util.List;
 
 public interface IBaseDao<T> {
 
-	public T doGetById(Serializable id);
+	public T getById(Serializable id);
 	
 	public T save(T t);
 	
 	public void delete(T t);
 	
-	public void doDeleteById(Serializable id);
+	public void deleteById(Serializable id);
 	
-	public List<T> doGetFilterList();
+	public List<T> getFilterList();
 	
 	
 //	  public abstract E insert(E paramE);

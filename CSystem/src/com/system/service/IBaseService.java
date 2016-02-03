@@ -1,5 +1,16 @@
 package com.system.service;
 
-public interface IBaseService {
+import java.io.Serializable;
+import java.util.List;
 
+public interface IBaseService<T> {
+
+	public T doGetById(Serializable id) throws Exception;
+	
+	public T doSave(T t) throws Exception;
+	
+	public boolean doDeleteById(Serializable id);
+	
+	public List<T> doGetFilterList()throws Exception;
+	
 }
