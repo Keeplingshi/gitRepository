@@ -59,7 +59,7 @@
 	        title: '新增用户',
 	        maxmin: true,
 	        shadeClose: true, //点击遮罩关闭层
-	        area : ['800px' , '520px'],
+	        area : ['380px' , '280px'],
 	        content: '${pageContext.request.contextPath}/user/userAdd'
 	    });
 	});

@@ -12,6 +12,15 @@
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/bootstrap.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
+	
+		<script type="text/javascript">
+			$(function(){
+				//默认加载用户列表
+				$.post("${pageContext.request.contextPath}/user/userList", function(result){
+					$("#content_page").html(result);
+				});
+			});
+		</script>
 	</head>
 
 	<body>
@@ -73,7 +82,7 @@
 								<span class="menu-text"> 菜单 </span>
 							</a>
 						</li>
-						<li id="user_manage">
+						<li id="user_manage" class="active">
 							<a href="javascript:void(0);">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text"> 账户管理 </span>
