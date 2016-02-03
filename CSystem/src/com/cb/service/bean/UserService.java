@@ -15,7 +15,7 @@ import com.cb.service.IUserService;
 @Transactional(rollbackFor = Throwable.class)
 public class UserService implements IUserService{
 
-	@Resource(name="userDao") private UserDao userDao;
+	@Resource private UserDao userDao;
 	
 	@Override
 	public List<User> doGetFilterList() {

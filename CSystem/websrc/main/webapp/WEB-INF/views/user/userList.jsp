@@ -6,14 +6,10 @@
 
 
 <div class="breadcrumbs" id="userListToolbar">
-<!-- 	<div class="nav-search" id="nav-search">
-
-	</div> -->
-	
-		<span class="input-icon" style="margin: 5px"> 
-			<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" /> 
-			<i class="icon-search nav-search-icon"></i>
-		</span>
+	<span class="input-icon" style="margin: 5px"> 
+		<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" /> 
+		<i class="icon-search nav-search-icon"></i>
+	</span>
 	
 	<input type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
 	<input type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="修改"/>

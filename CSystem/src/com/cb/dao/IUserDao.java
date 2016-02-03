@@ -1,10 +1,9 @@
 package com.cb.dao;
 
-import java.util.List;
-
 import com.cb.entity.User;
+import com.system.dao.IBaseDao;
 
-public interface IUserDao {
+public interface IUserDao extends IBaseDao<User>{
 	
-	public List<User> doGetFilterList();
+	//public List<User> doGetFilterList();
 }
