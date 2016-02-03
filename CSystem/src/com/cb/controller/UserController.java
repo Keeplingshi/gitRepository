@@ -25,4 +25,10 @@ public class UserController {
 		
 		return "/user/userList";
 	}
+	
+	@RequestMapping("/userAdd")
+	public String douserAdd(Model model)throws Exception{
+		
+		return "/user/userAdd";
+	}
 }

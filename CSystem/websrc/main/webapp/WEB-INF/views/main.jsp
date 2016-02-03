@@ -10,7 +10,8 @@
 
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/jquery-2.0.3.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/bootstrap.min.js"></script>
-	
+		<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 	</head>
 
 	<body>

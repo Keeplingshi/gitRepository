@@ -11,9 +11,9 @@
 		<i class="icon-search nav-search-icon"></i>
 	</span>
 	
-	<input type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
-	<input type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="修改"/>
-	<input type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
+	<input id="userDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
+	<input id="userEditButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="修改"/>
+	<input id="userAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 </div>
 <div class="table-responsive">
 	<table id="sample-table-1" class="table table-striped table-bordered table-hover">
@@ -52,6 +52,18 @@
 <input type="button" id="checkButton" value="选中" />
 
 <script type="text/javascript">
+
+	$("#userAddButton").click(function(){
+	    parent.layer.open({
+	        type: 2,
+	        title: '新增用户',
+	        maxmin: true,
+	        shadeClose: true, //点击遮罩关闭层
+	        area : ['800px' , '520px'],
+	        content: '${pageContext.request.contextPath}/user/userAdd'
+	    });
+	});
+
 		jQuery(function($) {
 			//checkbox选择全部
 			$('table th input:checkbox').on('click' , function(){
