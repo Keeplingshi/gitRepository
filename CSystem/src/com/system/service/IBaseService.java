@@ -9,6 +9,8 @@ public interface IBaseService<T> {
 	
 	public boolean doSave(T t) throws Exception;
 	
+	public boolean doUpdate(T t) throws Exception;
+	
 	public boolean doDeleteById(Serializable id);
 	
 	public List<T> doGetFilterList()throws Exception;

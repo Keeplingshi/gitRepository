@@ -31,6 +31,7 @@
 		<tbody>
 			<c:forEach items="${userList }" var="userDomain">
 				<tr>
+					<input type="hidden" id="userId" value="${userDomain.id }"/>
 					<td class="center">
 						<label> <input id="tbodyCheckbox1" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</td>
@@ -39,7 +40,7 @@
 
 					<td style="width: 260px">
 						<input type="button" class="btn_list_view" value="查看" /> 
-						<input type="button" class="btn_list_update" value="修改" /> 
+						<input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/> 
 						<input type="button" class="btn_list_delete" value="删除" />
 					</td>
 				</tr>
@@ -60,9 +61,35 @@
 	        maxmin: true,
 	        shadeClose: true, //点击遮罩关闭层
 	        area : ['380px' , '280px'],
-	        content: '${pageContext.request.contextPath}/user/userAdd'
+	        content: '${pageContext.request.contextPath}/user/userAdd',
+	        end: function(){
+				//默认加载用户列表
+				$.post("${pageContext.request.contextPath}/user/userList", function(result){
+					$("#content_page").html(result);
+				});
+	        }
 	    });
 	});
+	
+	//list中修改用户按钮
+	function updateUser(userId)
+	{
+	    parent.layer.open({
+	        type: 2,
+	        title: '新增用户',
+	        maxmin: true,
+	        shadeClose: true,
+	        area : ['380px' , '280px'],
+	        content: '${pageContext.request.contextPath}/user/userEdit/'+userId,
+	        end: function(){
+				//默认加载用户列表
+				$.post("${pageContext.request.contextPath}/user/userList", function(result){
+					$("#content_page").html(result);
+				});
+	        }
+	    });
+	}
+	
 
 		jQuery(function($) {
 			//checkbox选择全部

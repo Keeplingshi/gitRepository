@@ -9,6 +9,8 @@ public interface IBaseDao<T> {
 	
 	public boolean save(T t);
 	
+	public boolean update(T t);
+	
 	public void delete(T t);
 	
 	public void deleteById(Serializable id);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,15 +49,33 @@ public class UserController {
 		return "/user/userAdd";
 	}
 	
+	@RequestMapping("/userEdit/{id}")
+	public String doUserEdit(Model model,@PathVariable String id)throws Exception{
+		
+		UserDomain userDomain=userService.doGetUser(id);
+		model.addAttribute("userDomain", userDomain);
+		
+		return "/user/userEdit";
+	}
+	
+	/**
+	 * 保存
+	 * @param domain
+	 * @param result
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/save")
 	@ResponseBody
 	public String doSave(@Valid @ModelAttribute("domain") UserDomain domain,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
-			return null;
+			return "error";
 		} else {
-			userService.doSaveUser(domain);
+			if(userService.doSaveUser(domain)){
+				return "success";
+			}
 		}
-		return "success";
+		return "error";
 	}
 }

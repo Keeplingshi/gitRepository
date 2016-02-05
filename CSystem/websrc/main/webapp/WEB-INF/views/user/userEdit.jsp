@@ -73,25 +73,28 @@
 	}
 </style>
 
-<form id="userAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/user/save" method="post">
+<form id="userEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/user/save" method="post">
+	<input type="hidden" id="id" name="id" value="${userDomain.id }"/>
+	<input type="hidden" id="id" name="username" value="${userDomain.username }"/>
+	<input type="hidden" id="id" name="password" value="${userDomain.password }"/>
 	<table>
 		<tr>
 			<td class="lesta-150">账号：</td>
 			<td class="lestb">
-				<input type="text" id="username" name="username" class="input_text_a" placeholder="请输入账号">
+				${userDomain.username }
 			</td>
 		</tr>
 		<tr>
 			<td class="lesta-150">密码：</td>
 			<td class="lestb">
-				<input type="password" id="password" name="password" class="input_text_a" placeholder="请输入密码">
+				******
 			</td>
 		</tr>
 		<tr>
 			<td class="lesta-150">权限：</td>
 			<td id="authority_td" class="lestb">
 				<input type="button" id="add" class="add" value="+" />
-				<input type="text" id="weight" name="authority" class="input_text_b" maxlength="3" value="1" />
+				<input type="text" id="weight" name="authority" class="input_text_b" maxlength="3" value="${userDomain.authority }" />
 				<input type="button" id="jian" class="jian" value="-" />
 			</td>
 		</tr>
@@ -101,40 +104,19 @@
 </form>
 
 <script>
-/* 
-	$("#authority_td").on("mouseover",function(){
-		layer.tips('权限共有4级，', '#authority_td', {
-		    tips: [2, '#0FA6D8']
-		});
-	}); */
 	
 	$("#saveButton").click(function(){
-		
-		var usernameVal=$("#username").val();
-		var passwordVal=$("#password").val();
-		if(usernameVal==null||usernameVal==''){
-			layer.tips('用户名不能为空', '#username');
-			return;
-		}
-		if(passwordVal==null||passwordVal==''){
-			layer.tips('密码不能为空', '#password');
-			return;
-		}
-		
-		var form = $("#userAddFormId");
+		var form = $("#userEditFormId");
 		form.ajaxSubmit(function(result){
 			if(result=='success'){
-				
-				//默认加载用户列表
-				$.post("${pageContext.request.contextPath}/user/userList", function(result){
-					$("#content_page").html(result);
-				});
+
 				parent.layer.msg('添加成功', {
      		        time: 1500//1.5s后自动关闭
      		    });
 				//关闭当前新增页面页
 				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-				parent.layer.close(index); //再执行关闭    
+				parent.layer.close(index); //再执行关闭     
+				
 			}else{
 				layer.msg('新增失败');
 			}

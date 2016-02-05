@@ -58,7 +58,7 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
-	<bean id="transactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">  
+<!-- 	<bean id="transactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">  
 	    <property name="transactionManager" ref="transactionManager"></property>  
 	    <property name="transactionAttributes">  
 	        <props>  
@@ -69,7 +69,7 @@
 	            <prop key="*">PROPAGATION_REQUIRED</prop>  
 	        </props>  
 	    </property>  
-	</bean>
+	</bean> -->
 	
 	<!-- =================  Shiro权限控制配置         =================== -->
     <bean id="shiroRealm" class="com.cb.interceptor.shiro.ShiroRealm"/>  

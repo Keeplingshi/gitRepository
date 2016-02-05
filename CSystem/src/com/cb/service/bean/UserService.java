@@ -16,6 +16,7 @@ import com.system.service.bean.BaseService;
 import com.system.util.CopyUtil;
 
 @Service
+@Transactional
 public class UserService extends BaseService<User> implements IUserService{
 
 	@Resource private UserDao userDao;
@@ -44,7 +45,20 @@ public class UserService extends BaseService<User> implements IUserService{
 		User user=new User();
 		BeanUtils.copyProperties(userDomain,user);
 		
-		return super.doSave(user);
+		if(user.getId()==null){
+			return super.doSave(user);
+		}else{
+			return super.doUpdate(user);
+		}
+	}
+
+	@Override
+	public UserDomain doGetUser(String id) throws Exception {
+		// TODO Auto-generated method stub
+		User user=super.doGetById(id);
+		UserDomain userDomain=new UserDomain();
+		BeanUtils.copyProperties(user, userDomain);
+		return userDomain;
 	}
 	
 }

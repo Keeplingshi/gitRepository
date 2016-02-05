@@ -69,6 +69,22 @@ public class BaseDao<T> implements IBaseDao<T> {
 	}
 
 	@Override
+	public boolean update(T t) {
+		// TODO Auto-generated method stub
+		
+		Session session=getSession();
+		try{
+			session.update(t);
+			session.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+
+	@Override
 	public void delete(T t) {
 		// TODO Auto-generated method stub
 		getSession().delete(t);
