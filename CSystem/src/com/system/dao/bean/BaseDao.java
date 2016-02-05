@@ -87,7 +87,9 @@ public class BaseDao<T> implements IBaseDao<T> {
 	@Override
 	public void delete(T t) {
 		// TODO Auto-generated method stub
-		getSession().delete(t);
+		Session session=getSession();
+		session.delete(t);
+		session.flush();
 	}
 
 	@Override

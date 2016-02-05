@@ -13,4 +13,6 @@ public interface IUserService extends IBaseService<User>{
 	public List<UserDomain> doGetUserList() throws Exception;
 	
 	public boolean doSaveUser(UserDomain userDomain) throws Exception;
+	
+	public boolean doDeleteUserById(String id) throws Exception;
 }

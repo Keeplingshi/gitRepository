@@ -11,8 +11,7 @@
 		<i class="icon-search nav-search-icon"></i>
 	</span>
 	
-	<input id="userDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
-	<input id="userEditButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="修改"/>
+	<input id="userQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	<input id="userAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 </div>
 <div class="table-responsive">
@@ -39,9 +38,9 @@
 					<td>${userDomain.authority}</td>
 
 					<td style="width: 260px">
-						<input type="button" class="btn_list_view" value="查看" /> 
+						<input type="button" class="btn_list_view" value="查看" onclick="viewUser('${userDomain.id }')"/> 
 						<input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/> 
-						<input type="button" class="btn_list_delete" value="删除" />
+						<input type="button" class="btn_list_delete" value="删除" onclick="deleteUser('${userDomain.id }')"/>
 					</td>
 				</tr>
 			</c:forEach>
@@ -50,15 +49,13 @@
 	</table>
 </div>
 
-<input type="button" id="checkButton" value="选中" />
-
 <script type="text/javascript">
 
+	//新增用户按钮
 	$("#userAddButton").click(function(){
 	    parent.layer.open({
 	        type: 2,
 	        title: '新增用户',
-	        maxmin: true,
 	        shadeClose: true, //点击遮罩关闭层
 	        area : ['380px' , '280px'],
 	        content: '${pageContext.request.contextPath}/user/userAdd',
@@ -76,8 +73,7 @@
 	{
 	    parent.layer.open({
 	        type: 2,
-	        title: '新增用户',
-	        maxmin: true,
+	        title: '修改用户',
 	        shadeClose: true,
 	        area : ['380px' , '280px'],
 	        content: '${pageContext.request.contextPath}/user/userEdit/'+userId,
@@ -90,7 +86,46 @@
 	    });
 	}
 	
-
+	//list中查看用户按钮
+	function viewUser(userId)
+	{
+	    parent.layer.open({
+	        type: 2,
+	        title: '查看用户',
+	        shadeClose: true,
+	        area : ['380px' , '280px'],
+	        content: '${pageContext.request.contextPath}/user/userView/'+userId
+	    });
+	}
+	
+	//删除
+	function deleteUser(userId)
+	{
+		//询问框
+		layer.confirm('是否确定删除', {
+		    btn: ['确定','取消'] //按钮
+		}, function(){
+	 		//默认加载用户列表
+			$.post("${pageContext.request.contextPath}/user/delete/"+userId, function(result){
+				if(result=='success'){
+					//默认加载用户列表
+					$.post("${pageContext.request.contextPath}/user/userList", function(result){
+						$("#content_page").html(result);
+					});
+					parent.layer.msg('删除成功', {
+	     		        time: 1500//1.5s后自动关闭
+	     		    });
+				}else{
+					layer.msg('删除失败');
+				}
+			}); 
+		}, function(){
+			
+		});
+		
+	}
+	
+/* 
 		jQuery(function($) {
 			//checkbox选择全部
 			$('table th input:checkbox').on('click' , function(){
@@ -122,5 +157,5 @@
 				}
 			}
 			
-		});
+		}); */
 	</script>

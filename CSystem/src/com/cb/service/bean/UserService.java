@@ -21,9 +21,6 @@ public class UserService extends BaseService<User> implements IUserService{
 
 	@Resource private UserDao userDao;
 
-	/**
-	 * 获取用户列表
-	 */
 	@Override
 	public List<UserDomain> doGetUserList() throws Exception {
 		// TODO Auto-generated method stub
@@ -35,9 +32,6 @@ public class UserService extends BaseService<User> implements IUserService{
 		return userDomains;
 	}
 
-	/**
-	 * 保存用户
-	 */
 	@Override
 	public boolean doSaveUser(UserDomain userDomain) throws Exception {
 		// TODO Auto-generated method stub
@@ -59,6 +53,13 @@ public class UserService extends BaseService<User> implements IUserService{
 		UserDomain userDomain=new UserDomain();
 		BeanUtils.copyProperties(user, userDomain);
 		return userDomain;
+	}
+
+	@Override
+	public boolean doDeleteUserById(String id) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return super.doDeleteById(id);
 	}
 	
 }

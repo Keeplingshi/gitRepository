@@ -38,6 +38,22 @@ public class UserController {
 	}
 	
 	/**
+	 * 用户详情页面
+	 * @param model
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/userView/{id}")
+	public String doUserView(Model model,@PathVariable String id) throws Exception{
+		
+		UserDomain userDomain=userService.doGetUser(id);
+		model.addAttribute("userDomain", userDomain);
+		
+		return "/user/userView";
+	}
+	
+	/**
 	 * 新增账户页面
 	 * @param model
 	 * @return
@@ -49,6 +65,13 @@ public class UserController {
 		return "/user/userAdd";
 	}
 	
+	/**
+	 * 修改用户
+	 * @param model
+	 * @param id 用户id
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/userEdit/{id}")
 	public String doUserEdit(Model model,@PathVariable String id)throws Exception{
 		
@@ -76,6 +99,17 @@ public class UserController {
 				return "success";
 			}
 		}
+		return "error";
+	}
+	
+	@RequestMapping("/delete/{id}")
+	@ResponseBody
+	public String doDelete(@PathVariable String id)throws Exception{
+		
+		if(userService.doDeleteUserById(id)){
+			return "success";
+		}
+		
 		return "error";
 	}
 }
