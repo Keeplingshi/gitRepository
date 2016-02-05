@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +16,13 @@ import com.system.service.bean.BaseService;
 import com.system.util.CopyUtil;
 
 @Service
-@Transactional(rollbackFor = Throwable.class)
 public class UserService extends BaseService<User> implements IUserService{
 
 	@Resource private UserDao userDao;
 
+	/**
+	 * 获取用户列表
+	 */
 	@Override
 	public List<UserDomain> doGetUserList() throws Exception {
 		// TODO Auto-generated method stub
@@ -29,6 +32,19 @@ public class UserService extends BaseService<User> implements IUserService{
 		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
 		
 		return userDomains;
+	}
+
+	/**
+	 * 保存用户
+	 */
+	@Override
+	public boolean doSaveUser(UserDomain userDomain) throws Exception {
+		// TODO Auto-generated method stub
+		
+		User user=new User();
+		BeanUtils.copyProperties(userDomain,user);
+		
+		return super.doSave(user);
 	}
 	
 }

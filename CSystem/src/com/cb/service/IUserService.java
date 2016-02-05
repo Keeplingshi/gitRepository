@@ -8,6 +8,7 @@ import com.system.service.IBaseService;
 
 public interface IUserService extends IBaseService<User>{
 
-	//public List<UserDomain> doGetFilterList() throws Exception;
 	public List<UserDomain> doGetUserList() throws Exception;
+	
+	public boolean doSaveUser(UserDomain userDomain) throws Exception;
 }

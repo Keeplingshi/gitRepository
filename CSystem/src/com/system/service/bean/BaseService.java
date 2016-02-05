@@ -5,12 +5,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.system.dao.bean.BaseDao;
 import com.system.service.IBaseService;
 
-@Transactional(rollbackFor={Throwable.class})
 public class BaseService<T> implements IBaseService<T>{
 
 	@Resource private BaseDao<T> baseDao;
@@ -22,7 +19,7 @@ public class BaseService<T> implements IBaseService<T>{
 	}
 
 	@Override
-	public T doSave(T t) throws Exception {
+	public boolean doSave(T t) throws Exception {
 		// TODO Auto-generated method stub
 		return baseDao.save(t);
 	}

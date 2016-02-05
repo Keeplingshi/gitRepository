@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="USER")
 public class User {
 
-	private Long id;	//id
+	private String id;	//id
 	private String username;	//用户名
 	private String password;	//密码
 	private Integer authority;	//权限
@@ -30,11 +30,11 @@ public class User {
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name = "system-uuid",strategy="uuid")
 	@Column(name = "ID", unique = true, nullable = true, precision = 10, scale = 0)
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -2,7 +2,7 @@ package com.cb.domain;
 
 public class UserDomain {
 
-	private Long id;	//id
+	private String id;	//id
 	private String username;	//用户名
 	private String password;	//密码
 	private Integer authority;	//权限
@@ -11,10 +11,10 @@ public class UserDomain {
 		
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getUsername() {

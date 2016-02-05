@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.system.dao.IBaseDao;
 
 @Repository
@@ -53,11 +52,20 @@ public class BaseDao<T> implements IBaseDao<T> {
         return (T)getSession().get(entityClass, id);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public T save(T t) {
+	public boolean save(T t) {
 		// TODO Auto-generated method stub
-		return (T)getSession().save(t);
+		
+		Session session=getSession();
+		try{
+			session.save(t);
+			session.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override
