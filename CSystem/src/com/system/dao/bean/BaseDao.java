@@ -11,13 +11,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.system.dao.IBaseDao;
 
 @Repository
-@Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
 public class BaseDao<T> implements IBaseDao<T> {
 
 	@Autowired
@@ -49,7 +45,6 @@ public class BaseDao<T> implements IBaseDao<T> {
 			session = sessionFactory.getCurrentSession();
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		if(session==null){
 			session=sessionFactory.openSession();

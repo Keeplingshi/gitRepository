@@ -9,7 +9,6 @@ import com.cb.entity.User;
 import com.system.dao.bean.BaseDao;
 
 @Repository
-@Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
 public class UserDao extends BaseDao<User> implements IUserDao{
 
 }
