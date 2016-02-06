@@ -15,7 +15,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Controller
@@ -38,7 +37,7 @@ public class LoginController {
         System.out.println("用户[" + username + "]登录");  
 
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);  
-        token.setRememberMe(true);  
+        token.setRememberMe(true);
         System.out.println("为了验证登录用户而封装的token为" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));  
         //获取当前的Subject  
         Subject currentUser = SecurityUtils.getSubject();  
@@ -72,14 +71,5 @@ public class LoginController {
         }  
         return resultPageURL;  
     }  
-       
-       
-    /** 
-     * 用户登出 
-     */  
-    @RequestMapping("/logout")  
-    public String logout(HttpServletRequest request){  
-         SecurityUtils.getSubject().logout();  
-         return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/";  
-    }  
+    
 }

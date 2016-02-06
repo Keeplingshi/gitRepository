@@ -3,6 +3,9 @@ package com.system.service;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
+
 public interface IBaseService<T> {
 
 	public T doGetById(Serializable id) throws Exception;
@@ -13,6 +16,6 @@ public interface IBaseService<T> {
 	
 	public boolean doDeleteById(Serializable id);
 	
-	public List<T> doGetFilterList()throws Exception;
+	public List<T> doGetFilterList(DetachedCriteria detachedCriteria)throws Exception;
 	
 }

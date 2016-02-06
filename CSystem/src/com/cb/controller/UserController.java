@@ -47,7 +47,7 @@ public class UserController {
 	@RequestMapping("/userView/{id}")
 	public String doUserView(Model model,@PathVariable String id) throws Exception{
 		
-		UserDomain userDomain=userService.doGetUser(id);
+		UserDomain userDomain=userService.doGetUserById(id);
 		model.addAttribute("userDomain", userDomain);
 		
 		return "/user/userView";
@@ -75,7 +75,7 @@ public class UserController {
 	@RequestMapping("/userEdit/{id}")
 	public String doUserEdit(Model model,@PathVariable String id)throws Exception{
 		
-		UserDomain userDomain=userService.doGetUser(id);
+		UserDomain userDomain=userService.doGetUserById(id);
 		model.addAttribute("userDomain", userDomain);
 		
 		return "/user/userEdit";

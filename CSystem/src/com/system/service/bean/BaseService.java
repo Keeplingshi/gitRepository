@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.system.dao.bean.BaseDao;
@@ -46,9 +48,9 @@ public class BaseService<T> implements IBaseService<T>{
 	}
 
 	@Override
-	public List<T> doGetFilterList() throws Exception {
+	public List<T> doGetFilterList(DetachedCriteria detachedCriteria) throws Exception {
 		// TODO Auto-generated method stub
-		return baseDao.getFilterList();
+		return baseDao.getFilterList(detachedCriteria);
 	}
 
 }

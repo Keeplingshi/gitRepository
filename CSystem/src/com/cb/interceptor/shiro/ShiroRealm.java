@@ -48,7 +48,6 @@ public class ShiroRealm extends AuthorizingRealm {
         return null;
     }  
    
-       
     /** 
      * 验证当前登录的Subject 
      * @see 经测试:本例中该方法的调用时机为LoginController.login()方法中执行Subject.login()时 

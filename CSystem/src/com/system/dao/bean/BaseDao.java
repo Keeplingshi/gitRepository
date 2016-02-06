@@ -8,8 +8,10 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.system.dao.IBaseDao;
 
 @Repository
@@ -104,12 +106,18 @@ public class BaseDao<T> implements IBaseDao<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> getFilterList() {
+	public List<T> getFilterList(DetachedCriteria detachedCriteria) {
 		// TODO Auto-generated method stub
 		
-		Criteria criteria=getSession().createCriteria(entityClass);
+		return detachedCriteria.getExecutableCriteria(getSession()).list();
 		
-		return criteria.list();
+//		// 执行  
+//        List list = detachedCriteria.getExecutableCriteria(session).list();  
+//        System.out.println(list.size());session.close();  
+		
+//		criteria=getSession().createCriteria(entityClass);
+//		
+//		return criteria.list();
 	}
 
 }

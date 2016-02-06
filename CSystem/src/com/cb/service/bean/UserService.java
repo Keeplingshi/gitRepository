@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +22,15 @@ public class UserService extends BaseService<User> implements IUserService{
 
 	@Resource private UserDao userDao;
 
+	/**
+	 * @see IUserService#doGetUserList()
+	 */
 	@Override
 	public List<UserDomain> doGetUserList() throws Exception {
 		// TODO Auto-generated method stub
-		List<User> userList=super.doGetFilterList();
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
+		List<User> userList=super.doGetFilterList(detachedCriteria);
 		
 		@SuppressWarnings("unchecked")
 		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
@@ -32,6 +38,9 @@ public class UserService extends BaseService<User> implements IUserService{
 		return userDomains;
 	}
 
+	/**
+	 * @see IUserService#doSaveUser(UserDomain)
+	 */
 	@Override
 	public boolean doSaveUser(UserDomain userDomain) throws Exception {
 		// TODO Auto-generated method stub
@@ -39,6 +48,7 @@ public class UserService extends BaseService<User> implements IUserService{
 		User user=new User();
 		BeanUtils.copyProperties(userDomain,user);
 		
+		//判断是否为新用户，如果是，新增，否则更新
 		if(user.getId()==null){
 			return super.doSave(user);
 		}else{
@@ -46,8 +56,11 @@ public class UserService extends BaseService<User> implements IUserService{
 		}
 	}
 
+	/**
+	 * @see IUserService#doGetUserById(String)
+	 */
 	@Override
-	public UserDomain doGetUser(String id) throws Exception {
+	public UserDomain doGetUserById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		User user=super.doGetById(id);
 		UserDomain userDomain=new UserDomain();
@@ -55,6 +68,9 @@ public class UserService extends BaseService<User> implements IUserService{
 		return userDomain;
 	}
 
+	/**
+	 * @see IUserService#doDeleteUserById(String)
+	 */
 	@Override
 	public boolean doDeleteUserById(String id) throws Exception {
 		// TODO Auto-generated method stub

@@ -3,6 +3,9 @@ package com.system.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
+
 public interface IBaseDao<T> {
 
 	public T getById(Serializable id);
@@ -15,7 +18,7 @@ public interface IBaseDao<T> {
 	
 	public void deleteById(Serializable id);
 	
-	public List<T> getFilterList();
+	public List<T> getFilterList(DetachedCriteria detachedCriteria);
 	
 	
 //	  public abstract E insert(E paramE);
