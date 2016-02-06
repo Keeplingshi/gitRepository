@@ -5,8 +5,10 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.dao.bean.UserDao;
@@ -17,11 +19,11 @@ import com.system.service.bean.BaseService;
 import com.system.util.CopyUtil;
 
 @Service
-@Transactional
+@Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
 public class UserService extends BaseService<User> implements IUserService{
 
 	@Resource private UserDao userDao;
-
+	
 	/**
 	 * @see IUserService#doGetUserList()
 	 */
@@ -77,5 +79,53 @@ public class UserService extends BaseService<User> implements IUserService{
 		
 		return super.doDeleteById(id);
 	}
+
+	/**
+	 * @see IUserService#doCheckUserPassword(String, String)
+	 */
+	@Override
+	public boolean doCheckUserPassword(String username, char[] password)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
+		detachedCriteria.add(Restrictions.eq("username", username.trim()));
+		
+		List<User> userList=super.doGetFilterList(detachedCriteria);
+		
+		//如果有结果，username是唯一的
+		if(userList.size()==1){
+			User user=userList.get(0);
+			//判断密码是否等于
+			if((String.valueOf(password)).equals(user.getPassword())){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	/**
+	 * @see IUserService#doGetUserByUsername(String)
+	 */
+	@Override
+	public UserDomain doGetUserByUsername(String username) throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
+		detachedCriteria.add(Restrictions.eq("username", username.trim()));
+		
+		List<User> userList=super.doGetFilterList(detachedCriteria);
+		
+		//如果有结果，username是唯一的
+		if(userList.size()==1){
+			User user=userList.get(0);
+			UserDomain userDomain=new UserDomain();
+			BeanUtils.copyProperties(user, userDomain);
+			return userDomain;
+		}
+		
+		return null;
+	}
+	
 	
 }

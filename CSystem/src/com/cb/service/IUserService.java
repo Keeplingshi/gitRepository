@@ -39,5 +39,20 @@ public interface IUserService extends IBaseService<User>{
 	 */
 	public boolean doDeleteUserById(String id) throws Exception;
 	
+	/**
+	 * 验证用户名密码，如果通过，返回UserDomain，不通过，返回null
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doCheckUserPassword(String username,char[] password)throws Exception;
 	
+	/**
+	 * 通过用户名获取UserDomain实体
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
+	public UserDomain doGetUserByUsername(String username)throws Exception;
 }

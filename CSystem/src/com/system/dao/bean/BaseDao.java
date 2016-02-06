@@ -5,16 +5,19 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.system.dao.IBaseDao;
 
 @Repository
+@Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
 public class BaseDao<T> implements IBaseDao<T> {
 
 	@Autowired
@@ -41,8 +44,25 @@ public class BaseDao<T> implements IBaseDao<T> {
 	}
 	
 	protected Session getSession() {
-        return sessionFactory.getCurrentSession();  
+		Session session=null;
+		try {
+			session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(session==null){
+			session=sessionFactory.openSession();
+		}
+        return session;
     }
+	
+	private void closeSession(Session session){
+		//关闭session
+		if(session!=null&&session.isOpen()){
+			session.close();
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -51,7 +71,10 @@ public class BaseDao<T> implements IBaseDao<T> {
 		if (id == null){
 			return null;
 		}
-        return (T)getSession().get(entityClass, id);
+		Session session=getSession();
+		T t=(T)session.get(entityClass, id);
+		this.closeSession(session);
+        return t;
 	}
 
 	@Override
@@ -64,8 +87,10 @@ public class BaseDao<T> implements IBaseDao<T> {
 			session.flush();
 		}catch(Exception e){
 			e.printStackTrace();
+			this.closeSession(session);
 			return false;
 		}
+		this.closeSession(session);
 		
 		return true;
 	}
@@ -80,8 +105,10 @@ public class BaseDao<T> implements IBaseDao<T> {
 			session.flush();
 		}catch(Exception e){
 			e.printStackTrace();
+			this.closeSession(session);
 			return false;
 		}
+		this.closeSession(session);
 		
 		return true;
 	}
@@ -92,6 +119,7 @@ public class BaseDao<T> implements IBaseDao<T> {
 		Session session=getSession();
 		session.delete(t);
 		session.flush();
+		this.closeSession(session);
 	}
 
 	@Override
@@ -109,15 +137,10 @@ public class BaseDao<T> implements IBaseDao<T> {
 	public List<T> getFilterList(DetachedCriteria detachedCriteria) {
 		// TODO Auto-generated method stub
 		
-		return detachedCriteria.getExecutableCriteria(getSession()).list();
-		
-//		// 执行  
-//        List list = detachedCriteria.getExecutableCriteria(session).list();  
-//        System.out.println(list.size());session.close();  
-		
-//		criteria=getSession().createCriteria(entityClass);
-//		
-//		return criteria.list();
+		Session session=getSession();
+		List<T> list=detachedCriteria.getExecutableCriteria(session).list();
+		this.closeSession(session);
+		return list;
 	}
 
 }

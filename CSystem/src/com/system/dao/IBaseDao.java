@@ -3,7 +3,6 @@ package com.system.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 
 public interface IBaseDao<T> {
@@ -14,10 +13,23 @@ public interface IBaseDao<T> {
 	
 	public boolean update(T t);
 	
+	/**
+	 * 根据实体删除
+	 * @param t
+	 */
 	public void delete(T t);
 	
+	/**
+	 * 根据id删除实体
+	 * @param id
+	 */
 	public void deleteById(Serializable id);
 	
+	/**
+	 * 根据过滤条件查询所有实体，并返回list
+	 * @param detachedCriteria
+	 * @return
+	 */
 	public List<T> getFilterList(DetachedCriteria detachedCriteria);
 	
 	

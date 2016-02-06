@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.UserDomain;
+import com.cb.service.IUserService;
 import com.cb.service.bean.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-	@Resource private UserService userService;
+	@Resource private IUserService userService;
 	
 	/**
 	 * 账户列表页面

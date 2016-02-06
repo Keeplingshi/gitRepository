@@ -40,15 +40,15 @@ public class LoginController {
         token.setRememberMe(true);
         System.out.println("为了验证登录用户而封装的token为" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));  
         //获取当前的Subject  
-        Subject currentUser = SecurityUtils.getSubject();  
+        Subject currentUser = SecurityUtils.getSubject();
         try {
             //在调用了login方法后,SecurityManager会收到AuthenticationToken,并将其发送给已配置的Realm执行必须的认证检查  
             //每个Realm都能在必要时对提交的AuthenticationTokens作出反应  
-            //所以这一步在调用login(token)方法时,它会走到MyRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法  
+            //所以这一步在调用login(token)方法时,它会走到ShiroRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法  
             System.out.println("对用户[" + username + "]进行登录验证..验证开始");  
-            currentUser.login(token);  
+            currentUser.login(token);
             System.out.println("对用户[" + username + "]进行登录验证..验证通过");  
-            resultPageURL = "main";  
+            resultPageURL = "main";
         }catch(UnknownAccountException uae){  
             System.out.println("对用户[" + username + "]进行登录验证..验证未通过,未知账户");  
         }catch(IncorrectCredentialsException ice){  

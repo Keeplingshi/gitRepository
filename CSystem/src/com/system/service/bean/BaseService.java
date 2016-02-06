@@ -5,14 +5,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.system.dao.bean.BaseDao;
 import com.system.service.IBaseService;
 
-@Transactional
+@Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
 public class BaseService<T> implements IBaseService<T>{
 
 	@Resource private BaseDao<T> baseDao;

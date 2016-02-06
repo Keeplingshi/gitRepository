@@ -1,6 +1,8 @@
 package com.cb.interceptor.shiro;
 
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.shiro.SecurityUtils;
@@ -16,6 +18,10 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
+import com.cb.domain.UserDomain;
+import com.cb.service.IUserService;
+import com.cb.service.bean.UserService;
+
 
 /**
  * shiro身份验证
@@ -24,6 +30,8 @@ import org.apache.shiro.subject.Subject;
  */
 public class ShiroRealm extends AuthorizingRealm {
 
+	@Resource private IUserService userService;
+	
     /** 
      * 为当前登录的Subject授予角色和权限 
      * @see 经测试:本例中该方法的调用时机为需授权资源被访问时 
@@ -33,19 +41,36 @@ public class ShiroRealm extends AuthorizingRealm {
      */  
     @Override  
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals){  
-        //获取当前登录的用户名,等价于(String)principals.fromRealm(this.getName()).iterator().next()  
-        String currentUsername = (String)super.getAvailablePrincipal(principals);
-        
-        SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();  
-        if(null!=currentUsername && "cb".equals(currentUsername)){  
-            //添加一个角色,不是配置意义上的添加,而是证明该用户拥有admin角色
-            simpleAuthorInfo.addRole("admin");  
-            //添加权限  
-            simpleAuthorInfo.addStringPermission("admin:manage");  
-            System.out.println("已为用户[cb]赋予了[admin]角色和[admin:manage]权限");  
-            return simpleAuthorInfo;  
-        }
-        return null;
+    	
+    	String currentUsername=(String)super.getAvailablePrincipal(principals);
+    	SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
+		try {
+			UserDomain userDomain = userService.doGetUserByUsername(currentUsername);
+	    	if(null!=userDomain && 0==userDomain.getAuthority()){
+	    		simpleAuthorInfo.addRole("admin");
+	    		simpleAuthorInfo.addStringPermission("admin:manage");
+	    		return simpleAuthorInfo;
+	    	}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	return null;
+    	
+//        //获取当前登录的用户名,等价于(String)principals.fromRealm(this.getName()).iterator().next()  
+//        String currentUsername = (String)super.getAvailablePrincipal(principals);
+//        
+//        SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();  
+//        if(null!=currentUsername && "cb".equals(currentUsername)){  
+//            //添加一个角色,不是配置意义上的添加,而是证明该用户拥有admin角色
+//            simpleAuthorInfo.addRole("admin");  
+//            //添加权限  
+//            simpleAuthorInfo.addStringPermission("admin:manage");  
+//            System.out.println("已为用户[cb]赋予了[admin]角色和[admin:manage]权限");  
+//            return simpleAuthorInfo;  
+//        }
+//        return null;
     }  
    
     /** 
@@ -54,22 +79,39 @@ public class ShiroRealm extends AuthorizingRealm {
      */  
     @Override  
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {  
-        //获取基于用户名和密码的令牌  
-        //实际上这个authcToken是从LoginController里面currentUser.login(token)传过来的  
-        //两个token的引用都是一样的,本例中是org.apache.shiro.authc.UsernamePasswordToken@33799a1e  
-        UsernamePasswordToken token = (UsernamePasswordToken)authcToken;  
-        System.out.println("验证当前Subject时获取到token为" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));  
-
-        //此处无需比对,比对的逻辑Shiro会做,我们只需返回一个和令牌相关的正确的验证信息  
-        //说白了就是第一个参数填登录用户名,第二个参数填合法的登录密码(可以是从数据库中取到的,本例中为了演示就硬编码了)  
-        //这样一来,在随后的登录页面上就只有这里指定的用户和密码才能通过验证  
-        if("cb".equals(token.getUsername())){  
-            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo("cb", "cb", this.getName());  
-            this.setSession("currentUser", "cb");  
-            return authcInfo;  
-        }
-        //没有返回登录用户名对应的SimpleAuthenticationInfo对象时,就会在LoginController中抛出UnknownAccountException异常  
-        return null;  
+    	
+    	UsernamePasswordToken token=(UsernamePasswordToken)authcToken;
+    	
+    	try {
+			boolean isOk=userService.doCheckUserPassword(token.getUsername(), token.getPassword());
+			if(isOk){
+				AuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), this.getName());
+				this.setSession("currentUser",token.getUsername());
+				return authenticationInfo;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return null;
+    	
+//        //获取基于用户名和密码的令牌  
+//        //实际上这个authcToken是从LoginController里面currentUser.login(token)传过来的  
+//        //两个token的引用都是一样的,本例中是org.apache.shiro.authc.UsernamePasswordToken@33799a1e  
+//        UsernamePasswordToken token = (UsernamePasswordToken)authcToken;  
+//        System.out.println("验证当前Subject时获取到token为" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));  
+//        
+//        //此处无需比对,比对的逻辑Shiro会做,我们只需返回一个和令牌相关的正确的验证信息  
+//        //说白了就是第一个参数填登录用户名,第二个参数填合法的登录密码(可以是从数据库中取到的,本例中为了演示就硬编码了)  
+//        //这样一来,在随后的登录页面上就只有这里指定的用户和密码才能通过验证  
+//        if("cb".equals(token.getUsername())){  
+//            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo("cb", "cb", this.getName());  
+//            this.setSession("currentUser", "cb");
+//            return authcInfo;  
+//        }
+//        //没有返回登录用户名对应的SimpleAuthenticationInfo对象时,就会在LoginController中抛出UnknownAccountException异常  
+//        return null;  
     }  
 
        
