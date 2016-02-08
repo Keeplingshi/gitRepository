@@ -38,12 +38,13 @@
 
 					<td style="width: 260px">
 						<input type="button" class="btn_list_view" value="查看" onclick="viewUser('${userDomain.id }')"/> 
-						<input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/> 
-						<input type="button" class="btn_list_delete" value="删除" onclick="deleteUser('${userDomain.id }')"/>
+						<c:if test="${userDomain.authority!=0}">
+							<input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/> 
+							<input type="button" class="btn_list_delete" value="删除" onclick="deleteUser('${userDomain.id }')"/>
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>
-
 		</tbody>
 	</table>
 </div>

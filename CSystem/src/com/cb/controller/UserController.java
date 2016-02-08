@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.UserDomain;
 import com.cb.service.IUserService;
-import com.cb.service.bean.UserService;
 
 @Controller
 @RequestMapping("/user")
@@ -50,6 +49,7 @@ public class UserController {
 		
 		UserDomain userDomain=userService.doGetUserById(id);
 		model.addAttribute("userDomain", userDomain);
+		userService.doGetUserById(id);
 		
 		return "/user/userView";
 	}

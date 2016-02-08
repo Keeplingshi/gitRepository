@@ -5,7 +5,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -40,24 +39,25 @@ public class BaseDao<T> implements IBaseDao<T> {
 	}
 	
 	protected Session getSession() {
-		Session session=null;
-		try {
-			session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
-		}
-		if(session==null){
-			session=sessionFactory.openSession();
-		}
-        return session;
+		return sessionFactory.getCurrentSession();
+//		Session session=null;
+//		try {
+//			session = sessionFactory.getCurrentSession();
+//		} catch (HibernateException e) {
+//			// TODO Auto-generated catch block
+//		}
+//		if(session==null){
+//			session=sessionFactory.openSession();
+//		}
+//        return session;
     }
 	
-	private void closeSession(Session session){
-		//关闭session
-		if(session!=null&&session.isOpen()){
-			session.close();
-		}
-	}
+//	private void closeSession(Session session){
+//		//关闭session
+//		if(session!=null&&session.isOpen()){
+//			session.close();
+//		}
+//	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -68,7 +68,7 @@ public class BaseDao<T> implements IBaseDao<T> {
 		}
 		Session session=getSession();
 		T t=(T)session.get(entityClass, id);
-		this.closeSession(session);
+		//this.closeSession(session);
         return t;
 	}
 
@@ -82,10 +82,10 @@ public class BaseDao<T> implements IBaseDao<T> {
 			session.flush();
 		}catch(Exception e){
 			e.printStackTrace();
-			this.closeSession(session);
+			//this.closeSession(session);
 			return false;
 		}
-		this.closeSession(session);
+		//this.closeSession(session);
 		
 		return true;
 	}
@@ -100,10 +100,10 @@ public class BaseDao<T> implements IBaseDao<T> {
 			session.flush();
 		}catch(Exception e){
 			e.printStackTrace();
-			this.closeSession(session);
+			//this.closeSession(session);
 			return false;
 		}
-		this.closeSession(session);
+		//this.closeSession(session);
 		
 		return true;
 	}
@@ -114,7 +114,7 @@ public class BaseDao<T> implements IBaseDao<T> {
 		Session session=getSession();
 		session.delete(t);
 		session.flush();
-		this.closeSession(session);
+		//this.closeSession(session);
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class BaseDao<T> implements IBaseDao<T> {
 		
 		Session session=getSession();
 		List<T> list=detachedCriteria.getExecutableCriteria(session).list();
-		this.closeSession(session);
+		//this.closeSession(session);
 		return list;
 	}
 

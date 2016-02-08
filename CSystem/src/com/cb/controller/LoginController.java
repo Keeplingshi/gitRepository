@@ -1,5 +1,6 @@
 package com.cb.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -17,9 +18,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.cb.service.IUserService;
+
 @Controller
 public class LoginController {
 
+	@Resource private IUserService userService;
+	
 	@RequestMapping("/login")
 	public String getAllUser(Model model){
 		
@@ -28,9 +33,10 @@ public class LoginController {
 	
     /** 
      * 用户登录 
+     * @throws Exception 
      */
     @RequestMapping("/main")  
-    public String login(HttpServletRequest request){  
+    public String login(HttpServletRequest request,Model model) throws Exception{  
         String resultPageURL = InternalResourceViewResolver.FORWARD_URL_PREFIX + "/";  
         String username = request.getParameter("username");  
         String password = request.getParameter("password");  
@@ -62,7 +68,9 @@ public class LoginController {
             ae.printStackTrace();  
         }
         //验证是否登录成功  
-        if(currentUser.isAuthenticated()){  
+        if(currentUser.isAuthenticated()){
+//        	UserDomain userDomain=userService.doGetUserByUsername(username);
+//        	model.addAttribute("userDomain", userDomain);
             return "/main";
         }else{  
             token.clear();  
