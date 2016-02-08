@@ -43,7 +43,7 @@
 								<img class="nav-user-photo" src="${pageContext.request.contextPath}/resources/ace/assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>欢迎光临,</small>
-									Jason
+									${userDomain.username}
 								</span>
 								<i class="icon-caret-down"></i>
 							</a>

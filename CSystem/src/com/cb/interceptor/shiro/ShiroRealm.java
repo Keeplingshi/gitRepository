@@ -34,7 +34,7 @@ public class ShiroRealm extends AuthorizingRealm {
      * 为当前登录的Subject授予角色和权限 
      * @see 经测试:本例中该方法的调用时机为需授权资源被访问时 
      * @see 经测试:并且每次访问需授权资源时都会执行该方法中的逻辑,这表明本例中默认并未启用AuthorizationCache 
-     */  
+     */
     @Override  
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals){  
     	
