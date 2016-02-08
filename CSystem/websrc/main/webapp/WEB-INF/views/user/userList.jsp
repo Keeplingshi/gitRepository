@@ -14,6 +14,7 @@
 	<input id="userQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	<input id="userAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 </div>
+<form id="formId" modelAttribute="pageInfo" action="${pageContext.request.contextPath}/user/userList" method="post">
 <div class="table-responsive">
 	<table id="sample-table-1" class="table table-striped table-bordered table-hover">
 		<thead>
@@ -50,6 +51,7 @@
 	</table>
 	<div id="pageId"><tags:paged /></div>
 </div>
+</form>
 
 <script type="text/javascript">
 
