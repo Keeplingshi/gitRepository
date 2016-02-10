@@ -14,30 +14,48 @@ import com.system.dao.bean.BaseDao;
 import com.system.service.IBaseService;
 import com.system.util.PageInfo;
 
+/**
+ * 基础服务
+ * @author chen
+ *
+ * @param <T>
+ */
 @Service
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
 public class BaseService<T> implements IBaseService<T>{
 
 	@Resource private BaseDao<T> baseDao;
 
+	/**
+	 * @see IBaseService#doGetById(Serializable)
+	 */
 	@Override
 	public T doGetById(Serializable id) throws Exception {
 		// TODO Auto-generated method stub
 		return baseDao.getById(id);
 	}
 
+	/**
+	 * @see IBaseService#doSave(Object)
+	 */
 	@Override
 	public boolean doSave(T t) throws Exception {
 		// TODO Auto-generated method stub
 		return baseDao.save(t);
 	}
 
+	/**
+	 * @see IBaseService#doUpdate(Object)
+	 */
 	@Override
 	public boolean doUpdate(T t) throws Exception {
 		// TODO Auto-generated method stub
 		return baseDao.update(t);
 	}
 
+	/**
+	 * @see IBaseService#doDeleteById(Serializable)
+	 */
 	@Override
 	public boolean doDeleteById(Serializable id) {
 		// TODO Auto-generated method stub
@@ -50,12 +68,18 @@ public class BaseService<T> implements IBaseService<T>{
 		return true;
 	}
 
+	/**
+	 * @see IBaseService#doGetFilterList(DetachedCriteria)
+	 */
 	@Override
 	public List<T> doGetFilterList(DetachedCriteria detachedCriteria) throws Exception {
 		// TODO Auto-generated method stub
 		return baseDao.getFilterList(detachedCriteria);
 	}
 
+	/**
+	 * @see IBaseService#doGetPageList(DetachedCriteria, PageInfo)
+	 */
 	@Override
 	public List<T> doGetPageList(DetachedCriteria detachedCriteria,
 			PageInfo pageInfo) throws Exception {

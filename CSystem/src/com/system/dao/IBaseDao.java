@@ -9,10 +9,25 @@ import com.system.util.PageInfo;
 
 public interface IBaseDao<T> {
 
+	/**
+	 * 根据id获取实体
+	 * @param id
+	 * @return
+	 */
 	public T getById(Serializable id);
 	
+	/**
+	 * 保存
+	 * @param t
+	 * @return
+	 */
 	public boolean save(T t);
 	
+	/**
+	 * 更新
+	 * @param t
+	 * @return
+	 */
 	public boolean update(T t);
 	
 	/**

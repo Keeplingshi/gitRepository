@@ -19,6 +19,11 @@ import com.system.service.bean.BaseService;
 import com.system.util.CopyUtil;
 import com.system.util.PageInfo;
 
+/**
+ * 账户服务层
+ * @author chen
+ *
+ */
 @Service
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
 public class UserService extends BaseService<User> implements IUserService{
@@ -128,6 +133,9 @@ public class UserService extends BaseService<User> implements IUserService{
 		return null;
 	}
 
+	/**
+	 * @see IUserService#doGetPageList(DetachedCriteria, PageInfo)
+	 */
 	@Override
 	public List<UserDomain> doGetUserPageList(PageInfo pageInfo)
 			throws Exception {
@@ -140,6 +148,9 @@ public class UserService extends BaseService<User> implements IUserService{
 		return userDomains;
 	}
 
+	/**
+	 * @see IUserService#doDeleteUsersByIds(String[])
+	 */
 	@Override
 	public boolean doDeleteUsersByIds(String[] ids) throws Exception {
 		// TODO Auto-generated method stub

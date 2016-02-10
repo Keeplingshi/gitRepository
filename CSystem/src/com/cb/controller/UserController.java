@@ -21,12 +21,23 @@ import com.cb.service.IUserService;
 import com.cb.util.Consts;
 import com.system.util.PageInfo;
 
+/**
+ * 用户控制层
+ * @author chen
+ *
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
+	//userService服务层
 	@Resource private IUserService userService;
 	
+	/**
+	 * 过滤起前台pageInfo
+	 * 使@ModelAttribute("pageInfo") PageInfo pageInfo在前台使用name="pageInfo.currentPageNo"来进行传参数
+	 * @param binder
+	 */
 	@InitBinder("pageInfo")  
 	public void initPageInfoBinder(WebDataBinder binder) {  
 	    binder.setFieldDefaultPrefix("pageInfo.");  
@@ -41,7 +52,8 @@ public class UserController {
 	@RequestMapping("/userList")
 	public String getUserList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model) throws Exception{
-		//pageInfo=userService.doCalculatePage();
+
+		//采用分页方式获取
 		List<UserDomain> userList=userService.doGetUserPageList(pageInfo);
 		model.addAttribute("userList", userList);
 		
@@ -58,9 +70,9 @@ public class UserController {
 	@RequestMapping("/userView/{id}")
 	public String doUserView(Model model,@PathVariable String id) throws Exception{
 		
+		//获取UserDomain信息
 		UserDomain userDomain=userService.doGetUserById(id);
 		model.addAttribute("userDomain", userDomain);
-		userService.doGetUserById(id);
 		
 		return "/user/userView";
 	}
@@ -86,7 +98,8 @@ public class UserController {
 	 */
 	@RequestMapping("/userEdit/{id}")
 	public String doUserEdit(Model model,@PathVariable String id)throws Exception{
-		
+
+		//获取单条Domain信息
 		UserDomain userDomain=userService.doGetUserById(id);
 		model.addAttribute("userDomain", userDomain);
 		
@@ -114,6 +127,12 @@ public class UserController {
 		return "error";
 	}
 	
+	/**
+	 * 删除单条数据
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/delete/{id}")
 	@ResponseBody
 	public String doDelete(@PathVariable String id)throws Exception{
@@ -125,6 +144,12 @@ public class UserController {
 		return Consts.ERROR;
 	}
 	
+	/**
+	 * 批量删除
+	 * @param userIds
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/deleteUsers")
 	@ResponseBody
 	public String doDeleteUsers(@RequestParam(value = "userIds[]") String[] userIds)throws Exception{
@@ -134,10 +159,5 @@ public class UserController {
 		}
 		
 		return Consts.ERROR;
-//		if(userService.doDeleteUserById(id)){
-//			return Consts.SUCCESS;
-//		}
-//		
-//		return Consts.ERROR;
 	}
 }

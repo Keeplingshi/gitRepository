@@ -45,6 +45,10 @@ public class BaseDao<T> implements IBaseDao<T> {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	/**
+	 * 获取session
+	 * @return
+	 */
 	protected Session getSession() {
 		return sessionFactory.getCurrentSession();
 //		Session session=null;
@@ -66,6 +70,9 @@ public class BaseDao<T> implements IBaseDao<T> {
 //		}
 //	}
 
+	/**
+	 * @see IBaseDao#getById(Serializable)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public T getById(Serializable id) {
@@ -78,6 +85,9 @@ public class BaseDao<T> implements IBaseDao<T> {
         return t;
 	}
 
+	/**
+	 * @see IBaseDao#save(Object)
+	 */
 	@Override
 	public boolean save(T t) {
 		// TODO Auto-generated method stub
@@ -94,6 +104,9 @@ public class BaseDao<T> implements IBaseDao<T> {
 		return true;
 	}
 
+	/**
+	 * @see IBaseDao#update(Object)
+	 */
 	@Override
 	public boolean update(T t) {
 		// TODO Auto-generated method stub
@@ -104,14 +117,15 @@ public class BaseDao<T> implements IBaseDao<T> {
 			session.flush();
 		}catch(Exception e){
 			e.printStackTrace();
-			//this.closeSession(session);
 			return false;
 		}
-		//this.closeSession(session);
 		
 		return true;
 	}
 
+	/**
+	 * @see IBaseDao#delete(Object)
+	 */
 	@Override
 	public void delete(T t) {
 		// TODO Auto-generated method stub
@@ -121,6 +135,9 @@ public class BaseDao<T> implements IBaseDao<T> {
 		//this.closeSession(session);
 	}
 
+	/**
+	 * @see IBaseDao#deleteById(Serializable)
+	 */
 	@Override
 	public void deleteById(Serializable id) {
 		// TODO Auto-generated method stub
@@ -131,6 +148,9 @@ public class BaseDao<T> implements IBaseDao<T> {
 		}
 	}
 
+	/**
+	 * @see IBaseDao#getFilterList(DetachedCriteria)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getFilterList(DetachedCriteria detachedCriteria) {

@@ -1,7 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>		
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
+<!-- 查看用户界面 -->
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 	

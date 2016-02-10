@@ -5,6 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
+/**
+ * 拷贝工具类
+ * @author chen
+ *
+ */
 public class CopyUtil {
 
 	/**

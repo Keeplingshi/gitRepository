@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 
+<!-- 用户列表页面 -->
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@	taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />

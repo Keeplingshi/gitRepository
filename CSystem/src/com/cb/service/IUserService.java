@@ -7,6 +7,11 @@ import com.cb.entity.User;
 import com.system.service.IBaseService;
 import com.system.util.PageInfo;
 
+/**
+ * 账户服务层接口
+ * @author chen
+ *
+ */
 public interface IUserService extends IBaseService<User>{
 
 	/**
