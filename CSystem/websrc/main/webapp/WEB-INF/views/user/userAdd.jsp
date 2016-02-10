@@ -3,53 +3,13 @@
 <!-- 增加用户界面 -->
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 	
 
 <style type="text/css">
-
-	.lesta-150 {
-		color: #073662;
-		height: 40px;
-		width: 130px;
-		text-align: right;
-		padding-right: 4px;
-	}
-	
-	.lestb {
-		background: #FFF;
-		color: #333;
-		height: 40px;
-		padding-left: 7px;
-		text-align: left;
-	}
-	
-	.input_text_a{
-	    color: #858585;
-	    background-color: #fff;
-	    border: 1px solid #ccc;
-	    padding: 5px 4px;
-	    line-height: 1.2;
-	    font-size: 14px;
-	    font-family: inherit;
-	    border-radius:5px;
-	}
-	
-	.input_text_b{
-		width: 50px;
-	    text-align: center;
-	    color: #858585;
-	    background-color: #fff;
-	    border: 1px solid #ccc;
-	    padding: 5px 4px;
-	    line-height: 1.2;
-	    font-size: 14px;
-	    font-family: inherit;
-	    border-radius:5px;
-	}
-	
 	.add {
 		margin-right: 3px;
 	    margin-top: 2px;
@@ -102,12 +62,6 @@
 </form>
 
 <script>
-/* 
-	$("#authority_td").on("mouseover",function(){
-		layer.tips('权限共有4级，', '#authority_td', {
-		    tips: [2, '#0FA6D8']
-		});
-	}); */
 	
 	$("#saveButton").click(function(){
 		
@@ -165,6 +119,5 @@
 			$("#weight").val(1);
 		}
 	});
-
 
 </script>
