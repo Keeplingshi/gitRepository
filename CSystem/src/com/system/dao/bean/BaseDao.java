@@ -5,12 +5,19 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+import org.hibernate.internal.CriteriaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.system.dao.IBaseDao;
+import com.system.util.PageInfo;
 
 @Repository
 public class BaseDao<T> implements IBaseDao<T> {
@@ -135,6 +142,46 @@ public class BaseDao<T> implements IBaseDao<T> {
 		Session session=getSession();
 		List<T> list=detachedCriteria.getExecutableCriteria(session).list();
 		//this.closeSession(session);
+		return list;
+	}
+
+	/**
+	 * @see IBaseDao#getPageList(DetachedCriteria, PageInfo)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> getPageList(DetachedCriteria detachedCriteria,
+			PageInfo pageInfo) {
+		// TODO Auto-generated method stub
+		
+		if(pageInfo==null){
+			pageInfo=new PageInfo();
+		}
+		
+		Session session=getSession();
+		Criteria criteria=detachedCriteria.getExecutableCriteria(session);
+		
+		CriteriaImpl criteriaImpl=(CriteriaImpl)criteria;
+		Projection projection=criteriaImpl.getProjection();
+		//每页显示几条
+		int pagePerSize=pageInfo.getSizePerPage();
+		//计算总条目数
+		int totalCount=((Long)criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		//起始序号
+		int startIndex=(pageInfo.getCurrentPageNo()-1)*pagePerSize;
+		
+		//计算分页数
+		pageInfo.setTotalPages((int)Math.ceil(((double)totalCount/pagePerSize)));
+		
+		criteria.setProjection(projection);
+		if(projection==null){
+			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		}
+		
+		//进行分页查询
+		criteria.setFirstResult(startIndex).setMaxResults(pagePerSize);
+		List<T> list=criteria.list();
+		
 		return list;
 	}
 

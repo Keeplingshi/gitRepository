@@ -17,6 +17,7 @@ import com.cb.entity.User;
 import com.cb.service.IUserService;
 import com.system.service.bean.BaseService;
 import com.system.util.CopyUtil;
+import com.system.util.PageInfo;
 
 @Service
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
@@ -125,6 +126,18 @@ public class UserService extends BaseService<User> implements IUserService{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public List<UserDomain> doGetUserPageList(PageInfo pageInfo)
+			throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
+		List<User> userList=super.doGetPageList(detachedCriteria, pageInfo);
+		
+		@SuppressWarnings("unchecked")
+		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
+		return userDomains;
 	}
 	
 	

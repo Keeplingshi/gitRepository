@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 
+import com.system.util.PageInfo;
+
 public interface IBaseDao<T> {
 
 	public T getById(Serializable id);
@@ -31,6 +33,14 @@ public interface IBaseDao<T> {
 	 * @return
 	 */
 	public List<T> getFilterList(DetachedCriteria detachedCriteria);
+	
+	/**
+	 * 翻页查询list
+	 * @param detachedCriteria
+	 * @param pageInfo
+	 * @return
+	 */
+	public List<T> getPageList(DetachedCriteria detachedCriteria,PageInfo pageInfo);
 	
 	
 //	  public abstract E insert(E paramE);

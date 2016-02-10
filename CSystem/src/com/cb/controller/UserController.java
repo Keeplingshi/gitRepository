@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.UserDomain;
 import com.cb.service.IUserService;
+import com.cb.util.Consts;
 import com.system.util.PageInfo;
 
 @Controller
@@ -26,7 +27,7 @@ public class UserController {
 	@Resource private IUserService userService;
 	
 	@InitBinder("pageInfo")  
-	public void initAccountBinder(WebDataBinder binder) {  
+	public void initPageInfoBinder(WebDataBinder binder) {  
 	    binder.setFieldDefaultPrefix("pageInfo.");  
 	}
 	
@@ -37,10 +38,10 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/userList")
-	public String getAllUser(@ModelAttribute("pageInfo") PageInfo pageInfo
+	public String getUserList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model) throws Exception{
-		
-		List<UserDomain> userList=userService.doGetUserList();
+		//pageInfo=userService.doCalculatePage();
+		List<UserDomain> userList=userService.doGetUserPageList(pageInfo);
 		model.addAttribute("userList", userList);
 		
 		return "/user/userList";
@@ -70,7 +71,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/userAdd")
-	public String douserAdd(Model model)throws Exception{
+	public String doUserAdd(Model model)throws Exception{
 		
 		return "/user/userAdd";
 	}
@@ -103,10 +104,10 @@ public class UserController {
 	public String doSave(@Valid @ModelAttribute("domain") UserDomain domain,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
-			return "error";
+			return Consts.ERROR;
 		} else {
 			if(userService.doSaveUser(domain)){
-				return "success";
+				return Consts.SUCCESS;
 			}
 		}
 		return "error";
@@ -117,9 +118,9 @@ public class UserController {
 	public String doDelete(@PathVariable String id)throws Exception{
 		
 		if(userService.doDeleteUserById(id)){
-			return "success";
+			return Consts.SUCCESS;
 		}
 		
-		return "error";
+		return Consts.ERROR;
 	}
 }

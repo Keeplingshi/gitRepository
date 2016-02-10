@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.system.dao.bean.BaseDao;
 import com.system.service.IBaseService;
+import com.system.util.PageInfo;
 
 @Service
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
@@ -53,6 +54,13 @@ public class BaseService<T> implements IBaseService<T>{
 	public List<T> doGetFilterList(DetachedCriteria detachedCriteria) throws Exception {
 		// TODO Auto-generated method stub
 		return baseDao.getFilterList(detachedCriteria);
+	}
+
+	@Override
+	public List<T> doGetPageList(DetachedCriteria detachedCriteria,
+			PageInfo pageInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return baseDao.getPageList(detachedCriteria, pageInfo);
 	}
 
 }

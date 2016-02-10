@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 
+import com.system.util.PageInfo;
+
 public interface IBaseService<T> {
 
 	public T doGetById(Serializable id) throws Exception;
@@ -17,4 +19,5 @@ public interface IBaseService<T> {
 	
 	public List<T> doGetFilterList(DetachedCriteria detachedCriteria)throws Exception;
 	
+	public List<T> doGetPageList(DetachedCriteria detachedCriteria,PageInfo pageInfo)throws Exception;
 }

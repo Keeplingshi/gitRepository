@@ -5,6 +5,7 @@ import java.util.List;
 import com.cb.domain.UserDomain;
 import com.cb.entity.User;
 import com.system.service.IBaseService;
+import com.system.util.PageInfo;
 
 public interface IUserService extends IBaseService<User>{
 
@@ -22,6 +23,13 @@ public interface IUserService extends IBaseService<User>{
 	 * @throws Exception
 	 */
 	public List<UserDomain> doGetUserList() throws Exception;
+	
+	/**
+	 * 分页查询
+	 * @return
+	 * @throws Exception
+	 */
+	public List<UserDomain> doGetUserPageList(PageInfo pageInfo)throws Exception;
 	
 	/**
 	 * 保存用户

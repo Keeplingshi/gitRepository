@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 
 <div class="breadcrumbs" id="userListToolbar">
-	<span class="input-icon" style="margin: 5px"> 
+	<span class="input-icon" style="margin: 5px;">
 		<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" /> 
 		<i class="icon-search nav-search-icon"></i>
 	</span>
