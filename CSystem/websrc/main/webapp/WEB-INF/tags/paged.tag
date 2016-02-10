@@ -34,7 +34,7 @@
 						<span class="ui-separator"></span>
 					</td>
 					<td dir="ltr">
-						Page <input id="ui-pg-input" class="ui-pg-input" type="text" size="2" maxlength="7" value="${pageInfo.currentPageNo }" onkeypress="EnterPress(event)" onkeydown="EnterPress()" > of 
+						Page <input id="ui-pg-input" class="ui-pg-input" type="text" size="2" maxlength="7" value="${pageInfo.currentPageNo }" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();" onkeypress="EnterPress(event)" onkeydown="EnterPress()" > of 
 						<span id="sp_1_grid-pager">${pageInfo.totalPages }</span>
 					</td>
 					<td class="ui-pg-button ui-state-disabled" style="width: 4px; cursor: default;">
@@ -47,10 +47,12 @@
 						<span class="ui-icon icon-double-angle-right bigger-140"></span>
 					</td>
 					<td dir="ltr">
-						<select class="ui-pg-selbox">
+						<select id="pg-selbox" class="ui-pg-selbox">
 							<option value="10" selected="selected">10</option>
 							<option value="20">20</option>
 							<option value="30">30</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
 						</select>
 					</td>
 				</tr>
@@ -63,6 +65,20 @@
 	</div>
 	
 <script>
+
+	$(function(){
+		var pageSize = "${pageInfo.sizePerPage}";
+		$("#pg-selbox option[value='"+pageSize+"']").attr("selected",true);
+	});
+
+	$("#pg-selbox").change(function(){
+		var sizePerPage=$(this).children('option:selected').val();
+		console.info(sizePerPage);
+		
+		$("#sizePerPage").val(sizePerPage);
+		doPage();
+	});
+
 	$("#first_grid-pager").click(function(){
 		$("#currentPageNo").val("1");
 		doPage();

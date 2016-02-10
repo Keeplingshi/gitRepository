@@ -65,9 +65,9 @@
 	        content: '${pageContext.request.contextPath}/user/userAdd',
 	        end: function(){
 				//默认加载用户列表
-				$.post("${pageContext.request.contextPath}/user/userList", function(result){
-					$("#content_page").html(result);
-				});
+	    		$("#formId").ajaxSubmit(function(data){
+	        	 	$("#content_page").html(data);
+	    		});
 	        }
 	    });
 	});
@@ -82,10 +82,10 @@
 	        area : ['380px' , '280px'],
 	        content: '${pageContext.request.contextPath}/user/userEdit/'+userId,
 	        end: function(){
-				//默认加载用户列表
-				$.post("${pageContext.request.contextPath}/user/userList", function(result){
-					$("#content_page").html(result);
-				});
+	        	//默认加载用户列表
+	        	$("#formId").ajaxSubmit(function(data){
+	        	 	$("#content_page").html(data);
+	    		});
 	        }
 	    });
 	}
@@ -113,9 +113,9 @@
 			$.post("${pageContext.request.contextPath}/user/delete/"+userId, function(result){
 				if(result=='success'){
 					//默认加载用户列表
-					$.post("${pageContext.request.contextPath}/user/userList", function(result){
-						$("#content_page").html(result);
-					});
+		        	$("#formId").ajaxSubmit(function(data){
+		        	 	$("#content_page").html(data);
+		    		});
 					parent.layer.msg('删除成功', {
 	     		        time: 1500//1.5s后自动关闭
 	     		    });

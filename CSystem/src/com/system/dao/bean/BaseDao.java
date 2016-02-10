@@ -165,13 +165,17 @@ public class BaseDao<T> implements IBaseDao<T> {
 		Projection projection=criteriaImpl.getProjection();
 		//每页显示几条
 		int pagePerSize=pageInfo.getSizePerPage();
+
 		//计算总条目数
 		int totalCount=((Long)criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
-		//起始序号
-		int startIndex=(pageInfo.getCurrentPageNo()-1)*pagePerSize;
-		
 		//计算分页数
 		pageInfo.setTotalPages((int)Math.ceil(((double)totalCount/pagePerSize)));
+		
+		if(pageInfo.getCurrentPageNo()>pageInfo.getTotalPages()){
+			pageInfo.setCurrentPageNo(pageInfo.getTotalPages());
+		}
+		//起始序号
+		int startIndex=(pageInfo.getCurrentPageNo()-1)*pagePerSize;
 		
 		criteria.setProjection(projection);
 		if(projection==null){
