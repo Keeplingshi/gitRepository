@@ -139,6 +139,20 @@ public class UserService extends BaseService<User> implements IUserService{
 		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
 		return userDomains;
 	}
-	
+
+	@Override
+	public boolean doDeleteUsersByIds(String[] ids) throws Exception {
+		// TODO Auto-generated method stub
+		
+		boolean b=false;
+		for(String id:ids){
+			b=super.doDeleteById(id);
+			if(!b){
+				return false;
+			}
+		}
+		
+		return b;
+	}
 	
 }

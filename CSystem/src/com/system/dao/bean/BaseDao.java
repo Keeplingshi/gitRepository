@@ -75,7 +75,6 @@ public class BaseDao<T> implements IBaseDao<T> {
 		}
 		Session session=getSession();
 		T t=(T)session.get(entityClass, id);
-		//this.closeSession(session);
         return t;
 	}
 
@@ -89,10 +88,8 @@ public class BaseDao<T> implements IBaseDao<T> {
 			session.flush();
 		}catch(Exception e){
 			e.printStackTrace();
-			//this.closeSession(session);
 			return false;
 		}
-		//this.closeSession(session);
 		
 		return true;
 	}

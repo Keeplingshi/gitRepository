@@ -48,6 +48,14 @@ public interface IUserService extends IBaseService<User>{
 	public boolean doDeleteUserById(String id) throws Exception;
 	
 	/**
+	 * 删除多个用户
+	 * @param ids
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doDeleteUsersByIds(String[] ids)throws Exception;
+	
+	/**
 	 * 验证用户名密码，如果通过，返回UserDomain，不通过，返回null
 	 * @param username
 	 * @param password
