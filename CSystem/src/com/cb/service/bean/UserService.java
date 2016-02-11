@@ -165,5 +165,25 @@ public class UserService extends BaseService<User> implements IUserService{
 		
 		return b;
 	}
+
+	/**
+	 * @see IUserService#doSearchUserPageList(PageInfo, Integer, String)
+	 */
+	@Override
+	public List<UserDomain> doSearchUserPageList(PageInfo pageInfo,
+			Integer authority, String searchText) throws Exception {
+		// TODO Auto-generated method stub
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
+		if(authority!=null){
+			detachedCriteria.add(Restrictions.eq("authority", authority));
+		}
+		
+		List<User> userList=super.doGetPageList(detachedCriteria, pageInfo);
+		
+		@SuppressWarnings("unchecked")
+		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
+		return userDomains;
+	}
 	
 }

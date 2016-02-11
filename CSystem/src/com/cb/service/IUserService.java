@@ -37,6 +37,16 @@ public interface IUserService extends IBaseService<User>{
 	public List<UserDomain> doGetUserPageList(PageInfo pageInfo)throws Exception;
 	
 	/**
+	 * 根据查询条件返回用户列表
+	 * @param pageInfo
+	 * @param authority
+	 * @param searchText
+	 * @return
+	 * @throws Exception
+	 */
+	public List<UserDomain> doSearchUserPageList(PageInfo pageInfo,Integer authority,String searchText)throws Exception;
+	
+	/**
 	 * 保存用户
 	 * @param userDomain
 	 * @return

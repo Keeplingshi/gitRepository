@@ -11,8 +11,18 @@
 	<span class="input-icon" style="margin: 5px;">
 		<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" /> 
 		<i class="icon-search nav-search-icon"></i>
-	</span>
-
+	</span> 
+	
+	<label style="margin-left: 30px;">权限：</label>
+	<select id="authority_select_id" style="width: 100px;">
+		<option value="" selected="selected">选择</option>
+		<option value="0">0</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+	</select>
+	
 	<input id="userDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
 	<input id="userAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 	<input id="userQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
@@ -60,6 +70,19 @@
 
 <script type="text/javascript">
 
+	$(function(){
+		$("#authority_select_id option[value='${authority}']").attr("selected",true);
+	});
+
+	$("#authority_select_id").change(function(){
+		var authority_value=$(this).children('option:selected').val();
+
+		//默认加载用户列表
+		$.post("${pageContext.request.contextPath}/user/userSearchList?authority="+authority_value, function(result){
+			$("#content_page").html(result);
+		});
+	});
+
 	//新增用户按钮
 	$("#userAddButton").click(function(){
 	    parent.layer.open({
@@ -77,6 +100,7 @@
 	    });
 	});
 	
+	//多选删除
 	$("#userDeleteButton").click(function(){
 		var checkBoxs=$("table tbody input:checkbox");
 		var userIds=new Array();
@@ -184,6 +208,7 @@
 		
 	}
 
+	//点击表格标题栏，选中所有checkbox框
 	$('table th input:checkbox').on('click' , function(){
 		
 		var that=this;		

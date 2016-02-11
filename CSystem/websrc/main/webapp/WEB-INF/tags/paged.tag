@@ -73,7 +73,6 @@
 
 	$("#pg-selbox").change(function(){
 		var sizePerPage=$(this).children('option:selected').val();
-		console.info(sizePerPage);
 		
 		$("#sizePerPage").val(sizePerPage);
 		doPage();
