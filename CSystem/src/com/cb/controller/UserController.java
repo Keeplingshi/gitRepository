@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cb.domain.RoleDomain;
 import com.cb.domain.UserDomain;
 import com.cb.service.IRoleService;
 import com.cb.service.IUserService;
@@ -55,7 +56,7 @@ public class UserController {
 	public String getUserList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model) throws Exception{
 		//采用分页方式获取
-		List<UserDomain> userList=userService.doGetUserPageList(pageInfo);
+		List<UserDomain> userList=userService.doGetUserPageList(pageInfo);		
 		model.addAttribute("userList", userList);
 		
 		return "/user/userList";
