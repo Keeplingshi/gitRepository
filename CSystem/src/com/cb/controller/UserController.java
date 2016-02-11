@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.UserDomain;
+import com.cb.service.IRoleService;
 import com.cb.service.IUserService;
 import com.cb.util.Consts;
 import com.system.util.PageInfo;
@@ -32,6 +33,7 @@ public class UserController {
 
 	//userService服务层
 	@Resource private IUserService userService;
+	@Resource private IRoleService roleService;
 	
 	/**
 	 * 过滤起前台pageInfo

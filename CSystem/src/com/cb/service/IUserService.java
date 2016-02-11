@@ -38,9 +38,9 @@ public interface IUserService extends IBaseService<User>{
 	
 	/**
 	 * 根据查询条件返回用户列表
-	 * @param pageInfo
-	 * @param authority
-	 * @param searchText
+	 * @param pageInfo 分页
+	 * @param authority 权限
+	 * @param searchText 关键字
 	 * @return
 	 * @throws Exception
 	 */

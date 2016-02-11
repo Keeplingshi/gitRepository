@@ -3,8 +3,6 @@ package com.system.service.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,17 +20,19 @@ import com.system.util.PageInfo;
  */
 @Service
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
-public class BaseService<T> implements IBaseService<T>{
+public abstract class BaseService<T> implements IBaseService<T>{
 
-	@Resource private BaseDao<T> baseDao;
+	//@Resource private BaseDao<T> baseDao;
 
+	public abstract BaseDao<T> getBaseDao();  
+	
 	/**
 	 * @see IBaseService#doGetById(Serializable)
 	 */
 	@Override
 	public T doGetById(Serializable id) throws Exception {
 		// TODO Auto-generated method stub
-		return baseDao.getById(id);
+		return getBaseDao().getById(id);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class BaseService<T> implements IBaseService<T>{
 	@Override
 	public boolean doSave(T t) throws Exception {
 		// TODO Auto-generated method stub
-		return baseDao.save(t);
+		return getBaseDao().save(t);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class BaseService<T> implements IBaseService<T>{
 	@Override
 	public boolean doUpdate(T t) throws Exception {
 		// TODO Auto-generated method stub
-		return baseDao.update(t);
+		return getBaseDao().update(t);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class BaseService<T> implements IBaseService<T>{
 	public boolean doDeleteById(Serializable id) {
 		// TODO Auto-generated method stub
 		try{
-			baseDao.deleteById(id);
+			getBaseDao().deleteById(id);
 		}catch(Exception e){
 			return false;
 		}
@@ -74,7 +74,7 @@ public class BaseService<T> implements IBaseService<T>{
 	@Override
 	public List<T> doGetFilterList(DetachedCriteria detachedCriteria) throws Exception {
 		// TODO Auto-generated method stub
-		return baseDao.getFilterList(detachedCriteria);
+		return getBaseDao().getFilterList(detachedCriteria);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class BaseService<T> implements IBaseService<T>{
 	public List<T> doGetPageList(DetachedCriteria detachedCriteria,
 			PageInfo pageInfo) throws Exception {
 		// TODO Auto-generated method stub
-		return baseDao.getPageList(detachedCriteria, pageInfo);
+		return getBaseDao().getPageList(detachedCriteria, pageInfo);
 	}
 
 }

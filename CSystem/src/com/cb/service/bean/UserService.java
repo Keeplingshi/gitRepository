@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cb.dao.bean.UserDao;
+import com.cb.dao.IUserDao;
 import com.cb.domain.UserDomain;
 import com.cb.entity.User;
 import com.cb.service.IUserService;
+import com.system.dao.bean.BaseDao;
 import com.system.service.bean.BaseService;
 import com.system.util.CopyUtil;
 import com.system.util.PageInfo;
@@ -28,7 +29,7 @@ import com.system.util.PageInfo;
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
 public class UserService extends BaseService<User> implements IUserService{
 
-	@Resource private UserDao userDao;
+	@Resource private IUserDao userDao;
 	
 	/**
 	 * @see IUserService#doGetUserList()
@@ -187,6 +188,16 @@ public class UserService extends BaseService<User> implements IUserService{
 		@SuppressWarnings("unchecked")
 		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
 		return userDomains;
+	}
+
+	/**
+	 * 返回基类baseDao
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public BaseDao<User> getBaseDao() {
+		// TODO Auto-generated method stub
+		return (BaseDao<User>) userDao;
 	}
 	
 }
