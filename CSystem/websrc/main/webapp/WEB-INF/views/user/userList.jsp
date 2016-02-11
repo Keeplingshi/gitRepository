@@ -7,79 +7,85 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 
-<div class="breadcrumbs" id="userListToolbar">
-	<span class="input-icon" style="margin: 5px;">
-		<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" /> 
-		<i class="icon-search nav-search-icon"></i>
-	</span> 
-	
-	<label style="margin-left: 30px;">权限：</label>
-	<select id="authority_select_id" style="width: 100px;">
-		<option value="" selected="selected">选择</option>
-		<option value="0">0</option>
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-	</select>
-	
-	<input id="userDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
-	<input id="userAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
-	<input id="userQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
-</div>
-<form id="formId" modelAttribute="pageInfo" action="${pageContext.request.contextPath}/user/userList" method="post">
-<div class="table-responsive">
-	<table id="sample-table-1" class="table table-striped table-bordered table-hover">
-		<thead>
-			<tr>
-				<th class="center">
-					<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
-				</th>
-				<th>账号</th>
-				<th>权限</th>
-				<th>操作</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<c:forEach items="${userList }" var="userDomain">
+<form id="formId" modelAttribute="pageInfo" action="${pageContext.request.contextPath}/user/userSearchList" method="post">
+	<input type="hidden" id="authority" name="authority" value="${authority }" />
+	<div class="breadcrumbs" id="userListToolbar">
+		<span class="input-icon" style="margin: 5px;">
+			<input type="text" id="nav-search-input" name="searchText" placeholder="Search ..." class="nav-search-input" autocomplete="off" value="${searchText }"/> 
+			<i class="icon-search nav-search-icon"></i>
+		</span> 
+		
+		<label style="margin-left: 30px;">权限：</label>
+		<select id="authority_select_id" style="width: 100px;">
+			<option value="" selected="selected">选择</option>
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+		
+		<input id="userDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
+		<input id="userAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
+		<input id="userQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
+	</div>
+	<div class="table-responsive">
+		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+			<thead>
 				<tr>
-					<%-- <input type="hidden" id="userId" value="${userDomain.id }"/> --%>
-					<td class="center">
-					<c:if test="${userDomain.authority!=0}">
-						<label> <input type="checkbox" class="ace" value="${userDomain.id }"/> <span class="lbl"></span></label>
-					</c:if>
-					</td>
-					<td>${userDomain.username }</td>
-					<td>${userDomain.authority}</td>
-
-					<td style="width: 260px">
-						<input type="button" class="btn_list_view" value="查看" onclick="viewUser('${userDomain.id }')"/> 
-						<c:if test="${userDomain.authority!=0}">
-							<input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/> 
-							<input type="button" class="btn_list_delete" value="删除" onclick="deleteUser('${userDomain.id }')"/>
-						</c:if>
-					</td>
+					<th class="center">
+						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
+					</th>
+					<th>账号</th>
+					<th>权限</th>
+					<th>操作</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<div id="pageId"><tags:paged /></div>
-</div>
+			</thead>
+	
+			<tbody>
+				<c:forEach items="${userList }" var="userDomain">
+					<tr>
+						<%-- <input type="hidden" id="userId" value="${userDomain.id }"/> --%>
+						<td class="center">
+						<c:if test="${userDomain.authority!=0}">
+							<label> <input type="checkbox" class="ace" value="${userDomain.id }"/> <span class="lbl"></span></label>
+						</c:if>
+						</td>
+						<td>${userDomain.username }</td>
+						<td>${userDomain.authority}</td>
+	
+						<td style="width: 260px">
+							<input type="button" class="btn_list_view" value="查看" onclick="viewUser('${userDomain.id }')"/> 
+							<c:if test="${userDomain.authority!=0}">
+								<input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/> 
+								<input type="button" class="btn_list_delete" value="删除" onclick="deleteUser('${userDomain.id }')"/>
+							</c:if>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<div id="pageId"><tags:paged /></div>
+	</div>
 </form>
 
 <script type="text/javascript">
 
-	$(function(){
+	//使权限下拉框默认选择
+ 	$(function(){
 		$("#authority_select_id option[value='${authority}']").attr("selected",true);
-	});
+	}); 
 
+ 	//下拉框选择后给隐藏域赋值
 	$("#authority_select_id").change(function(){
 		var authority_value=$(this).children('option:selected').val();
-
-		//默认加载用户列表
-		$.post("${pageContext.request.contextPath}/user/userSearchList?authority="+authority_value, function(result){
-			$("#content_page").html(result);
+		$("#authority").val(authority_value);
+	});
+	
+ 	//查询
+	$("#userQueryButton").click(function(){
+		$("#formId").ajaxSubmit(function(data){
+    	 	$("#content_page").html(data);
 		});
 	});
 

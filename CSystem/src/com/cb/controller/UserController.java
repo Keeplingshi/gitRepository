@@ -76,6 +76,7 @@ public class UserController {
 		List<UserDomain> userList=userService.doSearchUserPageList(pageInfo, authority, searchText);
 		model.addAttribute("userList", userList);
 		model.addAttribute("authority", authority);
+		model.addAttribute("searchText", searchText);
 		
 		return "/user/userList";
 	}

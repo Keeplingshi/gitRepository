@@ -178,6 +178,9 @@ public class UserService extends BaseService<User> implements IUserService{
 		if(authority!=null){
 			detachedCriteria.add(Restrictions.eq("authority", authority));
 		}
+		if(searchText!=null&&searchText!=""){
+			detachedCriteria.add(Restrictions.like("username", "%"+searchText+"%"));
+		}
 		
 		List<User> userList=super.doGetPageList(detachedCriteria, pageInfo);
 		
