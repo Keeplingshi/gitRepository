@@ -2,7 +2,6 @@ package com.cb.service;
 
 import java.util.List;
 
-import com.cb.domain.RoleDomain;
 import com.cb.entity.Role;
 import com.system.service.IBaseService;
 
@@ -13,22 +12,22 @@ public interface IRoleService extends IBaseService<Role>{
 	 * @return
 	 * @throws Exception
 	 */
-	public RoleDomain doGetRoleById(String id)throws Exception;
+	public Role doGetRoleById(String id)throws Exception;
 	
 	/**
 	 * 获取角色列表
 	 * @return
 	 * @throws Exception
 	 */
-	public List<RoleDomain> doGetRoleList() throws Exception;
+	public List<Role> doGetRoleList() throws Exception;
 	
 	/**
 	 * 保存角色
-	 * @param RoleDomain
+	 * @param Role
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doSaveRole(RoleDomain roleDomain) throws Exception;
+	public boolean doSaveRole(Role role) throws Exception;
 	
 	/**
 	 * 删除角色

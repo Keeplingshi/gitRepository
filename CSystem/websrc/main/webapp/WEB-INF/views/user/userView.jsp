@@ -24,7 +24,7 @@
 		<tr>
 			<td class="lesta-150">权限：</td>
 			<td>
-				${userDomain.authority }
+				${userDomain.username }
 			</td>
 		</tr>
 		

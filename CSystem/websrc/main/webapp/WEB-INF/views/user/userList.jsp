@@ -13,16 +13,14 @@
 		<span class="input-icon" style="margin: 5px;">
 			<input type="text" id="nav-search-input" name="searchText" placeholder="Search ..." class="nav-search-input" autocomplete="off" value="${searchText }"/> 
 			<i class="icon-search nav-search-icon"></i>
-		</span> 
+		</span>
 		
-		<label style="margin-left: 30px;">权限：</label>
+		<label style="margin-left: 30px;">角色：</label>
 		<select id="authority_select_id" style="width: 100px;">
 			<option value="" selected="selected">选择</option>
-			<option value="0">0</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
+			<c:forEach items="${roleList }" var="roleDomain">
+				<option value="${roleDomain.id }">${roleDomain.name}</option>
+			</c:forEach>
 		</select>
 		
 		<input id="userDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
@@ -37,7 +35,7 @@
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
 					<th>账号</th>
-					<th>权限</th>
+					<th>角色</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -47,16 +45,16 @@
 					<tr>
 						<%-- <input type="hidden" id="userId" value="${userDomain.id }"/> --%>
 						<td class="center">
-						<c:if test="${userDomain.authority!=0}">
+						<c:if test="${userDomain.username!=''}">
 							<label> <input type="checkbox" class="ace" value="${userDomain.id }"/> <span class="lbl"></span></label>
 						</c:if>
 						</td>
 						<td>${userDomain.username }</td>
-						<td>${userDomain.authority}</td>
+						<td>${userDomain.username}</td>
 	
 						<td style="width: 260px">
 							<input type="button" class="btn_list_view" value="查看" onclick="viewUser('${userDomain.id }')"/> 
-							<c:if test="${userDomain.authority!=0}">
+							<c:if test="${userDomain.username!=''}">
 								<input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/> 
 								<input type="button" class="btn_list_delete" value="删除" onclick="deleteUser('${userDomain.id }')"/>
 							</c:if>

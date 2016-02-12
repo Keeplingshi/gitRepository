@@ -14,25 +14,25 @@ public class CopyUtil {
 
 	/**
 	 * list拷贝函数，将List<poObj> poList转换为List<voObj> voList
-	 * @param poList 要转换的list
-	 * @param voClass 希望转换成的对象
+	 * @param entityList 要转换的list
+	 * @param domainClazz 希望转换成的对象
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static List copyList (List <? extends Object> poList , Class voClass){
+	public static List copyList (List <? extends Object> entityList , Class domainClazz){
 		
-		List voList=new ArrayList();	
-		Object voObj =null;
-		for(Object poObj:poList){
+		List domainList=new ArrayList();	
+		Object domainObj =null;
+		for(Object entityObj:entityList){
 			try {
-				voObj = voClass.newInstance();
+				domainObj = domainClazz.newInstance();
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
-			BeanUtils.copyProperties(poObj, voObj);
-			voList.add(voObj);
+			BeanUtils.copyProperties(entityObj, domainObj);
+			domainList.add(domainObj);
 		}
-		return voList;
+		return domainList;
 	}
 	
 }

@@ -1,9 +1,12 @@
 package com.cb.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -20,7 +23,8 @@ public class User {
 	private String id;	//id
 	private String username;	//用户名
 	private String password;	//密码
-	private Integer authority;	//权限
+	private Role role;	//角色
+	//private String roleId;
 	
 	public User(){
 		
@@ -56,13 +60,36 @@ public class User {
 		this.password = password;
 	}
 
-	@Column(name = "AUTHORITY", nullable = false, length = 50)
-	public Integer getAuthority() {
-		return authority;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "ROLEID")
+	public Role getRole() {
+		return role;
 	}
 
-	public void setAuthority(Integer authority) {
-		this.authority = authority;
+	public void setRole(Role role) {
+		this.role = role;
 	}
+	
+	
+
+//	@Column(name = "ROLEID", nullable = false, length = 100)
+//	public String getRoleId() {
+//		return roleId;
+//	}
+//
+//	public void setRoleId(String roleId) {
+//		this.roleId = roleId;
+//	}
+	
+	
+
+//	@Column(name = "AUTHORITY", nullable = false, length = 50)
+//	public Integer getAuthority() {
+//		return authority;
+//	}
+//
+//	public void setAuthority(Integer authority) {
+//		this.authority = authority;
+//	}
 	
 }

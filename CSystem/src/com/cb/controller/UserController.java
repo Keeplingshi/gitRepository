@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cb.domain.RoleDomain;
-import com.cb.domain.UserDomain;
+import com.cb.entity.Role;
+import com.cb.entity.User;
 import com.cb.service.IRoleService;
 import com.cb.service.IUserService;
 import com.cb.util.Consts;
@@ -56,8 +56,11 @@ public class UserController {
 	public String getUserList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model) throws Exception{
 		//采用分页方式获取
-		List<UserDomain> userList=userService.doGetUserPageList(pageInfo);		
+		List<User> userList=userService.doGetUserPageList(pageInfo);
+		List<Role> roleList=roleService.doGetRoleList();
+		
 		model.addAttribute("userList", userList);
+		model.addAttribute("roleList", roleList);
 		
 		return "/user/userList";
 	}
@@ -76,7 +79,7 @@ public class UserController {
 			,BindingResult bindingResult,Model model,Integer authority,String searchText)throws Exception{
 		
 		//采用分页方式获取
-		List<UserDomain> userList=userService.doSearchUserPageList(pageInfo, authority, searchText);
+		List<User> userList=userService.doSearchUserPageList(pageInfo, authority, searchText);
 		model.addAttribute("userList", userList);
 		model.addAttribute("authority", authority);
 		model.addAttribute("searchText", searchText);
@@ -94,8 +97,8 @@ public class UserController {
 	@RequestMapping("/userView/{id}")
 	public String doUserView(Model model,@PathVariable String id) throws Exception{
 		
-		//获取UserDomain信息
-		UserDomain userDomain=userService.doGetUserById(id);
+		//获取User信息
+		User userDomain=userService.doGetUserById(id);
 		model.addAttribute("userDomain", userDomain);
 		
 		return "/user/userView";
@@ -124,7 +127,7 @@ public class UserController {
 	public String doUserEdit(Model model,@PathVariable String id)throws Exception{
 
 		//获取单条Domain信息
-		UserDomain userDomain=userService.doGetUserById(id);
+		User userDomain=userService.doGetUserById(id);
 		model.addAttribute("userDomain", userDomain);
 		
 		return "/user/userEdit";
@@ -139,7 +142,7 @@ public class UserController {
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public String doSave(@Valid @ModelAttribute("domain") UserDomain domain,
+	public String doSave(@Valid @ModelAttribute("domain") User domain,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;

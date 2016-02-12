@@ -6,18 +6,15 @@ import javax.annotation.Resource;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.dao.IUserDao;
-import com.cb.domain.UserDomain;
 import com.cb.entity.User;
 import com.cb.service.IUserService;
 import com.system.dao.bean.BaseDao;
 import com.system.service.bean.BaseService;
-import com.system.util.CopyUtil;
 import com.system.util.PageInfo;
 
 /**
@@ -35,27 +32,21 @@ public class UserService extends BaseService<User> implements IUserService{
 	 * @see IUserService#doGetUserList()
 	 */
 	@Override
-	public List<UserDomain> doGetUserList() throws Exception {
+	public List<User> doGetUserList() throws Exception {
 		// TODO Auto-generated method stub
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
 		List<User> userList=super.doGetFilterList(detachedCriteria);
 		
-		@SuppressWarnings("unchecked")
-		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
-		
-		return userDomains;
+		return userList;
 	}
 
 	/**
 	 * @see IUserService#doSaveUser(UserDomain)
 	 */
 	@Override
-	public boolean doSaveUser(UserDomain userDomain) throws Exception {
+	public boolean doSaveUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		
-		User user=new User();
-		BeanUtils.copyProperties(userDomain,user);
 		
 		//判断是否为新用户，如果是，新增，否则更新
 		if(user.getId()==null){
@@ -69,12 +60,10 @@ public class UserService extends BaseService<User> implements IUserService{
 	 * @see IUserService#doGetUserById(String)
 	 */
 	@Override
-	public UserDomain doGetUserById(String id) throws Exception {
+	public User doGetUserById(String id) throws Exception {
 		// TODO Auto-generated method stub
-		User user=super.doGetById(id);
-		UserDomain userDomain=new UserDomain();
-		BeanUtils.copyProperties(user, userDomain);
-		return userDomain;
+		
+		return super.doGetById(id);
 	}
 
 	/**
@@ -116,7 +105,7 @@ public class UserService extends BaseService<User> implements IUserService{
 	 * @see IUserService#doGetUserByUsername(String)
 	 */
 	@Override
-	public UserDomain doGetUserByUsername(String username) throws Exception {
+	public User doGetUserByUsername(String username) throws Exception {
 		// TODO Auto-generated method stub
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
 		detachedCriteria.add(Restrictions.eq("username", username.trim()));
@@ -126,9 +115,7 @@ public class UserService extends BaseService<User> implements IUserService{
 		//如果有结果，username是唯一的
 		if(userList.size()==1){
 			User user=userList.get(0);
-			UserDomain userDomain=new UserDomain();
-			BeanUtils.copyProperties(user, userDomain);
-			return userDomain;
+			return user;
 		}
 		
 		return null;
@@ -138,15 +125,13 @@ public class UserService extends BaseService<User> implements IUserService{
 	 * @see IUserService#doGetPageList(DetachedCriteria, PageInfo)
 	 */
 	@Override
-	public List<UserDomain> doGetUserPageList(PageInfo pageInfo)
+	public List<User> doGetUserPageList(PageInfo pageInfo)
 			throws Exception {
 		// TODO Auto-generated method stub
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
 		List<User> userList=super.doGetPageList(detachedCriteria, pageInfo);
 		
-		@SuppressWarnings("unchecked")
-		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
-		return userDomains;
+		return userList;
 	}
 
 	/**
@@ -171,7 +156,7 @@ public class UserService extends BaseService<User> implements IUserService{
 	 * @see IUserService#doSearchUserPageList(PageInfo, Integer, String)
 	 */
 	@Override
-	public List<UserDomain> doSearchUserPageList(PageInfo pageInfo,
+	public List<User> doSearchUserPageList(PageInfo pageInfo,
 			Integer authority, String searchText) throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -185,9 +170,7 @@ public class UserService extends BaseService<User> implements IUserService{
 		
 		List<User> userList=super.doGetPageList(detachedCriteria, pageInfo);
 		
-		@SuppressWarnings("unchecked")
-		List<UserDomain> userDomains=CopyUtil.copyList(userList, UserDomain.class);
-		return userDomains;
+		return userList;
 	}
 
 	/**
