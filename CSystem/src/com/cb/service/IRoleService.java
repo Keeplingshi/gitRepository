@@ -3,9 +3,8 @@ package com.cb.service;
 import java.util.List;
 
 import com.cb.entity.Role;
-import com.system.service.IBaseService;
 
-public interface IRoleService extends IBaseService<Role>{
+public interface IRoleService{
 	/**
 	 * 通过id获取角色
 	 * @param id

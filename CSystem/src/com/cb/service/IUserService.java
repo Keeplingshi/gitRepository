@@ -3,7 +3,6 @@ package com.cb.service;
 import java.util.List;
 
 import com.cb.entity.User;
-import com.system.service.IBaseService;
 import com.system.util.PageInfo;
 
 /**
@@ -11,7 +10,7 @@ import com.system.util.PageInfo;
  * @author chen
  *
  */
-public interface IUserService extends IBaseService<User>{
+public interface IUserService{
 
 	/**
 	 * 通过id获取用户

@@ -12,12 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cb.dao.IRoleDao;
 import com.cb.entity.Role;
 import com.cb.service.IRoleService;
-import com.system.dao.bean.BaseDao;
-import com.system.service.bean.BaseService;
 
 @Service
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
-public class RoleService extends BaseService<Role> implements IRoleService{
+public class RoleService implements IRoleService{
 
 	@Resource private IRoleDao roleDao;
 
@@ -27,7 +25,7 @@ public class RoleService extends BaseService<Role> implements IRoleService{
 	@Override
 	public Role doGetRoleById(String id) throws Exception {
 		// TODO Auto-generated method stub
-		return super.doGetById(id);
+		return roleDao.getById(id);
 	}
 
 	/**
@@ -37,7 +35,7 @@ public class RoleService extends BaseService<Role> implements IRoleService{
 	public List<Role> doGetRoleList() throws Exception {
 		// TODO Auto-generated method stub
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(Role.class);
-		List<Role> roleList=super.doGetFilterList(detachedCriteria);
+		List<Role> roleList=roleDao.getFilterList(detachedCriteria);
 		
 		return roleList;
 	}
@@ -50,9 +48,9 @@ public class RoleService extends BaseService<Role> implements IRoleService{
 		// TODO Auto-generated method stub
 		
 		if(role.getId()==null){
-			return super.doSave(role);
+			return roleDao.save(role);
 		}else{
-			return super.doUpdate(role);
+			return roleDao.update(role);
 		}
 	}
 
@@ -62,17 +60,7 @@ public class RoleService extends BaseService<Role> implements IRoleService{
 	@Override
 	public boolean doDeleteRoleById(String id) throws Exception {
 		// TODO Auto-generated method stub
-		return super.doDeleteById(id);
-	}
-
-	/**
-	 * 返回基类baseDao
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public BaseDao<Role> getBaseDao() {
-		// TODO Auto-generated method stub
-		return (BaseDao<Role>) roleDao;
+		return roleDao.deleteById(id);
 	}
 	
 }

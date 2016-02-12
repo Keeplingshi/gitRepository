@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cb.dao.IUserDao;
 import com.cb.entity.User;
 import com.cb.service.IUserService;
-import com.system.dao.bean.BaseDao;
-import com.system.service.bean.BaseService;
 import com.system.util.PageInfo;
 
 /**
@@ -24,7 +22,7 @@ import com.system.util.PageInfo;
  */
 @Service
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Throwable.class)
-public class UserService extends BaseService<User> implements IUserService{
+public class UserService implements IUserService{
 
 	@Resource private IUserDao userDao;
 	
@@ -36,7 +34,7 @@ public class UserService extends BaseService<User> implements IUserService{
 		// TODO Auto-generated method stub
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
-		List<User> userList=super.doGetFilterList(detachedCriteria);
+		List<User> userList=userDao.getFilterList(detachedCriteria);
 		
 		return userList;
 	}
@@ -50,9 +48,9 @@ public class UserService extends BaseService<User> implements IUserService{
 		
 		//判断是否为新用户，如果是，新增，否则更新
 		if(user.getId()==null){
-			return super.doSave(user);
+			return userDao.save(user);
 		}else{
-			return super.doUpdate(user);
+			return userDao.update(user);
 		}
 	}
 
@@ -63,7 +61,7 @@ public class UserService extends BaseService<User> implements IUserService{
 	public User doGetUserById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		
-		return super.doGetById(id);
+		return userDao.getById(id);
 	}
 
 	/**
@@ -73,7 +71,7 @@ public class UserService extends BaseService<User> implements IUserService{
 	public boolean doDeleteUserById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		
-		return super.doDeleteById(id);
+		return userDao.deleteById(id);
 	}
 
 	/**
@@ -87,7 +85,7 @@ public class UserService extends BaseService<User> implements IUserService{
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
 		detachedCriteria.add(Restrictions.eq("username", username.trim()));
 		
-		List<User> userList=super.doGetFilterList(detachedCriteria);
+		List<User> userList=userDao.getFilterList(detachedCriteria);
 		
 		//如果有结果，username是唯一的
 		if(userList.size()==1){
@@ -110,7 +108,7 @@ public class UserService extends BaseService<User> implements IUserService{
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
 		detachedCriteria.add(Restrictions.eq("username", username.trim()));
 		
-		List<User> userList=super.doGetFilterList(detachedCriteria);
+		List<User> userList=userDao.getFilterList(detachedCriteria);
 		
 		//如果有结果，username是唯一的
 		if(userList.size()==1){
@@ -129,7 +127,7 @@ public class UserService extends BaseService<User> implements IUserService{
 			throws Exception {
 		// TODO Auto-generated method stub
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
-		List<User> userList=super.doGetPageList(detachedCriteria, pageInfo);
+		List<User> userList=userDao.getPageList(detachedCriteria, pageInfo);
 		
 		return userList;
 	}
@@ -143,7 +141,7 @@ public class UserService extends BaseService<User> implements IUserService{
 		
 		boolean b=false;
 		for(String id:ids){
-			b=super.doDeleteById(id);
+			b=userDao.deleteById(id);
 			if(!b){
 				return false;
 			}
@@ -168,19 +166,9 @@ public class UserService extends BaseService<User> implements IUserService{
 			detachedCriteria.add(Restrictions.like("username", "%"+searchText+"%"));
 		}
 		
-		List<User> userList=super.doGetPageList(detachedCriteria, pageInfo);
+		List<User> userList=userDao.getPageList(detachedCriteria, pageInfo);
 		
 		return userList;
 	}
 
-	/**
-	 * 返回基类baseDao
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public BaseDao<User> getBaseDao() {
-		// TODO Auto-generated method stub
-		return (BaseDao<User>) userDao;
-	}
-	
 }

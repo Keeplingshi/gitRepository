@@ -14,7 +14,6 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.internal.CriteriaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.system.dao.IBaseDao;
@@ -128,25 +127,31 @@ public class BaseDao<T> implements IBaseDao<T> {
 	 * @see IBaseDao#delete(Object)
 	 */
 	@Override
-	public void delete(T t) {
+	public boolean delete(T t) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
-		session.delete(t);
-		session.flush();
-		//this.closeSession(session);
+		try{
+			session.delete(t);
+			session.flush();			
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	/**
 	 * @see IBaseDao#deleteById(Serializable)
 	 */
 	@Override
-	public void deleteById(Serializable id) {
+	public boolean deleteById(Serializable id) {
 		// TODO Auto-generated method stub
 		
 		T t=getById(id);
 		if(t!=null){
-			delete(t);
+			return delete(t);
 		}
+		return false;
 	}
 
 	/**

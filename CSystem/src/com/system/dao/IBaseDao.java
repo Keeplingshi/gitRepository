@@ -34,13 +34,13 @@ public interface IBaseDao<T> {
 	 * 根据实体删除
 	 * @param t
 	 */
-	public void delete(T t);
+	public boolean delete(T t);
 	
 	/**
 	 * 根据id删除实体
 	 * @param id
 	 */
-	public void deleteById(Serializable id);
+	public boolean deleteById(Serializable id);
 	
 	/**
 	 * 根据过滤条件查询所有实体，并返回list
