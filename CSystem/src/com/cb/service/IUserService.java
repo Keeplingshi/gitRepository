@@ -42,7 +42,7 @@ public interface IUserService{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<User> doSearchUserPageList(PageInfo pageInfo,Integer authority,String searchText)throws Exception;
+	public List<User> doSearchUserPageList(PageInfo pageInfo,String roleId,String searchText)throws Exception;
 	
 	/**
 	 * 保存用户

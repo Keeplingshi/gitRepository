@@ -76,12 +76,15 @@ public class UserController {
 	 */
 	@RequestMapping("userSearchList")
 	public String doUserSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,Integer authority,String searchText)throws Exception{
+			,BindingResult bindingResult,Model model,String roleId,String searchText)throws Exception{
 		
 		//采用分页方式获取
-		List<User> userList=userService.doSearchUserPageList(pageInfo, authority, searchText);
+		List<User> userList=userService.doSearchUserPageList(pageInfo, roleId, searchText);
+		List<Role> roleList=roleService.doGetRoleList();
+		
 		model.addAttribute("userList", userList);
-		model.addAttribute("authority", authority);
+		model.addAttribute("roleList", roleList);
+		model.addAttribute("roleId", roleId);
 		model.addAttribute("searchText", searchText);
 		
 		return "/user/userList";
@@ -113,6 +116,9 @@ public class UserController {
 	@RequestMapping("/userAdd")
 	public String doUserAdd(Model model)throws Exception{
 		
+		List<Role> roleList=roleService.doGetRoleList();
+		model.addAttribute("roleList", roleList);
+		
 		return "/user/userAdd";
 	}
 	
@@ -128,6 +134,9 @@ public class UserController {
 
 		//获取单条Domain信息
 		User userDomain=userService.doGetUserById(id);
+		List<Role> roleList=roleService.doGetRoleList();
+		
+		model.addAttribute("roleList", roleList);
 		model.addAttribute("userDomain", userDomain);
 		
 		return "/user/userEdit";

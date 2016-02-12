@@ -22,9 +22,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="lesta-150">权限：</td>
+			<td class="lesta-150">角色：</td>
 			<td>
-				${userDomain.username }
+				${userDomain.role.name }
 			</td>
 		</tr>
 		

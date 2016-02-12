@@ -87,4 +87,16 @@ public abstract class BaseService<T> implements IBaseService<T>{
 		return getBaseDao().getPageList(detachedCriteria, pageInfo);
 	}
 
+	
+	
+//调用时需要在子类加入下面方法
+//	/**
+//	 * 返回基类baseDao
+//	 */
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public BaseDao<User> getBaseDao() {
+//		// TODO Auto-generated method stub
+//		return (BaseDao<User>) userDao;
+//	}
 }

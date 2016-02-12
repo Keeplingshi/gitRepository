@@ -155,12 +155,12 @@ public class UserService implements IUserService{
 	 */
 	@Override
 	public List<User> doSearchUserPageList(PageInfo pageInfo,
-			Integer authority, String searchText) throws Exception {
+			String roleId, String searchText) throws Exception {
 		// TODO Auto-generated method stub
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
-		if(authority!=null){
-			detachedCriteria.add(Restrictions.eq("authority", authority));
+		if(roleId!=null&&roleId!=""){
+			detachedCriteria.add(Restrictions.eq("role.id", roleId));
 		}
 		if(searchText!=null&&searchText!=""){
 			detachedCriteria.add(Restrictions.like("username", "%"+searchText+"%"));
