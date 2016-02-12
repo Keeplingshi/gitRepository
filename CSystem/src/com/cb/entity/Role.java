@@ -27,6 +27,7 @@ public class Role {
 	private String id;	//id
 	private String name;	//角色名称
 	private Integer authority;	//角色权限
+	private String value;	//角色值
 	private Set<User> users = new HashSet<User>(0);
 	
 	@Id
@@ -54,6 +55,14 @@ public class Role {
 	}
 	public void setAuthority(Integer authority) {
 		this.authority = authority;
+	}
+	
+	@Column(name = "VALUE", nullable = false, length = 100)
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
 	}
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "role", fetch = FetchType.LAZY)

@@ -44,9 +44,9 @@ public class ShiroRealm extends AuthorizingRealm {
 			User user = userService.doGetUserByUsername(currentUsername);
 	    	if(null!=user){
 	    		//添加一个角色,不是配置意义上的添加,而是证明该用户拥有admin角色
-	    		simpleAuthorInfo.addRole("admin");
+	    		simpleAuthorInfo.addRole(user.getRole().getValue());
 	    		//添加权限  
-	    		simpleAuthorInfo.addStringPermission("admin:manage");
+	    		simpleAuthorInfo.addStringPermission(user.getRole().getValue()+":"+user.getRole().getAuthority());
 	    		return simpleAuthorInfo;
 	    	}
 		} catch (Exception e) {
@@ -95,7 +95,6 @@ public class ShiroRealm extends AuthorizingRealm {
         Subject currentUser = SecurityUtils.getSubject();  
         if(null != currentUser){  
             Session session = currentUser.getSession();  
-            System.out.println("Session默认超时时间为[" + session.getTimeout() + "]毫秒");  
             if(null != session){  
                 session.setAttribute(key, value);  
             }

@@ -53,7 +53,7 @@ public class LoginController {
             //所以这一步在调用login(token)方法时,它会走到ShiroRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法  
             currentUser.login(token);
             System.out.println("对用户[" + username + "]进行登录验证..验证通过");  
-            resultPageURL = "main";
+            resultPageURL = "/main";
         }catch(UnknownAccountException uae){  
             System.out.println("对用户[" + username + "]进行登录验证..验证未通过,未知账户");  
         }catch(IncorrectCredentialsException ice){  
