@@ -20,19 +20,19 @@ public class RoleService implements IRoleService{
 	@Resource private IRoleDao roleDao;
 
 	/**
-	 * @see IRoleService#doDeleteRoleById(String)
+	 * @see IRoleService#doDeleteById(String)
 	 */
 	@Override
-	public Role doGetRoleById(String id) throws Exception {
+	public Role doGetById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		return roleDao.getById(id);
 	}
 
 	/**
-	 * @see IRoleService#doGetRoleList()
+	 * @see IRoleService#doGetFilterList()
 	 */
 	@Override
-	public List<Role> doGetRoleList() throws Exception {
+	public List<Role> doGetFilterList() throws Exception {
 		// TODO Auto-generated method stub
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(Role.class);
 		List<Role> roleList=roleDao.getFilterList(detachedCriteria);
@@ -41,10 +41,10 @@ public class RoleService implements IRoleService{
 	}
 
 	/**
-	 * @see IRoleService#doSaveRole(Role)
+	 * @see IRoleService#doSave(Role)
 	 */
 	@Override
-	public boolean doSaveRole(Role role) throws Exception {
+	public boolean doSave(Role role) throws Exception {
 		// TODO Auto-generated method stub
 		
 		if(role.getId()==null){
@@ -55,10 +55,10 @@ public class RoleService implements IRoleService{
 	}
 
 	/**
-	 * @see IRoleService#doDeleteRoleById(String)
+	 * @see IRoleService#doDeleteById(String)
 	 */
 	@Override
-	public boolean doDeleteRoleById(String id) throws Exception {
+	public boolean doDeleteById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		return roleDao.deleteById(id);
 	}

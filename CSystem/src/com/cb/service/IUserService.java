@@ -18,21 +18,21 @@ public interface IUserService{
 	 * @return
 	 * @throws Exception
 	 */
-	public User doGetUserById(String id)throws Exception;
+	public User doGetById(String id)throws Exception;
 	
 	/**
 	 * 获取用户列表
 	 * @return
 	 * @throws Exception
 	 */
-	public List<User> doGetUserList() throws Exception;
+	public List<User> doGetFilterList() throws Exception;
 	
 	/**
 	 * 分页查询
 	 * @return
 	 * @throws Exception
 	 */
-	public List<User> doGetUserPageList(PageInfo pageInfo)throws Exception;
+	public List<User> doGetPageList(PageInfo pageInfo)throws Exception;
 	
 	/**
 	 * 根据查询条件返回用户列表
@@ -50,7 +50,7 @@ public interface IUserService{
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doSaveUser(User user) throws Exception;
+	public boolean doSave(User user) throws Exception;
 	
 	/**
 	 * 删除用户
@@ -58,7 +58,7 @@ public interface IUserService{
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doDeleteUserById(String id) throws Exception;
+	public boolean doDeleteById(String id) throws Exception;
 	
 	/**
 	 * 删除多个用户
@@ -66,7 +66,7 @@ public interface IUserService{
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doDeleteUsersByIds(String[] ids)throws Exception;
+	public boolean doDeleteByIds(String[] ids)throws Exception;
 	
 	/**
 	 * 验证用户名密码，如果通过，返回User，不通过，返回null

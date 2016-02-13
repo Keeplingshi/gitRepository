@@ -56,8 +56,8 @@ public class UserController {
 	public String getUserList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model) throws Exception{
 		//采用分页方式获取
-		List<User> userList=userService.doGetUserPageList(pageInfo);
-		List<Role> roleList=roleService.doGetRoleList();
+		List<User> userList=userService.doGetPageList(pageInfo);
+		List<Role> roleList=roleService.doGetFilterList();
 		
 		model.addAttribute("userList", userList);
 		model.addAttribute("roleList", roleList);
@@ -80,7 +80,7 @@ public class UserController {
 		
 		//采用分页方式获取
 		List<User> userList=userService.doSearchUserPageList(pageInfo, roleId, searchText);
-		List<Role> roleList=roleService.doGetRoleList();
+		List<Role> roleList=roleService.doGetFilterList();
 		
 		model.addAttribute("userList", userList);
 		model.addAttribute("roleList", roleList);
@@ -101,7 +101,7 @@ public class UserController {
 	public String doUserView(Model model,@PathVariable String id) throws Exception{
 		
 		//获取User信息
-		User userDomain=userService.doGetUserById(id);
+		User userDomain=userService.doGetById(id);
 		model.addAttribute("userDomain", userDomain);
 		
 		return "/user/userView";
@@ -116,7 +116,7 @@ public class UserController {
 	@RequestMapping("/userAdd")
 	public String doUserAdd(Model model)throws Exception{
 		
-		List<Role> roleList=roleService.doGetRoleList();
+		List<Role> roleList=roleService.doGetFilterList();
 		model.addAttribute("roleList", roleList);
 		
 		return "/user/userAdd";
@@ -133,8 +133,8 @@ public class UserController {
 	public String doUserEdit(Model model,@PathVariable String id)throws Exception{
 
 		//获取单条Domain信息
-		User userDomain=userService.doGetUserById(id);
-		List<Role> roleList=roleService.doGetRoleList();
+		User userDomain=userService.doGetById(id);
+		List<Role> roleList=roleService.doGetFilterList();
 		
 		model.addAttribute("roleList", roleList);
 		model.addAttribute("userDomain", userDomain);
@@ -156,7 +156,7 @@ public class UserController {
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
-			if(userService.doSaveUser(domain)){
+			if(userService.doSave(domain)){
 				return Consts.SUCCESS;
 			}
 		}
@@ -173,7 +173,7 @@ public class UserController {
 	@ResponseBody
 	public String doDelete(@PathVariable String id)throws Exception{
 		
-		if(userService.doDeleteUserById(id)){
+		if(userService.doDeleteById(id)){
 			return Consts.SUCCESS;
 		}
 		
@@ -190,7 +190,7 @@ public class UserController {
 	@ResponseBody
 	public String doDeleteUsers(@RequestParam(value = "userIds[]") String[] userIds)throws Exception{
 		
-		if(userService.doDeleteUsersByIds(userIds)){
+		if(userService.doDeleteByIds(userIds)){
 			return Consts.SUCCESS;
 		}
 		

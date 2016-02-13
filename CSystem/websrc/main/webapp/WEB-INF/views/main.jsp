@@ -15,6 +15,8 @@
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/ace.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 	
+		<title>CSystem管理系统</title>
+	
 		<script type="text/javascript">
 			$(function(){
 				//默认加载用户列表

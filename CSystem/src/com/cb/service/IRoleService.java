@@ -11,14 +11,14 @@ public interface IRoleService{
 	 * @return
 	 * @throws Exception
 	 */
-	public Role doGetRoleById(String id)throws Exception;
+	public Role doGetById(String id)throws Exception;
 	
 	/**
 	 * 获取角色列表
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Role> doGetRoleList() throws Exception;
+	public List<Role> doGetFilterList() throws Exception;
 	
 	/**
 	 * 保存角色
@@ -26,7 +26,7 @@ public interface IRoleService{
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doSaveRole(Role role) throws Exception;
+	public boolean doSave(Role role) throws Exception;
 	
 	/**
 	 * 删除角色
@@ -34,6 +34,6 @@ public interface IRoleService{
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doDeleteRoleById(String id) throws Exception;
+	public boolean doDeleteById(String id) throws Exception;
 	
 }

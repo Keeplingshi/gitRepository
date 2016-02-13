@@ -27,10 +27,10 @@ public class UserService implements IUserService{
 	@Resource private IUserDao userDao;
 	
 	/**
-	 * @see IUserService#doGetUserList()
+	 * @see IUserService#doGetFilterList()
 	 */
 	@Override
-	public List<User> doGetUserList() throws Exception {
+	public List<User> doGetFilterList() throws Exception {
 		// TODO Auto-generated method stub
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
@@ -40,10 +40,10 @@ public class UserService implements IUserService{
 	}
 
 	/**
-	 * @see IUserService#doSaveUser(UserDomain)
+	 * @see IUserService#doSave(UserDomain)
 	 */
 	@Override
-	public boolean doSaveUser(User user) throws Exception {
+	public boolean doSave(User user) throws Exception {
 		// TODO Auto-generated method stub
 		
 		//判断是否为新用户，如果是，新增，否则更新
@@ -55,20 +55,20 @@ public class UserService implements IUserService{
 	}
 
 	/**
-	 * @see IUserService#doGetUserById(String)
+	 * @see IUserService#doGetById(String)
 	 */
 	@Override
-	public User doGetUserById(String id) throws Exception {
+	public User doGetById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		
 		return userDao.getById(id);
 	}
 
 	/**
-	 * @see IUserService#doDeleteUserById(String)
+	 * @see IUserService#doDeleteById(String)
 	 */
 	@Override
-	public boolean doDeleteUserById(String id) throws Exception {
+	public boolean doDeleteById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		
 		return userDao.deleteById(id);
@@ -123,7 +123,7 @@ public class UserService implements IUserService{
 	 * @see IUserService#doGetPageList(DetachedCriteria, PageInfo)
 	 */
 	@Override
-	public List<User> doGetUserPageList(PageInfo pageInfo)
+	public List<User> doGetPageList(PageInfo pageInfo)
 			throws Exception {
 		// TODO Auto-generated method stub
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
@@ -133,10 +133,10 @@ public class UserService implements IUserService{
 	}
 
 	/**
-	 * @see IUserService#doDeleteUsersByIds(String[])
+	 * @see IUserService#doDeleteByIds(String[])
 	 */
 	@Override
-	public boolean doDeleteUsersByIds(String[] ids) throws Exception {
+	public boolean doDeleteByIds(String[] ids) throws Exception {
 		// TODO Auto-generated method stub
 		
 		boolean b=false;
