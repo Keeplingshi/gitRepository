@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.dao.IUserDao;
-import com.cb.entity.User;
+import com.cb.domain.UserDomain;
 import com.cb.service.IUserService;
 import com.system.util.PageInfo;
 
@@ -30,11 +30,11 @@ public class UserService implements IUserService{
 	 * @see IUserService#doGetFilterList()
 	 */
 	@Override
-	public List<User> doGetFilterList() throws Exception {
+	public List<UserDomain> doGetFilterList() throws Exception {
 		// TODO Auto-generated method stub
 		
-		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
-		List<User> userList=userDao.getFilterList(detachedCriteria);
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
+		List<UserDomain> userList=userDao.getFilterList(detachedCriteria);
 		
 		return userList;
 	}
@@ -43,7 +43,7 @@ public class UserService implements IUserService{
 	 * @see IUserService#doSave(UserDomain)
 	 */
 	@Override
-	public boolean doSave(User user) throws Exception {
+	public boolean doSave(UserDomain user) throws Exception {
 		// TODO Auto-generated method stub
 		
 		//判断是否为新用户，如果是，新增，否则更新
@@ -58,7 +58,7 @@ public class UserService implements IUserService{
 	 * @see IUserService#doGetById(String)
 	 */
 	@Override
-	public User doGetById(String id) throws Exception {
+	public UserDomain doGetById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		
 		return userDao.getById(id);
@@ -82,14 +82,14 @@ public class UserService implements IUserService{
 			throws Exception {
 		// TODO Auto-generated method stub
 		
-		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
 		detachedCriteria.add(Restrictions.eq("username", username.trim()));
 		
-		List<User> userList=userDao.getFilterList(detachedCriteria);
+		List<UserDomain> userList=userDao.getFilterList(detachedCriteria);
 		
 		//如果有结果，username是唯一的
 		if(userList.size()==1){
-			User user=userList.get(0);
+			UserDomain user=userList.get(0);
 			//判断密码是否等于
 			if((String.valueOf(password)).equals(user.getPassword())){
 				return true;
@@ -103,16 +103,16 @@ public class UserService implements IUserService{
 	 * @see IUserService#doGetUserByUsername(String)
 	 */
 	@Override
-	public User doGetUserByUsername(String username) throws Exception {
+	public UserDomain doGetUserByUsername(String username) throws Exception {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
 		detachedCriteria.add(Restrictions.eq("username", username.trim()));
 		
-		List<User> userList=userDao.getFilterList(detachedCriteria);
+		List<UserDomain> userList=userDao.getFilterList(detachedCriteria);
 		
 		//如果有结果，username是唯一的
 		if(userList.size()==1){
-			User user=userList.get(0);
+			UserDomain user=userList.get(0);
 			return user;
 		}
 		
@@ -123,11 +123,11 @@ public class UserService implements IUserService{
 	 * @see IUserService#doGetPageList(DetachedCriteria, PageInfo)
 	 */
 	@Override
-	public List<User> doGetPageList(PageInfo pageInfo)
+	public List<UserDomain> doGetPageList(PageInfo pageInfo)
 			throws Exception {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
-		List<User> userList=userDao.getPageList(detachedCriteria, pageInfo);
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
+		List<UserDomain> userList=userDao.getPageList(detachedCriteria, pageInfo);
 		
 		return userList;
 	}
@@ -154,11 +154,11 @@ public class UserService implements IUserService{
 	 * @see IUserService#doSearchUserPageList(PageInfo, Integer, String)
 	 */
 	@Override
-	public List<User> doSearchUserPageList(PageInfo pageInfo,
+	public List<UserDomain> doSearchUserPageList(PageInfo pageInfo,
 			String roleId, String searchText) throws Exception {
 		// TODO Auto-generated method stub
 		
-		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(User.class);
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
 		if(roleId!=null&&roleId!=""){
 			detachedCriteria.add(Restrictions.eq("role.id", roleId));
 		}
@@ -166,7 +166,7 @@ public class UserService implements IUserService{
 			detachedCriteria.add(Restrictions.like("username", "%"+searchText+"%"));
 		}
 		
-		List<User> userList=userDao.getPageList(detachedCriteria, pageInfo);
+		List<UserDomain> userList=userDao.getPageList(detachedCriteria, pageInfo);
 		
 		return userList;
 	}

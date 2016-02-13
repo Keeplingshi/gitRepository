@@ -2,7 +2,7 @@ package com.cb.service;
 
 import java.util.List;
 
-import com.cb.entity.Role;
+import com.cb.domain.RoleDomain;
 
 public interface IRoleService{
 	/**
@@ -11,22 +11,22 @@ public interface IRoleService{
 	 * @return
 	 * @throws Exception
 	 */
-	public Role doGetById(String id)throws Exception;
+	public RoleDomain doGetById(String id)throws Exception;
 	
 	/**
 	 * 获取角色列表
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Role> doGetFilterList() throws Exception;
+	public List<RoleDomain> doGetFilterList() throws Exception;
 	
 	/**
 	 * 保存角色
-	 * @param Role
+	 * @param RoleDomain
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doSave(Role role) throws Exception;
+	public boolean doSave(RoleDomain role) throws Exception;
 	
 	/**
 	 * 删除角色

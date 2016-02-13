@@ -18,7 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.cb.entity.User;
+import com.cb.domain.UserDomain;
 import com.cb.service.IUserService;
 
 @Controller
@@ -69,7 +69,7 @@ public class LoginController {
         }
         //验证是否登录成功  
         if(currentUser.isAuthenticated()){
-        	User user=userService.doGetUserByUsername(username);
+        	UserDomain user=userService.doGetUserByUsername(username);
         	model.addAttribute("userDomain", user);
             return "/main";
         }else{  

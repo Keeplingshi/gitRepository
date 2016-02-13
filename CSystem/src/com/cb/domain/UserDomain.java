@@ -1,4 +1,4 @@
-package com.cb.entity;
+package com.cb.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,15 +18,15 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name="USER")
-public class User {
+public class UserDomain {
 
 	private String id;	//id
 	private String username;	//用户名
 	private String password;	//密码
-	private Role role;	//角色
+	private RoleDomain role;	//角色
 	//private String roleId;
 	
-	public User(){
+	public UserDomain(){
 		
 	}
 
@@ -62,11 +62,11 @@ public class User {
 
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "ROLEID")
-	public Role getRole() {
+	public RoleDomain getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(RoleDomain role) {
 		this.role = role;
 	}
 	

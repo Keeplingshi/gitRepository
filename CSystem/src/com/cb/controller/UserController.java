@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cb.entity.Role;
-import com.cb.entity.User;
+import com.cb.domain.RoleDomain;
+import com.cb.domain.UserDomain;
 import com.cb.service.IRoleService;
 import com.cb.service.IUserService;
 import com.cb.util.Consts;
@@ -56,8 +56,8 @@ public class UserController {
 	public String getUserList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model) throws Exception{
 		//采用分页方式获取
-		List<User> userList=userService.doGetPageList(pageInfo);
-		List<Role> roleList=roleService.doGetFilterList();
+		List<UserDomain> userList=userService.doGetPageList(pageInfo);
+		List<RoleDomain> roleList=roleService.doGetFilterList();
 		
 		model.addAttribute("userList", userList);
 		model.addAttribute("roleList", roleList);
@@ -79,8 +79,8 @@ public class UserController {
 			,BindingResult bindingResult,Model model,String roleId,String searchText)throws Exception{
 		
 		//采用分页方式获取
-		List<User> userList=userService.doSearchUserPageList(pageInfo, roleId, searchText);
-		List<Role> roleList=roleService.doGetFilterList();
+		List<UserDomain> userList=userService.doSearchUserPageList(pageInfo, roleId, searchText);
+		List<RoleDomain> roleList=roleService.doGetFilterList();
 		
 		model.addAttribute("userList", userList);
 		model.addAttribute("roleList", roleList);
@@ -101,7 +101,7 @@ public class UserController {
 	public String doUserView(Model model,@PathVariable String id) throws Exception{
 		
 		//获取User信息
-		User userDomain=userService.doGetById(id);
+		UserDomain userDomain=userService.doGetById(id);
 		model.addAttribute("userDomain", userDomain);
 		
 		return "/user/userView";
@@ -116,7 +116,7 @@ public class UserController {
 	@RequestMapping("/userAdd")
 	public String doUserAdd(Model model)throws Exception{
 		
-		List<Role> roleList=roleService.doGetFilterList();
+		List<RoleDomain> roleList=roleService.doGetFilterList();
 		model.addAttribute("roleList", roleList);
 		
 		return "/user/userAdd";
@@ -133,8 +133,8 @@ public class UserController {
 	public String doUserEdit(Model model,@PathVariable String id)throws Exception{
 
 		//获取单条Domain信息
-		User userDomain=userService.doGetById(id);
-		List<Role> roleList=roleService.doGetFilterList();
+		UserDomain userDomain=userService.doGetById(id);
+		List<RoleDomain> roleList=roleService.doGetFilterList();
 		
 		model.addAttribute("roleList", roleList);
 		model.addAttribute("userDomain", userDomain);
@@ -151,7 +151,7 @@ public class UserController {
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public String doSave(@Valid @ModelAttribute("domain") User domain,
+	public String doSave(@Valid @ModelAttribute("domain") UserDomain domain,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;

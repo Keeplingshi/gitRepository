@@ -1,4 +1,4 @@
-package com.cb.entity;
+package com.cb.domain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,13 +22,13 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name="ROLE")
-public class Role {
+public class RoleDomain {
 
 	private String id;	//id
 	private String name;	//角色名称
 	private Integer authority;	//角色权限
 	private String value;	//角色值
-	private Set<User> users = new HashSet<User>(0);
+	private Set<UserDomain> users = new HashSet<UserDomain>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -66,10 +66,10 @@ public class Role {
 	}
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "role", fetch = FetchType.LAZY)
-	public Set<User> getUsers() {
+	public Set<UserDomain> getUsers() {
 		return users;
 	}
-	public void setUsers(Set<User> users) {
+	public void setUsers(Set<UserDomain> users) {
 		this.users = users;
 	}
 	

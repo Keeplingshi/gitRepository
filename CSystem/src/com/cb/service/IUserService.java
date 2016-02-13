@@ -2,7 +2,7 @@ package com.cb.service;
 
 import java.util.List;
 
-import com.cb.entity.User;
+import com.cb.domain.UserDomain;
 import com.system.util.PageInfo;
 
 /**
@@ -18,21 +18,21 @@ public interface IUserService{
 	 * @return
 	 * @throws Exception
 	 */
-	public User doGetById(String id)throws Exception;
+	public UserDomain doGetById(String id)throws Exception;
 	
 	/**
 	 * 获取用户列表
 	 * @return
 	 * @throws Exception
 	 */
-	public List<User> doGetFilterList() throws Exception;
+	public List<UserDomain> doGetFilterList() throws Exception;
 	
 	/**
 	 * 分页查询
 	 * @return
 	 * @throws Exception
 	 */
-	public List<User> doGetPageList(PageInfo pageInfo)throws Exception;
+	public List<UserDomain> doGetPageList(PageInfo pageInfo)throws Exception;
 	
 	/**
 	 * 根据查询条件返回用户列表
@@ -42,15 +42,15 @@ public interface IUserService{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<User> doSearchUserPageList(PageInfo pageInfo,String roleId,String searchText)throws Exception;
+	public List<UserDomain> doSearchUserPageList(PageInfo pageInfo,String roleId,String searchText)throws Exception;
 	
 	/**
 	 * 保存用户
-	 * @param User
+	 * @param UserDomain
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doSave(User user) throws Exception;
+	public boolean doSave(UserDomain user) throws Exception;
 	
 	/**
 	 * 删除用户
@@ -83,5 +83,5 @@ public interface IUserService{
 	 * @return
 	 * @throws Exception
 	 */
-	public User doGetUserByUsername(String username)throws Exception;
+	public UserDomain doGetUserByUsername(String username)throws Exception;
 }

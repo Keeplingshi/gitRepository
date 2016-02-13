@@ -16,7 +16,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
-import com.cb.entity.User;
+import com.cb.domain.UserDomain;
 import com.cb.service.IUserService;
 import com.cb.util.Consts;
 
@@ -41,7 +41,7 @@ public class ShiroRealm extends AuthorizingRealm {
     	String currentUsername=(String)super.getAvailablePrincipal(principals);
     	SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
 		try {
-			User user = userService.doGetUserByUsername(currentUsername);
+			UserDomain user = userService.doGetUserByUsername(currentUsername);
 	    	if(null!=user){
 	    		//添加一个角色,不是配置意义上的添加,而是证明该用户拥有admin角色
 	    		simpleAuthorInfo.addRole(user.getRole().getValue());
