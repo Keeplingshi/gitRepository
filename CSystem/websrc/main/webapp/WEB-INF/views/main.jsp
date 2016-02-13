@@ -110,8 +110,8 @@
 							</a>
 							
 							<ul class="submenu">
-								<li>
-									<a href="#">
+								<li id="college_manage">
+									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
 										学院管理
 									</a>
@@ -153,6 +153,16 @@
 		$("#user_manage").click(function(){
 			$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/user/userList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		$("#college_manage").click(function(){
+			
+			$(this).addClass("active");
+			$.post("${pageContext.request.contextPath}/college/collegeList", function(result){
+				$("#content_page").empty();
 				$("#content_page").html(result);
 			});
 		});

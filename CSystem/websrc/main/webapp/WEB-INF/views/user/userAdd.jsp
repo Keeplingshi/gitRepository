@@ -68,10 +68,7 @@
 		var form = $("#userAddFormId");
 		form.ajaxSubmit(function(result){
 			if(result=='success'){
-				//默认加载用户列表
-				$.post("${pageContext.request.contextPath}/user/userList", function(result){
-					$("#content_page").html(result);
-				});
+
 				parent.layer.msg('添加成功', {
      		        time: 1500//1.5s后自动关闭
      		    });

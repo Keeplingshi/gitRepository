@@ -74,7 +74,7 @@ public class UserController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("userSearchList")
+	@RequestMapping("/userSearchList")
 	public String doUserSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model,String roleId,String searchText)throws Exception{
 		
