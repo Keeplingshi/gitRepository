@@ -74,7 +74,7 @@ public class LoginController {
             return "/main";
         }else{  
             token.clear();  
-        }  
+        }
         return resultPageURL;  
     }  
     

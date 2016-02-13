@@ -8,11 +8,11 @@
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/bootstrap.min.css" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/font-awesome.min.css" rel="stylesheet"/>
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/ace.min.css" rel="stylesheet"/>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ace/assets\css\cyrillic.css" />
+		<link href="${pageContext.request.contextPath}/resources/ace/assets\css\cyrillic.css" rel="stylesheet"/>
 
-		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/jquery-2.0.3.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/bootstrap.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/bootstrap.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/ace.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 	
 		<script type="text/javascript">
@@ -95,6 +95,42 @@
 								<i class="icon-dashboard"></i>
 								<span class="menu-text"> 就业管理 </span>
 							</a>
+						</li>
+						<li id="school_manage">
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text">
+									学校管理
+									<span class="badge badge-primary ">3</span>
+								</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							
+							<ul class="submenu">
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										学院管理
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										专业管理
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										班级管理
+									</a>
+								</li>
+
+							</ul>
+							
 						</li>
 					</ul>
 				</div>
