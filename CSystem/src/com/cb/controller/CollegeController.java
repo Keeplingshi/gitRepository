@@ -53,7 +53,7 @@ public class CollegeController {
 	@RequestMapping("/collegeView/{id}")
 	public String docollegeView(Model model,@PathVariable String id) throws Exception{
 		
-		//获取User信息
+		//获取College信息
 		CollegeDomain collegeDomain=collegeService.doGetById(id);
 		model.addAttribute("collegeDomain", collegeDomain);
 		
