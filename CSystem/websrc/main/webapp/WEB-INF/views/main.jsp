@@ -117,8 +117,8 @@
 									</a>
 								</li>
 
-								<li>
-									<a href="#">
+								<li id="major_manage">
+									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
 										专业管理
 									</a>
@@ -162,6 +162,15 @@
 			
 			$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/college/collegeList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		$("#major_manage").click(function(){
+			
+			$(this).addClass("active");
+			$.post("${pageContext.request.contextPath}/major/majorList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});

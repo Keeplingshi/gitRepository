@@ -17,7 +17,7 @@
 		
 		<label style="margin-left: 30px;">角色：</label>
 		<select id="role_select_id" style="width: 100px;">
-			<option value="" selected="selected">选择</option>
+			<option value="" selected="selected">全部</option>
 			<c:forEach items="${roleList }" var="roleDomain">
 				<option value="${roleDomain.id }">${roleDomain.name}</option>
 			</c:forEach>

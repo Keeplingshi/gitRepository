@@ -1,31 +1,29 @@
 package com.cb.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 学院表
+ * 专业表
  * @author chen
  *
  */
 @Entity
-@Table(name="COLLEGE")
-public class CollegeDomain {
+@Table(name="MAJOR")
+public class MajorDomain {
 
 	private String id;
 	private String name;
-	private Set<MajorDomain> majors = new HashSet<MajorDomain>(0);
+	//private String collegeId;
+	private CollegeDomain college;	//所属学院
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -38,7 +36,7 @@ public class CollegeDomain {
 		this.id = id;
 	}
 	
-	@Column(name = "NAME",unique = true, nullable = false, length = 100)
+	@Column(name = "NAME", nullable = false, length = 100)
 	public String getName() {
 		return name;
 	}
@@ -46,12 +44,13 @@ public class CollegeDomain {
 		this.name = name;
 	}
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "college", fetch = FetchType.LAZY)
-	public Set<MajorDomain> getMajors() {
-		return majors;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "COLLEGEID")
+	public CollegeDomain getCollege() {
+		return college;
 	}
-	public void setMajors(Set<MajorDomain> majors) {
-		this.majors = majors;
+	public void setCollege(CollegeDomain college) {
+		this.college = college;
 	}
 	
 }
