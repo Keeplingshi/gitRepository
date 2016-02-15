@@ -79,7 +79,7 @@
 		<div class="main-container" id="main-container">
 			<div class="main-container-inner">
 				<div class="sidebar" id="sidebar">
-					<ul class="nav nav-list">
+					<ul id="menulist" class="nav nav-list">
 						<li>
 							<a href="javascript:void(0);">
 								<i class="icon-dashboard"></i>
@@ -98,8 +98,14 @@
 								<span class="menu-text"> 就业管理 </span>
 							</a>
 						</li>
-						<li id="school_manage">
-							<a href="#" class="dropdown-toggle">
+						<li id="student_manage">
+							<a href="javascript:void(0);">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text"> 学生管理 </span>
+							</a>
+						</li>
+						<li>
+							<a href="#" class="dropdown-toggle" onclick="removeclass()">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text">
 									学校管理
@@ -150,8 +156,19 @@
 	
 	<script>
 	
+		//使菜单栏只有一项被选中
+ 		function removeclass(){
+			$("#menulist li").removeClass("active");
+		} 
+		$("#menulist li").click(function(){
+			//判断是否有id属性
+			if($(this).is('[id]')){
+				$(this).addClass("active").siblings("li").removeClass("active");
+			}
+		});
+	
 		$("#user_manage").click(function(){
-			$(this).addClass("active");
+			//$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/user/userList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
@@ -160,7 +177,7 @@
 		
 		$("#college_manage").click(function(){
 			
-			$(this).addClass("active");
+			//$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/college/collegeList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
@@ -178,8 +195,17 @@
 		
 		$("#class_manage").click(function(){
 			
-			$(this).addClass("active");
+			//$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/class/classList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		$("#student_manage").click(function(){
+			
+			//$(this).addClass("active");
+			$.post("${pageContext.request.contextPath}/student/studentList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});
