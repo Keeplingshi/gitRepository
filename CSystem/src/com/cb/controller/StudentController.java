@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.ClassDomain;
+import com.cb.domain.StudentDomain;
 import com.cb.domain.CollegeDomain;
 import com.cb.domain.MajorDomain;
 import com.cb.service.IClassService;
@@ -63,13 +64,15 @@ public class StudentController {
 		
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-		List<ClassDomain> studentList=studentService.doGetPageList(pageInfo);
+		List<ClassDomain> classList=classService.doGetFilterList();
+		List<StudentDomain> studentList=studentService.doGetPageList(pageInfo);
 		
 		model.addAttribute("collegeList", collegeList);
 		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
 		model.addAttribute("studentList", studentList);
 		
-		return "/studentinfo/studentList";
+		return "/student/studentList";
 	}
 	
 	/**
@@ -87,18 +90,18 @@ public class StudentController {
 	public String dostudentSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model,String collegeId,String majorId,String searchText)throws Exception{
 		
-		List<ClassDomain> studentList=studentService.doSearchstudentPageList(pageInfo,collegeId,majorId, searchText);
+		//List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,collegeId,majorId, searchText);
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
 		
 		model.addAttribute("collegeList", collegeList);
 		model.addAttribute("majorList", majorList);
-		model.addAttribute("studentList", studentList);
+		//model.addAttribute("studentList", studentList);
 		model.addAttribute("majorId", majorId);
 		model.addAttribute("collegeId", collegeId);
 		model.addAttribute("searchText", searchText);
 	
-		return "/studentinfo/studentList";
+		return "/student/studentList";
 	}
 	
 	/**
@@ -112,10 +115,10 @@ public class StudentController {
 	public String dostudentView(Model model,@PathVariable String id) throws Exception{
 		
 		//获取student信息
-		ClassDomain studentDomain=studentService.doGetById(id);
+		StudentDomain studentDomain=studentService.doGetById(id);
 		model.addAttribute("studentDomain", studentDomain);
 		
-		return "/studentinfo/studentView";
+		return "/student/studentView";
 	}
 	
 	/**
@@ -133,7 +136,7 @@ public class StudentController {
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
 		
-		return "/classinfo/classAdd";
+		return "/student/studentAdd";
 	}
 	
 	/**
@@ -143,19 +146,19 @@ public class StudentController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/classEdit/{id}")
-	public String doclassEdit(Model model,@PathVariable String id)throws Exception{
+	@RequestMapping("/studentEdit/{id}")
+	public String dostudentEdit(Model model,@PathVariable String id)throws Exception{
 		
-		//获取class信息
-		ClassDomain classDomain=classService.doGetById(id);
+		//获取student信息
+		StudentDomain studentDomain=studentService.doGetById(id);
 		List<MajorDomain> majorList=majorService.doGetFilterList();
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		
-		model.addAttribute("classDomain", classDomain);
+		model.addAttribute("studentDomain", studentDomain);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
 		
-		return "/classinfo/classEdit";
+		return "/student/studentEdit";
 	}
 	
 	/**
@@ -167,12 +170,12 @@ public class StudentController {
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public String doSave(@Valid @ModelAttribute("domain") ClassDomain domain,
+	public String doSave(@Valid @ModelAttribute("domain") StudentDomain domain,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
-			if(classService.doSave(domain)){
+			if(studentService.doSave(domain)){
 				return Consts.SUCCESS;
 			}
 		}
@@ -189,7 +192,7 @@ public class StudentController {
 	@ResponseBody
 	public String doDelete(@PathVariable String id)throws Exception{
 		
-		if(classService.doDeleteById(id)){
+		if(studentService.doDeleteById(id)){
 			return Consts.SUCCESS;
 		}
 		
@@ -202,11 +205,11 @@ public class StudentController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/deleteClasses")
+	@RequestMapping("/deleteStudents")
 	@ResponseBody
-	public String doDeleteClasses(@RequestParam(value = "classIds[]") String[] classIds)throws Exception{
+	public String doDeleteStudents(@RequestParam(value = "studentIds[]") String[] studentIds)throws Exception{
 		
-		if(classService.doDeleteByIds(classIds)){
+		if(studentService.doDeleteByIds(studentIds)){
 			return Consts.SUCCESS;
 		}
 		

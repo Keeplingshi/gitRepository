@@ -54,4 +54,11 @@ public interface IStudentService {
 	 * @throws Exception
 	 */
 	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo, String searchText)throws Exception;
+
+	/**
+	 * 批量删除
+	 * @param studentIds
+	 * @return
+	 */
+	public boolean doDeleteByIds(String[] studentIds)throws Exception;
 }

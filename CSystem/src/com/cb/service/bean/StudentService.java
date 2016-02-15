@@ -91,4 +91,21 @@ public class StudentService implements IStudentService{
 		return null;
 	}
 
+	/**
+	 * @see com.cb.service.IStudentService#doDeleteByIds(java.lang.String[])
+	 */
+	@Override
+	public boolean doDeleteByIds(String[] studentIds) throws Exception {
+		// TODO Auto-generated method stub
+		boolean b=false;
+		for(String id:studentIds){
+			b=studentDao.deleteById(id);
+			if(!b){
+				return false;
+			}
+		}
+		
+		return b;
+	}
+
 }
