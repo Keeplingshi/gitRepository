@@ -105,7 +105,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="#" class="dropdown-toggle" onclick="removeclass()">
+							<a href="#" class="dropdown-toggle">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text">
 									学校管理
@@ -115,7 +115,7 @@
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							
-							<ul class="submenu">
+							<ul class="submenu" id="submenu">
 								<li id="college_manage">
 									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
@@ -155,15 +155,13 @@
 	</body>
 	
 	<script>
-	
+		
 		//使菜单栏只有一项被选中
- 		function removeclass(){
-			$("#menulist li").removeClass("active");
-		} 
 		$("#menulist li").click(function(){
-			//判断是否有id属性
 			if($(this).is('[id]')){
-				$(this).addClass("active").siblings("li").removeClass("active");
+				$("#menulist li").removeClass("active");
+				$(this).addClass("active");
+				
 			}
 		});
 	
