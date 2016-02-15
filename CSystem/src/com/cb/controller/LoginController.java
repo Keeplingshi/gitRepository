@@ -21,6 +21,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.cb.domain.UserDomain;
 import com.cb.service.IUserService;
 
+/**
+ * 登录控制层
+ * @author chen
+ *
+ */
 @Controller
 public class LoginController {
 

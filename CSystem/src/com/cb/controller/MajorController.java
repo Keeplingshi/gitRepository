@@ -5,6 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,11 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.CollegeDomain;
 import com.cb.domain.MajorDomain;
-import com.cb.domain.RoleDomain;
-import com.cb.domain.UserDomain;
 import com.cb.service.ICollegeService;
 import com.cb.service.IMajorService;
 import com.cb.util.Consts;
+import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
 
 /**
@@ -66,7 +68,7 @@ public class MajorController {
 	}
 	
 	@RequestMapping("/majorSearchList")
-	public String doUserSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
+	public String domajorSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model,String collegeId,String searchText)throws Exception{
 		
 		List<MajorDomain> majorList=majorService.doSearchmajorPageList(pageInfo,collegeId,searchText);
@@ -170,5 +172,14 @@ public class MajorController {
 		return Consts.ERROR;
 	}
 	
-	
+	@RequestMapping("/getMajorByCollege")
+	@ResponseBody
+	public String dogetMajorByCollege(Model model,String college_id)throws Exception{
+		
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(college_id);
+		
+		JSONArray jsonArray=JSONArray.fromObject(majorList);
+		return jsonArray.toString();
+		
+	}
 }

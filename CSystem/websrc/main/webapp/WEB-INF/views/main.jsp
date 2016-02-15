@@ -124,8 +124,8 @@
 									</a>
 								</li>
 
-								<li>
-									<a href="#">
+								<li id="class_manage">
+									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
 										班级管理
 									</a>
@@ -171,6 +171,15 @@
 			
 			$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/major/majorList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		$("#class_manage").click(function(){
+			
+			$(this).addClass("active");
+			$.post("${pageContext.request.contextPath}/class/classList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});

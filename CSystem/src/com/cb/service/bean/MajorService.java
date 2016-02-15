@@ -1,5 +1,6 @@
 package com.cb.service.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cb.dao.IMajorDao;
 import com.cb.domain.MajorDomain;
 import com.cb.service.IMajorService;
+import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
 
 /**
@@ -92,15 +94,35 @@ public class MajorService implements IMajorService{
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(MajorDomain.class);
 
-		if(collegeId!=null&&collegeId!=""){
+		if(collegeId!=null&&!"".equals(collegeId)){
 			detachedCriteria.add(Restrictions.eq("college.id", collegeId));
 		}
-		if(searchText!=null&&searchText!=""){
+		if(searchText!=null&&!"".equals(searchText)){
 			detachedCriteria.add(Restrictions.like("name", "%"+searchText+"%"));
 		}
 		
 		List<MajorDomain> majorList=majorDao.getPageList(detachedCriteria, pageInfo);
 		return majorList;
+	}
+
+	/**
+	 * @see IMajorService#dogetMajorsByCollegeId(String)
+	 */
+	@Override
+	public List<SelectItem> dogetMajorsByCollegeId(String collegeId) {
+		// TODO Auto-generated method stub
+		
+		List<SelectItem> selectList=new ArrayList<>();
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(MajorDomain.class);
+		if(collegeId!=null&&!"".equals(collegeId)){
+			detachedCriteria.add(Restrictions.eq("college.id", collegeId));
+		}
+		List<MajorDomain> majorList=majorDao.getFilterList(detachedCriteria);
+		for(MajorDomain majorDomain:majorList){
+			selectList.add(new SelectItem(majorDomain.getId(),majorDomain.getName()));
+		}
+		
+		return selectList;
 	}
 
 }

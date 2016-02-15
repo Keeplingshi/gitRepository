@@ -3,6 +3,7 @@ package com.cb.service;
 import java.util.List;
 
 import com.cb.domain.MajorDomain;
+import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
 
 public interface IMajorService {
@@ -55,4 +56,11 @@ public interface IMajorService {
 	 */
 	public List<MajorDomain> doSearchmajorPageList(PageInfo pageInfo,
 			String collegeId, String searchText)throws Exception;
+
+	/**
+	 * 根据学院id获取专业
+	 * @param collegeId
+	 * @return
+	 */
+	public List<SelectItem> dogetMajorsByCollegeId(String collegeId);
 }

@@ -1,12 +1,17 @@
 package com.cb.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +29,7 @@ public class MajorDomain {
 	private String name;
 	//private String collegeId;
 	private CollegeDomain college;	//所属学院
+	private Set<ClassDomain> classes=new HashSet<ClassDomain>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -52,5 +58,14 @@ public class MajorDomain {
 	public void setCollege(CollegeDomain college) {
 		this.college = college;
 	}
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "major", fetch = FetchType.LAZY)
+	public Set<ClassDomain> getClasses() {
+		return classes;
+	}
+	public void setClasses(Set<ClassDomain> classes) {
+		this.classes = classes;
+	}
+
 	
 }

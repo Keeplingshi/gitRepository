@@ -159,10 +159,10 @@ public class UserService implements IUserService{
 		// TODO Auto-generated method stub
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
-		if(roleId!=null&&roleId!=""){
+		if(roleId!=null&&!"".equals(roleId)){
 			detachedCriteria.add(Restrictions.eq("role.id", roleId));
 		}
-		if(searchText!=null&&searchText!=""){
+		if(searchText!=null&&!"".equals(searchText)){
 			detachedCriteria.add(Restrictions.like("username", "%"+searchText+"%"));
 		}
 		
