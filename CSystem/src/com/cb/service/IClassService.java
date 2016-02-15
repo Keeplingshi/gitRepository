@@ -55,4 +55,12 @@ public interface IClassService {
 	 */
 	public List<ClassDomain> doSearchclassPageList(PageInfo pageInfo,
 			String collegeId,String majorId, String searchText)throws Exception;
+
+	/**
+	 * 多选删除
+	 * @param classIds
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doDeleteByIds(String[] classIds)throws Exception;
 }

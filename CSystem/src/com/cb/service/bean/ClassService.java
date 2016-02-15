@@ -108,4 +108,21 @@ public class ClassService implements IClassService{
 		return classList;
 	}
 
+	/**
+	 * @see IClassService#doDeleteByIds(String[])
+	 */
+	@Override
+	public boolean doDeleteByIds(String[] classIds) throws Exception {
+		// TODO Auto-generated method stub
+		boolean b=false;
+		for(String id:classIds){
+			b=classDao.deleteById(id);
+			if(!b){
+				return false;
+			}
+		}
+		
+		return b;
+	}
+
 }

@@ -18,7 +18,7 @@
 		</span>
 
 		<label style="margin-left: 30px;">学院：</label>
-		<select id="college_select_id" style="width: 100px;">
+		<select id="college_select_id" style="width: 100px;" onchange="getMajor(this.value)">
 			<option value="" selected="selected">全部</option>
 			<c:forEach items="${collegeList }" var="collegeDomain">
 				<option value="${collegeDomain.id }">${collegeDomain.name}</option>
@@ -28,8 +28,8 @@
 		<label style="margin-left: 30px;">专业：</label>
 		<select id="major_select_id" style="width: 100px;">
 			<option value="" selected="selected">全部</option>
-			<c:forEach items="${majorList }" var="majorDomain">
-				<option value="${majorDomain.id }">${majorDomain.name}</option>
+			<c:forEach items="${majorList }" var="majorItem">
+				<option value="${majorItem.selectText }">${majorItem.selectValue}</option>
 			</c:forEach>
 		</select>
 	
@@ -120,7 +120,7 @@
 	        type: 2,
 	        title: '查看班级',
 	        shadeClose: true,
-	        area : ['380px' , '280px'],
+	        area : ['380px' , '300px'],
 	        content: '${pageContext.request.contextPath}/class/classView/'+classId
 	    });
 	}
@@ -132,7 +132,7 @@
 	        type: 2,
 	        title: '修改班级',
 	        shadeClose: true,
-	        area : ['380px' , '280px'],
+	        area : ['380px' , '320px'],
 	        content: '${pageContext.request.contextPath}/class/classEdit/'+classId,
 	        end: function(){
 	        	//默认加载用户列表
@@ -169,7 +169,79 @@
 		});
 		
 	}
+	
+	
+	//多选删除
+	$("#classDeleteButton").click(function(){
+		var checkBoxs=$("table tbody input:checkbox");
+		var classIds=new Array();
+		for(var i=0;i<checkBoxs.length;i++)
+		{
+			var checkBox=checkBoxs[i];
+			if(checkBox.checked){
+				classIds.push(checkBox.value);
+			}
+		}
+		if(classIds.length=='0'){
+			layer.msg('请至少选择一个');
+			return;
+		}
+		
+		//询问框
+		layer.confirm('是否确定删除这些班级？', {
+		    btn: ['确定','取消'] //按钮
+		}, function(){
+			console.info("确定");
+			$.ajax({
+				url : "${pageContext.request.contextPath}/class/deleteClasses",
+				async: false,
+				data : {
+					"classIds" : classIds
+				},
+				dataType : "text",
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					layer.msg('删除失败');
+                },
+				success : function(result) {
+					if(result=='success'){
+						//默认加载用户列表
+			        	$("#formId").ajaxSubmit(function(data){
+			        	 	$("#content_page").html(data);
+			    		});
+						parent.layer.msg('删除成功', {
+		     		        time: 1500//1.5s后自动关闭
+		     		    });
+					}else{
+						layer.msg('删除失败');
+					}
+				}
+			});
+			
+		}, function(){
+			
+		});
+	});
 
+	//选择学院，得到专业
+	function getMajor(college_id)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/major/getMajorByCollege?college_id='+college_id,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var major_select=$("#major_select_id");
+				major_select.empty();
+				major_select.append('<option value="">'+"全部"+'</option>');
+				for(var i=0;i<json.length;i++){
+					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				} 
+			}
+		});
+	}
+	
 	//点击表格标题栏，选中所有checkbox框
 	$('table th input:checkbox').on('click' , function(){
 		

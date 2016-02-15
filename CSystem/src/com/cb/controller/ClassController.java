@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.ClassDomain;
@@ -59,7 +60,7 @@ public class ClassController {
 			,BindingResult bindingResult,Model model)throws Exception{
 		
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-		List<MajorDomain> majorList=majorService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
 		List<ClassDomain> classList=classService.doGetPageList(pageInfo);
 		
 		model.addAttribute("collegeList", collegeList);
@@ -69,6 +70,17 @@ public class ClassController {
 		return "/classinfo/classList";
 	}
 	
+	/**
+	 * 搜索
+	 * @param pageInfo
+	 * @param bindingResult
+	 * @param model
+	 * @param collegeId
+	 * @param majorId
+	 * @param searchText
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/classSearchList")
 	public String doclassSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model,String collegeId,String majorId,String searchText)throws Exception{
@@ -182,4 +194,20 @@ public class ClassController {
 		return Consts.ERROR;
 	}
 	
+	/**
+	 * 批量删除
+	 * @param userIds
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/deleteClasses")
+	@ResponseBody
+	public String doDeleteClasses(@RequestParam(value = "classIds[]") String[] classIds)throws Exception{
+		
+		if(classService.doDeleteByIds(classIds)){
+			return Consts.SUCCESS;
+		}
+		
+		return Consts.ERROR;
+	}
 }
