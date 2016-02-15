@@ -166,7 +166,7 @@
 		});
 	
 		$("#user_manage").click(function(){
-			//$(this).addClass("active");
+
 			$.post("${pageContext.request.contextPath}/user/userList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
@@ -175,7 +175,6 @@
 		
 		$("#college_manage").click(function(){
 			
-			//$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/college/collegeList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
@@ -184,7 +183,6 @@
 		
 		$("#major_manage").click(function(){
 			
-			$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/major/majorList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
@@ -193,7 +191,6 @@
 		
 		$("#class_manage").click(function(){
 			
-			//$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/class/classList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
@@ -202,7 +199,6 @@
 		
 		$("#student_manage").click(function(){
 			
-			//$(this).addClass("active");
 			$.post("${pageContext.request.contextPath}/student/studentList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
