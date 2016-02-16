@@ -34,6 +34,7 @@ import com.system.util.PageInfo;
  *
  */
 @Controller
+@RequestMapping("/student")
 public class StudentController {
 
 	@Resource private IMajorService majorService;
@@ -130,9 +131,11 @@ public class StudentController {
 	@RequestMapping("/studentAdd")
 	public String dostudentAdd(Model model)throws Exception{
 		
+		List<ClassDomain> classList=classService.doGetFilterList();
 		List<MajorDomain> majorList=majorService.doGetFilterList();
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		
+		model.addAttribute("classList", classList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
 		

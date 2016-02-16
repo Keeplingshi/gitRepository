@@ -6,8 +6,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
