@@ -109,13 +109,20 @@
 								<i class="icon-dashboard"></i>
 								<span class="menu-text">
 									学校管理
-									<span class="badge badge-primary ">3</span>
+									<span class="badge badge-primary ">4</span>
 								</span>
 
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							
 							<ul class="submenu" id="submenu">
+								<li id="grade_manage">
+									<a href="javascript:void(0);">
+										<i class="icon-double-angle-right"></i>
+										年级管理
+									</a>
+								</li>
+							
 								<li id="college_manage">
 									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
@@ -200,6 +207,14 @@
 		$("#student_manage").click(function(){
 			
 			$.post("${pageContext.request.contextPath}/student/studentList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		$("#grade_manage").click(function(){
+			
+			$.post("${pageContext.request.contextPath}/grade/gradeList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});

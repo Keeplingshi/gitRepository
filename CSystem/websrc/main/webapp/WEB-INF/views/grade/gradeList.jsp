@@ -1,15 +1,15 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 
-<!-- 学院列表页面 -->
+<!-- 年级列表页面 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@	taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 
-<form id="formId" action="${pageContext.request.contextPath}/college/collegeList" method="post">
-	<div class="breadcrumbs" id="collegeListToolbar">
-		<input id="collegeAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
+<form id="formId" action="${pageContext.request.contextPath}/grade/gradeList" method="post">
+	<div class="breadcrumbs" id="gradeListToolbar">
+		<input id="gradeAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 	</div>
 	<div class="table-responsive">
 		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
@@ -18,22 +18,21 @@
 					<th class="center">
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
-					<th>学院名称</th>
+					<th>年级名称</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 	
 			<tbody>
-				<c:forEach items="${collegeList }" var="collegeDomain">
+				<c:forEach items="${gradeList }" var="gradeDomain">
 					<tr>
 						<td class="center">
-						<label> <input type="checkbox" class="ace" value="${collegeDomain.id }"/> <span class="lbl"></span></label>
+						<label> <input type="checkbox" class="ace" value="${gradeDomain.id }"/> <span class="lbl"></span></label>
 						</td>
-						<td>${collegeDomain.name }</td>
+						<td>${gradeDomain.grade }</td>
 	
 						<td style="width: 260px">
-							<input type="button" class="btn_list_view" value="查看" onclick="viewCollege('${collegeDomain.id }')"/> 
-							<input type="button" class="btn_list_delete" value="删除" onclick="deleteCollege('${collegeDomain.id }')"/>
+							<input type="button" class="btn_list_delete" value="删除" onclick="deleteGrade('${gradeDomain.id }')"/>
 						</td>
 					</tr>
 				</c:forEach>
@@ -44,16 +43,16 @@
 
 <script type="text/javascript">
 
-	//新增用户按钮
-	$("#collegeAddButton").click(function(){
+	//新增年级按钮
+	$("#gradeAddButton").click(function(){
 	    parent.layer.open({
 	        type: 2,
-	        title: '新增学院',
+	        title: '新增年级',
 	        shadeClose: true, //点击遮罩关闭层
 	        area : ['380px' , '180px'],
-	        content: '${pageContext.request.contextPath}/college/collegeAdd',
+	        content: '${pageContext.request.contextPath}/grade/gradeAdd',
 	        end: function(){
-				//默认加载用户列表
+				//默认加载年级列表
 	    		$("#formId").ajaxSubmit(function(data){
 	        	 	$("#content_page").html(data);
 	    		});
@@ -61,29 +60,17 @@
 	    });
 	});
 	
-	//list中查看用户按钮
-	function viewCollege(collegeId)
-	{
-	    parent.layer.open({
-	        type: 2,
-	        title: '查看学院',
-	        shadeClose: true,
-	        area : ['380px' , '180px'],
-	        content: '${pageContext.request.contextPath}/college/collegeView/'+collegeId
-	    });
-	}
-	
 	//删除
-	function deleteCollege(collegeId)
+	function deleteGrade(gradeId)
 	{
 		//询问框
 		layer.confirm('是否确定删除？', {
 		    btn: ['确定','取消'] //按钮
 		}, function(){
-	 		//默认加载用户列表
-			$.post("${pageContext.request.contextPath}/college/delete/"+collegeId, function(result){
+	 		//默认加载年级列表
+			$.post("${pageContext.request.contextPath}/grade/delete/"+gradeId, function(result){
 				if(result=='success'){
-					//默认加载用户列表
+					//默认加载年级列表
 		        	$("#formId").ajaxSubmit(function(data){
 		        	 	$("#content_page").html(data);
 		    		});
@@ -110,5 +97,4 @@
 		});
 	});
 
-		
 	</script>
