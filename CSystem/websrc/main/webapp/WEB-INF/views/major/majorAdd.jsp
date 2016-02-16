@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>		
 
-<!-- 增加学院界面 -->
+<!-- 增加专业界面 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />

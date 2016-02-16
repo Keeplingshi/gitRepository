@@ -21,7 +21,12 @@
 			</td>
 			<td class="lesta-150">年级：</td>
 			<td class="lestb">
-				<input type="text" id="gradeId" name="gradeId" class="input_text_a" placeholder="请输入年级">
+				<select id="grade_select_add_id" class="select_style">
+					<option value="" selected="selected">选择</option>
+					<c:forEach items="${gradeList }" var="gradeDomain">
+						<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
+					</c:forEach>
+				</select>
 			</td>
 		</tr>
 		<tr>

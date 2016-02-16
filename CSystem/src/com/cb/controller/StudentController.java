@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.ClassDomain;
+import com.cb.domain.GradeDomain;
 import com.cb.domain.StudentDomain;
 import com.cb.domain.CollegeDomain;
 import com.cb.domain.MajorDomain;
 import com.cb.service.IClassService;
 import com.cb.service.ICollegeService;
+import com.cb.service.IGradeService;
 import com.cb.service.IMajorService;
 import com.cb.service.IStudentService;
 import com.cb.util.Consts;
@@ -37,6 +39,7 @@ import com.system.util.PageInfo;
 @RequestMapping("/student")
 public class StudentController {
 
+	@Resource private IGradeService gradeService;
 	@Resource private IMajorService majorService;
 	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
@@ -131,10 +134,12 @@ public class StudentController {
 	@RequestMapping("/studentAdd")
 	public String dostudentAdd(Model model)throws Exception{
 		
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
 		List<ClassDomain> classList=classService.doGetFilterList();
 		List<MajorDomain> majorList=majorService.doGetFilterList();
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		
+		model.addAttribute("gradeList", gradeList);
 		model.addAttribute("classList", classList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
