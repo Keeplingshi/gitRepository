@@ -7,6 +7,13 @@
 	<welcome-file-list>
 		<welcome-file>/WEB-INF/views/login.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<jsp-config>
+		<taglib>
+	        <taglib-uri>/csystem-taglib</taglib-uri>
+	        <taglib-location>/WEB-INF/tags/codebook.tld</taglib-location>
+		</taglib>
+	</jsp-config>
 
 	<!--**********************   配置log4j路径     ************************** -->
  	<context-param>

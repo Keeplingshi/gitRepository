@@ -57,4 +57,13 @@ public interface ICodeBookService {
 	 * @throws Exception
 	 */
 	public List<CodeBookDomain> doGetCodeBookByType(String type)throws Exception;
+	
+	/**
+	 * 通过值和类型获取名字
+	 * @param value
+	 * @param type
+	 * @return
+	 * @throws Exception
+	 */
+	public String doGetNameByValueAndType(String value,String type)throws Exception;
 }

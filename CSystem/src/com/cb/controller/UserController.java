@@ -20,6 +20,7 @@ import com.cb.domain.RoleDomain;
 import com.cb.domain.UserDomain;
 import com.cb.service.IRoleService;
 import com.cb.service.IUserService;
+import com.cb.util.CodeBookHelper;
 import com.cb.util.Consts;
 import com.system.util.PageInfo;
 

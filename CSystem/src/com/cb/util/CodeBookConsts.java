@@ -8,24 +8,24 @@ package com.cb.util;
 public class CodeBookConsts {
 
 	/**
-	 * 政治面貌：8001   A-党员  B-预备党员  C-团员  D-群众
+	 * 政治面貌：8001   1-党员  2-预备党员  3-团员  4-群众
 	 */
-	public static final String POLITICALSTATUE_TYPE_A="A";
+	public static final String POLITICALSTATUE_TYPE_A="1";
 	
 	/**
-	 * 政治面貌：8001   A-党员  B-预备党员  C-团员  D-群众
+	 * 政治面貌：8001   1-党员  2-预备党员  3-团员  4-群众
 	 */
-	public static final String POLITICALSTATUE_TYPE_B="B";
+	public static final String POLITICALSTATUE_TYPE_B="2";
 	
 	/**
-	 * 政治面貌：8001   A-党员  B-预备党员  C-团员  D-群众
+	 * 政治面貌：8001   1-党员  2-预备党员  3-团员  4-群众
 	 */
-	public static final String POLITICALSTATUE_TYPE_C="C";
+	public static final String POLITICALSTATUE_TYPE_C="3";
 	
 	/**
-	 * 政治面貌：8001   A-党员  B-预备党员  C-团员  D-群众
+	 * 政治面貌：8001   1-党员  2-预备党员  3-团员  4-群众
 	 */
-	public static final String POLITICALSTATUE_TYPE_D="D";
+	public static final String POLITICALSTATUE_TYPE_D="4";
 	
 	
 }

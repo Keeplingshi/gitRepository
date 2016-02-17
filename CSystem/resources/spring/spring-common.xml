@@ -115,4 +115,6 @@
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>  
 	<!-- =================  Shiro权限控制配置         =================== -->
 	
+	<bean id="SpringContextUtil" class="com.cb.util.SpringContextUtil" scope="singleton"></bean>
+	
 </beans>
