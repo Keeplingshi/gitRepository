@@ -3,6 +3,7 @@ package com.cb.service;
 import java.util.List;
 
 import com.cb.domain.ClassDomain;
+import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
 
 public interface IClassService {
@@ -63,4 +64,11 @@ public interface IClassService {
 	 * @throws Exception
 	 */
 	public boolean doDeleteByIds(String[] classIds)throws Exception;
+
+	/**
+	 * 根据专业查找班级
+	 * @param major_id
+	 * @return
+	 */
+	public List<SelectItem> dogetClasssByMajorId(String major_id)throws Exception;
 }

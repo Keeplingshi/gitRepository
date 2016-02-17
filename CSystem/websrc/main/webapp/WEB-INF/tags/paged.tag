@@ -80,12 +80,17 @@
 
 	$("#first_grid-pager").click(function(){
 		$("#currentPageNo").val("1");
+		layer.msg("第一页！", {
+			offset: ['260px'],
+			time: 1500//1.5s后自动关闭
+		});
 		doPage();
 	});
 	
 	$("#prev_grid-pager").click(function(){
 		if("${pageInfo.currentPageNo}"==1){
 			layer.msg("当前为第一页！", {
+				offset: ['260px'],
 				time: 1500//1.5s后自动关闭
 			});
 			return;
@@ -97,6 +102,7 @@
 	$("#next_grid-pager").click(function(){
  		if("${pageInfo.currentPageNo}"=="${pageInfo.totalPages}"){
 			layer.msg("当前为最后一页！", {
+				offset: ['260px'],
 				time: 1500//1.5s后自动关闭
 			});
 			return;
@@ -107,6 +113,10 @@
 	
 	$("#last_grid-pager").click(function(){
 		$("#currentPageNo").val("${pageInfo.totalPages}");
+		layer.msg("最后一页！", {
+			offset: ['260px'],
+			time: 1500//1.5s后自动关闭
+		});
 		doPage();
 	});
 	

@@ -88,6 +88,7 @@
 	        title: '新增专业',
 	        shadeClose: true, //点击遮罩关闭层
 	        area : ['380px' , '280px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/major/majorAdd',
 	        end: function(){
 				//默认加载专业列表
@@ -106,6 +107,7 @@
 	        title: '查看专业',
 	        shadeClose: true,
 	        area : ['380px' , '280px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/major/majorView/'+majorId
 	    });
 	}
@@ -118,6 +120,7 @@
 	        title: '修改专业',
 	        shadeClose: true,
 	        area : ['380px' , '280px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/major/majorEdit/'+majorId,
 	        end: function(){
 	        	//默认加载用户列表

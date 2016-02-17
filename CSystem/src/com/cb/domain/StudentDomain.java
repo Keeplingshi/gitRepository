@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 学生表
@@ -26,6 +27,7 @@ public class StudentDomain {
 	private String stuId;	//学号
 	private String name;	//姓名
 	private Integer sex;	//性别 0,男性   1,女性
+	@DateTimeFormat( pattern = "yyyy-MM-dd" )
 	private Date birthday;	//出生日期
 	private Integer politicalStatus;	//政治面貌
 	private String IDnumber;	//身份证号

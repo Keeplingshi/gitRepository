@@ -49,11 +49,13 @@ public interface IStudentService {
 	 * 搜索功能
 	 * @param pageInfo
 	 * @param collegeId
+	 * @param majorId
+	 * @param classId 
 	 * @param searchText
 	 * @return
 	 * @throws Exception
 	 */
-	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo, String searchText)throws Exception;
+	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo, String collegeId, String majorId, String classId, String searchText)throws Exception;
 
 	/**
 	 * 批量删除

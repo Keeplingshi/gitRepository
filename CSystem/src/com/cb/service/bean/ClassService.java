@@ -1,5 +1,6 @@
 package com.cb.service.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cb.dao.IClassDao;
 import com.cb.domain.ClassDomain;
 import com.cb.service.IClassService;
+import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
 
 /**
@@ -123,6 +125,26 @@ public class ClassService implements IClassService{
 		}
 		
 		return b;
+	}
+
+	/**
+	 * @see com.cb.service.IClassService#dogetClasssByMajorId(java.lang.String)
+	 */
+	@Override
+	public List<SelectItem> dogetClasssByMajorId(String major_id)
+			throws Exception {
+		// TODO Auto-generated method stub
+		List<SelectItem> selectList=new ArrayList<>();
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(ClassDomain.class);
+		if(major_id!=null&&!"".equals(major_id)){
+			detachedCriteria.add(Restrictions.eq("major.id", major_id));
+		}
+		List<ClassDomain> classList=classDao.getFilterList(detachedCriteria);
+		for(ClassDomain classDomain:classList){
+			selectList.add(new SelectItem(classDomain.getId(),classDomain.getName()));
+		}
+		
+		return selectList;
 	}
 
 }

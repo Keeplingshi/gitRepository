@@ -170,6 +170,13 @@ public class MajorController {
 		return Consts.ERROR;
 	}
 	
+	/**
+	 * 根据学院查找专业
+	 * @param model
+	 * @param college_id
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/getMajorByCollege")
 	@ResponseBody
 	public String dogetMajorByCollege(Model model,String college_id)throws Exception{

@@ -28,7 +28,7 @@
 					<c:forEach items="${gradelist }" var="gradeDomain">
 						<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
 					</c:forEach>
-				</select>			
+				</select>
 			</td>
 		</tr>
 		<tr>

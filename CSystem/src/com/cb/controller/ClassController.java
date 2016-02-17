@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -216,5 +218,23 @@ public class ClassController {
 		}
 		
 		return Consts.ERROR;
+	}
+	
+	/**
+	 * 根据专业查找相应班级
+	 * @param model
+	 * @param major_id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getClassByMajor")
+	@ResponseBody
+	public String dogetClassByMajor(Model model,String major_id)throws Exception{
+		
+		List<SelectItem> classList=classService.dogetClasssByMajorId(major_id);
+		
+		JSONArray jsonArray=JSONArray.fromObject(classList);
+		return jsonArray.toString();
+		
 	}
 }

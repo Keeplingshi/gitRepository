@@ -3,6 +3,7 @@
 <!-- 学生列表页面 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@	taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
@@ -28,7 +29,7 @@
 		</select>
 		
 		<label style="margin-left: 20px;">专业：</label>
-		<select id="major_select_id" style="width: 100px;">
+		<select id="major_select_id" style="width: 100px;" onchange="getClass(this.value)">
 			<option value="" selected="selected">全部</option>
 			<c:forEach items="${majorList }" var="majorItem">
 				<option value="${majorItem.selectText }">${majorItem.selectValue}</option>
@@ -39,7 +40,7 @@
 		<select id="class_select_id" style="width: 100px;">
 			<option value="" selected="selected">全部</option>
 			<c:forEach items="${classList }" var="classItem">
-				<option value="${classItem.id }">${classItem.name}</option>
+				<option value="${classItem.selectText }">${classItem.selectValue}</option>
 			</c:forEach>
 		</select>
 	
@@ -81,19 +82,19 @@
 						</td>
 						<td>${studentDomain.stuId }</td>
 						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
-						<td>${studentDomain.name }</td>
+						<td>${studentDomain.sex }</td>
+						<td><fmt:formatDate value="${studentDomain.birthday }" type="date"/></td>
+						<td>${studentDomain.politicalStatus }</td>
+						<td>${studentDomain.IDnumber }</td>
+						<td>${studentDomain.nativePlace }</td>
+						<td>${studentDomain.dormitory }</td>
+						<td>${studentDomain.classDomain.grade.grade }</td>
+						<td>${studentDomain.classDomain.major.college.name }</td>
+						<td>${studentDomain.classDomain.major.name }</td>
+						<td>${studentDomain.classDomain.name }</td>
+						<td>${studentDomain.email }</td>
+						<td>${studentDomain.telephone }</td>
+						<td>${studentDomain.cellphone }</td>
 						<td style="width: 260px">
 							<input type="button" class="btn_list_view" value="查看" onclick="viewstudent('${studentDomain.id }')"/>
 							<input type="button" class="btn_list_update" value="修改" onclick="updatestudent('${studentDomain.id }')"/>  
@@ -110,13 +111,18 @@
 
 <script type="text/javascript">
 
-	//使权限下拉框默认选择
+	//使下拉框默认选择
 	$(function(){
 		$("#college_select_id option[value='${collegeId}']").attr("selected",true);
 		$("#major_select_id option[value='${majorId}']").attr("selected",true);
+		$("#class_select_id option[value='${classId}']").attr("selected",true);
 	});
 	
  	//下拉框选择后给隐藏域赋值
+ 	$("#class_select_id").change(function(){
+		var classIdVal=$(this).children('option:selected').val();
+		$("#classId").val(classIdVal);
+	});
 	$("#major_select_id").change(function(){
 		var majorIdVal=$(this).children('option:selected').val();
 		$("#majorId").val(majorIdVal);
@@ -140,6 +146,7 @@
 	        title: '新增学生',
 	        shadeClose: true, //点击遮罩关闭层
 	        area : ['700px' , '500px'],
+	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/student/studentAdd',
 	        end: function(){
 				//默认加载学生列表
@@ -258,6 +265,16 @@
 			
 		});
 	});
+	
+	//点击表格标题栏，选中所有checkbox框
+	$('table th input:checkbox').on('click' , function(){
+		
+		var that=this;		
+ 		$(this).closest('table').find('tr > td:first-child input:checkbox').each(function(){
+			this.checked = that.checked;
+			$(this).closest('tr').toggleClass('selected');
+		});
+	});
 
 	//选择学院，得到专业
 	function getMajor(college_id)
@@ -279,15 +296,23 @@
 		});
 	}
 	
-	//点击表格标题栏，选中所有checkbox框
-	$('table th input:checkbox').on('click' , function(){
-		
-		var that=this;		
- 		$(this).closest('table').find('tr > td:first-child input:checkbox').each(function(){
-			this.checked = that.checked;
-			$(this).closest('tr').toggleClass('selected');
+	//选择专业，得到班级
+	function getClass(major_id)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/class/getClassByMajor?major_id='+major_id,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var class_select=$("#class_select_id");
+				class_select.empty();
+				class_select.append('<option value="">'+"全部"+'</option>');
+				for(var i=0;i<json.length;i++){
+					class_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				} 
+			}
 		});
-	});
-
-		
+	}
 </script>

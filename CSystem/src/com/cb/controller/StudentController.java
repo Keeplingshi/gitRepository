@@ -72,7 +72,7 @@ public class StudentController {
 		
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-		List<ClassDomain> classList=classService.doGetFilterList();
+		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
 		List<StudentDomain> studentList=studentService.doGetPageList(pageInfo);
 		
 		model.addAttribute("collegeList", collegeList);
@@ -96,15 +96,18 @@ public class StudentController {
 	 */
 	@RequestMapping("/studentSearchList")
 	public String dostudentSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,String collegeId,String majorId,String searchText)throws Exception{
+			,BindingResult bindingResult,Model model,String collegeId,String majorId,String classId,String searchText)throws Exception{
 		
-		//List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,collegeId,majorId, searchText);
+		List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,collegeId,majorId,classId,searchText);
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
-		
+		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
+
+		model.addAttribute("studentList", studentList);
+		model.addAttribute("classList", classList);
 		model.addAttribute("collegeList", collegeList);
 		model.addAttribute("majorList", majorList);
-		//model.addAttribute("studentList", studentList);
+		model.addAttribute("classId", classId);
 		model.addAttribute("majorId", majorId);
 		model.addAttribute("collegeId", collegeId);
 		model.addAttribute("searchText", searchText);
@@ -187,6 +190,7 @@ public class StudentController {
 	public String doSave(@Valid @ModelAttribute("domain") StudentDomain domain,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
+			System.out.println(result);
 			return Consts.ERROR;
 		} else {
 			if(studentService.doSave(domain)){

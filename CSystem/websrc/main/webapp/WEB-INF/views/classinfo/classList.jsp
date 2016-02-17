@@ -107,6 +107,7 @@
 	        title: '新增班级',
 	        shadeClose: true, //点击遮罩关闭层
 	        area : ['380px' , '300px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/class/classAdd',
 	        end: function(){
 				//默认加载班级列表
@@ -125,6 +126,7 @@
 	        title: '查看班级',
 	        shadeClose: true,
 	        area : ['380px' , '300px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/class/classView/'+classId
 	    });
 	}
@@ -137,6 +139,7 @@
 	        title: '修改班级',
 	        shadeClose: true,
 	        area : ['380px' , '320px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/class/classEdit/'+classId,
 	        end: function(){
 	        	//默认加载用户列表

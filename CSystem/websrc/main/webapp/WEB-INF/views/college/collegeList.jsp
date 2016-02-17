@@ -51,6 +51,7 @@
 	        title: '新增学院',
 	        shadeClose: true, //点击遮罩关闭层
 	        area : ['380px' , '180px'],
+	        offset: ['240px'],
 	        content: '${pageContext.request.contextPath}/college/collegeAdd',
 	        end: function(){
 				//默认加载用户列表
@@ -69,6 +70,7 @@
 	        title: '查看学院',
 	        shadeClose: true,
 	        area : ['380px' , '180px'],
+	        offset: ['240px'],
 	        content: '${pageContext.request.contextPath}/college/collegeView/'+collegeId
 	    });
 	}

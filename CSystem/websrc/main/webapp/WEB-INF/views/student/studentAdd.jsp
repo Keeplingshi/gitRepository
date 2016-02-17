@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>		
 
-<!-- 增加学院界面 -->
+<!-- 增加学生界面 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -11,7 +11,9 @@
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 <script src="${pageContext.request.contextPath}/resources/plugins/datePicker/WdatePicker.js"></script>
 
-<form id="classAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/class/save" method="post">
+<form id="studentAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/student/save" method="post">
+	<input type="hidden" id="politicalStatusId" name="politicalStatus" value=""/>
+	<input type="hidden" id="classId" name="classDomain.id" value=""/>
 	<table>
 		<tr>
 			<td class="lesta-150">学号：</td>
@@ -46,12 +48,12 @@
 		<tr>
 			<td class="lesta-150">性别：</td>
 			<td class="lestb">
-				<input type="radio" name="sex" value="0" />男
+				<input type="radio" name="sex" value="0" checked="checked"/>男
 				<input type="radio" name="sex" value="1" />女
 			</td>
 			<td class="lesta-150">专业：</td>
 			<td class="lestb">
-				<select id="major_select_add_id" class="select_style">
+				<select id="major_select_add_id" class="select_style" onchange="getClass(this.value)">
 					<option value="" selected="selected">选择</option>
 					<c:forEach items="${majorList }" var="majorDomain">
 						<option value="${majorDomain.id }">${majorDomain.name}</option>
@@ -121,6 +123,94 @@
 
 <script>
 
+	//下拉框选择后给隐藏域赋值
+	$("#politicalStatus_select_add_id").change(function(){
+		var politicalStatus_id=$(this).children('option:selected').val();
+		$("#politicalStatusId").val(politicalStatus_id);
+	});
+	
+	//下拉框选择后给隐藏域赋值
+	$("#class_select_add_id").change(function(){
+		var class_id=$(this).children('option:selected').val();
+		$("#classId").val(class_id);
+	});
+	
+	$("#saveButton").click(function(){
+		
+		var stuIdVal=$("#stuId").val();		//学号
+		var stunameVal=$("#stuname").val();	//姓名
+		var classIdVal=$("#classId").val();	//班级
+		
+		if(stuIdVal==null||stuIdVal==''){
+			layer.tips('姓名不能为空', '#stuId');
+			return;
+		}
 
+		if(stunameVal==null||stunameVal==''){
+			layer.tips('学号不能为空', '#stuname');
+			return;
+		}
+		
+		if(classIdVal==null||classIdVal==''){
+			layer.tips('班级不能为空', '#class_select_add_id');
+			return;
+		}
+		
+		var form = $("#studentAddFormId");
+		form.ajaxSubmit(function(result){
+			if(result=='success'){
 
+				parent.layer.msg('添加成功', {
+     		        time: 1500//1.5s后自动关闭
+     		    });
+				//关闭当前新增页面页
+				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+				parent.layer.close(index); //再执行关闭    
+			}else{
+				layer.msg('新增失败');
+			}
+		});
+		
+	});
+
+	//选择学院，得到专业
+	function getMajor(college_id)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/major/getMajorByCollege?college_id='+college_id,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var major_select=$("#major_select_add_id");
+				major_select.empty();
+				major_select.append('<option value="">'+"选择"+'</option>');
+				for(var i=0;i<json.length;i++){
+					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				} 
+			}
+		});
+	}
+	
+	//选择专业，得到班级
+	function getClass(major_id)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/class/getClassByMajor?major_id='+major_id,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var class_select=$("#class_select_add_id");
+				class_select.empty();
+				class_select.append('<option value="">'+"选择"+'</option>');
+				for(var i=0;i<json.length;i++){
+					class_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				} 
+			}
+		});
+	}
+	
 </script>

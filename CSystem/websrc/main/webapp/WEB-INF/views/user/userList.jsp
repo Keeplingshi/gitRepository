@@ -94,6 +94,7 @@
 	        title: '新增用户',
 	        shadeClose: true, //点击遮罩关闭层
 	        area : ['380px' , '280px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/user/userAdd',
 	        end: function(){
 				//默认加载用户列表
@@ -163,6 +164,7 @@
 	        title: '修改用户',
 	        shadeClose: true,
 	        area : ['380px' , '280px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/user/userEdit/'+userId,
 	        end: function(){
 	        	//默认加载用户列表
@@ -181,6 +183,7 @@
 	        title: '查看用户',
 	        shadeClose: true,
 	        area : ['380px' , '280px'],
+	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/user/userView/'+userId
 	    });
 	}

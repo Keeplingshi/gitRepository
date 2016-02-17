@@ -5,6 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,16 +85,6 @@ public class StudentService implements IStudentService{
 	}
 
 	/**
-	 * @see com.cb.service.IStudentService#doSearchstudentPageList(com.system.util.PageInfo, java.lang.String)
-	 */
-	@Override
-	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo,
-			String searchText) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
 	 * @see com.cb.service.IStudentService#doDeleteByIds(java.lang.String[])
 	 */
 	@Override
@@ -106,6 +99,49 @@ public class StudentService implements IStudentService{
 		}
 		
 		return b;
+	}
+
+	/**
+	 * @see com.cb.service.IStudentService#doSearchstudentPageList(com.system.util.PageInfo, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo,
+			String collegeId, String majorId, String classId, String searchText)
+			throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(StudentDomain.class);
+		
+		//班级过滤
+		if(classId!=null&&!"".equals(classId)){
+			detachedCriteria.add(Restrictions.eq("classDomain.id", classId));
+		}else{
+			if(majorId!=null&&!"".equals(majorId)){
+				//专业过滤
+				detachedCriteria.createAlias("classDomain", "clazz");
+				detachedCriteria.createAlias("clazz.major", "qmajor");
+				detachedCriteria.add(Restrictions.eq("qmajor.id", majorId));
+			}else{
+				if(collegeId!=null&&!"".equals(collegeId)){
+					//学院过滤
+					detachedCriteria.createAlias("classDomain", "clazz");
+					detachedCriteria.createAlias("clazz.major", "qmajor");
+					detachedCriteria.createAlias("qmajor.college", "qcollege");
+					detachedCriteria.add(Restrictions.eq("qcollege.id", collegeId));
+				}
+			}
+		}
+		
+		if(searchText!=null&&!"".equals(searchText)){
+			//多条件过滤，此处名字，宿舍，籍贯
+			Disjunction disjunction = Restrictions.disjunction();  
+			disjunction.add(Restrictions.like("name", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
+			disjunction.add(Restrictions.like("dormitory", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
+			disjunction.add(Restrictions.like("nativePlace", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
+	              
+			detachedCriteria.add(disjunction);  
+		}
+		
+		return studentDao.getPageList(detachedCriteria, pageInfo);
 	}
 
 }
