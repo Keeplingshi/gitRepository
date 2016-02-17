@@ -18,7 +18,7 @@
 		<tr>
 			<td class="lesta-150">所在年级：</td>
 			<td class="lestb">
-				${classDomain.gradeId }
+				${classDomain.grade.grade }
 			</td>
 		</tr>
 		<tr>

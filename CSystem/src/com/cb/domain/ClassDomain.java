@@ -1,12 +1,17 @@
 package com.cb.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -24,7 +29,9 @@ public class ClassDomain {
 	private String name;	//名称
 	//private String majorId;	//所属专业
 	private MajorDomain major;	//所属专业
-	private String gradeId;	//所属年级
+	//private String gradeId;	//所属年级
+	private GradeDomain grade;
+	private Set<StudentDomain> students=new HashSet<StudentDomain>();
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -62,13 +69,31 @@ public class ClassDomain {
 		this.major = major;
 	}
 	
-	@Column(name = "GRADEID", nullable = false, length = 100)
-	public String getGradeId() {
-		return gradeId;
-	}
+//	@Column(name = "GRADEID", nullable = false, length = 100)
+//	public String getGradeId() {
+//		return gradeId;
+//	}
+//	
+//	public void setGradeId(String gradeId) {
+//		this.gradeId = gradeId;
+//	}
 	
-	public void setGradeId(String gradeId) {
-		this.gradeId = gradeId;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "GRADEID")
+	public GradeDomain getGrade() {
+		return grade;
+	}
+	public void setGrade(GradeDomain grade) {
+		this.grade = grade;
+	}	
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "classDomain", fetch = FetchType.LAZY)
+	public Set<StudentDomain> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<StudentDomain> students) {
+		this.students = students;
 	}
 	
 }

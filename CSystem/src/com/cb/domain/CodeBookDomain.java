@@ -2,8 +2,11 @@ package com.cb.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -23,7 +26,12 @@ public class CodeBookDomain {
 	private String type;	//类型
 	private String remark;	//备注
 	private String parentId;	//父节点
+	private CodeBookDomain codeBookDomain;
 	
+	public CodeBookDomain(){
+		
+	}
+
 	@Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name = "system-uuid",strategy="uuid")
@@ -51,7 +59,7 @@ public class CodeBookDomain {
 		this.value = value;
 	}
 	
-	@Column(name = "TYPE", unique=true ,nullable = false, length = 100)
+	@Column(name = "TYPE",nullable = false, length = 100)
 	public String getType() {
 		return type;
 	}
@@ -74,5 +82,15 @@ public class CodeBookDomain {
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENTID", insertable = false, updatable = false)
+	public CodeBookDomain getCodeBookDomain() {
+		return codeBookDomain;
+	}
+	public void setCodeBookDomain(CodeBookDomain codeBookDomain) {
+		this.codeBookDomain = codeBookDomain;
+	}
+	
 	
 }

@@ -1,9 +1,15 @@
 package com.cb.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -19,6 +25,7 @@ public class GradeDomain {
 
 	private String id;
 	private Integer grade;
+	private Set<ClassDomain> classes=new HashSet<ClassDomain>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -37,6 +44,14 @@ public class GradeDomain {
 	}
 	public void setGrade(Integer grade) {
 		this.grade = grade;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "grade", fetch = FetchType.LAZY)
+	public Set<ClassDomain> getClasses() {
+		return classes;
+	}
+	public void setClasses(Set<ClassDomain> classes) {
+		this.classes = classes;
 	}
 	
 	

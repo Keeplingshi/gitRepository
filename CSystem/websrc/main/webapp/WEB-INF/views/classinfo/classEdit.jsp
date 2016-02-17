@@ -11,6 +11,7 @@
 
 <form id="classEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/class/save" method="post">
 	<input type="hidden" id="id" name="id" value="${classDomain.id }" />
+	<input type="hidden" id="gradeId" name="grade.id" value="${classDomain.grade.id }" />
 	<input type="hidden" id="majorId" name="major.id" value="${classDomain.major.id }" />
 	<table>
 		<tr>
@@ -22,7 +23,12 @@
 		<tr>
 			<td class="lesta-150">所属年级：</td>
 			<td class="lestb">
-				<input type="text" id="gradeId" name="gradeId" class="input_text_a" placeholder="请输入年级" value="${classDomain.gradeId }">
+				<select id="grade_select_add_id" class="select_style" onchange="getGrade(this.value)">
+					<option value="" selected="selected">选择</option>
+					<c:forEach items="${gradelist }" var="gradeDomain">
+						<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
+					</c:forEach>
+				</select>			
 			</td>
 		</tr>
 		<tr>
@@ -55,6 +61,7 @@
 	$(function(){
 		$("#college_select_add_id option[value='${classDomain.major.college.id}']").attr("selected",true);
 		$("#major_select_add_id option[value='${classDomain.major.id}']").attr("selected",true);
+		$("#grade_select_add_id option[value='${classDomain.grade.id}']").attr("selected",true);
 	});
 
 	//选择学院，得到专业
@@ -86,6 +93,11 @@
 	$("#major_select_add_id").change(function(){
 		var major_id=$(this).children('option:selected').val();
 		$("#majorId").val(major_id);
+	});
+	
+	$("#grade_select_add_id").change(function(){
+		var grade_id=$(this).children('option:selected').val();
+		$("#gradeId").val(grade_id);
 	});
 	
 	$("#saveButton").click(function(){

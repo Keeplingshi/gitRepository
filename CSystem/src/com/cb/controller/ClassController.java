@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.ClassDomain;
 import com.cb.domain.CollegeDomain;
+import com.cb.domain.GradeDomain;
 import com.cb.domain.MajorDomain;
 import com.cb.service.IClassService;
 import com.cb.service.ICollegeService;
+import com.cb.service.IGradeService;
 import com.cb.service.IMajorService;
 import com.cb.util.Consts;
 import com.cb.util.SelectItem;
@@ -38,6 +40,7 @@ public class ClassController {
 	@Resource private IMajorService majorService;
 	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
+	@Resource private IGradeService gradeService;
 	
 	/**
 	 * 过滤起前台pageInfo
@@ -125,9 +128,11 @@ public class ClassController {
 	@RequestMapping("/classAdd")
 	public String doclassAdd(Model model)throws Exception{
 		
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
 		List<MajorDomain> majorList=majorService.doGetFilterList();
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		
+		model.addAttribute("gradeList", gradeList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
 		
@@ -146,10 +151,12 @@ public class ClassController {
 		
 		//获取class信息
 		ClassDomain classDomain=classService.doGetById(id);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
 		List<MajorDomain> majorList=majorService.doGetFilterList();
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		
 		model.addAttribute("classDomain", classDomain);
+		model.addAttribute("gradelist",gradeList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
 		

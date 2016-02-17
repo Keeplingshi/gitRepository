@@ -2,10 +2,13 @@ package com.cb.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -28,8 +31,8 @@ public class StudentDomain {
 	private String IDnumber;	//身份证号
 	private String nativePlace;	//籍贯
 	private String dormitory;	//宿舍号
-	private String gradeId;		//年级
-	private String classId;		//班级，通过班级可以查到专业学院
+	//private String classId;		//班级，通过班级可以查到专业学院
+	private ClassDomain classDomain;	//班级,通过班级可以查到专业学院所处年级
 	private String email;	//电子邮件
 	private String telephone;	//联系电话
 	private String cellphone;	//手机
@@ -109,20 +112,22 @@ public class StudentDomain {
 		this.dormitory = dormitory;
 	}
 	
-	@Column(name = "GRADEID", nullable = true, length = 100)
-	public String getGradeId() {
-		return gradeId;
-	}
-	public void setGradeId(String gradeId) {
-		this.gradeId = gradeId;
-	}
+//	
+//	@Column(name = "CLASSID", nullable = true, length = 100)
+//	public String getClassId() {
+//		return classId;
+//	}
+//	public void setClassId(String classId) {
+//		this.classId = classId;
+//	}
 	
-	@Column(name = "CLASSID", nullable = true, length = 100)
-	public String getClassId() {
-		return classId;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "CLASSID")
+	public ClassDomain getClassDomain() {
+		return classDomain;
 	}
-	public void setClassId(String classId) {
-		this.classId = classId;
+	public void setClassDomain(ClassDomain classDomain) {
+		this.classDomain = classDomain;
 	}
 	
 	@Column(name = "EMAIL", nullable = true, length = 100)

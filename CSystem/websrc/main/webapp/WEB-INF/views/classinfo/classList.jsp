@@ -46,6 +46,8 @@
 					</th>
 					<th>班级名称</th>
 					<th>所属专业</th>
+					<th>所属学院</th>
+					<th>所属年级</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -58,6 +60,8 @@
 						</td>
 						<td>${classDomain.name }</td>
 						<td>${classDomain.major.name }</td>
+						<td>${classDomain.major.college.name }</td>
+						<td>${classDomain.grade.grade }</td>
 						<td style="width: 260px">
 							<input type="button" class="btn_list_view" value="查看" onclick="viewclass('${classDomain.id }')"/>
 							<input type="button" class="btn_list_update" value="修改" onclick="updateclass('${classDomain.id }')"/>  

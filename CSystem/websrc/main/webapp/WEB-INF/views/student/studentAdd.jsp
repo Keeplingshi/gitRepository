@@ -12,7 +12,6 @@
 <script src="${pageContext.request.contextPath}/resources/plugins/datePicker/WdatePicker.js"></script>
 
 <form id="classAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/class/save" method="post">
-	<input type="hidden" id="majorId" name="major.id" value="" />
 	<table>
 		<tr>
 			<td class="lesta-150">学号：</td>

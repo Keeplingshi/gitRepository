@@ -17,15 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.domain.ClassDomain;
+import com.cb.domain.CodeBookDomain;
 import com.cb.domain.GradeDomain;
 import com.cb.domain.StudentDomain;
 import com.cb.domain.CollegeDomain;
 import com.cb.domain.MajorDomain;
 import com.cb.service.IClassService;
+import com.cb.service.ICodeBookService;
 import com.cb.service.ICollegeService;
 import com.cb.service.IGradeService;
 import com.cb.service.IMajorService;
 import com.cb.service.IStudentService;
+import com.cb.util.CodeBookConstsType;
 import com.cb.util.Consts;
 import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
@@ -45,6 +48,7 @@ public class StudentController {
 	@Resource private IClassService classService;
 	@Resource private IStudentService studentService;
 	
+	@Resource private ICodeBookService codeBookService;
 	
 	/**
 	 * 过滤起前台pageInfo
@@ -134,11 +138,13 @@ public class StudentController {
 	@RequestMapping("/studentAdd")
 	public String dostudentAdd(Model model)throws Exception{
 		
+		List<CodeBookDomain> politicalStatusList=codeBookService.doGetCodeBookByType(CodeBookConstsType.POLITICALSTATUE_TYPE);
 		List<GradeDomain> gradeList=gradeService.doGetFilterList();
 		List<ClassDomain> classList=classService.doGetFilterList();
 		List<MajorDomain> majorList=majorService.doGetFilterList();
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		
+		model.addAttribute("politicalStatusList", politicalStatusList);
 		model.addAttribute("gradeList", gradeList);
 		model.addAttribute("classList", classList);
 		model.addAttribute("majorList", majorList);

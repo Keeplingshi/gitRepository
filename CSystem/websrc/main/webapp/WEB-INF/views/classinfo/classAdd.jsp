@@ -11,6 +11,7 @@
 
 <form id="classAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/class/save" method="post">
 	<input type="hidden" id="majorId" name="major.id" value="" />
+	<input type="hidden" id="gradeId" name="grade.id" value="" />
 	<table>
 		<tr>
 			<td class="lesta-150">班级名称：</td>
@@ -21,7 +22,12 @@
 		<tr>
 			<td class="lesta-150">所属年级：</td>
 			<td class="lestb">
-				<input type="text" id="gradeId" name="gradeId" class="input_text_a" placeholder="请输入年级">
+				<select id="grade_select_add_id" class="select_style" onchange="getGrade(this.value)">
+					<option value="" selected="selected">选择</option>
+					<c:forEach items="${gradeList }" var="gradeDomain">
+						<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
+					</c:forEach>
+				</select>
 			</td>
 		</tr>
 		<tr>
@@ -71,16 +77,17 @@
 			}
 		});
 	}
-
-/* 	//下拉框选择后给隐藏域赋值
-	$("#college_select_add_id").change(function(){
-
-	}); */
 	
 	//下拉框选择后给隐藏域赋值
 	$("#major_select_add_id").change(function(){
 		var major_id=$(this).children('option:selected').val();
 		$("#majorId").val(major_id);
+	});
+	
+	//下拉框选择后给隐藏域赋值
+	$("#grade_select_add_id").change(function(){
+		var grade_id=$(this).children('option:selected').val();
+		$("#gradeId").val(grade_id);
 	});
 	
 	$("#saveButton").click(function(){
