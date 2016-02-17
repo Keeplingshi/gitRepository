@@ -37,7 +37,7 @@
 		<tr>
 			<td class="lesta-150">性别：</td>
 			<td class="lestb" style="width:150px;">
-				${studentDomain.sex }
+				${cusfun:getNameByValueAndType(studentDomain.sex,"8002")}
 			</td>
 			<td class="lesta-150">专业：</td>
 			<td class="lestb" style="width:150px;">
@@ -57,7 +57,7 @@
 		<tr>
 			<td class="lesta-150">政治面貌：</td>
 			<td class="lestb" style="width:150px;">
-				${cusfun:getNameByValueAndType("1","8001")}
+				${cusfun:getNameByValueAndType(studentDomain.politicalStatus,"8001")}
 			</td>
 			<td class="lesta-150">电子邮件：</td>
 			<td class="lestb" style="width:150px;">

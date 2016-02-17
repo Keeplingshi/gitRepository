@@ -27,5 +27,13 @@ public class CodeBookConsts {
 	 */
 	public static final String POLITICALSTATUE_TYPE_D="4";
 	
-	
+	/**
+	 * 性别：8002    0-男  1-女
+	 */
+	public static final String SEX_TYPE_A="0";
+
+	/**
+	 * 性别：8002    0-男  1-女
+	 */
+	public static final String SEX_TYPE_B="1";
 }

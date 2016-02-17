@@ -23,12 +23,12 @@ import com.cb.domain.StudentDomain;
 import com.cb.domain.CollegeDomain;
 import com.cb.domain.MajorDomain;
 import com.cb.service.IClassService;
-import com.cb.service.ICodeBookService;
 import com.cb.service.ICollegeService;
 import com.cb.service.IGradeService;
 import com.cb.service.IMajorService;
 import com.cb.service.IStudentService;
 import com.cb.util.CodeBookConstsType;
+import com.cb.util.CodeBookHelper;
 import com.cb.util.Consts;
 import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
@@ -47,8 +47,6 @@ public class StudentController {
 	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
 	@Resource private IStudentService studentService;
-	
-	@Resource private ICodeBookService codeBookService;
 	
 	/**
 	 * 过滤起前台pageInfo
@@ -141,7 +139,7 @@ public class StudentController {
 	@RequestMapping("/studentAdd")
 	public String dostudentAdd(Model model)throws Exception{
 		
-		List<CodeBookDomain> politicalStatusList=codeBookService.doGetCodeBookByType(CodeBookConstsType.POLITICALSTATUE_TYPE);
+		List<CodeBookDomain> politicalStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.POLITICALSTATUE_TYPE);
 		List<GradeDomain> gradeList=gradeService.doGetFilterList();
 		List<ClassDomain> classList=classService.doGetFilterList();
 		List<MajorDomain> majorList=majorService.doGetFilterList();
@@ -170,10 +168,16 @@ public class StudentController {
 		StudentDomain studentDomain=studentService.doGetById(id);
 		List<MajorDomain> majorList=majorService.doGetFilterList();
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<ClassDomain> classList=classService.doGetFilterList();
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		List<CodeBookDomain> politicalStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.POLITICALSTATUE_TYPE);
 		
+		model.addAttribute("politicalStatusList", politicalStatusList);
 		model.addAttribute("studentDomain", studentDomain);
+		model.addAttribute("classList", classList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("gradeList", gradeList);
 		
 		return "/student/studentEdit";
 	}

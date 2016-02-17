@@ -12,4 +12,8 @@ public class CodeBookConstsType {
 	 */
 	public static final String POLITICALSTATUE_TYPE="8001";
 	
+	/**
+	 * 性别：8002
+	 */
+	public static final String SEX_TYPE="8002";
 }

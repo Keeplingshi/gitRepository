@@ -5,8 +5,6 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.cb.domain.CodeBookDomain;
-
 /**
  * @author chen
  *

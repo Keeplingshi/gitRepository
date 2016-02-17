@@ -1,5 +1,8 @@
 package com.cb.util;
 
+import java.util.List;
+
+import com.cb.domain.CodeBookDomain;
 import com.cb.service.ICodeBookService;
 
 /**
@@ -10,17 +13,33 @@ public class CodeBookHelper {
 
 	private static ICodeBookService codeBookService=(ICodeBookService)SpringContextUtil.getBean("codeBookService");
 	
+	/**
+	 * 根据值和类型获取名称
+	 * @param value
+	 * @param type
+	 * @return
+	 */
 	public static String getNameByValueAndType(String value,String type)
 	{
 		String name="";
 		try {
 			name = codeBookService.doGetNameByValueAndType(value, type);
-			System.out.println(name);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return name;
+	}
+	
+	/**
+	 * 根据类型获取List
+	 * @param type
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<CodeBookDomain> getCodeBookByType(String type)throws Exception
+	{
+		return codeBookService.doGetCodeBookByType(type);
 	}
 	
 }

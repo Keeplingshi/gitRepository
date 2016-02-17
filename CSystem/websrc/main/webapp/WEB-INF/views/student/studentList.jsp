@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@	taglib tagdir="/WEB-INF/tags" prefix="tags" %>
+<%@	taglib uri="/csystem-taglib" prefix="cusfun" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 
@@ -82,9 +83,9 @@
 						</td>
 						<td>${studentDomain.stuId }</td>
 						<td>${studentDomain.name }</td>
-						<td>${studentDomain.sex }</td>
+						<td>${cusfun:getNameByValueAndType(studentDomain.sex,"8002")}</td>
 						<td><fmt:formatDate value="${studentDomain.birthday }" type="date"/></td>
-						<td>${studentDomain.politicalStatus }</td>
+						<td>${cusfun:getNameByValueAndType(studentDomain.politicalStatus,"8001")}</td>
 						<td>${studentDomain.IDnumber }</td>
 						<td>${studentDomain.nativePlace }</td>
 						<td>${studentDomain.dormitory }</td>
@@ -177,7 +178,8 @@
 	        type: 2,
 	        title: '修改学生',
 	        shadeClose: true,
-	        area : ['380px' , '320px'],
+	        area : ['700px' , '500px'],
+	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/student/studentEdit/'+studentId,
 	        end: function(){
 	        	//默认加载用户列表
