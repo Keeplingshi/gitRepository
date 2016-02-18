@@ -152,7 +152,7 @@
 	});
 	
 	$("#saveButton").click(function(){
-		console.info("111111");
+		
 		var stunameVal=$("#stuname").val();	//姓名
 		var classIdVal=$("#classId").val();	//班级
 		console.info("33333333");
@@ -160,18 +160,17 @@
 			layer.tips('姓名不能为空', '#stuname');
 			return;
 		}
-		console.info("44444444");
 		if(classIdVal==null||classIdVal==''){
 			layer.tips('班级不能为空', '#class_select_edit_id');
 			return;
 		}
-		console.info("4dddddddddddddddd");
 		var form = $("#studentEditFormId");
 		form.ajaxSubmit(function(result){
 			console.info("43242"+result+"dddddddddd");
 			if(result=='success'){
 
-				parent.layer.msg('添加成功', {
+				parent.layer.msg('修改成功', {
+					offset: ['260px'],
      		        time: 1500//1.5s后自动关闭
      		    });
 				//关闭当前新增页面页
@@ -179,7 +178,10 @@
 				parent.layer.close(index); //再执行关闭    
 			}else{
 				console.info("43242");
-				layer.msg('新增失败');
+				layer.msg('新增失败',{
+					offset: ['260px'],
+	     		    time: 1500
+	     		});
 			}
 		});
 		

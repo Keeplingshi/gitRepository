@@ -49,6 +49,10 @@
 		<input id="studentAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 		<input id="studentQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	</div>
+	<div class="breadcrumbs">
+		<input id="studentExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="从excel中导入数据"/>
+		<input id="studentDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
+	</div>
 	<div class="table-responsive">
 		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
 			<thead>
@@ -267,6 +271,23 @@
 		}, function(){
 			
 		});
+	});
+	
+	$("#studentExcelToDBButton").click(function(){
+	    parent.layer.open({
+	        type: 2,
+	        title: '从excel中导入学生信息',
+	        shadeClose: true,
+	        area : ['700px' , '500px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/student/studentExcelView',
+	        end: function(){
+	        	//默认加载用户列表
+	        	$("#formId").ajaxSubmit(function(data){
+	        	 	$("#content_page").html(data);
+	    		});
+	        }
+	    });
 	});
 	
 	//点击表格标题栏，选中所有checkbox框

@@ -3,6 +3,7 @@ package com.cb.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,7 @@ import com.cb.service.IStudentService;
 import com.cb.util.CodeBookConstsType;
 import com.cb.util.CodeBookHelper;
 import com.cb.util.Consts;
+import com.cb.util.ExcelDoUtil;
 import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
 
@@ -238,4 +240,33 @@ public class StudentController {
 		return Consts.ERROR;
 	}
 	
+	/**
+	 * 从excel中导入学生信息页面
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/studentExcelView")
+	public String dostudentExcelView(Model model)throws Exception{
+		
+		return "student/studentExcelView";
+	};
+	
+	/**
+	 * 保存文件
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/studentExcelSave")
+	@ResponseBody
+	public String dostudentExcelSave(HttpServletRequest request)
+	{
+		String path=ExcelDoUtil.saveFile(request, "studentExcel");
+		if(path!=null){
+			System.out.println(path);
+			return Consts.SUCCESS;
+		}
+		System.out.println("error");
+		return Consts.ERROR;
+	}
 }
