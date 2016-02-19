@@ -66,4 +66,12 @@ public interface ICodeBookService {
 	 * @throws Exception
 	 */
 	public String doGetNameByValueAndType(String value,String type)throws Exception;
+
+	/**
+	 * 通过名称和类型获取值
+	 * @param name
+	 * @param type
+	 * @return
+	 */
+	public String doGetValueByNameAndType(String name, String type)throws Exception;
 }

@@ -16,14 +16,22 @@ jQuery(function() {
 
         // 文件接收服务端。
         server: '/CSystem/student/studentExcelSave',
+        
+        accept:{
+            title: 'excel',
+            extensions: 'xls',
+            mimeTypes: 'xls'
+        },
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-        pick: '#picker'
+        pick: '#picker',
+        fileNumLimit:1
     });
 
     // 当有文件添加进来的时候
     uploader.on( 'fileQueued', function( file ) {
+    	$list.empty();
         $list.append( '<div id="' + file.id + '" class="item">' +
             '<h4 class="info">' + file.name + '</h4>' +
             '<p class="state">等待上传...</p>' +
@@ -77,6 +85,14 @@ jQuery(function() {
     });
 
     $btn.on( 'click', function() {
+    	
+		var classId=$("#classExcelViewId").val();
+		
+		if(classId==null||classId==''){
+	        $list.append( '<div>请选择班级</div>' );
+			return;
+		}
+		uploader.options.formData={classId:classId}; 
         if ( state === 'uploading' ) {
             uploader.stop();
         } else {

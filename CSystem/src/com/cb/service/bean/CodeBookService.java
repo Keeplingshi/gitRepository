@@ -121,5 +121,29 @@ public class CodeBookService implements ICodeBookService{
 		
 		return null;
 	}
+
+	/**
+	 * @see com.cb.service.ICodeBookService#doGetValueByNameAndType(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public String doGetValueByNameAndType(String name, String type)
+			throws Exception {
+		// TODO Auto-generated method stub
+		if(name==null||"".equals(name)){
+			return null;
+		}
+		if(type==null||"".equals(type)){
+			return null;
+		}
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(CodeBookDomain.class);
+		detachedCriteria.add(Restrictions.eq("name", name));
+		detachedCriteria.add(Restrictions.eq("type", type));
+		List<CodeBookDomain> codeBookList=codeBookDao.getFilterList(detachedCriteria);
+		if(codeBookList.size()==1){
+			return codeBookList.get(0).getValue();
+		}		
+		return null;
+	}
 	
 }

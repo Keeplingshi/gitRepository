@@ -63,4 +63,12 @@ public interface IStudentService {
 	 * @return
 	 */
 	public boolean doDeleteByIds(String[] studentIds)throws Exception;
+	
+	/**
+	 * 根据学号获取学生
+	 * @param stuId
+	 * @return
+	 * @throws Exception
+	 */
+	public StudentDomain doGetByStudentId(String stuId);
 }

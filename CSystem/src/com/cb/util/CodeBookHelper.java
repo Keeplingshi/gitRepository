@@ -32,6 +32,24 @@ public class CodeBookHelper {
 	}
 	
 	/**
+	 * 根据名称和类型获取值
+	 * @param name
+	 * @param type
+	 * @return
+	 */
+	public static String getValueByNameAndType(String name,String type)
+	{
+		String value="";
+		try {
+			value = codeBookService.doGetValueByNameAndType(name, type);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return value;
+	}
+	
+	/**
 	 * 根据类型获取List
 	 * @param type
 	 * @return

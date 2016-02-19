@@ -144,4 +144,23 @@ public class StudentService implements IStudentService{
 		return studentDao.getPageList(detachedCriteria, pageInfo);
 	}
 
+	/**
+	 * @see com.cb.service.IStudentService#doGetByStudentId(java.lang.String)
+	 */
+	@Override
+	public StudentDomain doGetByStudentId(String stuId) {
+		// TODO Auto-generated method stub
+		if(stuId==null||"".equals(stuId)){
+			return null;
+		}
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(StudentDomain.class);
+		detachedCriteria.add(Restrictions.eq("stuId", stuId));
+		List<StudentDomain> studentDomains=studentDao.getFilterList(detachedCriteria);
+		if(studentDomains.size()==1){
+			return studentDomains.get(0);
+		}
+		return null;
+	}
+
 }

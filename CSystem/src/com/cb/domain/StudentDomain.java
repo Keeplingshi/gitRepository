@@ -66,7 +66,7 @@ public class StudentDomain {
 		this.name = name;
 	}
 	
-	@Column(name = "SEX", nullable = false, length = 10)
+	@Column(name = "SEX", nullable = true, length = 10)
 	public Integer getSex() {
 		return sex;
 	}

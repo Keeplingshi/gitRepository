@@ -1,9 +1,9 @@
 package com.cb.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cb.domain.ClassDomain;
 import com.cb.domain.CodeBookDomain;
@@ -101,7 +102,7 @@ public class StudentController {
 		List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,collegeId,majorId,classId,searchText);
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
-		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
 
 		model.addAttribute("studentList", studentList);
 		model.addAttribute("classList", classList);
@@ -249,6 +250,16 @@ public class StudentController {
 	@RequestMapping("/studentExcelView")
 	public String dostudentExcelView(Model model)throws Exception{
 		
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("gradeList", gradeList);
+		
 		return "student/studentExcelView";
 	};
 	
@@ -259,14 +270,24 @@ public class StudentController {
 	 */
 	@RequestMapping("/studentExcelSave")
 	@ResponseBody
-	public String dostudentExcelSave(HttpServletRequest request)
+	public String dostudentExcelSave(@RequestParam(value = "file", required = false) MultipartFile file,String classId)
 	{
-		String path=ExcelDoUtil.saveFile(request, "studentExcel");
-		if(path!=null){
-			System.out.println(path);
-			return Consts.SUCCESS;
+		System.out.println(classId);
+		String path="D:/";
+		String fileName=file.getOriginalFilename();
+		File targetFile = new File(path, fileName);
+		if (!targetFile.exists()) {
+			targetFile.mkdirs();
 		}
-		System.out.println("error");
-		return Consts.ERROR;
+		try{
+			file.transferTo(targetFile);
+			ExcelDoUtil.studentInfoexcelToDB(targetFile,classId);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			targetFile.delete();
+		}
+		
+		return Consts.SUCCESS;
 	}
 }
