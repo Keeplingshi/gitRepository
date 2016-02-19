@@ -1,6 +1,5 @@
 package com.cb.controller;
 
-import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -272,20 +271,11 @@ public class StudentController {
 	@ResponseBody
 	public String dostudentExcelSave(@RequestParam(value = "file", required = false) MultipartFile file,String classId)
 	{
-		System.out.println(classId);
-		String path="D:/";
-		String fileName=file.getOriginalFilename();
-		File targetFile = new File(path, fileName);
-		if (!targetFile.exists()) {
-			targetFile.mkdirs();
-		}
 		try{
-			file.transferTo(targetFile);
-			ExcelDoUtil.studentInfoexcelToDB(targetFile,classId);
+			ClassDomain classDomain=classService.doGetById(classId);
+			ExcelDoUtil.studentInfoexcelToDB(file,classDomain);
 		}catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			targetFile.delete();
+			return Consts.ERROR;
 		}
 		
 		return Consts.SUCCESS;

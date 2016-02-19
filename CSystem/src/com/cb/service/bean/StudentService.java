@@ -163,4 +163,17 @@ public class StudentService implements IStudentService{
 		return null;
 	}
 
+	/**
+	 * @see com.cb.service.IStudentService#doGetIdbystuId(java.lang.String)
+	 */
+	@Override
+	public String doGetIdbystuId(String stuId) throws Exception {
+		// TODO Auto-generated method stub
+		StudentDomain studentDomain=this.doGetByStudentId(stuId);
+		if(studentDomain!=null){
+			return studentDomain.getId();
+		}
+		return null;
+	}
+
 }

@@ -71,4 +71,12 @@ public interface IStudentService {
 	 * @throws Exception
 	 */
 	public StudentDomain doGetByStudentId(String stuId);
+	
+	/**
+	 * 根据学号获取学生id
+	 * @param stuId
+	 * @return
+	 * @throws Exception
+	 */
+	public String doGetIdbystuId(String stuId)throws Exception;
 }
