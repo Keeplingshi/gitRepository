@@ -3,6 +3,7 @@ jQuery(function() {
     var $ = jQuery,
         $list = $('#thelist'),
         $btn = $('#ctlBtn'),
+        $theclassinfo=$('#theclassinfo'),
         state = 'pending',
         uploader;
 
@@ -56,8 +57,13 @@ jQuery(function() {
         $percent.css( 'width', percentage * 100 + '%' );
     });
 
-    uploader.on( 'uploadSuccess', function( file ) {
-        $( '#'+file.id ).find('p.state').text('已上传');
+    uploader.on( 'uploadSuccess', function( file,data) {
+    	var upload_result=data._raw;
+    	if(upload_result=='success'){
+    		$( '#'+file.id ).find('p.state').text('数据写入成功');
+    	}else{
+    		$( '#'+file.id ).find('p.state').text('数据写入失败');
+    	}
     });
 
     uploader.on( 'uploadError', function( file ) {
@@ -89,7 +95,7 @@ jQuery(function() {
 		var classId=$("#classExcelViewId").val();
 		
 		if(classId==null||classId==''){
-	        $list.append( '<div>请选择班级</div>' );
+			$theclassinfo.append( '<div>请选择班级</div>' );
 			return;
 		}
 		uploader.options.formData={classId:classId}; 

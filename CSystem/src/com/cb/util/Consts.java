@@ -22,5 +22,8 @@ public class Consts {
 	 */
 	public static final String CURRENT_USER="currentUser";
 	
-	
+	/**
+	 * student表下载模板
+	 */
+	public static final String DOWNLOAD_STUDENTEXCEL="downloadTemplate//student.xls";
 }

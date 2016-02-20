@@ -3,6 +3,7 @@ package com.cb.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,8 @@ import com.cb.util.CodeBookConstsType;
 import com.cb.util.CodeBookHelper;
 import com.cb.util.Consts;
 import com.cb.util.ExcelDoUtil;
+import com.cb.util.FileDownload;
+import com.cb.util.PathUtil;
 import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
 
@@ -279,5 +282,15 @@ public class StudentController {
 		}
 		
 		return Consts.SUCCESS;
+	}
+	
+	/**
+	 * 下载模板
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/downstudentExcel")
+	public void downstudentExcel(HttpServletResponse response)throws Exception{
+		FileDownload.fileDownload(response, PathUtil.getWebInfpath()+Consts.DOWNLOAD_STUDENTEXCEL, "student.xls");
 	}
 }
