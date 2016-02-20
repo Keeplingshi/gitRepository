@@ -32,7 +32,7 @@ import com.cb.service.IStudentService;
 import com.cb.util.CodeBookConstsType;
 import com.cb.util.CodeBookHelper;
 import com.cb.util.Consts;
-import com.cb.util.ExcelDoUtil;
+import com.cb.util.ExcelToDBUtil;
 import com.cb.util.FileDownload;
 import com.cb.util.PathUtil;
 import com.cb.util.SelectItem;
@@ -276,7 +276,7 @@ public class StudentController {
 	{
 		try{
 			ClassDomain classDomain=classService.doGetById(classId);
-			ExcelDoUtil.studentInfoexcelToDB(file,classDomain);
+			ExcelToDBUtil.studentInfoexcelToDB(file,classDomain);
 		}catch (Exception e) {
 			return Consts.ERROR;
 		}
@@ -291,6 +291,6 @@ public class StudentController {
 	 */
 	@RequestMapping("/downstudentExcel")
 	public void downstudentExcel(HttpServletResponse response)throws Exception{
-		FileDownload.fileDownload(response, PathUtil.getWebInfpath()+Consts.DOWNLOAD_STUDENTEXCEL, "student.xls");
+		FileDownload.fileDownload(response, PathUtil.getWebInfpath()+Consts.DOWNLOAD_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
 	}
 }

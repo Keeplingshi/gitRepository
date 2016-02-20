@@ -20,7 +20,7 @@ import com.cb.service.IStudentService;
  * @author chen
  *
  */
-public class ExcelDoUtil {
+public class ExcelToDBUtil {
 
 	private static IStudentService studentService=(IStudentService)SpringContextUtil.getBean("studentService");
 	

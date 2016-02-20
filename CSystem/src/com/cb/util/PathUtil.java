@@ -10,7 +10,7 @@ import java.io.File;
 public class PathUtil {
 
 	/**
-	 * 获取类路径
+	 * 获取web-inf路径
 	 * @return
 	 */
 	public static String getWebInfpath(){
