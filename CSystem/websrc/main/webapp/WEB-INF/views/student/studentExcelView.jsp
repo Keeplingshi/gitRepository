@@ -13,7 +13,7 @@
 <table>
 	<tr style="height: 60px;">
 		<td>
-		<a href="${pageContext.request.contextPath}/student/downstudentExcel"><input type="button" id="excelDownload" class="button button-primary button-rounded button-small" value="模板下载"/></a>  
+		<a href="${pageContext.request.contextPath}/student/downloadStudentExcel"><input type="button" id="excelDownload" class="button button-primary button-rounded button-small" value="模板下载"/></a>  
 		</td>
 	</tr>
 	<tr style="height: 60px;">
@@ -52,13 +52,6 @@
 			</div>	
 		</td>
 	</tr>
-<!-- 	<tr style="height: 60px;">
-		<td>
-			<div id="picker">选择文件</div>
-			<input type="button" id="ctlBtn" class="button button-primary button-rounded button-small" value="开始上传"/>
-		
-		</td>
-	</tr> -->
   	<tr style="height: 60px;">
 		<td>
 			<div id="uploader">

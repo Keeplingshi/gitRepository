@@ -16,7 +16,7 @@ import com.cb.domain.StudentDomain;
 import com.cb.service.IStudentService;
 
 /**
- * excel文件操作类
+ * 从excel导入数据库
  * @author chen
  *
  */

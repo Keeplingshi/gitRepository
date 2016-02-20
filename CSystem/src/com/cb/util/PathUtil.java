@@ -13,7 +13,7 @@ public class PathUtil {
 	 * 获取web-inf路径
 	 * @return
 	 */
-	public static String getWebInfpath(){
+	public static String getWebInfPath(){
 		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""))).replaceAll("file:/", "").replaceAll("%20", " ").trim();	
 		if(path.indexOf(":") != 1){
 			path = File.separator + path;
@@ -23,4 +23,13 @@ public class PathUtil {
 		return path;
 	}
 	
+	public static String getWebappPath(){
+		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""))).replaceAll("file:/", "").replaceAll("%20", " ").trim();	
+		if(path.indexOf(":") != 1){
+			path = File.separator + path;
+		}
+		path=path.replace('/', '\\'); // 将/换成\ 
+		path=path.replace("WEB-INF\\classes\\", ""); //去掉class
+		return path;
+	}
 }

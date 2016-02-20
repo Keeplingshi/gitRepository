@@ -32,5 +32,10 @@ public class Consts {
 	 */
 	public static final String DOWNLOAD_PATH="downloadTemplate//";
 	
+	/**
+	 * student导出学生信息文件路径
+	 */
+	public static final String DBTOEXCEL_PATH="downloadStudnetInfo//";
+	
 
 }

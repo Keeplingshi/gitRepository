@@ -273,6 +273,7 @@
 		});
 	});
 	
+	//excel导入
 	$("#studentExcelToDBButton").click(function(){
 	    parent.layer.open({
 	        type: 2,
@@ -287,6 +288,18 @@
 	        	 	$("#content_page").html(data);
 	    		});
 	        }
+	    });
+	});
+	
+	//导出信息
+	$("#studentDBToExcelButton").click(function(){
+	    parent.layer.open({
+	        type: 2,
+	        title: '导出学生信息',
+	        shadeClose: true,
+	        area : ['700px' , '500px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/student/studentDBToExcelView'
 	    });
 	});
 	

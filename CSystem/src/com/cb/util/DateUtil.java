@@ -1,4 +1,4 @@
-package com.fh.util;
+package com.cb.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,7 +17,14 @@ public class DateUtil {
 
 	private final static SimpleDateFormat sdfTime = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
-	
+
+	public static String getDayFormat(Date date)
+	{
+		if(date==null){
+			return null;
+		}
+		return sdfDay.format(date);
+	}
 	
 	/**
 	 * 获取YYYY格式
@@ -104,7 +111,6 @@ public class DateUtil {
 	public static int getDiffYear(String startTime,String endTime) {
 		DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			long aa=0;
 			int years=(int) (((fmt.parse(endTime).getTime()-fmt.parse(startTime).getTime())/ (1000 * 60 * 60 * 24))/365);
 			return years;
 		} catch (Exception e) {

@@ -79,4 +79,15 @@ public interface IStudentService {
 	 * @throws Exception
 	 */
 	public String doGetIdbystuId(String stuId)throws Exception;
+
+	/**
+	 * 查询学生信息
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @return
+	 */
+	public List<StudentDomain> doSearchstudentList(String gradeId,
+			String collegeId, String majorId, String classId)throws Exception;
 }

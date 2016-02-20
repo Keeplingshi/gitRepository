@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cb.dao.IStudentDao;
 import com.cb.domain.StudentDomain;
 import com.cb.service.IStudentService;
+import com.cb.util.ValidateUtil;
 import com.system.util.PageInfo;
 
 /**
@@ -174,6 +175,44 @@ public class StudentService implements IStudentService{
 			return studentDomain.getId();
 		}
 		return null;
+	}
+
+	/**
+	 * @see com.cb.service.IStudentService#doSearchstudentList(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<StudentDomain> doSearchstudentList(String gradeId,
+			String collegeId, String majorId, String classId) throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(StudentDomain.class);
+		
+		//班级过滤
+		if(ValidateUtil.notEmpty(classId)){
+			detachedCriteria.add(Restrictions.eq("classDomain.id", classId));
+		}else{
+			if(ValidateUtil.notEmpty(majorId)){
+				//专业过滤
+				detachedCriteria.createAlias("classDomain", "clazz");
+				detachedCriteria.createAlias("clazz.major", "qmajor");
+				detachedCriteria.add(Restrictions.eq("qmajor.id", majorId));
+			}else{
+				if(ValidateUtil.notEmpty(collegeId)){
+					//学院过滤
+					detachedCriteria.createAlias("classDomain", "clazz");
+					detachedCriteria.createAlias("clazz.major", "qmajor");
+					detachedCriteria.createAlias("qmajor.college", "qcollege");
+					detachedCriteria.add(Restrictions.eq("qcollege.id", collegeId));
+				}
+			}
+			//过滤年级
+			if(ValidateUtil.notEmpty(gradeId)){
+				detachedCriteria.createAlias("classDomain", "clazz");
+				detachedCriteria.createAlias("clazz.grade", "qgrade");
+				detachedCriteria.add(Restrictions.eq("qgrade.id", gradeId));
+			}
+		}
+		
+		return studentDao.getFilterList(detachedCriteria);
 	}
 
 }

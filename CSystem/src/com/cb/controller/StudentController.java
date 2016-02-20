@@ -32,6 +32,7 @@ import com.cb.service.IStudentService;
 import com.cb.util.CodeBookConstsType;
 import com.cb.util.CodeBookHelper;
 import com.cb.util.Consts;
+import com.cb.util.DBToExcelUtil;
 import com.cb.util.ExcelToDBUtil;
 import com.cb.util.FileDownload;
 import com.cb.util.PathUtil;
@@ -266,6 +267,28 @@ public class StudentController {
 	};
 	
 	/**
+	 * 导出数据
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/studentDBToExcelView")
+	public String dostudentDBToExcelView(Model model)throws Exception{
+		
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("gradeList", gradeList);
+		
+		return "student/studentDBToExcelView";
+	}
+	
+	/**
 	 * 保存文件
 	 * @param request
 	 * @return
@@ -289,8 +312,39 @@ public class StudentController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping("/downstudentExcel")
-	public void downstudentExcel(HttpServletResponse response)throws Exception{
-		FileDownload.fileDownload(response, PathUtil.getWebInfpath()+Consts.DOWNLOAD_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
+	@RequestMapping("/downloadStudentExcel")
+	public void dodownloadStudentExcel(HttpServletResponse response)throws Exception{
+		FileDownload.fileDownload(response, PathUtil.getWebInfPath()+Consts.DOWNLOAD_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
+	}
+	
+	/**
+	 * 学生信息导出文件
+	 * @param gradeId
+	 * @param classId
+	 * @param majorId
+	 * @param collegeId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/studentDBToExcel")
+	@ResponseBody
+	public String dostudentDBToExcel(HttpServletResponse response,String gradeId,String collegeId,String majorId,String classId)throws Exception{
+		
+		List<StudentDomain> studentDomains=studentService.doSearchstudentList(gradeId,collegeId, majorId, classId);
+		
+		String path=PathUtil.getWebappPath()+Consts.DBTOEXCEL_PATH+Consts.STUDENTEXCEL;
+		DBToExcelUtil.studnetinfoDBToExcel(studentDomains, path);
+		
+		return Consts.SUCCESS;
+	}
+	
+	/**
+	 * 下载学生信息
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/downloadStudentInfo")
+	public void dodownloadStudentInfo(HttpServletResponse response)throws Exception{
+		FileDownload.fileDownload(response, PathUtil.getWebappPath()+Consts.DBTOEXCEL_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
 	}
 }
