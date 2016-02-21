@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>	
-<%@ page language="java" import="com.cb.util.*" %>	
+<%@ page language="java" import="com.cb.csystem.util.*" %>	
 
 <!-- 增加学生界面 -->
 

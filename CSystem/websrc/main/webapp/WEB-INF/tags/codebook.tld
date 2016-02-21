@@ -9,7 +9,7 @@
 	<function>
 		<name>getNameByValueAndType</name>
 		<function-class>
-			com.cb.util.CodeBookHelper
+			com.cb.csystem.util.CodeBookHelper
 		</function-class>
 		<function-signature>
 			java.lang.String getNameByValueAndType(java.lang.String,java.lang.String)

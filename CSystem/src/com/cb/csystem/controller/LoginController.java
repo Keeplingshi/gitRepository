@@ -1,0 +1,86 @@
+package com.cb.csystem.controller;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.cb.csystem.domain.UserDomain;
+import com.cb.csystem.service.IUserService;
+
+/**
+ * 登录控制层
+ * @author chen
+ *
+ */
+@Controller
+public class LoginController {
+
+	@Resource private IUserService userService;
+	
+	@RequestMapping("/login")
+	public String getAllUser(Model model){
+		
+		return "/login";
+	}
+	
+    /** 
+     * 用户登录 
+     * @throws Exception 
+     */
+    @RequestMapping("/main")  
+    public String login(HttpServletRequest request,Model model) throws Exception{  
+        String resultPageURL = InternalResourceViewResolver.FORWARD_URL_PREFIX + "/";  
+        String username = request.getParameter("username");  
+        String password = request.getParameter("password");  
+
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);  
+        token.setRememberMe(true);
+        System.out.println("为了验证登录用户而封装的token为" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));  
+        //获取当前的Subject  
+        Subject currentUser = SecurityUtils.getSubject();
+        try {
+            //在调用了login方法后,SecurityManager会收到AuthenticationToken,并将其发送给已配置的Realm执行必须的认证检查  
+            //每个Realm都能在必要时对提交的AuthenticationTokens作出反应  
+            //所以这一步在调用login(token)方法时,它会走到ShiroRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法  
+            currentUser.login(token);
+            System.out.println("对用户[" + username + "]进行登录验证..验证通过");  
+            resultPageURL = "/main";
+        }catch(UnknownAccountException uae){  
+            System.out.println("对用户[" + username + "]进行登录验证..验证未通过,未知账户");  
+        }catch(IncorrectCredentialsException ice){  
+            System.out.println("对用户[" + username + "]进行登录验证..验证未通过,错误的凭证");  
+        }catch(LockedAccountException lae){  
+            System.out.println("对用户[" + username + "]进行登录验证..验证未通过,账户已锁定");  
+        }catch(ExcessiveAttemptsException eae){  
+            System.out.println("对用户[" + username + "]进行登录验证..验证未通过,错误次数过多");  
+        }catch(AuthenticationException ae){  
+            //通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景  
+            System.out.println("对用户[" + username + "]进行登录验证..验证未通过,堆栈轨迹如下");  
+            ae.printStackTrace();  
+        }
+        //验证是否登录成功  
+        if(currentUser.isAuthenticated()){
+        	UserDomain user=userService.doGetUserByUsername(username);
+        	model.addAttribute("userDomain", user);
+            return "/main";
+        }else{  
+            token.clear();  
+        }
+        return resultPageURL;  
+    }  
+    
+}
