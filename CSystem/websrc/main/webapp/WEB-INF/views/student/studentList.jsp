@@ -9,11 +9,15 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+
 <div>
 <form id="formId" action="${pageContext.request.contextPath}/student/studentSearchList" method="post">
 	<input type="hidden" id="majorId" name="majorId" value="${majorId }" />
 	<input type="hidden" id="collegeId" name="collegeId" value="${collegeId }" />
 	<input type="hidden" id="classId" name="classId" value="${classId }" />
+	<input type="hidden" id="sortMode" name="sortMode" value="${sortMode }" />
+	<input type="hidden" id="sortValue" name="sortValue" value="${sortValue }" />
 	<div class="breadcrumbs" id="studentListToolbar">
 	
 		<span class="input-icon" style="margin: 5px;">
@@ -54,16 +58,45 @@
 		<input id="studentDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
 	</div>
 	<div class="table-responsive">
-		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+		<table id="sample-table-2" class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
 					<th class="center">
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
-					<th>学号</th>
-					<th>姓名</th>
+					<th>学号
+						<span>
+							<c:choose>
+								<c:when test="${sortMode=='asc'&&sortValue=='stuId' }">
+									<img id="img_stuId_asc" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_up_24.png">
+								</c:when>
+								<c:when test="${sortMode=='desc'&&sortValue=='stuId' }">
+									<img id="img_stuId_desc" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_down_24.png">
+								</c:when>
+								<c:otherwise>
+									<img id="img_stuId" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_24.png">
+								</c:otherwise>
+							</c:choose>
+						</span>
+					</th>
+					<th>姓名
+					</th>
 					<th>性别</th>
-					<th>出生日期</th>
+					<th>出生日期
+						<span>
+							<c:choose>
+								<c:when test="${sortMode=='asc'&&sortValue=='birthday' }">
+									<img id="img_birthday_asc" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_up_24.png">
+								</c:when>
+								<c:when test="${sortMode=='desc'&&sortValue=='birthday' }">
+									<img id="img_birthday_desc" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_down_24.png">
+								</c:when>
+								<c:otherwise>
+									<img id="img_birthday" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_24.png">
+								</c:otherwise>
+							</c:choose>
+						</span>
+					</th>
 					<th>政治面貌</th>
 					<th>身份证号</th>
 					<th>籍贯</th>
@@ -116,7 +149,22 @@
 
 <script type="text/javascript">
 
-	console.info("${pageContext.request.contextPath}");
+	$("#sample-table-2 thead tr th img").click(function(){
+		
+		var sortValueVal=$(this)[0].id.split("_")[1];
+		var sortModeVal=$(this)[0].id.split("_")[2];
+		$("#sortValue").val(sortValueVal);
+		if(sortModeVal=='asc'){
+			$("#sortMode").val('desc');
+		}else{
+			$("#sortMode").val('asc');
+		}
+		
+ 		//默认加载学生列表
+		$("#formId").ajaxSubmit(function(data){
+    	 	$("#content_page").html(data);
+		}); 
+	});
 
 	//使下拉框默认选择
 	$(function(){

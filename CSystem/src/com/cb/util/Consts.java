@@ -39,5 +39,13 @@ public class Consts {
 	 */
 	public static final String DBTOEXCEL_PATH=PathUtil.getWebappPath()+"downloadStudnetInfo//";
 	
-
+	/**
+	 * 降序
+	 */
+	public static final String SORT_DESC="desc";
+	
+	/**
+	 * 升序
+	 */
+	public static final String SORT_ASC="asc";
 }

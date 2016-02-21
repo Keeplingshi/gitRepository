@@ -99,9 +99,10 @@ public class StudentController {
 	 */
 	@RequestMapping("/studentSearchList")
 	public String dostudentSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,String collegeId,String majorId,String classId,String searchText)throws Exception{
+			,BindingResult bindingResult,Model model,String collegeId,String majorId
+			,String classId,String searchText,String sortMode,String sortValue)throws Exception{
 		
-		List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,collegeId,majorId,classId,searchText);
+		List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,collegeId,majorId,classId,searchText,sortMode,sortValue);
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
 		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
@@ -114,6 +115,8 @@ public class StudentController {
 		model.addAttribute("majorId", majorId);
 		model.addAttribute("collegeId", collegeId);
 		model.addAttribute("searchText", searchText);
+		model.addAttribute("sortMode", sortMode);
+		model.addAttribute("sortValue", sortValue);
 	
 		return "/student/studentList";
 	}

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cb.dao.IStudentDao;
 import com.cb.domain.StudentDomain;
 import com.cb.service.IStudentService;
+import com.cb.util.Consts;
 import com.system.util.PageInfo;
 import com.system.util.ValidateUtil;
 
@@ -107,7 +109,7 @@ public class StudentService implements IStudentService{
 	 */
 	@Override
 	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo,
-			String collegeId, String majorId, String classId, String searchText)
+			String collegeId, String majorId, String classId, String searchText,String sortMode,String sortValue)
 			throws Exception {
 		// TODO Auto-generated method stub
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(StudentDomain.class);
@@ -140,6 +142,14 @@ public class StudentService implements IStudentService{
 			disjunction.add(Restrictions.like("nativePlace", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
 	              
 			detachedCriteria.add(disjunction);  
+		}
+		
+		if(ValidateUtil.notEmpty(sortValue)){
+			if(Consts.SORT_ASC.equals(sortMode)){
+				detachedCriteria.addOrder(Order.asc(sortValue));
+			}else{
+				detachedCriteria.addOrder(Order.desc(sortValue));
+			}
 		}
 		
 		return studentDao.getPageList(detachedCriteria, pageInfo);

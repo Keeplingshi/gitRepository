@@ -55,7 +55,7 @@ public interface IStudentService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo, String collegeId, String majorId, String classId, String searchText)throws Exception;
+	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo, String collegeId, String majorId, String classId, String searchText,String sortMode,String sortValue)throws Exception;
 
 	/**
 	 * 批量删除
