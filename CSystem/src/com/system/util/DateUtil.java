@@ -1,4 +1,4 @@
-package com.cb.util;
+package com.system.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,6 +18,11 @@ public class DateUtil {
 	private final static SimpleDateFormat sdfTime = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
 
+	/**
+	 * 使日期格式化
+	 * @param date
+	 * @return
+	 */
 	public static String getDayFormat(Date date)
 	{
 		if(date==null){

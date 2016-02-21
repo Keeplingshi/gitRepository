@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cb.dao.IMajorDao;
 import com.cb.domain.MajorDomain;
 import com.cb.service.IMajorService;
-import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
+import com.system.util.SelectItem;
 
 /**
  * 专业服务类

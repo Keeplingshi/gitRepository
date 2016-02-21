@@ -3,8 +3,8 @@ package com.cb.service;
 import java.util.List;
 
 import com.cb.domain.MajorDomain;
-import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
+import com.system.util.SelectItem;
 
 public interface IMajorService {
 	

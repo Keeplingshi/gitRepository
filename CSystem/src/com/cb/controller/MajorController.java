@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +22,8 @@ import com.cb.domain.MajorDomain;
 import com.cb.service.ICollegeService;
 import com.cb.service.IMajorService;
 import com.cb.util.Consts;
-import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
+import com.system.util.SelectItem;
 
 /**
  * 专业控制层

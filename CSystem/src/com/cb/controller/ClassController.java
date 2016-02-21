@@ -27,8 +27,8 @@ import com.cb.service.ICollegeService;
 import com.cb.service.IGradeService;
 import com.cb.service.IMajorService;
 import com.cb.util.Consts;
-import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
+import com.system.util.SelectItem;
 
 /**
  * 班级控制层

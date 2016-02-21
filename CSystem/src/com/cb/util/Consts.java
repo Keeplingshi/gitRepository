@@ -1,5 +1,7 @@
 package com.cb.util;
 
+import com.system.util.PathUtil;
+
 /**
  * 常用常量
  * @author chen

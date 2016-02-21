@@ -201,6 +201,7 @@
 	{
 		//询问框
 		layer.confirm('是否确定删除？', {
+			offset: ['260px'],
 		    btn: ['确定','取消'] //按钮
 		}, function(){
 	 		//默认加载学生列表
@@ -211,6 +212,7 @@
 		        	 	$("#content_page").html(data);
 		    		});
 					parent.layer.msg('删除成功', {
+						offset: ['260px'],
 	     		        time: 1500//1.5s后自动关闭
 	     		    });
 				}else{
@@ -236,24 +238,28 @@
 			}
 		}
 		if(studentIds.length=='0'){
-			layer.msg('请至少选择一个');
+			layer.msg('请至少选择一个',{
+				offset: ['260px']
+			});
 			return;
 		}
 		
 		//询问框
 		layer.confirm('是否确定删除这些学生？', {
+			offset: ['260px'],
 		    btn: ['确定','取消'] //按钮
 		}, function(){
-			console.info("确定");
 			$.ajax({
-				url : "${pageContext.request.contextPath}/student/deleteClasses",
+				url : "${pageContext.request.contextPath}/student/deleteStudents",
 				async: false,
 				data : {
 					"studentIds" : studentIds
 				},
 				dataType : "text",
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					layer.msg('删除失败');
+					layer.msg('删除失败',{
+						offset: ['260px']
+					});
                 },
 				success : function(result) {
 					if(result=='success'){
@@ -262,10 +268,13 @@
 			        	 	$("#content_page").html(data);
 			    		});
 						parent.layer.msg('删除成功', {
+							offset: ['260px'],
 		     		        time: 1500//1.5s后自动关闭
 		     		    });
 					}else{
-						layer.msg('删除失败');
+						layer.msg('删除失败',{
+							offset: ['260px']
+						});
 					}
 				}
 			});

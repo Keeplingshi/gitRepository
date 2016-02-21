@@ -155,7 +155,6 @@
 		
 		var stunameVal=$("#stuname").val();	//姓名
 		var classIdVal=$("#classId").val();	//班级
-		console.info("33333333");
 		if(stunameVal==null||stunameVal==''){
 			layer.tips('姓名不能为空', '#stuname');
 			return;
@@ -166,7 +165,6 @@
 		}
 		var form = $("#studentEditFormId");
 		form.ajaxSubmit(function(result){
-			console.info("43242"+result+"dddddddddd");
 			if(result=='success'){
 
 				parent.layer.msg('修改成功', {
@@ -177,8 +175,7 @@
 				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 				parent.layer.close(index); //再执行关闭    
 			}else{
-				console.info("43242");
-				layer.msg('新增失败',{
+				layer.msg('修改失败',{
 					offset: ['260px'],
 	     		    time: 1500
 	     		});

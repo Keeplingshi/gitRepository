@@ -1,4 +1,4 @@
-package com.cb.util;
+package com.system.util;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -54,7 +54,7 @@ public class FileUtil {
 	public static boolean createDir(String destDirName) {
 		File dir = new File(destDirName);
 		if (dir.exists()) {
-			return false;
+			return true;
 		}
 		if (!destDirName.endsWith(File.separator)) {
 			destDirName = destDirName + File.separator;
@@ -75,9 +75,10 @@ public class FileUtil {
 	 */
 	public static boolean createFile(String destFileName){
 		
-		File file = new File(destFileName);  
+		File file = new File(destFileName); 
+		//如果存在，返回true
         if(file.exists()) {  
-            return false;  
+            return true;  
         }  
         if (destFileName.endsWith(File.separator)) {  
             return false;  
@@ -88,7 +89,7 @@ public class FileUtil {
             if(!file.getParentFile().mkdirs()) {  
                 return false;  
             }  
-        }  
+        }
         //创建目标文件  
         try {  
             if (file.createNewFile()) {  
@@ -97,7 +98,6 @@ public class FileUtil {
                 return false;  
             }  
         } catch (IOException e) {  
-            e.printStackTrace();  
             return false;  
         }
 	}

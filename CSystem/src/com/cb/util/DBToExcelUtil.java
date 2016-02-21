@@ -12,6 +12,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.cb.domain.StudentDomain;
+import com.system.util.DateUtil;
+import com.system.util.FileUtil;
 
 /**
  * 从数据库导出信息到excel文件
@@ -75,11 +77,13 @@ public class DBToExcelUtil {
 		}
 		
 		try {
-			FileUtil.createFile(path);
-			OutputStream out = new FileOutputStream(path);
-			workbook.write(out);
-			out.close();
-			b=true;
+			//首先创建文件
+			if(FileUtil.createFile(path)){
+				OutputStream out = new FileOutputStream(path);
+				workbook.write(out);
+				out.close();
+				b=true;
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
