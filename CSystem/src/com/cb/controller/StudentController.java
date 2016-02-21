@@ -34,8 +34,7 @@ import com.cb.util.CodeBookHelper;
 import com.cb.util.Consts;
 import com.cb.util.DBToExcelUtil;
 import com.cb.util.ExcelToDBUtil;
-import com.cb.util.FileDownload;
-import com.cb.util.PathUtil;
+import com.cb.util.FileUtil;
 import com.cb.util.SelectItem;
 import com.system.util.PageInfo;
 
@@ -289,7 +288,7 @@ public class StudentController {
 	}
 	
 	/**
-	 * 保存文件
+	 * 将excel文件中学生信息写入数据库
 	 * @param request
 	 * @return
 	 */
@@ -314,7 +313,7 @@ public class StudentController {
 	 */
 	@RequestMapping("/downloadStudentExcel")
 	public void dodownloadStudentExcel(HttpServletResponse response)throws Exception{
-		FileDownload.fileDownload(response, PathUtil.getWebInfPath()+Consts.DOWNLOAD_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
+		FileUtil.fileDownload(response, Consts.DOWNLOAD_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
 	}
 	
 	/**
@@ -331,11 +330,14 @@ public class StudentController {
 	public String dostudentDBToExcel(HttpServletResponse response,String gradeId,String collegeId,String majorId,String classId)throws Exception{
 		
 		List<StudentDomain> studentDomains=studentService.doSearchstudentList(gradeId,collegeId, majorId, classId);
+		boolean b=DBToExcelUtil.studnetinfoDBToExcel(studentDomains, Consts.DBTOEXCEL_PATH+Consts.STUDENTEXCEL);
 		
-		String path=PathUtil.getWebappPath()+Consts.DBTOEXCEL_PATH+Consts.STUDENTEXCEL;
-		DBToExcelUtil.studnetinfoDBToExcel(studentDomains, path);
+		if(b){
+			return Consts.SUCCESS;
+		}else{
+			return Consts.ERROR;
+		}
 		
-		return Consts.SUCCESS;
 	}
 	
 	/**
@@ -345,6 +347,6 @@ public class StudentController {
 	 */
 	@RequestMapping("/downloadStudentInfo")
 	public void dodownloadStudentInfo(HttpServletResponse response)throws Exception{
-		FileDownload.fileDownload(response, PathUtil.getWebappPath()+Consts.DBTOEXCEL_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
+		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
 	}
 }

@@ -75,7 +75,7 @@ public class DBToExcelUtil {
 		}
 		
 		try {
-			
+			FileUtil.createFile(path);
 			OutputStream out = new FileOutputStream(path);
 			workbook.write(out);
 			out.close();

@@ -30,12 +30,12 @@ public class Consts {
 	/**
 	 * student表下载模板
 	 */
-	public static final String DOWNLOAD_PATH="downloadTemplate//";
+	public static final String DOWNLOAD_PATH=PathUtil.getWebappPath()+"downloadTemplate//";
 	
 	/**
 	 * student导出学生信息文件路径
 	 */
-	public static final String DBTOEXCEL_PATH="downloadStudnetInfo//";
+	public static final String DBTOEXCEL_PATH=PathUtil.getWebappPath()+"downloadStudnetInfo//";
 	
 
 }

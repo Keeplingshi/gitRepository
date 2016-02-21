@@ -12,13 +12,12 @@ import java.nio.channels.FileChannel;
 
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
- * 文件下载
+ * 文件操作类
  * @author chen
  *
  */
-public class FileDownload {
+public class FileUtil {
 
 	/**
 	 * 文件下载
@@ -43,9 +42,87 @@ public class FileDownload {
 		outputStream.flush();
 		outputStream.close();
 		response.flushBuffer();
-
 	}
 	
+	/**
+	 * 创建目录
+	 * 
+	 * @param destDirName
+	 *            目标目录名
+	 * @return 目录创建成功返回true，否则返回false
+	 */
+	public static boolean createDir(String destDirName) {
+		File dir = new File(destDirName);
+		if (dir.exists()) {
+			return false;
+		}
+		if (!destDirName.endsWith(File.separator)) {
+			destDirName = destDirName + File.separator;
+		}
+		// 创建单个目录
+		if (dir.mkdirs()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 创建文件
+	 * @param path 路径
+	 * @param filename 文件名称
+	 * @return
+	 */
+	public static boolean createFile(String destFileName){
+		
+		File file = new File(destFileName);  
+        if(file.exists()) {  
+            return false;  
+        }  
+        if (destFileName.endsWith(File.separator)) {  
+            return false;  
+        }  
+        //判断目标文件所在的目录是否存在  
+        if(!file.getParentFile().exists()) {  
+            //如果目标文件所在的目录不存在，则创建父目录  
+            if(!file.getParentFile().mkdirs()) {  
+                return false;  
+            }  
+        }  
+        //创建目标文件  
+        try {  
+            if (file.createNewFile()) {  
+                return true;  
+            } else {  
+                return false;  
+            }  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+            return false;  
+        }
+	}
+	
+	/**
+	 * 删除文件
+	 * 
+	 * @param filePathAndName
+	 *            String 文件路径及名称 如c:/fqf.txt
+	 * @param fileContent
+	 *            String
+	 * @return boolean
+	 */
+	public static void delFile(String filePathAndName) {
+		try {
+			String filePath = filePathAndName;
+			filePath = filePath.toString();
+			java.io.File myDelFile = new java.io.File(filePath);
+			myDelFile.delete();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 读取到字节数组2
 	 * 
@@ -87,5 +164,4 @@ public class FileDownload {
 			}
 		}
 	}
-	
 }
