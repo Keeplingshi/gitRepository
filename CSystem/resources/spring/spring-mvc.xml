@@ -35,7 +35,8 @@
     <!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
 	
 	<!-- 静态资源(js/image/css)的访问 -->
-	<mvc:resources location="/WEB-INF/resources/" mapping="/resources/**"/>
+	<mvc:resources location="/resources/" mapping="/resources/**"/>
+	<!-- <mvc:resources location="/WEB-INF/resources/" mapping="/resources/**"/> -->
 
 	<!-- 定义视图解析器 -->	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

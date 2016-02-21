@@ -116,6 +116,8 @@
 
 <script type="text/javascript">
 
+	console.info("${pageContext.request.contextPath}");
+
 	//使下拉框默认选择
 	$(function(){
 		$("#college_select_id option[value='${collegeId}']").attr("selected",true);
