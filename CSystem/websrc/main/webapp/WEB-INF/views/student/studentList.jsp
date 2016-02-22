@@ -8,7 +8,6 @@
 <%@	taglib uri="/csystem-taglib" prefix="cusfun" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
-
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 
 <div>
@@ -58,13 +57,13 @@
 		<input id="studentDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
 	</div>
 	<div class="table-responsive">
-		<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+		<table id="sample-table-2" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
 			<thead>
 				<tr>
 					<th class="center">
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
-					<th>学号
+					<th style="width: 120px;">学号
 						<span>
 							<c:choose>
 								<c:when test="${sortMode=='asc'&&sortValue=='stuId' }">
@@ -79,10 +78,9 @@
 							</c:choose>
 						</span>
 					</th>
-					<th>姓名
-					</th>
-					<th>性别</th>
-					<th>出生日期
+					<th style="width: 80px;">姓名</th>
+					<th style="width: 50px;">性别</th>
+<%-- 					<th>出生日期
 						<span>
 							<c:choose>
 								<c:when test="${sortMode=='asc'&&sortValue=='birthday' }">
@@ -96,18 +94,18 @@
 								</c:otherwise>
 							</c:choose>
 						</span>
-					</th>
-					<th>政治面貌</th>
-					<th>身份证号</th>
+					</th> --%>
+					<th style="width: 90px;">政治面貌</th>
+					<!-- <th>身份证号</th> -->
 					<th>籍贯</th>
-					<th>宿舍</th>
+					<th style="width: 90px;">宿舍</th>
 					<th>年级</th>
 					<th>院系</th>
 					<th>专业</th>
 					<th>班级</th>
 					<th>电子邮件</th>
-					<th>联系电话</th>
-					<th>手机</th>
+					<!-- <th>联系电话</th> -->
+					<!-- <th>手机</th> -->
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -121,19 +119,19 @@
 						<td>${studentDomain.stuId }</td>
 						<td>${studentDomain.name }</td>
 						<td>${cusfun:getNameByValueAndType(studentDomain.sex,"8002")}</td>
-						<td><fmt:formatDate value="${studentDomain.birthday }" type="date"/></td>
+						<%-- <td><fmt:formatDate value="${studentDomain.birthday }" type="date"/></td> --%>
 						<td>${cusfun:getNameByValueAndType(studentDomain.politicalStatus,"8001")}</td>
-						<td>${studentDomain.IDnumber }</td>
+						<%-- <td>${studentDomain.IDnumber }</td> --%>
 						<td>${studentDomain.nativePlace }</td>
 						<td>${studentDomain.dormitory }</td>
 						<td>${studentDomain.classDomain.grade.grade }</td>
 						<td>${studentDomain.classDomain.major.college.name }</td>
 						<td>${studentDomain.classDomain.major.name }</td>
 						<td>${studentDomain.classDomain.name }</td>
-						<td>${studentDomain.email }</td>
-						<td>${studentDomain.telephone }</td>
-						<td>${studentDomain.cellphone }</td>
-						<td style="width: 260px">
+						<td style="overflow:hidden;text-overflow:ellipsis;">${studentDomain.email }</td>
+						<%-- <td>${studentDomain.telephone }</td> --%>
+						<%-- <td>${studentDomain.cellphone }</td> --%>
+						<td>
 							<input type="button" class="btn_list_view" value="查看" onclick="viewstudent('${studentDomain.id }')"/>
 							<input type="button" class="btn_list_update" value="修改" onclick="updatestudent('${studentDomain.id }')"/>  
 							<input type="button" class="btn_list_delete" value="删除" onclick="deletestudent('${studentDomain.id }')"/>
