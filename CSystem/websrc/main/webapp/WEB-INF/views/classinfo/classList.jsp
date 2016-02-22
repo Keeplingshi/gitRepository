@@ -4,6 +4,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@	taglib tagdir="/WEB-INF/tags" prefix="tags" %>
+<%@	taglib uri="/commonutil-taglib" prefix="cusfun" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 
@@ -45,6 +46,7 @@
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
 					<th>班级名称</th>
+					<th>班长</th>
 					<th>所属专业</th>
 					<th>所属学院</th>
 					<th>所属年级</th>
@@ -56,9 +58,10 @@
 				<c:forEach items="${classList }" var="classDomain">
 					<tr>
 						<td class="center">
-						<label> <input type="checkbox" class="ace" value="${classDomain.id }"/> <span class="lbl"></span></label>
+							<label> <input type="checkbox" class="ace" value="${classDomain.id }"/> <span class="lbl"></span></label>
 						</td>
 						<td>${classDomain.name }</td>
+						<td>${cusfun:getMonitorNameByClassId(classDomain.id)}</td>
 						<td>${classDomain.major.name }</td>
 						<td>${classDomain.major.college.name }</td>
 						<td>${classDomain.grade.grade }</td>

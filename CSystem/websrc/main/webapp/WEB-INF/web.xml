@@ -13,6 +13,10 @@
 	        <taglib-uri>/csystem-taglib</taglib-uri>
 	        <taglib-location>/WEB-INF/tags/codebook.tld</taglib-location>
 		</taglib>
+		<taglib>
+	        <taglib-uri>/commonutil-taglib</taglib-uri>
+	        <taglib-location>/WEB-INF/tags/commonutil.tld</taglib-location>
+		</taglib>
 	</jsp-config>
 
 	<!--**********************   配置log4j路径     ************************** -->
