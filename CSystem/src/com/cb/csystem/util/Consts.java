@@ -48,4 +48,14 @@ public class Consts {
 	 * 升序
 	 */
 	public static final String SORT_ASC="asc";
+	
+	/**
+	 * 班长    0-否  1-是
+	 */
+	public static final Integer IS_MONITOR_A=0;
+	
+	/**
+	 * 班长    0-否  1-是
+	 */	
+	public static final Integer IS_MONITOR_B=1;
 }

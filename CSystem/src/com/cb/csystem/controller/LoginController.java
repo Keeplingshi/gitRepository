@@ -74,8 +74,8 @@ public class LoginController {
         }
         //验证是否登录成功  
         if(currentUser.isAuthenticated()){
-        	UserDomain user=userService.doGetUserByUsername(username);
-        	model.addAttribute("userDomain", user);
+        	UserDomain userDomain=userService.doGetUserByUsername(username);
+        	model.addAttribute("userDomain", userDomain);
             return "/main";
         }else{  
             token.clear();  

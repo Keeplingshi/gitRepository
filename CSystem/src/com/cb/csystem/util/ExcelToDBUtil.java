@@ -157,6 +157,7 @@ public class ExcelToDBUtil {
 
 			String stuId=studentDomain.getStuId();
 			StudentDomain studentExistsDomain=studentService.doGetByStudentId(stuId);
+			//存在该学生，更新
 			if(studentExistsDomain!=null){
 				studentExistsDomain.setName(studentDomain.getName());
 				studentExistsDomain.setSex(studentDomain.getSex());

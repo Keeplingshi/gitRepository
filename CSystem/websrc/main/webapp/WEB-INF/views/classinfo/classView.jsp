@@ -33,7 +33,12 @@
 				${classDomain.major.college.name }
 			</td>
 		</tr>
-		
+		<tr>
+			<td class="lesta-150">班长：</td>
+			<td class="lestb">
+				${monitorName }
+			</td>
+		</tr>		
 	</table>
 	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 140px;" value="关闭"/>
 

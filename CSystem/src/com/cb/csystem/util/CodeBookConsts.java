@@ -36,4 +36,5 @@ public class CodeBookConsts {
 	 * 性别：8002    0-男  1-女
 	 */
 	public static final String SEX_TYPE_B="1";
+	
 }

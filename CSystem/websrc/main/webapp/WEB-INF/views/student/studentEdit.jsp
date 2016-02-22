@@ -16,6 +16,7 @@
 	<input type="hidden" id="stuId" name="stuId" value="${studentDomain.stuId }"/>
 	<input type="hidden" id="politicalStatusId" name="politicalStatus" value="${studentDomain.politicalStatus }"/>
 	<input type="hidden" id="classId" name="classDomain.id" value="${studentDomain.classDomain.id }"/>
+	<input type="hidden" id="isMonitor" name="isMonitor" value="${studentDomain.isMonitor }"/>
 	<table>
 		<tr>
 			<td class="lesta-150">学号：</td>

@@ -38,6 +38,7 @@ public class StudentDomain {
 	private String email;	//电子邮件
 	private String telephone;	//联系电话
 	private String cellphone;	//手机
+	private Integer isMonitor;	//是否为班长，0否1是
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -154,6 +155,14 @@ public class StudentDomain {
 	}
 	public void setCellphone(String cellphone) {
 		this.cellphone = cellphone;
+	}
+	
+	@Column(name = "ISMONITOR", nullable = true, length = 10,columnDefinition="INT default 0")
+	public Integer getIsMonitor() {
+		return isMonitor;
+	}
+	public void setIsMonitor(Integer isMonitor) {
+		this.isMonitor = isMonitor;
 	}
 
 }

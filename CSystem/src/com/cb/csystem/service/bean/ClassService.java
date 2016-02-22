@@ -13,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.csystem.dao.IClassDao;
 import com.cb.csystem.domain.ClassDomain;
+import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IClassService;
+import com.cb.csystem.service.IStudentService;
+import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
 
@@ -27,6 +30,7 @@ import com.cb.system.util.SelectItem;
 public class ClassService implements IClassService{
 
 	@Resource private IClassDao classDao;
+	@Resource private IStudentService studentService;
 	
 	/**
 	 * @see IClassService#doGetById(String)
@@ -145,6 +149,42 @@ public class ClassService implements IClassService{
 		}
 		
 		return selectList;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IClassService#doSetMonitor(java.lang.String)
+	 */
+	@Override
+	public boolean doSetMonitor(String stuId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		if(studentService.doGetByStudentId(stuId)==null){
+			return false;
+		}
+		ClassDomain classDomain=studentService.doGetByStudentId(stuId).getClassDomain();
+		for(StudentDomain studentDomain:classDomain.getStudents()){
+			if(stuId.equals(studentDomain.getStuId())){
+				studentDomain.setIsMonitor(Consts.IS_MONITOR_B);
+			}else{
+				studentDomain.setIsMonitor(Consts.IS_MONITOR_A);
+			}
+		}
+		
+		return true;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IClassService#doGetMonitor(com.cb.csystem.domain.ClassDomain)
+	 */
+	@Override
+	public StudentDomain doGetMonitor(ClassDomain classDomain) throws Exception {
+		// TODO Auto-generated method stub
+		for(StudentDomain studentDomain:classDomain.getStudents()){
+			if(Consts.IS_MONITOR_B.equals(studentDomain.getIsMonitor())){
+				return studentDomain;
+			}
+		}		
+		return null;
 	}
 
 }

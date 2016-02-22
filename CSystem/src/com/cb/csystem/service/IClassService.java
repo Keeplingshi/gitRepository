@@ -3,6 +3,7 @@ package com.cb.csystem.service;
 import java.util.List;
 
 import com.cb.csystem.domain.ClassDomain;
+import com.cb.csystem.domain.StudentDomain;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
 
@@ -71,4 +72,20 @@ public interface IClassService {
 	 * @return
 	 */
 	public List<SelectItem> dogetClasssByMajorId(String major_id)throws Exception;
+	
+	/**
+	 * 根据学号设置班长
+	 * @param stuId
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doSetMonitor(String stuId)throws Exception;
+	
+	/**
+	 * 获取班级班长
+	 * @param classDomain
+	 * @return
+	 * @throws Exception
+	 */
+	public StudentDomain doGetMonitor(ClassDomain classDomain)throws Exception;
 }

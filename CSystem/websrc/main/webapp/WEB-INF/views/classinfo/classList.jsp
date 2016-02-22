@@ -125,7 +125,7 @@
 	        type: 2,
 	        title: '查看班级',
 	        shadeClose: true,
-	        area : ['380px' , '300px'],
+	        area : ['380px' , '360px'],
 	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/class/classView/'+classId
 	    });
@@ -138,7 +138,7 @@
 	        type: 2,
 	        title: '修改班级',
 	        shadeClose: true,
-	        area : ['380px' , '320px'],
+	        area : ['380px' , '360px'],
 	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/class/classEdit/'+classId,
 	        end: function(){

@@ -31,6 +31,7 @@ public class ClassDomain {
 	private MajorDomain major;	//所属专业
 	//private String gradeId;	//所属年级
 	private GradeDomain grade;
+	//private String monitorId;	//班长id
 	private Set<StudentDomain> students=new HashSet<StudentDomain>();
 	
 	@Id
@@ -78,11 +79,29 @@ public class ClassDomain {
 //		this.gradeId = gradeId;
 //	}
 	
+//	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY,targetEntity=StudentDomain.class)
+//	@JoinColumn(name="MONITORID")
+//	public StudentDomain getMonitor() {
+//		return monitor;
+//	}
+//	public void setMonitor(StudentDomain monitor) {
+//		this.monitor = monitor;
+//	}
+	
+//	@Column(name = "MONITORID", nullable = false, length = 200)
+//	public String getMonitorId() {
+//		return monitorId;
+//	}
+//	public void setMonitorId(String monitorId) {
+//		this.monitorId = monitorId;
+//	}	
+	
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "GRADEID")
 	public GradeDomain getGrade() {
 		return grade;
 	}
+
 	public void setGrade(GradeDomain grade) {
 		this.grade = grade;
 	}	

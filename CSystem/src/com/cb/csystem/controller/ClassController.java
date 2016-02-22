@@ -26,6 +26,7 @@ import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.ICollegeService;
 import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
+import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
@@ -39,6 +40,7 @@ import com.cb.system.util.SelectItem;
 @RequestMapping("/class")
 public class ClassController {
 
+	@Resource private IStudentService studentService;
 	@Resource private IMajorService majorService;
 	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
@@ -117,6 +119,7 @@ public class ClassController {
 		//获取class信息
 		ClassDomain classDomain=classService.doGetById(id);
 		model.addAttribute("classDomain", classDomain);
+		model.addAttribute("monitorName", classService.doGetMonitor(classDomain).getName());
 		
 		return "/classinfo/classView";
 	}
@@ -161,6 +164,7 @@ public class ClassController {
 		model.addAttribute("gradelist",gradeList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("monitorId", classService.doGetMonitor(classDomain).getStuId());
 		
 		return "/classinfo/classEdit";
 	}
@@ -174,12 +178,13 @@ public class ClassController {
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public String doSave(@Valid @ModelAttribute("domain") ClassDomain domain,
+	public String doSave(@Valid @ModelAttribute("domain") ClassDomain domain,String monitorId,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
-			if(classService.doSave(domain)){
+			
+			if(classService.doSave(domain)&&classService.doSetMonitor(monitorId)){
 				return Consts.SUCCESS;
 			}
 		}
