@@ -1,0 +1,12 @@
+package com.cb.csystem.dao;
+
+import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.system.dao.IBaseDao;
+
+/**
+ * @author chen
+ *
+ */
+public interface IJobInfoDao extends IBaseDao<JobInfoDomain>{
+
+}

@@ -14,11 +14,6 @@
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/bootstrap.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/ace.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
-
-<script src="${pageContext.request.contextPath}/resources/ace/assets/js/ace-extra.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/ace/assets/js/jquery.dataTables.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/ace/assets/js/jquery.dataTables.bootstrap.js"></script>
-	
 	
 		<title>CSystem管理系统</title>
 	
@@ -218,6 +213,13 @@
 		$("#student_manage").click(function(){
 			
 			$.post("${pageContext.request.contextPath}/student/studentList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		$("#job_manage").click(function(){
+			$.post("${pageContext.request.contextPath}/jobinfo/jobInfoList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});
