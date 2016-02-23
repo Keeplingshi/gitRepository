@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,7 @@ public class JobInfoService implements IJobInfoService{
 	@Override
 	public JobInfoDomain doGetById(String id) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return jobInfoDao.getById(id);
 	}
 
 	/**
@@ -39,7 +40,8 @@ public class JobInfoService implements IJobInfoService{
 	@Override
 	public List<JobInfoDomain> doGetFilterList() throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(JobInfoDomain.class);
+		return jobInfoDao.getFilterList(detachedCriteria);
 	}
 
 	/**
@@ -49,7 +51,8 @@ public class JobInfoService implements IJobInfoService{
 	public List<JobInfoDomain> doGetPageList(PageInfo pageInfo)
 			throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(JobInfoDomain.class);
+		return jobInfoDao.getPageList(detachedCriteria, pageInfo);
 	}
 
 	/**
@@ -58,7 +61,11 @@ public class JobInfoService implements IJobInfoService{
 	@Override
 	public boolean doSave(JobInfoDomain jobInfoDomain) throws Exception {
 		// TODO Auto-generated method stub
-		return false;
+		if(jobInfoDomain.getId()==null){
+			return jobInfoDao.save(jobInfoDomain);
+		}else{
+			return jobInfoDao.update(jobInfoDomain);
+		}
 	}
 
 	/**
@@ -67,7 +74,7 @@ public class JobInfoService implements IJobInfoService{
 	@Override
 	public boolean doDeleteById(String id) throws Exception {
 		// TODO Auto-generated method stub
-		return false;
+		return jobInfoDao.deleteById(id);
 	}
 
 	/**
@@ -87,7 +94,15 @@ public class JobInfoService implements IJobInfoService{
 	@Override
 	public boolean doDeleteByIds(String[] jobInfoIds) throws Exception {
 		// TODO Auto-generated method stub
-		return false;
+		boolean b=false;
+		for(String id:jobInfoIds){
+			b=jobInfoDao.deleteById(id);
+			if(!b){
+				return false;
+			}
+		}
+		
+		return b;
 	}
 
 }

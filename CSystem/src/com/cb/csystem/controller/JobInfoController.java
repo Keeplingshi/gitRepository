@@ -1,5 +1,7 @@
 package com.cb.csystem.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IJobInfoService;
+import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 
@@ -25,10 +29,11 @@ import com.cb.system.util.PageInfo;
  *
  */
 @Controller
-@RequestMapping("/jobinfo")
+@RequestMapping("/jobInfo")
 public class JobInfoController {
 
 	@Resource private IJobInfoService jobInfoService;
+	@Resource private IStudentService studentService;
 	
 	/**
 	 * 过滤起前台pageInfo
@@ -41,7 +46,7 @@ public class JobInfoController {
 	}
 	
 	/**
-	 * 学生列表
+	 * 就业列表
 	 * @param model
 	 * @return
 	 * @throws Exception
@@ -49,6 +54,11 @@ public class JobInfoController {
 	@RequestMapping("/jobInfoList")
 	public String getjobInfoList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model)throws Exception{
+		
+//		List<JobInfoDomain> jobInfoList=jobInfoService.doGetPageList(pageInfo);
+//		model.addAttribute("jobInfoList", jobInfoList);
+		List<StudentDomain> studentList=studentService.doGetPageList(pageInfo);
+		model.addAttribute("studentList", studentList);
 		
 		return "/jobInfo/jobInfoList";
 	}
@@ -68,11 +78,14 @@ public class JobInfoController {
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model,String searchText,String sortMode,String sortValue)throws Exception{
 	
+		List<StudentDomain> studentList=studentService.doGetPageList(pageInfo);
+		model.addAttribute("studentList", studentList);
+		
 		return "/jobInfo/jobInfoList";
 	}
 	
 	/**
-	 * 学生详情页面
+	 * 就业详情页面
 	 * @param model
 	 * @param id
 	 * @return
@@ -81,11 +94,14 @@ public class JobInfoController {
 	@RequestMapping("/jobInfoView/{id}")
 	public String dojobInfoView(Model model,@PathVariable String id) throws Exception{
 		
+		StudentDomain studentDomain=studentService.doGetById(id);
+		model.addAttribute("studentDomain", studentDomain);
+		
 		return "/jobInfo/jobInfoView";
 	}
 	
 	/**
-	 * 新增学生页面
+	 * 新增就业页面
 	 * @param model
 	 * @return
 	 * @throws Exception
@@ -97,7 +113,7 @@ public class JobInfoController {
 	}
 	
 	/**
-	 * 修改学生
+	 * 修改就业
 	 * @param model
 	 * @param id
 	 * @return
@@ -105,6 +121,9 @@ public class JobInfoController {
 	 */
 	@RequestMapping("/jobInfoEdit/{id}")
 	public String dojobInfoEdit(Model model,@PathVariable String id)throws Exception{
+		
+		StudentDomain studentDomain=studentService.doGetById(id);
+		model.addAttribute("studentDomain", studentDomain);
 		
 		return "/jobInfo/jobInfoEdit";
 	}

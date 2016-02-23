@@ -5,10 +5,13 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -39,6 +42,7 @@ public class StudentDomain {
 	private String telephone;	//联系电话
 	private String cellphone;	//手机
 	private Integer isMonitor;	//是否为班长，0否1是
+	private JobInfoDomain jobInfo;
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -163,6 +167,14 @@ public class StudentDomain {
 	}
 	public void setIsMonitor(Integer isMonitor) {
 		this.isMonitor = isMonitor;
+	}
+	
+	@OneToOne(mappedBy="student",cascade=CascadeType.ALL,fetch=FetchType.LAZY,targetEntity=JobInfoDomain.class)
+	public JobInfoDomain getJobInfo() {
+		return jobInfo;
+	}
+	public void setJobInfo(JobInfoDomain jobInfo) {
+		this.jobInfo = jobInfo;
 	}
 
 }

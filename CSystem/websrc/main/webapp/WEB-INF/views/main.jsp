@@ -219,7 +219,7 @@
 		});
 		
 		$("#job_manage").click(function(){
-			$.post("${pageContext.request.contextPath}/jobinfo/jobInfoList", function(result){
+			$.post("${pageContext.request.contextPath}/jobInfo/jobInfoList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});

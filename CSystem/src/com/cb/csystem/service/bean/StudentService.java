@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.csystem.dao.IStudentDao;
+import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.StudentDomain;
+import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
@@ -30,6 +32,7 @@ import com.cb.system.util.ValidateUtil;
 public class StudentService implements IStudentService{
 
 	private @Resource IStudentDao studentDao;
+	private @Resource IJobInfoService jobInfoService;
 	
 	/**
 	 * @see com.cb.csystem.service.IStudentService#doGetById(java.lang.String)
@@ -72,6 +75,9 @@ public class StudentService implements IStudentService{
 	public boolean doSave(StudentDomain studentDomain) throws Exception {
 		// TODO Auto-generated method stub
 		if(studentDomain.getId()==null){
+			JobInfoDomain jobInfoDomain=new JobInfoDomain();
+			jobInfoDomain.setStudent(studentDomain);
+			jobInfoService.doSave(jobInfoDomain);
 			return studentDao.save(studentDomain);
 		}else{
 			return studentDao.update(studentDomain);

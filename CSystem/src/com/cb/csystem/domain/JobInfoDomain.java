@@ -1,9 +1,13 @@
 package com.cb.csystem.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -18,7 +22,8 @@ import org.hibernate.annotations.GenericGenerator;
 public class JobInfoDomain {
 	
 	private String id;
-	private String studentId;	//学生ID，注意，此处不是学号，而是学生表的ID
+	//private String studentId;	//学生ID，注意，此处不是学号，而是学生表的ID
+	private StudentDomain student;
 	private Integer ContractStatus;	//签约状态
 	private String company;	//公司
 	private Integer protocalState;	//协议书状态
@@ -40,12 +45,12 @@ public class JobInfoDomain {
 		this.id = id;
 	}
 	
-	@Column(name = "STUDENTID",unique = true, nullable = false, length = 100)
-	public String getStudentId() {
-		return studentId;
+	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY,targetEntity=StudentDomain.class)
+	public StudentDomain getStudent() {
+		return student;
 	}
-	public void setStudentId(String studentId) {
-		this.studentId = studentId;
+	public void setStudent(StudentDomain student) {
+		this.student = student;
 	}
 	
 	@Column(name = "CONTRACTSTATUS", nullable = true, length = 10)
@@ -119,6 +124,5 @@ public class JobInfoDomain {
 	public void setIsPositive(Integer isPositive) {
 		this.isPositive = isPositive;
 	}
-	
-	
+
 }
