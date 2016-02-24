@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,7 +23,7 @@ public class JobInfoDomain {
 	private String id;
 	//private String studentId;	//学生ID，注意，此处不是学号，而是学生表的ID
 	private StudentDomain student;
-	private Integer ContractStatus;	//签约状态
+	private Integer contractStatus;	//签约状态
 	private String company;	//公司
 	private Integer protocalState;	//协议书状态
 	private Integer nowState;	//当前状态
@@ -55,10 +54,10 @@ public class JobInfoDomain {
 	
 	@Column(name = "CONTRACTSTATUS", nullable = true, length = 10)
 	public Integer getContractStatus() {
-		return ContractStatus;
+		return contractStatus;
 	}
 	public void setContractStatus(Integer contractStatus) {
-		ContractStatus = contractStatus;
+		this.contractStatus = contractStatus;
 	}
 	
 	@Column(name = "COMPANY", nullable = true, length = 200)

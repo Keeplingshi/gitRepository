@@ -1,28 +1,180 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>		
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'jobInfoEdit.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+<!-- 修改就业信息界面 -->
 
-  </head>
-  
-  <body>
-    This is my JSP page. <br>
-  </body>
-</html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
+<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/datePicker/WdatePicker.js"></script>
+
+<form id="jobInfoEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/jobInfo/save" method="post">
+	<input type="hidden" id="id" name="id" value="${studentDomain.jobInfo.id }" />
+	<input type="hidden" id="contractStatus" name="contractStatus" value="${studentDomain.jobInfo.contractStatus }" />
+	<input type="hidden" id="protocalState" name="protocalState" value="${studentDomain.jobInfo.protocalState }" />
+	<input type="hidden" id="nowState" name="nowState" value="${studentDomain.jobInfo.nowState }" />
+	<input type="hidden" id="student" name="student" value="${studentDomain }" />
+	<table>
+		<tr>
+			<td class="lesta-150">姓名：</td>
+			<td class="lestb">
+				${studentDomain.name }
+			</td>
+			<td class="lesta-150">学号：</td>
+			<td class="lestb">
+				${studentDomain.stuId }
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">班级：</td>
+			<td class="lestb">
+				${studentDomain.classDomain.name }
+			</td>
+			<td class="lesta-150">当前状态：</td>
+			<td class="lestb">
+				<select id="nowState_select_edit_id" class="select_style">
+					<option value="" selected="selected">选择</option>
+					<c:forEach items="${nowStateList }" var="nowStateDomain">
+						<option value="${nowStateDomain.value }">${nowStateDomain.name}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">签约状态：</td>
+			<td class="lestb">
+				<select id="contractStatus_select_edit_id" class="select_style" onchange="getProtocalState(this.value)">
+					<option value="" selected="selected">选择</option>
+					<c:forEach items="${contractStatusList }" var="contractStatusDomain">
+						<option value="${contractStatusDomain.value }">${contractStatusDomain.name}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td class="lesta-150">协议书状态：</td>
+			<td class="lestb">
+				<select id="protocalState_select_edit_id" class="select_style">
+					<option value="" selected="selected">选择</option>
+					<c:forEach items="${protocalStateList }" var="protocalStateDomain">
+						<option value="${protocalStateDomain.value }">${protocalStateDomain.name}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">签约单位：</td>
+			<td class="lestb" colspan="3">
+				<input type="text" id="company" name="company" class="input_text_a" placeholder="请输入签约单位" value="${studentDomain.jobInfo.company }" style="width:300px;">
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">薪水/月：</td>
+			<td class="lestb">
+				<input type="text" id="salary" name="salary" class="input_text_a" placeholder="请输入薪水" value="${studentDomain.jobInfo.salary }" />
+			</td>
+			<td class="lesta-150">城市：</td>
+			<td class="lestb">
+				<input type="text" id="city" name="city" class="input_text_a" placeholder="请输入签约城市" value="${studentDomain.jobInfo.city }" />
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">备注：</td>
+			<td class="lestb" colspan="3" rowspan="2">
+				<textarea rows="5" cols="50" id="note" name="note" style="margin-top: 20px;">${studentDomain.jobInfo.note }</textarea>
+			</td>
+		</tr>
+	</table>
+	<input id="saveButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:30px; margin-left: 270px;" value="确定"/>
+</form>
+
+<script>
+
+	//初始化赋值
+	$(function(){
+		$("#nowState_select_edit_id option[value='${studentDomain.jobInfo.nowState}']").attr("selected",true);
+		$("#contractStatus_select_edit_id option[value='${studentDomain.jobInfo.contractStatus}']").attr("selected",true);
+		$("#protocalState_select_edit_id option[value='${studentDomain.jobInfo.protocalState}']").attr("selected",true);
+	});
+
+	//下拉框选择后给隐藏域赋值
+	$("#nowState_select_edit_id").change(function(){
+		var nowState_value=$(this).children('option:selected').val();
+		$("#nowState").val(nowState_value);
+	});
+	
+	//下拉框选择后给隐藏域赋值
+	$("#contractStatus_select_edit_id").change(function(){
+		var contractStatus_value=$(this).children('option:selected').val();
+		$("#contractStatus").val(contractStatus_value);
+	});
+	
+	//下拉框选择后给隐藏域赋值
+	$("#protocalState_select_edit_id").change(function(){
+		
+		var contractStatus_value=$("#contractStatus").val();
+		if(contractStatus_value==''||contractStatus_value==null){
+			layer.tips('请先选择签约状态', '#contractStatus_select_edit_id');
+			return ;
+		}
+		
+		var protocalState_value=$(this).children('option:selected').val();
+		$("#protocalState").val(protocalState_value);
+	});
+	
+	$("#saveButton").click(function(){
+		
+/* 		var stunameVal=$("#stuname").val();	//姓名
+		var classIdVal=$("#classId").val();	//班级
+		if(stunameVal==null||stunameVal==''){
+			layer.tips('姓名不能为空', '#stuname');
+			return;
+		}
+		if(classIdVal==null||classIdVal==''){
+			layer.tips('班级不能为空', '#class_select_edit_id');
+			return;
+		} */
+		var form = $("#jobInfoEditFormId");
+		form.ajaxSubmit(function(result){
+			if(result=='success'){
+
+				parent.layer.msg('修改成功', {
+					offset: ['260px'],
+     		        time: 1500//1.5s后自动关闭
+     		    });
+				//关闭当前新增页面页
+				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+				parent.layer.close(index); //再执行关闭    
+			}else{
+				layer.msg('修改失败',{
+					offset: ['260px'],
+	     		    time: 1500
+	     		});
+			}
+		});
+		
+	});
+
+	//选择学院，得到专业
+	function getProtocalState(contractStatus_value)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/jobInfo/getProtocalState?contractStatusValue='+contractStatus_value,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var major_select=$("#protocalState_select_edit_id");
+				major_select.empty();
+				major_select.append('<option value="">'+"选择"+'</option>');
+				for(var i=0;i<json.length;i++){
+					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				}
+				$("#protocalState").val('');
+			}
+		});
+	}
+	
+</script>

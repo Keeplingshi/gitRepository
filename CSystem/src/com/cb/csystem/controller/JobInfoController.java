@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +22,11 @@ import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.service.IStudentService;
+import com.cb.csystem.util.CodeBookConstsType;
+import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
+import com.cb.system.util.SelectItem;
 
 /**
  * 就业信息控制层
@@ -124,6 +129,9 @@ public class JobInfoController {
 		
 		StudentDomain studentDomain=studentService.doGetById(id);
 		model.addAttribute("studentDomain", studentDomain);
+		model.addAttribute("contractStatusList", CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE));
+		model.addAttribute("protocalStateList", CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE));
+		model.addAttribute("nowStateList", CodeBookHelper.getCodeBookByType(CodeBookConstsType.NOWSTATE_TYPE));
 		
 		return "/jobInfo/jobInfoEdit";
 	}
@@ -140,7 +148,6 @@ public class JobInfoController {
 	public String doSave(@Valid @ModelAttribute("domain") JobInfoDomain domain,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
-			System.out.println(result);
 			return Consts.ERROR;
 		} else {
 			if(jobInfoService.doSave(domain)){
@@ -184,4 +191,21 @@ public class JobInfoController {
 		return Consts.ERROR;
 	}
 	
+	/**
+	 * 根据签约状态获取协议书状态
+	 * @param model
+	 * @param college_id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getProtocalState")
+	@ResponseBody
+	public String doGetProtocalState(String contractStatusValue)throws Exception{
+		
+		List<SelectItem> protocalStateList=jobInfoService.doGetProtocalState(contractStatusValue);
+		
+		JSONArray jsonArray=JSONArray.fromObject(protocalStateList);
+		return jsonArray.toString();
+		
+	}
 }

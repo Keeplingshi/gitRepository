@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.system.util.PageInfo;
+import com.cb.system.util.SelectItem;
 
 /**
  * 就业信息表基础服务类
@@ -67,5 +68,12 @@ public interface IJobInfoService {
 	 * @return
 	 */
 	public boolean doDeleteByIds(String[] jobInfoIds)throws Exception;
+
+	/**
+	 * 根据签约状态获取协议书状态
+	 * @param contractStatusValue	签约状态
+	 * @return
+	 */
+	public List<SelectItem> doGetProtocalState(String contractStatusValue)throws Exception;
 	
 }

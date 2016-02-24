@@ -15,6 +15,7 @@ import com.cb.csystem.dao.ICodeBookDao;
 import com.cb.csystem.domain.CodeBookDomain;
 import com.cb.csystem.service.ICodeBookService;
 import com.cb.system.util.PageInfo;
+import com.cb.system.util.ValidateUtil;
 
 /**
  * CodeBook服务层
@@ -144,6 +145,50 @@ public class CodeBookService implements ICodeBookService{
 			return codeBookList.get(0).getValue();
 		}		
 		return null;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.ICodeBookService#doGetIdByValueAndType(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public String doGetIdByValueAndType(String value, String type)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+		if(ValidateUtil.isEmpty(value)||ValidateUtil.isEmpty(type)){
+			return null;
+		}
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(CodeBookDomain.class);
+		detachedCriteria.add(Restrictions.eq("value", value));
+		detachedCriteria.add(Restrictions.eq("type", type));
+		List<CodeBookDomain> codeBookList=codeBookDao.getFilterList(detachedCriteria);
+		if(codeBookList.size()==1){
+			return codeBookList.get(0).getId();
+		}
+		
+		return null;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.ICodeBookService#doGetCodeBookListByParent(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<CodeBookDomain> doGetCodeBookListByParent(String parentValue,
+			String parentType, String childType) throws Exception {
+		// TODO Auto-generated method stub
+		
+		if(ValidateUtil.isEmpty(parentValue)||ValidateUtil.isEmpty(parentType)||ValidateUtil.isEmpty(childType)){
+			return null;
+		}
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(CodeBookDomain.class);
+		detachedCriteria.add(Restrictions.eq("parentId", doGetIdByValueAndType(parentValue,parentType)));
+		
+		detachedCriteria.add(Restrictions.eq("type", childType));
+		List<CodeBookDomain> codeBookList=codeBookDao.getFilterList(detachedCriteria);
+		
+		return codeBookList;
 	}
 	
 }

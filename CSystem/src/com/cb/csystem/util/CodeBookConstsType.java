@@ -17,4 +17,23 @@ public class CodeBookConstsType {
 	 */
 	public static final String SEX_TYPE="8002";
 	
+	/**
+	 * 签约状态：8003
+	 */
+	public static final String CONTRACTSTATUS_TYPE="8003";
+	
+	/**
+	 * 签约书状态：8004
+	 */
+	public static final String PROTOCALSTATE_TYPE="8004";
+	
+	/**
+	 * 当前状态:8005
+	 */
+	public static final String NOWSTATE_TYPE="8005";
+	
+	/**
+	 * 是否积极：8006
+	 */
+	public static final String ISPOSITIVE_TYPE="8006";
 }

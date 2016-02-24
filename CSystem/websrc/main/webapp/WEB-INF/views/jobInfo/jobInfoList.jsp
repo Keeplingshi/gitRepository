@@ -20,8 +20,6 @@
 			<i class="icon-search nav-search-icon"></i>
 		</span>
 	
-		<input id="jobInfoDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
-		<input id="jobInfoAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 		<input id="jobInfoQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	</div>
 	<div class="table-responsive">
@@ -49,7 +47,7 @@
 				<c:forEach items="${studentList }" var="studentDomain">
 					<tr>
 						<td class="center">
-							<label> <input type="checkbox" class="ace" value="${jobInfoDomain.id }"/> <span class="lbl"></span></label>
+							<label> <input type="checkbox" class="ace" value="${studentDomain.id }"/> <span class="lbl"></span></label>
 						</td>
 						<td>${studentDomain.stuId }</td>
 						<td>${studentDomain.name }</td>
@@ -62,39 +60,11 @@
 						<td>薪水</td>
 						<td>备注</td>
 						<td>
-							<input type="button" class="btn_list_view" value="查看" onclick="viewjobInfo('${jobInfoDomain.id }')"/>
-							<input type="button" class="btn_list_update" value="修改" onclick="updatejobInfo('${jobInfoDomain.id }')"/>  
-							<input type="button" class="btn_list_delete" value="删除" onclick="deletejobInfo('${jobInfoDomain.id }')"/>
+							<input type="button" class="btn_list_view" value="查看" onclick="viewjobInfo('${studentDomain.id }')"/>
+							<input type="button" class="btn_list_update" value="修改" onclick="updatejobInfo('${studentDomain.id }')"/>
 						</td>
 					</tr>
 				</c:forEach>
-<%-- 				<c:forEach items="${studentList }" var="studentDomain">
-					<tr>
-						<td class="center">
-						<label> <input type="checkbox" class="ace" value="${studentDomain.id }"/> <span class="lbl"></span></label>
-						</td>
-						<td>${studentDomain.stuId }</td>
-						<td>${studentDomain.name }</td>
-						<td>${cusfun:getNameByValueAndType(studentDomain.sex,"8002")}</td>
-						<td><fmt:formatDate value="${studentDomain.birthday }" type="date"/></td>
-						<td>${cusfun:getNameByValueAndType(studentDomain.politicalStatus,"8001")}</td>
-						<td>${studentDomain.IDnumber }</td>
-						<td>${studentDomain.nativePlace }</td>
-						<td>${studentDomain.dormitory }</td>
-						<td>${studentDomain.classDomain.grade.grade }</td>
-						<td>${studentDomain.classDomain.major.college.name }</td>
-						<td>${studentDomain.classDomain.major.name }</td>
-						<td>${studentDomain.classDomain.name }</td>
-						<td style="overflow:hidden;text-overflow:ellipsis;">${studentDomain.email }</td>
-						<td>${studentDomain.telephone }</td>
-						<td>${studentDomain.cellphone }</td>
-						<td>
-							<input type="button" class="btn_list_view" value="查看" onclick="viewstudent('${studentDomain.id }')"/>
-							<input type="button" class="btn_list_update" value="修改" onclick="updatestudent('${studentDomain.id }')"/>  
-							<input type="button" class="btn_list_delete" value="删除" onclick="deletestudent('${studentDomain.id }')"/>
-						</td>
-					</tr>
-				</c:forEach> --%>
 			</tbody>
 		</table>
 		<div id="pageId"><tags:paged /></div>
@@ -121,5 +91,38 @@
 	        }
 	    });
 	});
+	
+	
+	//list中修改就业信息按钮
+	function updatejobInfo(studentId)
+	{
+	    parent.layer.open({
+	        type: 2,
+	        title: '修改就业信息',
+	        shadeClose: true,
+	        area : ['630px' , '480px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoEdit/'+studentId,
+	        end: function(){
+	        	//默认加载用户列表
+	        	$("#formId").ajaxSubmit(function(data){
+	        	 	$("#content_page").html(data);
+	    		});
+	        }
+	    });
+	}
+	
+	//list中查看就业信息按钮
+	function viewjobInfo(studentId)
+	{
+	    parent.layer.open({
+	        type: 2,
+	        title: '查看就业信息',
+	        shadeClose: true,
+	        area : ['700px' , '500px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoView/'+studentId
+	    });
+	}
 
 </script>

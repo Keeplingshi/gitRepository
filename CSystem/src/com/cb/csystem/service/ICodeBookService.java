@@ -74,4 +74,23 @@ public interface ICodeBookService {
 	 * @return
 	 */
 	public String doGetValueByNameAndType(String name, String type)throws Exception;
+	
+	/**
+	 * 通过值和类型获取id
+	 * @param value
+	 * @param type
+	 * @return
+	 * @throws Exception
+	 */
+	public String doGetIdByValueAndType(String value,String type)throws Exception;
+	
+	/**
+	 * 根据父节点值和类型查询子节点
+	 * @param parentValue
+	 * @param parentType
+	 * @param childType
+	 * @return
+	 * @throws Exception
+	 */
+	public List<CodeBookDomain> doGetCodeBookListByParent(String parentValue,String parentType,String childType)throws Exception;
 }

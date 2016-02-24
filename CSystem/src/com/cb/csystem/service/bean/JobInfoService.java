@@ -1,5 +1,6 @@
 package com.cb.csystem.service.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,9 +11,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.csystem.dao.IJobInfoDao;
+import com.cb.csystem.domain.CodeBookDomain;
 import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.csystem.service.ICodeBookService;
 import com.cb.csystem.service.IJobInfoService;
+import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.system.util.PageInfo;
+import com.cb.system.util.SelectItem;
 
 /**
  * 就业信息服务层
@@ -24,6 +29,7 @@ import com.cb.system.util.PageInfo;
 public class JobInfoService implements IJobInfoService{
 
 	@Resource private IJobInfoDao jobInfoDao;
+	@Resource private ICodeBookService codeBookService;
 	
 	/**
 	 * @see com.cb.csystem.service.IJobInfoService#doGetById(java.lang.String)
@@ -103,6 +109,24 @@ public class JobInfoService implements IJobInfoService{
 		}
 		
 		return b;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IJobInfoService#doGetProtocalState(java.lang.String)
+	 */
+	@Override
+	public List<SelectItem> doGetProtocalState(String contractStatusValue)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+		List<SelectItem> selectList=new ArrayList<>();
+		//查询类型为 签约书状态
+		List<CodeBookDomain> codeBookDomains=codeBookService.doGetCodeBookListByParent(contractStatusValue, CodeBookConstsType.CONTRACTSTATUS_TYPE, CodeBookConstsType.PROTOCALSTATE_TYPE);
+		for(CodeBookDomain codeBookDomain:codeBookDomains){
+			selectList.add(new SelectItem(codeBookDomain.getValue(),codeBookDomain.getName()));
+		}
+		
+		return selectList;
 	}
 
 }

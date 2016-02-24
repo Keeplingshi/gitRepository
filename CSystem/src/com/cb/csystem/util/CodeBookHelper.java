@@ -51,6 +51,24 @@ public class CodeBookHelper {
 	}
 	
 	/**
+	 * 通过值和类型获取id
+	 * @param value
+	 * @param type
+	 * @return
+	 */
+	public static String getIdByValueAndType(String value,String type)
+	{
+		String id="";
+		try {
+			id = codeBookService.doGetIdByValueAndType(value, type);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return id;
+	}
+	
+	/**
 	 * 根据类型获取List
 	 * @param type
 	 * @return
