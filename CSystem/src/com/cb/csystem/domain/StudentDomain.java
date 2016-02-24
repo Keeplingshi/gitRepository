@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -168,7 +169,9 @@ public class StudentDomain {
 		this.isMonitor = isMonitor;
 	}
 	
-	@OneToOne(mappedBy="student",cascade=CascadeType.ALL,fetch=FetchType.LAZY,targetEntity=JobInfoDomain.class)
+	//@OneToOne(mappedBy="student",cascade=CascadeType.ALL,fetch=FetchType.LAZY,targetEntity=JobInfoDomain.class)
+	@OneToOne(targetEntity=JobInfoDomain.class, cascade=CascadeType.ALL)  
+    @PrimaryKeyJoinColumn
 	public JobInfoDomain getJobInfo() {
 		return jobInfo;
 	}

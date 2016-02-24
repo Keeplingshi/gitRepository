@@ -15,6 +15,9 @@ public class DateUtil {
 	private final static SimpleDateFormat sdfDays = new SimpleDateFormat(
 	"yyyyMMdd");
 
+	private final static SimpleDateFormat sdfMinute = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm");
+	
 	private final static SimpleDateFormat sdfTime = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
 
@@ -29,6 +32,14 @@ public class DateUtil {
 			return null;
 		}
 		return sdfDay.format(date);
+	}
+	
+	/**
+	 * 获取yyyy-MM-dd hh:mm 格式的日期
+	 * @return
+	 */
+	public static String getSdfMinute(){
+		return sdfMinute.format(new Date());
 	}
 	
 	/**

@@ -3,13 +3,14 @@ package com.cb.csystem.domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * 就业信息
@@ -33,10 +34,20 @@ public class JobInfoDomain {
 	private String modifyTime;	//最后修改时间
 	private Integer isPositive;	//是否积极
 	
+//	  @Id  
+//	    @Column(name="pid")  
+//	    @GenericGenerator(name="foreignKey", strategy="foreign", parameters=@Parameter(name="property", value="user"))  
+//	    @GeneratedValue(generator="foreignKey", strategy=GenerationType.IDENTITY) 
+//	
+//	@Id
+//	@GeneratedValue(generator="system-uuid")
+//	@GenericGenerator(name = "system-uuid",strategy="uuid")
+//	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
+	
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name = "system-uuid",strategy="uuid")
 	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
+	@GenericGenerator(name = "foreignKey",strategy="foreign",parameters=@Parameter(name = "property", value = "student"))
+	@GeneratedValue(generator="foreignKey")
 	public String getId() {
 		return id;
 	}
@@ -44,7 +55,9 @@ public class JobInfoDomain {
 		this.id = id;
 	}
 	
-	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY,targetEntity=StudentDomain.class)
+	//@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY,targetEntity=StudentDomain.class)
+	@OneToOne(targetEntity=StudentDomain.class, cascade=CascadeType.ALL, mappedBy="jobInfo")  
+    @PrimaryKeyJoinColumn(name="id", referencedColumnName="id") 
 	public StudentDomain getStudent() {
 		return student;
 	}

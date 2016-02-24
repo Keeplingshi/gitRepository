@@ -26,42 +26,44 @@
 		<table id="sample-table-2" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
 			<thead>
 				<tr>
-					<th class="center" style="width: 80px;">
+					<th class="center" style="width: 60px;">
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
-					<th style="width: 120px;">学号</th>
+					<th style="width: 100px;">学号</th>
 					<th style="width: 80px;">姓名</th>
 					<th style="width: 60px;">性别</th>
 					<th>班级</th>
 					<th>签约状态</th>
 					<th>签约单位</th>
-					<th>协议书状态</th>
+					<th>协议书</th>
 					<th>当前状态</th>
 					<th>薪水</th>
 					<th>备注</th>
+					<th style="width: 120px;">最后修改时间</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 	
 			<tbody>
-				<c:forEach items="${studentList }" var="studentDomain">
-					<tr>
+				<c:forEach items="${jobInfoList }" var="jobInfoDomain">
+					<tr style="">
 						<td class="center">
-							<label> <input type="checkbox" class="ace" value="${studentDomain.id }"/> <span class="lbl"></span></label>
+							<label> <input type="checkbox" class="ace" value="${jobInfoDomain.id }"/> <span class="lbl"></span></label>
 						</td>
-						<td>${studentDomain.stuId }</td>
-						<td>${studentDomain.name }</td>
-						<td>${cusfun:getNameByValueAndType(studentDomain.sex,"8002")}</td>
-						<td>${studentDomain.classDomain.name }</td>
-						<td>签约状态</td>
-						<td>签约单位</td>
-						<td>协议书状态</td>
-						<td>当前状态</td>
-						<td>薪水</td>
-						<td>备注</td>
+						<td>${jobInfoDomain.student.stuId }</td>
+						<td>${jobInfoDomain.student.name }</td>
+						<td>${cusfun:getNameByValueAndType(jobInfoDomain.student.sex,"8002")}</td>
+						<td>${jobInfoDomain.student.classDomain.name }</td>
+						<td>${cusfun:getNameByValueAndType(jobInfoDomain.contractStatus,"8003")}</td>
+						<td>${jobInfoDomain.company }</td>
+						<td>${cusfun:getNameByValueAndType(jobInfoDomain.protocalState,"8004")}</td>
+						<td>${cusfun:getNameByValueAndType(jobInfoDomain.nowState,"8005")}</td>
+						<td>${jobInfoDomain.salary }</td>
+						<td>${jobInfoDomain.note }</td>
+						<td>${jobInfoDomain.modifyTime }</td>
 						<td>
-							<input type="button" class="btn_list_view" value="查看" onclick="viewjobInfo('${studentDomain.id }')"/>
-							<input type="button" class="btn_list_update" value="修改" onclick="updatejobInfo('${studentDomain.id }')"/>
+							<input type="button" class="btn_list_view" value="查看" onclick="viewjobInfo('${jobInfoDomain.id }')"/>
+							<input type="button" class="btn_list_update" value="修改" onclick="updatejobInfo('${jobInfoDomain.id }')"/>
 						</td>
 					</tr>
 				</c:forEach>
@@ -73,28 +75,9 @@
 </div>
 
 <script type="text/javascript">
-
-	//新增学生按钮
-	$("#jobInfoAddButton").click(function(){
-	    parent.layer.open({
-	        type: 2,
-	        title: '新增学生',
-	        shadeClose: true, //点击遮罩关闭层
-	        area : ['700px' , '500px'],
-	        offset: ['100px'],
-	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoAdd',
-	        end: function(){
-				//默认加载学生列表
-	    		$("#formId").ajaxSubmit(function(data){
-	        	 	$("#content_page").html(data);
-	    		});
-	        }
-	    });
-	});
-	
 	
 	//list中修改就业信息按钮
-	function updatejobInfo(studentId)
+	function updatejobInfo(jobInfoId)
 	{
 	    parent.layer.open({
 	        type: 2,
@@ -102,7 +85,7 @@
 	        shadeClose: true,
 	        area : ['630px' , '480px'],
 	        offset: ['100px'],
-	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoEdit/'+studentId,
+	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoEdit/'+jobInfoId,
 	        end: function(){
 	        	//默认加载用户列表
 	        	$("#formId").ajaxSubmit(function(data){
@@ -113,15 +96,15 @@
 	}
 	
 	//list中查看就业信息按钮
-	function viewjobInfo(studentId)
+	function viewjobInfo(jobInfoId)
 	{
 	    parent.layer.open({
 	        type: 2,
 	        title: '查看就业信息',
 	        shadeClose: true,
-	        area : ['700px' , '500px'],
+	        area : ['630px' , '480px'],
 	        offset: ['100px'],
-	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoView/'+studentId
+	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoView/'+jobInfoId
 	    });
 	}
 

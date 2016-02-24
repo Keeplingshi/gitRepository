@@ -1,8 +1,10 @@
 package com.cb.csystem.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
@@ -25,6 +27,7 @@ import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
+import com.cb.system.util.DateUtil;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
 
@@ -60,10 +63,10 @@ public class JobInfoController {
 	public String getjobInfoList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model)throws Exception{
 		
-//		List<JobInfoDomain> jobInfoList=jobInfoService.doGetPageList(pageInfo);
-//		model.addAttribute("jobInfoList", jobInfoList);
-		List<StudentDomain> studentList=studentService.doGetPageList(pageInfo);
-		model.addAttribute("studentList", studentList);
+		List<JobInfoDomain> jobInfoList=jobInfoService.doGetPageList(pageInfo);
+		model.addAttribute("jobInfoList", jobInfoList);
+//		List<StudentDomain> studentList=studentService.doGetPageList(pageInfo);
+//		model.addAttribute("studentList", studentList);
 		
 		return "/jobInfo/jobInfoList";
 	}
@@ -83,8 +86,8 @@ public class JobInfoController {
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model,String searchText,String sortMode,String sortValue)throws Exception{
 	
-		List<StudentDomain> studentList=studentService.doGetPageList(pageInfo);
-		model.addAttribute("studentList", studentList);
+		List<JobInfoDomain> jobInfoList=jobInfoService.doGetPageList(pageInfo);
+		model.addAttribute("jobInfoList", jobInfoList);
 		
 		return "/jobInfo/jobInfoList";
 	}
@@ -101,6 +104,9 @@ public class JobInfoController {
 		
 		StudentDomain studentDomain=studentService.doGetById(id);
 		model.addAttribute("studentDomain", studentDomain);
+		
+		JobInfoDomain jobInfoDomain=jobInfoService.doGetById(id);
+		model.addAttribute("jobInfoDomain", jobInfoDomain);
 		
 		return "/jobInfo/jobInfoView";
 	}
@@ -127,8 +133,8 @@ public class JobInfoController {
 	@RequestMapping("/jobInfoEdit/{id}")
 	public String dojobInfoEdit(Model model,@PathVariable String id)throws Exception{
 		
-		StudentDomain studentDomain=studentService.doGetById(id);
-		model.addAttribute("studentDomain", studentDomain);
+		JobInfoDomain jobInfoDomain=jobInfoService.doGetById(id);
+		model.addAttribute("jobInfoDomain", jobInfoDomain);
 		model.addAttribute("contractStatusList", CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE));
 		model.addAttribute("protocalStateList", CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE));
 		model.addAttribute("nowStateList", CodeBookHelper.getCodeBookByType(CodeBookConstsType.NOWSTATE_TYPE));
@@ -146,10 +152,14 @@ public class JobInfoController {
 	@RequestMapping("/save")
 	@ResponseBody
 	public String doSave(@Valid @ModelAttribute("domain") JobInfoDomain domain,
-			BindingResult result)throws Exception{
+			BindingResult result,HttpSession session)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
+			//获取当前登录用户名
+			String username=(String) session.getAttribute(Consts.CURRENT_USER);
+			String modifyTime=DateUtil.getSdfMinute()+" "+username;
+			domain.setModifyTime(modifyTime);
 			if(jobInfoService.doSave(domain)){
 				return Consts.SUCCESS;
 			}

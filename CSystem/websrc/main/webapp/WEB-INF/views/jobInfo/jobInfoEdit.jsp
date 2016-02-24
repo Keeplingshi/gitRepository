@@ -12,26 +12,25 @@
 <script src="${pageContext.request.contextPath}/resources/plugins/datePicker/WdatePicker.js"></script>
 
 <form id="jobInfoEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/jobInfo/save" method="post">
-	<input type="hidden" id="id" name="id" value="${studentDomain.jobInfo.id }" />
-	<input type="hidden" id="contractStatus" name="contractStatus" value="${studentDomain.jobInfo.contractStatus }" />
-	<input type="hidden" id="protocalState" name="protocalState" value="${studentDomain.jobInfo.protocalState }" />
-	<input type="hidden" id="nowState" name="nowState" value="${studentDomain.jobInfo.nowState }" />
-	<input type="hidden" id="student" name="student" value="${studentDomain }" />
+	<input type="hidden" id="id" name="id" value="${jobInfoDomain.id }" />
+	<input type="hidden" id="contractStatus" name="contractStatus" value="${jobInfoDomain.contractStatus }" />
+	<input type="hidden" id="protocalState" name="protocalState" value="${jobInfoDomain.protocalState }" />
+	<input type="hidden" id="nowState" name="nowState" value="${jobInfoDomain.nowState }" />
 	<table>
 		<tr>
 			<td class="lesta-150">姓名：</td>
 			<td class="lestb">
-				${studentDomain.name }
+				${jobInfoDomain.student.name }
 			</td>
 			<td class="lesta-150">学号：</td>
 			<td class="lestb">
-				${studentDomain.stuId }
+				${jobInfoDomain.student.stuId }
 			</td>
 		</tr>
 		<tr>
 			<td class="lesta-150">班级：</td>
 			<td class="lestb">
-				${studentDomain.classDomain.name }
+				${jobInfoDomain.student.classDomain.name }
 			</td>
 			<td class="lesta-150">当前状态：</td>
 			<td class="lestb">
@@ -66,23 +65,23 @@
 		<tr>
 			<td class="lesta-150">签约单位：</td>
 			<td class="lestb" colspan="3">
-				<input type="text" id="company" name="company" class="input_text_a" placeholder="请输入签约单位" value="${studentDomain.jobInfo.company }" style="width:300px;">
+				<input type="text" id="company" name="company" class="input_text_a" placeholder="请输入签约单位" value="${jobInfoDomain.company }" style="width:300px;">
 			</td>
 		</tr>
 		<tr>
 			<td class="lesta-150">薪水/月：</td>
 			<td class="lestb">
-				<input type="text" id="salary" name="salary" class="input_text_a" placeholder="请输入薪水" value="${studentDomain.jobInfo.salary }" />
+				<input type="text" id="salary" name="salary" class="input_text_a" placeholder="请输入薪水" value="${jobInfoDomain.salary }" />
 			</td>
 			<td class="lesta-150">城市：</td>
 			<td class="lestb">
-				<input type="text" id="city" name="city" class="input_text_a" placeholder="请输入签约城市" value="${studentDomain.jobInfo.city }" />
+				<input type="text" id="city" name="city" class="input_text_a" placeholder="请输入签约城市" value="${jobInfoDomain.city }" />
 			</td>
 		</tr>
 		<tr>
 			<td class="lesta-150">备注：</td>
 			<td class="lestb" colspan="3" rowspan="2">
-				<textarea rows="5" cols="50" id="note" name="note" style="margin-top: 20px;">${studentDomain.jobInfo.note }</textarea>
+				<textarea rows="5" cols="50" id="note" name="note" style="margin-top: 20px;">${jobInfoDomain.note }</textarea>
 			</td>
 		</tr>
 	</table>
@@ -93,9 +92,9 @@
 
 	//初始化赋值
 	$(function(){
-		$("#nowState_select_edit_id option[value='${studentDomain.jobInfo.nowState}']").attr("selected",true);
-		$("#contractStatus_select_edit_id option[value='${studentDomain.jobInfo.contractStatus}']").attr("selected",true);
-		$("#protocalState_select_edit_id option[value='${studentDomain.jobInfo.protocalState}']").attr("selected",true);
+		$("#nowState_select_edit_id option[value='${jobInfoDomain.nowState}']").attr("selected",true);
+		$("#contractStatus_select_edit_id option[value='${jobInfoDomain.contractStatus}']").attr("selected",true);
+		$("#protocalState_select_edit_id option[value='${jobInfoDomain.protocalState}']").attr("selected",true);
 	});
 
 	//下拉框选择后给隐藏域赋值
