@@ -172,4 +172,41 @@ public class JobInfoService implements IJobInfoService{
 		return selectList;
 	}
 
+	/**
+	 * @see com.cb.csystem.service.IJobInfoService#doSearchJobInfoList(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<JobInfoDomain> doSearchJobInfoList(String gradeId,
+			String collegeId, String majorId, String classId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(JobInfoDomain.class);
+		detachedCriteria.createAlias("student", "qstu");
+		detachedCriteria.createAlias("qstu.classDomain", "qclazz");
+		//班级过滤
+		if(ValidateUtil.notEmpty(classId)){
+			detachedCriteria.add(Restrictions.eq("qclazz.id", classId));
+		}else{
+			if(ValidateUtil.notEmpty(majorId)){
+				//专业过滤
+				detachedCriteria.createAlias("qclazz.major", "qmajor");
+				detachedCriteria.add(Restrictions.eq("qmajor.id", majorId));
+			}else{
+				if(ValidateUtil.notEmpty(collegeId)){
+					//学院过滤
+					detachedCriteria.createAlias("qclazz.major", "qmajor");
+					detachedCriteria.createAlias("qmajor.college", "qcollege");
+					detachedCriteria.add(Restrictions.eq("qcollege.id", collegeId));
+				}
+			}
+			if(ValidateUtil.notEmpty(gradeId)){
+				//年级过滤
+				detachedCriteria.createAlias("qclazz.grade", "qgrade");
+				detachedCriteria.add(Restrictions.eq("qgrade.id", gradeId));
+			}
+		}
+		
+		return jobInfoDao.getFilterList(detachedCriteria);
+	}
+
 }

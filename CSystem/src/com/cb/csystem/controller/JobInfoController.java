@@ -3,6 +3,7 @@ package com.cb.csystem.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cb.csystem.domain.CollegeDomain;
 import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.StudentDomain;
@@ -32,7 +34,9 @@ import com.cb.csystem.util.CodeBookConsts;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
+import com.cb.csystem.util.DBToExcelUtil;
 import com.cb.system.util.DateUtil;
+import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
 
@@ -272,5 +276,60 @@ public class JobInfoController {
 		}
 		
 		return Consts.ERROR;
+	}
+	
+	/**
+	 * 就业信息导出页面
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/jobInfoDBToExcelView")
+	public String doJobInfoDBToExcelView(Model model)throws Exception{
+		
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("gradeList", gradeList);
+		
+		return "/jobInfo/jobInfoDBToExcelView";
+	}
+	
+	/**
+	 * 导出就业信息
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/jobInfoDBToExcel")
+	@ResponseBody
+	public String dojobInfoDBToExcel(String gradeId,String collegeId,String majorId,String classId)throws Exception{
+		
+		List<JobInfoDomain> jobInfoDomains=jobInfoService.doSearchJobInfoList(gradeId,collegeId, majorId, classId);
+		boolean b=DBToExcelUtil.jobInfoDBToExcel(jobInfoDomains, Consts.DBTOEXCEL_PATH+Consts.JOBINFO_EXCEL);
+		
+		if(b){
+			return Consts.SUCCESS;
+		}else{
+			return Consts.ERROR;
+		}
+	}
+	
+	/**
+	 * 下载统计信息
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/downloadJobInfo")
+	public void dodownloadJobInfo(HttpServletResponse response)throws Exception{
+		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.JOBINFO_EXCEL, Consts.JOBINFO_EXCEL);
 	}
 }

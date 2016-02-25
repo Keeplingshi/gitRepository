@@ -27,7 +27,12 @@ public class Consts {
 	/**
 	 * student模板文件名称
 	 */
-	public static final String STUDENTEXCEL="student.xls";
+	public static final String STUDENT_EXCEL="student.xls";
+	
+	/**
+	 * 就业信息导出文件名称
+	 */
+	public static final String JOBINFO_EXCEL="jobcount.xls";
 	
 	/**
 	 * student表下载模板
@@ -37,7 +42,7 @@ public class Consts {
 	/**
 	 * student导出学生信息文件路径
 	 */
-	public static final String DBTOEXCEL_PATH=PathUtil.getWebappPath()+"downloadStudnetInfo//";
+	public static final String DBTOEXCEL_PATH=PathUtil.getWebappPath()+"downloadExcelInfo//";
 	
 	/**
 	 * 降序

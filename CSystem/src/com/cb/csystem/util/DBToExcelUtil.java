@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.system.util.DateUtil;
 import com.cb.system.util.FileUtil;
@@ -91,5 +92,94 @@ public class DBToExcelUtil {
 		
 		return b;
 	}
+	
+	/**
+	 * 导出就业信息数据
+	 * @param jobInfoDomains
+	 * @param path
+	 * @return
+	 */
+	@SuppressWarnings("resource")
+	public static boolean jobInfoDBToExcel(List<JobInfoDomain> jobInfoDomains,String path)
+	{
+		boolean b=false;
+		String[] headers = { "学号", "姓名", "性别", "签约状态","签约单位","协议书状态","当前状态","城市","薪金/月","备注"};
+		int columnNum=headers.length;
+		// 声明一个工作薄
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		// 生成一个表格
+		HSSFSheet sheet = workbook.createSheet("就业统计信息");
+		// 设置表格默认列宽度为15个字节
+		sheet.setDefaultColumnWidth(15);
+		
+		// 产生表格标题行
+		HSSFRow row = sheet.createRow(0);
+		for (int i = 0; i < columnNum; i++) {
+			HSSFCell cell = row.createCell(i);
+			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+			cell.setCellValue(text);
+		}
+
+		int index=0;
+		HSSFCell[] cells=new HSSFCell[columnNum];
+		for(JobInfoDomain jobInfoDomain:jobInfoDomains)
+		{
+			index++;
+			row = sheet.createRow(index);
+			for(int i=0;i<columnNum;i++){
+				cells[i]=row.createCell(i);
+			}
+			StudentDomain studentDomain=jobInfoDomain.getStudent();
+			if(studentDomain!=null){
+				//学号
+				cells[0].setCellValue(studentDomain.getStuId());
+				//姓名
+				cells[1].setCellValue(studentDomain.getName());
+				//性别
+				if(studentDomain.getSex()!=null){
+					cells[2].setCellValue(CodeBookHelper.getNameByValueAndType(studentDomain.getSex().toString(), CodeBookConstsType.SEX_TYPE));
+				}
+				//签约状态
+				if(jobInfoDomain.getContractStatus()!=null){
+					cells[3].setCellValue(CodeBookHelper.getNameByValueAndType(jobInfoDomain.getContractStatus().toString(), CodeBookConstsType.CONTRACTSTATUS_TYPE));
+				}
+				//签约单位
+				cells[4].setCellValue(jobInfoDomain.getCompany());
+				//协议书状态
+				if(jobInfoDomain.getProtocalState()!=null){
+					cells[5].setCellValue(CodeBookHelper.getNameByValueAndType(jobInfoDomain.getProtocalState().toString(), CodeBookConstsType.PROTOCALSTATE_TYPE));
+				}
+				//当前状态
+				if(jobInfoDomain.getNowState()!=null){
+					cells[6].setCellValue(CodeBookHelper.getNameByValueAndType(jobInfoDomain.getNowState().toString(), CodeBookConstsType.NOWSTATE_TYPE));
+				}
+				//城市
+				cells[7].setCellValue(jobInfoDomain.getCity());
+				//薪金
+				if(jobInfoDomain.getSalary()!=null){
+					cells[8].setCellValue(jobInfoDomain.getSalary());
+				}
+				//备注
+				cells[9].setCellValue(jobInfoDomain.getNote());
+			}
+
+		}
+		
+		try {
+			//首先创建文件
+			if(FileUtil.createFile(path)){
+				OutputStream out = new FileOutputStream(path);
+				workbook.write(out);
+				out.close();
+				b=true;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
+	
 	
 }

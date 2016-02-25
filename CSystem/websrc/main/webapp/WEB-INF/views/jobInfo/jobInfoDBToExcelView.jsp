@@ -6,7 +6,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 
-<form id="studentDBtoExcelFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/student/studentDBToExcel" method="post">
+<form id="jobInfoDBtoExcelFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/jobInfo/jobInfoDBToExcel" method="post">
 	<input type="hidden" id="gradeId" name="gradeId" value="" />
 	<input type="hidden" id="classId" name="classId" value="" />
 	<input type="hidden" id="majorId" name="majorId" value="" />
@@ -58,7 +58,7 @@
 <script>
 
 	$("#DBtoExcelButton").click(function(){
-		var form = $("#studentDBtoExcelFormId");
+		var form = $("#jobInfoDBtoExcelFormId");
 		form.ajaxSubmit(function(result){
 			if(result=='success'){
 
@@ -67,10 +67,13 @@
      		        time: 1500//1.5s后自动关闭
      		    });
 				
-				window.location="${pageContext.request.contextPath}/student/downloadStudentInfo";
+				window.location="${pageContext.request.contextPath}/jobInfo/downloadJobInfo";
 
 			}else{
-				layer.msg('导出失败');
+				parent.layer.msg('导出失败', {
+					offset: ['260px'],
+     		        time: 1500//1.5s后自动关闭
+     		    });
 			}
 		});
 	});

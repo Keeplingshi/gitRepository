@@ -316,7 +316,7 @@ public class StudentController {
 	 */
 	@RequestMapping("/downloadStudentExcel")
 	public void dodownloadStudentExcel(HttpServletResponse response)throws Exception{
-		FileUtil.fileDownload(response, Consts.DOWNLOAD_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
+		FileUtil.fileDownload(response, Consts.DOWNLOAD_PATH+Consts.STUDENT_EXCEL, Consts.STUDENT_EXCEL);
 	}
 	
 	/**
@@ -333,7 +333,7 @@ public class StudentController {
 	public String dostudentDBToExcel(HttpServletResponse response,String gradeId,String collegeId,String majorId,String classId)throws Exception{
 		
 		List<StudentDomain> studentDomains=studentService.doSearchstudentList(gradeId,collegeId, majorId, classId);
-		boolean b=DBToExcelUtil.studnetinfoDBToExcel(studentDomains, Consts.DBTOEXCEL_PATH+Consts.STUDENTEXCEL);
+		boolean b=DBToExcelUtil.studnetinfoDBToExcel(studentDomains, Consts.DBTOEXCEL_PATH+Consts.STUDENT_EXCEL);
 		
 		if(b){
 			return Consts.SUCCESS;
@@ -350,6 +350,6 @@ public class StudentController {
 	 */
 	@RequestMapping("/downloadStudentInfo")
 	public void dodownloadStudentInfo(HttpServletResponse response)throws Exception{
-		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.STUDENTEXCEL, Consts.STUDENTEXCEL);
+		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.STUDENT_EXCEL, Consts.STUDENT_EXCEL);
 	}
 }

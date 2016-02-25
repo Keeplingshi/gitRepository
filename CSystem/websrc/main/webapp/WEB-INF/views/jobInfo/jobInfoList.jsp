@@ -50,6 +50,10 @@
 	
 		<input id="jobInfoQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	</div>
+	<div class="breadcrumbs">
+		<input id="jobInfoCountButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="统计信息"/>
+		<input id="jobInfoDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
+	</div>
 	<div class="table-responsive">
 		<table id="sample-table-2" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
 			<thead>
@@ -119,9 +123,7 @@
 						<%-- <td>${jobInfoDomain.note }</td> --%>
 						<td>${jobInfoDomain.modifyTime }</td>
 						<td>
-							<c:if test="${jobInfoDomain.isPositive==1 }">
-								<input type="button" class="btn_list_lock" value="标记" onclick="tagjobInfo('${jobInfoDomain.id }')"/>
-							</c:if>
+							<input type="button" class="btn_list_lock" value="标记" onclick="tagjobInfo('${jobInfoDomain.id }')"/>
 							<input type="button" class="btn_list_view" value="查看" onclick="viewjobInfo('${jobInfoDomain.id }')"/>
 							<input type="button" class="btn_list_update" value="修改" onclick="updatejobInfo('${jobInfoDomain.id }')"/>
 						</td>
@@ -204,6 +206,17 @@
 		$("#formId").ajaxSubmit(function(data){
 		 	$("#content_page").html(data);
 		});
+	});
+	
+	$("#jobInfoDBToExcelButton").click(function(){
+	    parent.layer.open({
+	        type: 2,
+	        title: '导出就业信息',
+	        shadeClose: true,
+	        area : ['700px' , '500px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoDBToExcelView'
+	    });
 	});
 	
 	//list中修改就业信息按钮

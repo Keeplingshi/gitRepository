@@ -76,5 +76,16 @@ public interface IJobInfoService {
 	 * @return
 	 */
 	public List<SelectItem> doGetProtocalState(String contractStatusValue)throws Exception;
+
+	/**
+	 * 搜索jobinfo信息
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @return
+	 */
+	public List<JobInfoDomain> doSearchJobInfoList(String gradeId,
+			String collegeId, String majorId, String classId)throws Exception;
 	
 }
