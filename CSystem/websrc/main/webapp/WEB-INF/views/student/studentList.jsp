@@ -100,8 +100,8 @@
 					<th>籍贯</th>
 					<th style="width: 90px;">宿舍</th>
 					<th>年级</th>
-					<th>院系</th>
-					<th>专业</th>
+<!-- 					<th>院系</th>
+					<th>专业</th> -->
 					<th>班级</th>
 					<th>电子邮件</th>
 					<!-- <th>联系电话</th> -->
@@ -125,8 +125,8 @@
 						<td>${studentDomain.nativePlace }</td>
 						<td>${studentDomain.dormitory }</td>
 						<td>${studentDomain.classDomain.grade.grade }</td>
-						<td>${studentDomain.classDomain.major.college.name }</td>
-						<td>${studentDomain.classDomain.major.name }</td>
+<%-- 						<td>${studentDomain.classDomain.major.college.name }</td>
+						<td>${studentDomain.classDomain.major.name }</td> --%>
 						<td>${studentDomain.classDomain.name }</td>
 						<td style="overflow:hidden;text-overflow:ellipsis;">${studentDomain.email }</td>
 						<%-- <td>${studentDomain.telephone }</td> --%>

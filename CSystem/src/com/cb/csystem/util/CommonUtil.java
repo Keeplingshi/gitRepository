@@ -22,7 +22,10 @@ public class CommonUtil {
 	{
 		try {
 			StudentDomain studentDomain=classService.doGetMonitor(classService.doGetById(classId));
-			return studentDomain.getName();
+			if(studentDomain!=null){
+				return studentDomain.getName();
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

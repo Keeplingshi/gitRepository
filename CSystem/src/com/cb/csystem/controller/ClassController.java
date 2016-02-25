@@ -22,6 +22,7 @@ import com.cb.csystem.domain.ClassDomain;
 import com.cb.csystem.domain.CollegeDomain;
 import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.MajorDomain;
+import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.ICollegeService;
 import com.cb.csystem.service.IGradeService;
@@ -119,7 +120,10 @@ public class ClassController {
 		//获取class信息
 		ClassDomain classDomain=classService.doGetById(id);
 		model.addAttribute("classDomain", classDomain);
-		model.addAttribute("monitorName", classService.doGetMonitor(classDomain).getName());
+		StudentDomain monitorDomain=classService.doGetMonitor(classDomain);
+		if(monitorDomain!=null){
+			model.addAttribute("monitorName", monitorDomain.getName());
+		}
 		
 		return "/classinfo/classView";
 	}
@@ -164,8 +168,10 @@ public class ClassController {
 		model.addAttribute("gradelist",gradeList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("collegeList", collegeList);
-		model.addAttribute("monitorId", classService.doGetMonitor(classDomain).getStuId());
-		
+		StudentDomain monitorDomain=classService.doGetMonitor(classDomain);
+		if(monitorDomain!=null){
+			model.addAttribute("monitorName", monitorDomain.getName());
+		}
 		return "/classinfo/classEdit";
 	}
 	
@@ -183,8 +189,8 @@ public class ClassController {
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
-			
-			if(classService.doSave(domain)&&classService.doSetMonitor(monitorId)){
+			classService.doSetMonitor(monitorId);
+			if(classService.doSave(domain)){
 				return Consts.SUCCESS;
 			}
 		}

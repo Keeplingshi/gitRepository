@@ -38,7 +38,7 @@
 					<th>协议书</th>
 					<th>当前状态</th>
 					<th>薪水</th>
-					<th>备注</th>
+					<!-- <th>备注</th> -->
 					<th style="width: 120px;">最后修改时间</th>
 					<th>操作</th>
 				</tr>
@@ -59,7 +59,7 @@
 						<td>${cusfun:getNameByValueAndType(jobInfoDomain.protocalState,"8004")}</td>
 						<td>${cusfun:getNameByValueAndType(jobInfoDomain.nowState,"8005")}</td>
 						<td>${jobInfoDomain.salary }</td>
-						<td>${jobInfoDomain.note }</td>
+						<%-- <td>${jobInfoDomain.note }</td> --%>
 						<td>${jobInfoDomain.modifyTime }</td>
 						<td>
 							<input type="button" class="btn_list_view" value="查看" onclick="viewjobInfo('${jobInfoDomain.id }')"/>

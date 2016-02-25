@@ -22,7 +22,7 @@
 		<tr>
 			<td class="lesta-150">所属年级：</td>
 			<td class="lestb">
-				<select id="grade_select_add_id" class="select_style" onchange="getGrade(this.value)">
+				<select id="grade_select_add_id" class="select_style">
 					<option value="" selected="selected">选择</option>
 					<c:forEach items="${gradeList }" var="gradeDomain">
 						<option value="${gradeDomain.id }">${gradeDomain.grade}</option>

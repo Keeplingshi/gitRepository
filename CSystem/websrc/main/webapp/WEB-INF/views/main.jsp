@@ -92,16 +92,16 @@
 								<span class="menu-text"> 账户管理 </span>
 							</a>
 						</li>
-						<li id="job_manage">
-							<a href="javascript:void(0);">
-								<i class="icon-dashboard"></i>
-								<span class="menu-text"> 就业管理 </span>
-							</a>
-						</li>
 						<li id="student_manage">
 							<a href="javascript:void(0);">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text"> 学生管理 </span>
+							</a>
+						</li>
+						<li id="job_manage">
+							<a href="javascript:void(0);">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text"> 就业管理 </span>
 							</a>
 						</li>
 						<li>
