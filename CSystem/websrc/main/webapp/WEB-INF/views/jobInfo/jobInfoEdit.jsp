@@ -10,6 +10,8 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 <script src="${pageContext.request.contextPath}/resources/plugins/datePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/validform/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
 
 <form id="jobInfoEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/jobInfo/save" method="post">
 	<input type="hidden" id="id" name="id" value="${jobInfoDomain.id }" />
@@ -71,7 +73,7 @@
 		<tr>
 			<td class="lesta-150">薪水/月：</td>
 			<td class="lestb">
-				<input type="text" id="salary" name="salary" class="input_text_a" placeholder="请输入薪水" value="${jobInfoDomain.salary }" />
+				<input type="text" id="salary" name="salary" class="input_text_a" datatype="n" ignore="ignore" placeholder="请输入薪水" value="${jobInfoDomain.salary }" />
 			</td>
 			<td class="lesta-150">城市：</td>
 			<td class="lestb">
@@ -89,6 +91,19 @@
 </form>
 
 <script>
+
+	$.Tipmsg.r=null;
+	
+	var showmsg=function(msg,obj){
+		layer.tips(msg, obj);
+	};
+
+	$("#jobInfoEditFormId").Validform({
+		tiptype:function(msg,o){
+			showmsg(msg,o.obj[0]);
+		}
+	});
+
 
 	//初始化赋值
 	$(function(){
@@ -124,16 +139,11 @@
 	
 	$("#saveButton").click(function(){
 		
-/* 		var stunameVal=$("#stuname").val();	//姓名
-		var classIdVal=$("#classId").val();	//班级
-		if(stunameVal==null||stunameVal==''){
-			layer.tips('姓名不能为空', '#stuname');
+ 		var salaryVal=$("#salary").val();	//姓名
+		if(!isDecimal(salaryVal)){
+			layer.tips('请输入数字', '#salary');
 			return;
 		}
-		if(classIdVal==null||classIdVal==''){
-			layer.tips('班级不能为空', '#class_select_edit_id');
-			return;
-		} */
 		var form = $("#jobInfoEditFormId");
 		form.ajaxSubmit(function(result){
 			if(result=='success'){
