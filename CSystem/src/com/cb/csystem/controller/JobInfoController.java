@@ -1,6 +1,5 @@
 package com.cb.csystem.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,10 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.StudentDomain;
+import com.cb.csystem.service.IClassService;
+import com.cb.csystem.service.ICollegeService;
+import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IJobInfoService;
+import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IStudentService;
+import com.cb.csystem.util.CodeBookConsts;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
@@ -42,6 +47,10 @@ public class JobInfoController {
 
 	@Resource private IJobInfoService jobInfoService;
 	@Resource private IStudentService studentService;
+	@Resource private IMajorService majorService;
+	@Resource private ICollegeService collegeService;
+	@Resource private IClassService classService;
+	@Resource private IGradeService gradeService;
 	
 	/**
 	 * 过滤起前台pageInfo
@@ -64,9 +73,14 @@ public class JobInfoController {
 			,BindingResult bindingResult,Model model)throws Exception{
 		
 		List<JobInfoDomain> jobInfoList=jobInfoService.doGetPageList(pageInfo);
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		
 		model.addAttribute("jobInfoList", jobInfoList);
-//		List<StudentDomain> studentList=studentService.doGetPageList(pageInfo);
-//		model.addAttribute("studentList", studentList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("gradeList", gradeList);
 		
 		return "/jobInfo/jobInfoList";
 	}
@@ -84,10 +98,25 @@ public class JobInfoController {
 	 */
 	@RequestMapping("/jobInfoSearchList")
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,String searchText,String sortMode,String sortValue)throws Exception{
+			,BindingResult bindingResult,Model model,String gradeId,String majorId
+			,String classId,String searchText,String sortMode,String sortValue)throws Exception{
 	
-		List<JobInfoDomain> jobInfoList=jobInfoService.doGetPageList(pageInfo);
+		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,gradeId,majorId,classId,searchText, sortMode, sortValue);
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+
 		model.addAttribute("jobInfoList", jobInfoList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("gradeList", gradeList);
+		
+		model.addAttribute("classId", classId);
+		model.addAttribute("majorId", majorId);
+		model.addAttribute("gradeId", gradeId);
+		model.addAttribute("searchText", searchText);
+		model.addAttribute("sortMode", sortMode);
+		model.addAttribute("sortValue", sortValue);
 		
 		return "/jobInfo/jobInfoList";
 	}
@@ -217,5 +246,31 @@ public class JobInfoController {
 		JSONArray jsonArray=JSONArray.fromObject(protocalStateList);
 		return jsonArray.toString();
 		
+	}
+	
+	/**
+	 * 标记积极不积极
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/markIsPositive/{id}")
+	@ResponseBody
+	public String doMarkIsPositive(@PathVariable String id)throws Exception{
+		
+		JobInfoDomain jobInfoDomain=jobInfoService.doGetById(id);
+		if(jobInfoDomain==null){
+			return Consts.ERROR;
+		}
+		if(CodeBookConsts.ISPOSITIVE_TYPE_A.equals(jobInfoDomain.getIsPositive().toString())){
+			jobInfoDomain.setIsPositive(new Integer(CodeBookConsts.ISPOSITIVE_TYPE_B));
+		}else{
+			jobInfoDomain.setIsPositive(new Integer(CodeBookConsts.ISPOSITIVE_TYPE_A));
+		}
+		if(jobInfoService.doSave(jobInfoDomain)){
+			return Consts.SUCCESS;
+		}
+		
+		return Consts.ERROR;
 	}
 }

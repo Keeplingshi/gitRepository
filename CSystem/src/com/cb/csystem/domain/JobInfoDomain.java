@@ -29,7 +29,7 @@ public class JobInfoDomain {
 	private Integer protocalState;	//协议书状态
 	private Integer nowState;	//当前状态
 	private String city;	//城市
-	private String salary;	//薪水
+	private Integer salary;	//薪水
 	private String note;	//备注
 	private String modifyTime;	//最后修改时间
 	private Integer isPositive;	//是否积极
@@ -105,11 +105,21 @@ public class JobInfoDomain {
 		this.city = city;
 	}
 	
-	@Column(name = "SALARY", nullable = true, length = 100)
-	public String getSalary() {
+	
+	
+//	@Column(name = "SALARY", nullable = true, length = 100)
+//	public String getSalary() {
+//		return salary;
+//	}
+//	public void setSalary(String salary) {
+//		this.salary = salary;
+//	}
+	
+	@Column(name = "SALARY", nullable = true, length = 10)
+	public Integer getSalary() {
 		return salary;
 	}
-	public void setSalary(String salary) {
+	public void setSalary(Integer salary) {
 		this.salary = salary;
 	}
 	
@@ -117,6 +127,7 @@ public class JobInfoDomain {
 	public String getNote() {
 		return note;
 	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}

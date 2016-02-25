@@ -60,7 +60,8 @@ public interface IJobInfoService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo, String searchText,String sortMode,String sortValue)throws Exception;
+	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo,String gradeId,String majorId
+			,String classId,String searchText,String sortMode,String sortValue)throws Exception;
 
 	/**
 	 * 批量删除

@@ -92,6 +92,7 @@
 
 <script>
 
+	//表单验证
 	$.Tipmsg.r=null;
 	
 	var showmsg=function(msg,obj){
@@ -140,10 +141,13 @@
 	$("#saveButton").click(function(){
 		
  		var salaryVal=$("#salary").val();	//姓名
-		if(!isDecimal(salaryVal)){
-			layer.tips('请输入数字', '#salary');
-			return;
-		}
+ 		if(salaryVal!=null&&salaryVal!=''){
+ 			if(!isNumber(salaryVal)){
+ 				layer.tips('请输入整数', '#salary');
+ 				return;
+ 			}
+ 		}
+
 		var form = $("#jobInfoEditFormId");
 		form.ajaxSubmit(function(result){
 			if(result=='success'){

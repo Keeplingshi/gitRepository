@@ -6,6 +6,10 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +20,10 @@ import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.service.ICodeBookService;
 import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.util.CodeBookConstsType;
+import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
+import com.cb.system.util.ValidateUtil;
 
 /**
  * 就业信息服务层
@@ -87,11 +93,48 @@ public class JobInfoService implements IJobInfoService{
 	 * @see com.cb.csystem.service.IJobInfoService#doSearchjobInfoPageList(com.cb.system.util.PageInfo, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo,
-			String searchText, String sortMode, String sortValue)
-			throws Exception {
+	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo,String gradeId,String majorId
+			,String classId,String searchText,String sortMode,String sortValue)throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(JobInfoDomain.class);
+		detachedCriteria.createAlias("student", "qstu");
+		detachedCriteria.createAlias("qstu.classDomain", "qclazz");
+		//班级过滤
+		if(ValidateUtil.notEmpty(classId)){
+			detachedCriteria.add(Restrictions.eq("qclazz.id", classId));
+		}else{
+			if(ValidateUtil.notEmpty(majorId)){
+				//专业过滤
+				detachedCriteria.createAlias("qclazz.major", "qmajor");
+				detachedCriteria.add(Restrictions.eq("qmajor.id", majorId));
+			}
+			if(ValidateUtil.notEmpty(gradeId)){
+				//年级过滤
+				detachedCriteria.createAlias("qclazz.grade", "qgrade");
+				detachedCriteria.add(Restrictions.eq("qgrade.id", gradeId));
+			}
+		}
+		
+		if(ValidateUtil.notEmpty(searchText)){
+			//多条件过滤，此处名字，学号，公司
+			Disjunction disjunction = Restrictions.disjunction();
+			disjunction.add(Restrictions.like("qstu.name", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
+			disjunction.add(Restrictions.like("qstu.stuId", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
+			disjunction.add(Restrictions.like("company", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
+	        
+			detachedCriteria.add(disjunction);
+		}
+		
+		if(ValidateUtil.notEmpty(sortValue)){
+			if(Consts.SORT_ASC.equals(sortMode)){
+				detachedCriteria.addOrder(Order.asc(sortValue));
+			}else{
+				detachedCriteria.addOrder(Order.desc(sortValue));
+			}
+		}
+		
+		return jobInfoDao.getPageList(detachedCriteria, pageInfo);
 	}
 
 	/**
