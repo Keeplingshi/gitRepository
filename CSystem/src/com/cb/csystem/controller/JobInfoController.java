@@ -35,6 +35,7 @@ import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
 import com.cb.csystem.util.DBToExcelUtil;
+import com.cb.csystem.util.bean.JobInfoCountBean;
 import com.cb.system.util.DateUtil;
 import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;
@@ -321,7 +322,8 @@ public class JobInfoController {
 	public String dojobInfoDBToExcel(String gradeId,String collegeId,String majorId,String classId)throws Exception{
 		
 		List<JobInfoDomain> jobInfoDomains=jobInfoService.doSearchJobInfoList(gradeId,collegeId, majorId, classId);
-		boolean b=DBToExcelUtil.jobInfoDBToExcel(jobInfoDomains, Consts.DBTOEXCEL_PATH+Consts.JOBINFO_EXCEL);
+		List<SelectItem> selectItems=jobInfoService.doJobInfoCount(gradeId, collegeId, majorId, classId);
+		boolean b=DBToExcelUtil.jobInfoDBToExcel(jobInfoDomains, selectItems,Consts.DBTOEXCEL_PATH+Consts.JOBINFO_EXCEL);
 		
 		if(b){
 			return Consts.SUCCESS;
@@ -331,7 +333,7 @@ public class JobInfoController {
 	}
 	
 	/**
-	 * 下载统计信息
+	 * 下载就业信息
 	 * @param response
 	 * @throws Exception
 	 */
@@ -369,5 +371,34 @@ public class JobInfoController {
 		model.addAttribute("majorId", majorId);
 		
 		return "/jobInfo/jobInfoCountView";
+	}
+	
+	/**
+	 * 就业统计信息导出
+	 * @param gradeId
+	 * @param collegeId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/jobInfoCountDBToExcel")
+	@ResponseBody
+	public String dojobInfoCountDBToExcel(String gradeId,String collegeId)throws Exception{
+		
+		List<JobInfoCountBean> jobInfoCountBeans=jobInfoService.doJobInfoCountByClassInfo(gradeId, collegeId);
+		if(DBToExcelUtil.jobInfoCountDBToExcel(jobInfoCountBeans, Consts.DBTOEXCEL_PATH+Consts.JOBCOUNT_EXCEL)){
+			return Consts.SUCCESS;
+		}
+		
+		return Consts.ERROR;
+	}
+	
+	/**
+	 * 下载就业统计信息
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/downloadJobCount")
+	public void dodownloadJobCount(HttpServletResponse response)throws Exception{
+		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.JOBCOUNT_EXCEL, Consts.JOBCOUNT_EXCEL);
 	}
 }

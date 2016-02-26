@@ -70,9 +70,43 @@
 		</table>
 		
 		<input type="button" id="jobInfoCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="查询"/>
+		
+		<input type="button" id="jobInfoCountDBToExcelButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="统计信息导出"/>
 	</form>
 
 <script>
+
+	$("#jobInfoCountDBToExcelButton").click(function(){
+		
+		var gradeIdVal=$("#gradeId").val();
+		var collegeIdVal=$("#collegeId").val();
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/jobInfo/jobInfoCountDBToExcel?gradeId='+ gradeIdVal+'&collegeId='+collegeIdVal,
+			type : "post",
+			error : function(e) {
+			
+			},
+			success : function(result) {
+				if(result=='success'){
+
+					parent.layer.msg('导出成功', {
+						offset: ['260px'],
+	     		        time: 1500//1.5s后自动关闭
+	     		    });
+					
+					window.location="${pageContext.request.contextPath}/jobInfo/downloadJobCount";
+
+				}else{
+					parent.layer.msg('导出失败', {
+						offset: ['260px'],
+	     		        time: 1500//1.5s后自动关闭
+	     		    });
+				}
+			}
+		});
+	});
+
 	//使下拉框默认选择
 	$(function() {
 		$("#grade_jobCount_select_id option[value='${gradeId}']").attr("selected", true);

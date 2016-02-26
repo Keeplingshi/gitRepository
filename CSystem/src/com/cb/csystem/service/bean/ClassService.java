@@ -19,6 +19,7 @@ import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
+import com.cb.system.util.ValidateUtil;
 
 /**
  * 班级服务层
@@ -185,6 +186,32 @@ public class ClassService implements IClassService{
 			}
 		}		
 		return null;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IClassService#doGetClazzByGradeOrCollegeOrMajor(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<ClassDomain> doGetClazzByGradeOrCollegeOrMajor(String gradeId,
+			String collegeId,String majorId) throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(ClassDomain.class);
+		if(ValidateUtil.notEmpty(gradeId)){
+			detachedCriteria.add(Restrictions.eq("grade.id", gradeId));
+		}
+		if(ValidateUtil.notEmpty(majorId)){
+			detachedCriteria.createAlias("major", "m");
+			detachedCriteria.add(Restrictions.eq("m.id", majorId));
+		}else{
+			if(ValidateUtil.notEmpty(collegeId)){
+				//多级查询
+				detachedCriteria.createAlias("major", "m");
+				detachedCriteria.createAlias("m.college", "c");
+				detachedCriteria.add(Restrictions.eq("c.id", collegeId));
+			}
+		}
+
+		return classDao.getFilterList(detachedCriteria);
 	}
 
 }

@@ -88,4 +88,13 @@ public interface IClassService {
 	 * @throws Exception
 	 */
 	public StudentDomain doGetMonitor(ClassDomain classDomain)throws Exception;
+	
+	/**
+	 * 通过年级学院专业获取班级列表
+	 * @param gradeId
+	 * @param collegeId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ClassDomain> doGetClazzByGradeOrCollegeOrMajor(String gradeId,String collegeId,String majorId)throws Exception;
 }

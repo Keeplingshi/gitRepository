@@ -32,7 +32,12 @@ public class Consts {
 	/**
 	 * 就业信息导出文件名称
 	 */
-	public static final String JOBINFO_EXCEL="jobcount.xls";
+	public static final String JOBINFO_EXCEL="jobinfo.xls";
+	
+	/**
+	 * 就业统计信息导出文件名称
+	 */
+	public static final String JOBCOUNT_EXCEL="jobcount.xls";
 	
 	/**
 	 * student表下载模板

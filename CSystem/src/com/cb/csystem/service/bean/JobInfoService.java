@@ -15,13 +15,17 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.csystem.dao.IJobInfoDao;
+import com.cb.csystem.domain.ClassDomain;
 import com.cb.csystem.domain.CodeBookDomain;
 import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.ICodeBookService;
 import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.util.CodeBookConsts;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.Consts;
+import com.cb.csystem.util.bean.JobInfoCountBean;
+import com.cb.system.util.DateUtil;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
 import com.cb.system.util.ValidateUtil;
@@ -37,6 +41,7 @@ public class JobInfoService implements IJobInfoService{
 
 	@Resource private IJobInfoDao jobInfoDao;
 	@Resource private ICodeBookService codeBookService;
+	@Resource private IClassService classService;
 	
 	/**
 	 * @see com.cb.csystem.service.IJobInfoService#doGetById(java.lang.String)
@@ -333,7 +338,74 @@ public class JobInfoService implements IJobInfoService{
 		detachedCriteria_F.add(Restrictions.eq("contractStatus", Integer.parseInt(CodeBookConsts.CONTRACTSTATUS_TYPE_F)));
 		selectList.add(new SelectItem("出国",String.valueOf(jobInfoDao.getTotalCount(detachedCriteria_F))));
 		
+		selectList.add(new SelectItem("统计日期",DateUtil.getDay()));
+		
 		return selectList;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IJobInfoService#doJobInfoCountByClassInfo(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<JobInfoCountBean> doJobInfoCountByClassInfo(String gradeId,
+			String collegeId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		List<JobInfoCountBean> jobInfoCountBeans=new ArrayList<>();
+		List<ClassDomain> classDomains=classService.doGetClazzByGradeOrCollegeOrMajor(gradeId, collegeId, null);
+		
+		for(ClassDomain classDomain:classDomains){
+			String classId=classDomain.getId();
+			//班级过滤
+			if(ValidateUtil.notEmpty(classId)){
+				DetachedCriteria detachedCriteria=DetachedCriteria.forClass(JobInfoDomain.class);
+				DetachedCriteria detachedCriteria_A=DetachedCriteria.forClass(JobInfoDomain.class);
+				DetachedCriteria detachedCriteria_B=DetachedCriteria.forClass(JobInfoDomain.class);
+				DetachedCriteria detachedCriteria_C=DetachedCriteria.forClass(JobInfoDomain.class);
+				DetachedCriteria detachedCriteria_D=DetachedCriteria.forClass(JobInfoDomain.class);
+				DetachedCriteria detachedCriteria_E=DetachedCriteria.forClass(JobInfoDomain.class);
+				DetachedCriteria detachedCriteria_F=DetachedCriteria.forClass(JobInfoDomain.class);
+				
+				detachedCriteria.createAlias("student", "qstu");
+				detachedCriteria.createAlias("qstu.classDomain", "qclazz");
+				detachedCriteria_A.createAlias("student", "qstu");
+				detachedCriteria_A.createAlias("qstu.classDomain", "qclazz");
+				detachedCriteria_B.createAlias("student", "qstu");
+				detachedCriteria_B.createAlias("qstu.classDomain", "qclazz");
+				detachedCriteria_C.createAlias("student", "qstu");
+				detachedCriteria_C.createAlias("qstu.classDomain", "qclazz");
+				detachedCriteria_D.createAlias("student", "qstu");
+				detachedCriteria_D.createAlias("qstu.classDomain", "qclazz");
+				detachedCriteria_E.createAlias("student", "qstu");
+				detachedCriteria_E.createAlias("qstu.classDomain", "qclazz");
+				detachedCriteria_F.createAlias("student", "qstu");
+				detachedCriteria_F.createAlias("qstu.classDomain", "qclazz");
+				
+				detachedCriteria.add(Restrictions.eq("qclazz.id", classId));
+				detachedCriteria_A.add(Restrictions.eq("qclazz.id", classId));
+				detachedCriteria_B.add(Restrictions.eq("qclazz.id", classId));
+				detachedCriteria_C.add(Restrictions.eq("qclazz.id", classId));
+				detachedCriteria_D.add(Restrictions.eq("qclazz.id", classId));
+				detachedCriteria_E.add(Restrictions.eq("qclazz.id", classId));
+				detachedCriteria_F.add(Restrictions.eq("qclazz.id", classId));
+				
+				JobInfoCountBean jobInfoCountBean=new JobInfoCountBean();
+				jobInfoCountBean.setClassName(classDomain.getName());
+				jobInfoCountBean.setClassMemberNum(jobInfoDao.getTotalCount(detachedCriteria));
+				jobInfoCountBean.setContractState_A(jobInfoDao.getTotalCount(detachedCriteria_A));
+				jobInfoCountBean.setContractState_B(jobInfoDao.getTotalCount(detachedCriteria_B));
+				jobInfoCountBean.setContractState_C(jobInfoDao.getTotalCount(detachedCriteria_C));
+				jobInfoCountBean.setContractState_D(jobInfoDao.getTotalCount(detachedCriteria_D));
+				jobInfoCountBean.setContractState_E(jobInfoDao.getTotalCount(detachedCriteria_E));
+				jobInfoCountBean.setContractState_F(jobInfoDao.getTotalCount(detachedCriteria_F));
+				jobInfoCountBean.setAverageSalary(jobInfoDao.getAverageCount(detachedCriteria, "salary"));
+				jobInfoCountBean.setCountDate(DateUtil.getDay());
+				
+				jobInfoCountBeans.add(jobInfoCountBean);
+			}
+		}
+		
+		return jobInfoCountBeans;
 	}
 
 }

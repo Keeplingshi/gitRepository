@@ -3,6 +3,7 @@ package com.cb.csystem.service;
 import java.util.List;
 
 import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.csystem.util.bean.JobInfoCountBean;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
 
@@ -99,5 +100,14 @@ public interface IJobInfoService {
 	 */
 	public List<SelectItem> doJobInfoCount(String gradeId,
 			String collegeId, String majorId, String classId)throws Exception;
+	
+	/**
+	 * 就业信息统计以班级导出
+	 * @param gradeId
+	 * @param collegeId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<JobInfoCountBean> doJobInfoCountByClassInfo(String gradeId,String collegeId)throws Exception;
 	
 }
