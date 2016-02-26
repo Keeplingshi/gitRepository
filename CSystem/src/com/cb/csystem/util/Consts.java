@@ -68,4 +68,29 @@ public class Consts {
 	 * 班长    0-否  1-是
 	 */	
 	public static final Integer IS_MONITOR_B=1;
+	
+	/**
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 */
+	public static final Integer AUTHORITY_ADMIN=0;
+	
+	/**
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 */
+	public static final Integer AUTHORITY_INSTRUCTOR=1;
+	
+	/**
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 */
+	public static final Integer AUTHORITY_TEACHER=2;
+	
+	/**
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 */
+	public static final Integer AUTHORITY_MONITOR=3;
+	
+	/**
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 */
+	public static final Integer AUTHORITY_STUDENT=4;
 }

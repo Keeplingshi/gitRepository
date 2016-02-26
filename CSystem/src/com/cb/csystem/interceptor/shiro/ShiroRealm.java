@@ -46,7 +46,7 @@ public class ShiroRealm extends AuthorizingRealm {
 	    		//添加一个角色,不是配置意义上的添加,而是证明该用户拥有admin角色
 	    		simpleAuthorInfo.addRole(user.getRole().getValue());
 	    		//添加权限  
-	    		simpleAuthorInfo.addStringPermission(user.getRole().getValue()+":"+user.getRole().getAuthority());
+	    		simpleAuthorInfo.addStringPermission(String.valueOf(user.getRole().getAuthority()));
 	    		return simpleAuthorInfo;
 	    	}
 		} catch (Exception e) {
@@ -70,17 +70,18 @@ public class ShiroRealm extends AuthorizingRealm {
     	
     	//此处无需比对,比对的逻辑Shiro会做,我们只需返回一个和令牌相关的正确的验证信息
     	//这样一来,在随后的登录页面上就只有这里指定的用户和密码才能通过验证
+    	boolean isOk=false;
     	try {
     		//判断用户名密码
-			boolean isOk=userService.doCheckUserPassword(token.getUsername(), token.getPassword());
-			if(isOk){
-				AuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), this.getName());
-				this.setSession(Consts.CURRENT_USER,token.getUsername());
-				return authenticationInfo;
-			}
+			isOk=userService.doCheckUserPassword(token.getUsername(), token.getPassword());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if(isOk){
+			AuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), this.getName());
+			this.setSession(Consts.CURRENT_USER,token.getUsername());
+			return authenticationInfo;
 		}
     	
     	return null;

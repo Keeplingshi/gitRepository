@@ -12,6 +12,8 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ace/assets/css/font-awesome.min.css" />
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ace/assets/css/ace.min.css" />
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ace/assets/css/ace-rtl.min.css" />
+		<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 
 	</head>
 
@@ -64,15 +66,7 @@
 													<div class="space"></div>
 
 													<div class="clearfix">
-														<label class="inline">
-															<input type="checkbox" style="display:none"/>
-															<span class="lbl"> </span>
-														</label>
-
-														<input type="submit" class="width-35 pull-right btn btn-sm btn-primary">
-															<i class="icon-key"></i>
-															登录
-														</input>
+														<input type="submit" class="width-35 pull-right btn btn-sm btn-primary" value="登录">
 													</div>
 
 													<div class="space-4"></div>
@@ -89,4 +83,15 @@
 		</div>
 
 	</body>
+	<script type="text/javascript">
+		$(function(){
+			var errorinfo='${error}';
+			if(errorinfo=='error'){
+				layer.tips('用户名或密码错误', '#username');
+			}
+		});
+	</script>
 </html>
+
+
+
