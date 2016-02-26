@@ -55,7 +55,7 @@
 						<td style="width: 260px">
 							<input type="button" class="btn_list_view" value="查看" onclick="viewUser('${userDomain.id }')"/> 
 							<c:if test="${userDomain.role.authority!=0}">
-								<input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/> 
+								<%-- <input type="button" class="btn_list_update" value="修改" onclick="updateUser('${userDomain.id }')"/>  --%>
 								<input type="button" class="btn_list_delete" value="删除" onclick="deleteUser('${userDomain.id }')"/>
 							</c:if>
 						</td>
@@ -156,7 +156,7 @@
 		});
 	});
 	
-	//list中修改用户按钮
+/* 	//list中修改用户按钮
 	function updateUser(userId)
 	{
 	    parent.layer.open({
@@ -173,7 +173,7 @@
 	    		});
 	        }
 	    });
-	}
+	} */
 	
 	//list中查看用户按钮
 	function viewUser(userId)

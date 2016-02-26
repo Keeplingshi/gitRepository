@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cb.csystem.dao.IUserDao;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IUserService;
+import com.cb.system.util.EndecryptUtils;
 import com.cb.system.util.PageInfo;
 
 /**
@@ -48,6 +49,7 @@ public class UserService implements IUserService{
 		
 		//判断是否为新用户，如果是，新增，否则更新
 		if(user.getId()==null){
+			user.setPassword(EndecryptUtils.md5(user.getPassword()));
 			return userDao.save(user);
 		}else{
 			return userDao.update(user);
@@ -91,7 +93,7 @@ public class UserService implements IUserService{
 		if(userList.size()==1){
 			UserDomain user=userList.get(0);
 			//判断密码是否等于
-			if((String.valueOf(password)).equals(user.getPassword())){
+			if(EndecryptUtils.md5((String.valueOf(password))).equals(user.getPassword())){
 				return true;
 			}
 		}
