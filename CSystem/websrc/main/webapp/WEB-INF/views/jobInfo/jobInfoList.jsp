@@ -106,7 +106,7 @@
 	
 			<tbody>
 				<c:forEach items="${jobInfoList }" var="jobInfoDomain">
-					<c:if test="${jobInfoDomain.isPositive==1 }">
+					<c:if test="${jobInfoDomain.isPositive!=2 }">
 					<tr>
 						<td class="center">
 							<label> <input type="checkbox" class="ace" value="${jobInfoDomain.id }"/> <span class="lbl"></span></label>
@@ -129,7 +129,7 @@
 						</td>
 					</tr>
 					</c:if>
-					<c:if test="${jobInfoDomain.isPositive!=1 }">
+					<c:if test="${jobInfoDomain.isPositive==2 }">
 					<tr style="color: #FF0000;">
 						<td class="center">
 							<label> <input type="checkbox" class="ace" value="${jobInfoDomain.id }"/> <span class="lbl"></span></label>
@@ -177,7 +177,7 @@
 		//默认加载学生列表
 		$("#formId").ajaxSubmit(function(data){
 		 	$("#content_page").html(data);
-		}); 
+		});
 	});
 	
 	//使下拉框默认选择
@@ -208,6 +208,7 @@
 		});
 	});
 	
+	//就业信息导出数据
 	$("#jobInfoDBToExcelButton").click(function(){
 	    parent.layer.open({
 	        type: 2,
@@ -216,6 +217,18 @@
 	        area : ['700px' , '500px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoDBToExcelView'
+	    });
+	});
+	
+	//就业信息统计
+	$("#jobInfoCountButton").click(function(){
+	    parent.layer.open({
+	        type: 2,
+	        title: '就业信息统计',
+	        shadeClose: true,
+	        area : ['700px' , '500px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/jobInfo/jobInfoCountView'
 	    });
 	});
 	

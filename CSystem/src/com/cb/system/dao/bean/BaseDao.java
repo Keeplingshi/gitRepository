@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
@@ -190,7 +191,12 @@ public class BaseDao<T> implements IBaseDao<T> {
 		int pagePerSize=pageInfo.getSizePerPage();
 
 		//计算总条目数
-		int totalCount=((Long)criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		int totalCount=0;
+		try {
+			totalCount = ((Long)criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+		}
 		//计算分页数
 		pageInfo.setTotalPages((int)Math.ceil(((double)totalCount/pagePerSize)));
 		
@@ -210,6 +216,58 @@ public class BaseDao<T> implements IBaseDao<T> {
 		List<T> list=criteria.list();
 		
 		return list;
+	}
+
+	/**
+	 * @see com.cb.system.dao.IBaseDao#getTotalCount(org.hibernate.criterion.DetachedCriteria)
+	 */
+	@Override
+	public int getTotalCount(DetachedCriteria detachedCriteria) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		Criteria criteria=detachedCriteria.getExecutableCriteria(session);
+		int totalCount=0;
+		try {
+			totalCount = ((Long)criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+		}
+		return totalCount;
+	}
+	
+	/**
+	 * @see com.cb.system.dao.IBaseDao#getCountNumber(org.hibernate.criterion.DetachedCriteria, java.lang.String)
+	 */
+	@Override
+	public double getCountNumber(DetachedCriteria detachedCriteria,
+			String propertyName) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		Criteria criteria=detachedCriteria.getExecutableCriteria(session);
+		double countNumber=0;
+		try {
+			countNumber = ((Double)criteria.setProjection(Projections.count(propertyName)).uniqueResult()).doubleValue();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+		return countNumber;
+	}
+
+	/**
+	 * @see com.cb.system.dao.IBaseDao#getAverageCount(org.hibernate.criterion.DetachedCriteria)
+	 */
+	@Override
+	public double getAverageCount(DetachedCriteria detachedCriteria,String propertyName) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		Criteria criteria=detachedCriteria.getExecutableCriteria(session);
+		double averageValue=0;
+		try{
+			averageValue= ((Double)(criteria.setProjection(Projections.avg(propertyName)).uniqueResult())).doubleValue();
+		}catch(Exception e){
+			averageValue=0;
+		}
+		return averageValue;
 	}
 
 }

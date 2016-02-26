@@ -266,11 +266,18 @@ public class JobInfoController {
 		if(jobInfoDomain==null){
 			return Consts.ERROR;
 		}
-		if(CodeBookConsts.ISPOSITIVE_TYPE_A.equals(jobInfoDomain.getIsPositive().toString())){
+		//null或者1，设置成2
+		//2，设置成1
+		if(jobInfoDomain.getIsPositive()==null){
 			jobInfoDomain.setIsPositive(new Integer(CodeBookConsts.ISPOSITIVE_TYPE_B));
 		}else{
-			jobInfoDomain.setIsPositive(new Integer(CodeBookConsts.ISPOSITIVE_TYPE_A));
+			if(CodeBookConsts.ISPOSITIVE_TYPE_A.equals(jobInfoDomain.getIsPositive().toString())){
+				jobInfoDomain.setIsPositive(new Integer(CodeBookConsts.ISPOSITIVE_TYPE_B));
+			}else{
+				jobInfoDomain.setIsPositive(new Integer(CodeBookConsts.ISPOSITIVE_TYPE_A));
+			}		
 		}
+
 		if(jobInfoService.doSave(jobInfoDomain)){
 			return Consts.SUCCESS;
 		}
@@ -331,5 +338,36 @@ public class JobInfoController {
 	@RequestMapping("/downloadJobInfo")
 	public void dodownloadJobInfo(HttpServletResponse response)throws Exception{
 		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.JOBINFO_EXCEL, Consts.JOBINFO_EXCEL);
+	}
+	
+	/**
+	 * 就业统计信息
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/jobInfoCountView")
+	public String dojobInfoCountView(Model model,String gradeId,String collegeId,String majorId,String classId)throws Exception{
+		
+		List<SelectItem> jobInfoCountList=jobInfoService.doJobInfoCount(gradeId, collegeId, majorId, classId);
+		
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		
+		model.addAttribute("jobInfoCountList", jobInfoCountList);
+		
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("gradeList", gradeList);
+		
+		model.addAttribute("gradeId", gradeId);
+		model.addAttribute("collegeId", collegeId);
+		model.addAttribute("classId", classId);
+		model.addAttribute("majorId", majorId);
+		
+		return "/jobInfo/jobInfoCountView";
 	}
 }

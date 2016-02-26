@@ -57,6 +57,28 @@ public interface IBaseDao<T> {
 	 */
 	public List<T> getPageList(DetachedCriteria detachedCriteria,PageInfo pageInfo);
 	
+	/**
+	 * 获取数目
+	 * @param detachedCriteria
+	 * @return
+	 */
+	public int getTotalCount(DetachedCriteria detachedCriteria);
+	
+	/**
+	 * 获取某一字段统计值
+	 * @param detachedCriteria
+	 * @param propertyName
+	 * @return
+	 */
+	public double getCountNumber(DetachedCriteria detachedCriteria,String propertyName);
+	
+	/**
+	 * 根据过滤条件获取平均数
+	 * @param detachedCriteria
+	 * @param propertyName	需要求平均值的字段
+	 * @return
+	 */
+	public double getAverageCount(DetachedCriteria detachedCriteria,String propertyName);
 	
 //	  public abstract E insert(E paramE);
 //

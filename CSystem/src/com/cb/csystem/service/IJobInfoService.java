@@ -88,4 +88,16 @@ public interface IJobInfoService {
 	public List<JobInfoDomain> doSearchJobInfoList(String gradeId,
 			String collegeId, String majorId, String classId)throws Exception;
 	
+	/**
+	 * 就业信息统计
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<SelectItem> doJobInfoCount(String gradeId,
+			String collegeId, String majorId, String classId)throws Exception;
+	
 }

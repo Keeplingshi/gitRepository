@@ -18,6 +18,7 @@
 	<input type="hidden" id="contractStatus" name="contractStatus" value="${jobInfoDomain.contractStatus }" />
 	<input type="hidden" id="protocalState" name="protocalState" value="${jobInfoDomain.protocalState }" />
 	<input type="hidden" id="nowState" name="nowState" value="${jobInfoDomain.nowState }" />
+	<input type="hidden" id="isPositive" name="isPositive" value="${jobInfoDomain.isPositive }" />
 	<table>
 		<tr>
 			<td class="lesta-150">姓名：</td>
