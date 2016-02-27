@@ -15,7 +15,9 @@ import com.cb.csystem.dao.IClassDao;
 import com.cb.csystem.domain.ClassDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IClassService;
+import com.cb.csystem.service.IRoleService;
 import com.cb.csystem.service.IStudentService;
+import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
@@ -32,6 +34,8 @@ public class ClassService implements IClassService{
 
 	@Resource private IClassDao classDao;
 	@Resource private IStudentService studentService;
+	@Resource private IRoleService roleService;
+	@Resource private IUserService userService;
 	
 	/**
 	 * @see IClassService#doGetById(String)
@@ -153,28 +157,6 @@ public class ClassService implements IClassService{
 	}
 
 	/**
-	 * @see com.cb.csystem.service.IClassService#doSetMonitor(java.lang.String)
-	 */
-	@Override
-	public boolean doSetMonitor(String stuId) throws Exception {
-		// TODO Auto-generated method stub
-		
-		if(studentService.doGetByStudentId(stuId)==null){
-			return false;
-		}
-		ClassDomain classDomain=studentService.doGetByStudentId(stuId).getClassDomain();
-		for(StudentDomain studentDomain:classDomain.getStudents()){
-			if(stuId.equals(studentDomain.getStuId())){
-				studentDomain.setIsMonitor(Consts.IS_MONITOR_B);
-			}else{
-				studentDomain.setIsMonitor(Consts.IS_MONITOR_A);
-			}
-		}
-		
-		return true;
-	}
-
-	/**
 	 * @see com.cb.csystem.service.IClassService#doGetMonitor(com.cb.csystem.domain.ClassDomain)
 	 */
 	@Override
@@ -214,4 +196,34 @@ public class ClassService implements IClassService{
 		return classDao.getFilterList(detachedCriteria);
 	}
 
+	/**
+	 * 设置班长
+	 * @param classDomain
+	 * @param stuId
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public boolean doSetMonitor(String classId,String stuId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		if(studentService.doGetByStudentId(stuId)==null){
+			return false;
+		}
+		boolean b=false;
+		ClassDomain classDomain=studentService.doGetByStudentId(stuId).getClassDomain();
+		if(classId.equals(classDomain.getId())){
+			for(StudentDomain studentDomain:classDomain.getStudents()){
+				if(stuId.equals(studentDomain.getStuId())){
+					studentDomain.setIsMonitor(Consts.IS_MONITOR_B);
+					userService.doSetMonitorByClassDomain(studentDomain, classDomain);
+					b=true;
+				}else{
+					studentDomain.setIsMonitor(Consts.IS_MONITOR_A);
+				}
+			}
+		}
+		
+		return b;
+	}
 }

@@ -11,10 +11,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.csystem.dao.IUserDao;
+import com.cb.csystem.domain.ClassDomain;
+import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.domain.UserDomain;
+import com.cb.csystem.service.IRoleService;
 import com.cb.csystem.service.IUserService;
+import com.cb.csystem.util.Consts;
 import com.cb.system.util.EndecryptUtils;
 import com.cb.system.util.PageInfo;
+import com.cb.system.util.ValidateUtil;
 
 /**
  * 账户服务层
@@ -26,6 +31,7 @@ import com.cb.system.util.PageInfo;
 public class UserService implements IUserService{
 
 	@Resource private IUserDao userDao;
+	@Resource private IRoleService roleService;
 	
 	/**
 	 * @see IUserService#doGetFilterList()
@@ -46,10 +52,9 @@ public class UserService implements IUserService{
 	@Override
 	public boolean doSave(UserDomain user) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 		//判断是否为新用户，如果是，新增，否则更新
 		if(user.getId()==null){
-			user.setPassword(EndecryptUtils.md5(user.getPassword()));
 			return userDao.save(user);
 		}else{
 			return userDao.update(user);
@@ -161,16 +166,43 @@ public class UserService implements IUserService{
 		// TODO Auto-generated method stub
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
-		if(roleId!=null&&!"".equals(roleId)){
+		if(ValidateUtil.notEmpty(roleId)){
 			detachedCriteria.add(Restrictions.eq("role.id", roleId));
 		}
-		if(searchText!=null&&!"".equals(searchText)){
+		if(ValidateUtil.notEmpty(searchText)){
 			detachedCriteria.add(Restrictions.like("username", "%"+searchText+"%"));
 		}
 		
 		List<UserDomain> userList=userDao.getPageList(detachedCriteria, pageInfo);
 		
 		return userList;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IUserService#doSetMonitorByClassDomain(com.cb.csystem.domain.StudentDomain, com.cb.csystem.domain.ClassDomain)
+	 */
+	@Override
+	public void doSetMonitorByClassDomain(StudentDomain monitorDomain,
+			ClassDomain classDomain) throws Exception {
+		// TODO Auto-generated method stub
+		
+		if(monitorDomain==null||classDomain==null){
+			return;
+		}
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
+		detachedCriteria.add(Restrictions.eq("classDomain.id", classDomain.getId()));
+		List<UserDomain> userList=userDao.getFilterList(detachedCriteria);
+		//删除原班长账户
+		for(UserDomain userDomain:userList){
+			userDao.delete(userDomain);
+		}
+		UserDomain userDomain=new UserDomain();
+		userDomain.setUsername(monitorDomain.getStuId());
+		userDomain.setPassword(EndecryptUtils.md5(monitorDomain.getStuId()));
+		userDomain.setClassDomain(classDomain);
+		userDomain.setRole(roleService.doGetRoleByAuthority(Consts.AUTHORITY_MONITOR));
+		userDao.save(userDomain);
+		
 	}
 
 }

@@ -90,4 +90,5 @@ public interface IStudentService {
 	 */
 	public List<StudentDomain> doSearchstudentList(String gradeId,
 			String collegeId, String majorId, String classId)throws Exception;
+
 }

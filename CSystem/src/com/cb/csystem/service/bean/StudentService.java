@@ -167,7 +167,7 @@ public class StudentService implements IStudentService{
 	@Override
 	public StudentDomain doGetByStudentId(String stuId) {
 		// TODO Auto-generated method stub
-		if(stuId==null||"".equals(stuId)){
+		if(ValidateUtil.isEmpty(stuId)){
 			return null;
 		}
 		

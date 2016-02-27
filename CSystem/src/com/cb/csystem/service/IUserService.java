@@ -2,6 +2,8 @@ package com.cb.csystem.service;
 
 import java.util.List;
 
+import com.cb.csystem.domain.ClassDomain;
+import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.system.util.PageInfo;
 
@@ -84,4 +86,12 @@ public interface IUserService{
 	 * @throws Exception
 	 */
 	public UserDomain doGetUserByUsername(String username)throws Exception;
+	
+	/**
+	 * 设置班级班长账号
+	 * @param monitorDomain
+	 * @param classDomain
+	 * @throws Exception
+	 */
+	public void doSetMonitorByClassDomain(StudentDomain monitorDomain,ClassDomain classDomain)throws Exception;
 }

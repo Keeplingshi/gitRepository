@@ -2,6 +2,7 @@
 
 <!-- 查看用户界面 -->
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
@@ -27,7 +28,28 @@
 				${userDomain.role.name }
 			</td>
 		</tr>
-		
+		<c:if test="${userDomain.role.authority==1||userDomain.role.authority==2 }">
+			<tr>
+				<td class="lesta-150">学院：</td>
+				<td>
+					${userDomain.college.name }
+				</td>
+			</tr>
+			<tr>
+				<td class="lesta-150">年级：</td>
+				<td>
+					${userDomain.grade.grade }
+				</td>
+			</tr>
+		</c:if>
+		<c:if test="${userDomain.role.authority==3 }">
+			<tr>
+				<td class="lesta-150">班级：</td>
+				<td>
+					${userDomain.classDomain.name }
+				</td>
+			</tr>
+		</c:if>
 	</table>
 	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 140px;" value="关闭"/>
 

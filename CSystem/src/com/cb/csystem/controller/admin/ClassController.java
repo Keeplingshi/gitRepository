@@ -184,12 +184,11 @@ public class ClassController {
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public String doSave(@Valid @ModelAttribute("domain") ClassDomain domain,String monitorId,
+	public String doSave(@Valid @ModelAttribute("domain") ClassDomain domain,
 			BindingResult result)throws Exception{
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
-			classService.doSetMonitor(monitorId);
 			if(classService.doSave(domain)){
 				return Consts.SUCCESS;
 			}
@@ -247,5 +246,38 @@ public class ClassController {
 		JSONArray jsonArray=JSONArray.fromObject(classList);
 		return jsonArray.toString();
 		
+	}
+	
+	/**
+	 * 设置班长界面
+	 * @param model
+	 * @param classId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/setmonitorView/{classId}")
+	public String docsetmonitor(Model model,@PathVariable String classId)throws Exception{
+		
+		model.addAttribute("classId", classId);
+		
+		return "/adminView/classinfo/setMonitorView";
+	}
+	
+	/**
+	 * 设置班长
+	 * @param classId
+	 * @param monitorId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/setmonitor")
+	@ResponseBody
+	public String doSetmonitor(String classId,String monitorId)throws Exception{
+		
+		if(classService.doSetMonitor(classId,monitorId)){
+			return Consts.SUCCESS;
+		}
+		
+		return Consts.ERROR;
 	}
 }

@@ -72,15 +72,7 @@ public interface IClassService {
 	 * @return
 	 */
 	public List<SelectItem> dogetClasssByMajorId(String major_id)throws Exception;
-	
-	/**
-	 * 根据学号设置班长
-	 * @param stuId
-	 * @return
-	 * @throws Exception
-	 */
-	public boolean doSetMonitor(String stuId)throws Exception;
-	
+		
 	/**
 	 * 获取班级班长
 	 * @param classDomain
@@ -97,4 +89,13 @@ public interface IClassService {
 	 * @throws Exception
 	 */
 	public List<ClassDomain> doGetClazzByGradeOrCollegeOrMajor(String gradeId,String collegeId,String majorId)throws Exception;
+
+	/**
+	 * 设置班长
+	 * @param stuId
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doSetMonitor(String classId,String stuId) throws Exception;
+
 }

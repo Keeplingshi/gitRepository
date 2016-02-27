@@ -49,6 +49,11 @@
 					</select>	
 				</td>
 			</tr>
+			<tr>
+				<td>
+			<input type="button" id="jobInfoCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="查询"/>
+				</td>
+			</tr>
 		</table>
 
 		<table class="table table-bordered table-striped" style="margin-top: 30px;">
@@ -69,9 +74,7 @@
 			</tbody>
 		</table>
 		
-		<input type="button" id="jobInfoCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="查询"/>
-		
-		<input type="button" id="jobInfoCountDBToExcelButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="统计信息导出"/>
+		<input type="button" id="jobInfoCountDBToExcelButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 280px;" value="统计信息导出"/>
 	</form>
 
 <script>

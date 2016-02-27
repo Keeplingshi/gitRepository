@@ -36,4 +36,11 @@ public interface IRoleService{
 	 */
 	public boolean doDeleteById(String id) throws Exception;
 	
+	/**
+	 * 根据value值获取角色
+	 * @param value
+	 * @return
+	 * @throws Exception
+	 */
+	public RoleDomain doGetRoleByAuthority(Integer authority)throws Exception;
 }

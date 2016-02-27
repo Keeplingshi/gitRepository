@@ -78,7 +78,7 @@
 			</td>
 			<td class="lesta-150">城市：</td>
 			<td class="lestb">
-				<input type="text" id="city" name="city" class="input_text_a" placeholder="请输入签约城市" value="${jobInfoDomain.city }" />
+				<input type="text" id="city" name="city" class="input_text_a" placeholder="便于统计档案派遣" value="${jobInfoDomain.city }" />
 			</td>
 		</tr>
 		<tr>

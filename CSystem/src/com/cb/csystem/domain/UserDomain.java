@@ -23,8 +23,14 @@ public class UserDomain {
 	private String id;	//id
 	private String username;	//用户名
 	private String password;	//密码
-	private RoleDomain role;	//角色
 	//private String roleId;
+	private RoleDomain role;	//角色
+	//private String collegeId;	//学院	辅导员使用
+	private CollegeDomain college;
+	//private String gradeId;		//年级	辅导员使用
+	private GradeDomain grade;
+	//private String classId;		//班级	班长账户使用
+	private ClassDomain classDomain;
 	
 	public UserDomain(){
 		
@@ -69,6 +75,66 @@ public class UserDomain {
 	public void setRole(RoleDomain role) {
 		this.role = role;
 	}
+
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "COLLEGEID")
+	public CollegeDomain getCollege() {
+		return college;
+	}
+
+	public void setCollege(CollegeDomain college) {
+		this.college = college;
+	}
+
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "GRADEID")
+	public GradeDomain getGrade() {
+		return grade;
+	}
+
+	public void setGrade(GradeDomain grade) {
+		this.grade = grade;
+	}
+
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "CLASSID")
+	public ClassDomain getClassDomain() {
+		return classDomain;
+	}
+
+	public void setClassDomain(ClassDomain classDomain) {
+		this.classDomain = classDomain;
+	}
+
+//	@Column(name = "COLLEGEID", nullable = true, length = 100)
+//	public String getCollegeId() {
+//		return collegeId;
+//	}
+//
+//	public void setCollegeId(String collegeId) {
+//		this.collegeId = collegeId;
+//	}
+
+	
+	
+	
+//	@Column(name = "GRADEID", nullable = true, length = 100)
+//	public String getGradeId() {
+//		return gradeId;
+//	}
+//
+//	public void setGradeId(String gradeId) {
+//		this.gradeId = gradeId;
+//	}
+//
+//	@Column(name = "CLASSID", nullable = true, length = 100)
+//	public String getClassId() {
+//		return classId;
+//	}
+//
+//	public void setClassId(String classId) {
+//		this.classId = classId;
+//	}
 	
 	
 

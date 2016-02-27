@@ -26,6 +26,7 @@ public class GradeDomain {
 	private String id;
 	private Integer grade;
 	private Set<ClassDomain> classes=new HashSet<ClassDomain>(0);
+	private Set<UserDomain> users=new HashSet<UserDomain>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -52,6 +53,14 @@ public class GradeDomain {
 	}
 	public void setClasses(Set<ClassDomain> classes) {
 		this.classes = classes;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "grade", fetch = FetchType.LAZY)
+	public Set<UserDomain> getUsers() {
+		return users;
+	}
+	public void setUsers(Set<UserDomain> users) {
+		this.users = users;
 	}
 	
 	

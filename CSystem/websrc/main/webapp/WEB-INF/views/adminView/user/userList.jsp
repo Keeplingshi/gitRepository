@@ -93,7 +93,7 @@
 	        type: 2,
 	        title: '新增用户',
 	        shadeClose: true, //点击遮罩关闭层
-	        area : ['380px' , '280px'],
+	        area : ['380px' , '340px'],
 	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/admin/user/userAdd',
 	        end: function(){
@@ -182,7 +182,7 @@
 	        type: 2,
 	        title: '查看用户',
 	        shadeClose: true,
-	        area : ['380px' , '280px'],
+	        area : ['380px' , '340px'],
 	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/admin/user/userView/'+userId
 	    });

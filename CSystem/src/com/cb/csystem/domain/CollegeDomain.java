@@ -26,6 +26,7 @@ public class CollegeDomain {
 	private String id;
 	private String name;
 	private Set<MajorDomain> majors = new HashSet<MajorDomain>(0);
+	private Set<UserDomain> users=new HashSet<UserDomain>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -52,6 +53,19 @@ public class CollegeDomain {
 	}
 	public void setMajors(Set<MajorDomain> majors) {
 		this.majors = majors;
+	}
+	/**
+	 * @return the users
+	 */
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "college", fetch = FetchType.LAZY)
+	public Set<UserDomain> getUsers() {
+		return users;
+	}
+	/**
+	 * @param users the users to set
+	 */
+	public void setUsers(Set<UserDomain> users) {
+		this.users = users;
 	}
 	
 }

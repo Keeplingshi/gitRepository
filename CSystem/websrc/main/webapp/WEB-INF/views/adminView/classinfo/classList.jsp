@@ -65,9 +65,10 @@
 						<td>${classDomain.major.name }</td>
 						<td>${classDomain.major.college.name }</td>
 						<td>${classDomain.grade.grade }</td>
-						<td style="width: 260px">
+						<td style="width: 330px">
 							<input type="button" class="btn_list_view" value="查看" onclick="viewclass('${classDomain.id }')"/>
 							<input type="button" class="btn_list_update" value="修改" onclick="updateclass('${classDomain.id }')"/>  
+							<input type="button" class="btn_list_techset" value="设置班长" onclick="setmonitor('${classDomain.id }')"/>
 							<input type="button" class="btn_list_delete" value="删除" onclick="deleteclass('${classDomain.id }')"/>
 						</td>
 					</tr>
@@ -141,7 +142,7 @@
 	        type: 2,
 	        title: '修改班级',
 	        shadeClose: true,
-	        area : ['380px' , '360px'],
+	        area : ['380px' , '300px'],
 	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/admin/class/classEdit/'+classId,
 	        end: function(){
@@ -168,6 +169,7 @@
 		        	 	$("#content_page").html(data);
 		    		});
 					parent.layer.msg('删除成功', {
+						offset: ['260px'],
 	     		        time: 1500//1.5s后自动关闭
 	     		    });
 				}else{
@@ -178,6 +180,23 @@
 			
 		});
 		
+	}
+	
+	function setmonitor(classId){
+	    parent.layer.open({
+	        type: 2,
+	        title: '设置班长',
+	        shadeClose: true,
+	        area : ['380px' , '300px'],
+	        offset: ['150px'],
+	        content: '${pageContext.request.contextPath}/admin/class/setmonitorView/'+classId,
+	        end: function(){
+	        	//默认加载用户列表
+	        	$("#formId").ajaxSubmit(function(data){
+	        	 	$("#content_page").html(data);
+	    		});
+	        }
+	    });
 	}
 	
 	

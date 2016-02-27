@@ -51,12 +51,6 @@
 				</select>
 			</td>
 		</tr>
-		<tr>
-			<td class="lesta-150">班长：</td>
-			<td class="lestb">
-				<input type="text" id="monitorId" name="monitorId" class="input_text_a" placeholder="请输入班长学号" value="${monitorId }">
-			</td>
-		</tr>
 	</table>
 	<input id="saveButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 140px;" value="确定"/>
 </form>
@@ -89,11 +83,6 @@
 			}
 		});
 	}
-
-/* 	//下拉框选择后给隐藏域赋值
-	$("#college_select_add_id").change(function(){
-
-	}); */
 	
 	//下拉框选择后给隐藏域赋值
 	$("#major_select_add_id").change(function(){

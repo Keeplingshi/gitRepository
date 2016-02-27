@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +62,22 @@ public class RoleService implements IRoleService{
 	public boolean doDeleteById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		return roleDao.deleteById(id);
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IRoleService#doGetRoleByValue(Integer))
+	 */
+	@Override
+	public RoleDomain doGetRoleByAuthority(Integer authority) throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(RoleDomain.class);
+		detachedCriteria.add(Restrictions.eq("authority", authority));
+		List<RoleDomain> roleList=roleDao.getFilterList(detachedCriteria);
+		
+		if(roleList.size()==1){
+			return roleList.get(0);
+		}
+		return null;
 	}
 	
 }

@@ -33,6 +33,7 @@ public class ClassDomain {
 	private GradeDomain grade;
 	//private String monitorId;	//班长id
 	private Set<StudentDomain> students=new HashSet<StudentDomain>();
+	private Set<UserDomain> users=new HashSet<UserDomain>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -113,6 +114,14 @@ public class ClassDomain {
 
 	public void setStudents(Set<StudentDomain> students) {
 		this.students = students;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "classDomain", fetch = FetchType.LAZY)
+	public Set<UserDomain> getUsers() {
+		return users;
+	}
+	public void setUsers(Set<UserDomain> users) {
+		this.users = users;
 	}
 	
 }

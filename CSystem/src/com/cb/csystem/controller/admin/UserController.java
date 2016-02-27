@@ -16,11 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cb.csystem.domain.CollegeDomain;
+import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.RoleDomain;
 import com.cb.csystem.domain.UserDomain;
+import com.cb.csystem.service.ICollegeService;
+import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IRoleService;
 import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
+import com.cb.system.util.EndecryptUtils;
 import com.cb.system.util.PageInfo;
 
 /**
@@ -35,6 +40,8 @@ public class UserController {
 	//userService服务层
 	@Resource private IUserService userService;
 	@Resource private IRoleService roleService;
+	@Resource private IGradeService gradeService;
+	@Resource private ICollegeService collegeService;
 	
 	/**
 	 * 过滤起前台pageInfo
@@ -117,7 +124,12 @@ public class UserController {
 	public String doUserAdd(Model model)throws Exception{
 		
 		List<RoleDomain> roleList=roleService.doGetFilterList();
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		
 		model.addAttribute("roleList", roleList);
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("gradeList", gradeList);
 		
 		return "/adminView/user/userAdd";
 	}
@@ -156,6 +168,8 @@ public class UserController {
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
+			//设置md5加密
+			domain.setPassword(EndecryptUtils.md5(domain.getPassword()));
 			if(userService.doSave(domain)){
 				return Consts.SUCCESS;
 			}
