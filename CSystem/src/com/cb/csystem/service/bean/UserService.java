@@ -88,7 +88,9 @@ public class UserService implements IUserService{
 	public boolean doCheckUserPassword(String username, char[] password)
 			throws Exception {
 		// TODO Auto-generated method stub
-		
+		if(ValidateUtil.isEmpty(username)){
+			return false;
+		}
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(UserDomain.class);
 		detachedCriteria.add(Restrictions.eq("username", username.trim()));
 		

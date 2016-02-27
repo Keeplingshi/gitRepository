@@ -42,7 +42,10 @@
 				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 				parent.layer.close(index); //再执行关闭    
 			}else{
-				layer.msg('新增失败');
+				parent.layer.msg('添加失败', {
+					offset: ['260px'],
+     		        time: 1500//1.5s后自动关闭
+     		    });
 			}
 		});
 		

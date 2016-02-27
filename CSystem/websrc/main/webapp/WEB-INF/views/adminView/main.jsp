@@ -53,19 +53,14 @@
 							</a>
 
 							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-								<li>
-									<a href="#">
-										<i class="icon-cog"></i>设置
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="icon-user"></i>个人资料
+								<li id="user_password">
+									<a href="javascript:void(0);">
+										<i class="icon-cog"></i>修改密码
 									</a>
 								</li>
 								<li class="divider"></li>
-								<li>
-									<a href="#">
+								<li id="user_logout">
+									<a href="javascript:void(0);">
 										<i class="icon-off"></i>退出
 									</a>
 								</li>
@@ -176,6 +171,27 @@
 				$(this).addClass("active");
 				
 			}
+		});
+		
+		//修改密码
+		$("#user_password").click(function(){
+			//console.info($(this).attr("value"));
+		    parent.layer.open({
+		        type: 2,
+		        title: '修改密码',
+		        shadeClose: true,
+		        area : ['360px' , '320px'],
+		        offset: ['100px'],
+		        content: '${pageContext.request.contextPath}/common/modifyPasswordView',
+		        end: function(){
+		        	
+		        }
+		    });
+		});
+		
+		//登出
+		$("#user_logout").click(function(){
+			window.location.href="${pageContext.request.contextPath}/logout";
 		});
 	
 		$("#user_manage").click(function(){

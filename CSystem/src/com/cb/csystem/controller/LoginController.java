@@ -33,7 +33,7 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("/login")
-	public String getAllUser(Model model){
+	public String getLogin(Model model){
 		
 		return "/login";
 	}
@@ -96,4 +96,17 @@ public class LoginController {
         return "/login";
     }  
     
+    /**
+     * 登出
+     * @param model
+     * @return
+     */
+	@RequestMapping("/logout")
+	public String getLogout(){
+		
+		Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();
+		
+		return "/login";
+	}
 }
