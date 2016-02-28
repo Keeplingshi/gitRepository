@@ -15,31 +15,18 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.cb.csystem.domain.ClassDomain;
 import com.cb.csystem.domain.CodeBookDomain;
-import com.cb.csystem.domain.CollegeDomain;
-import com.cb.csystem.domain.GradeDomain;
-import com.cb.csystem.domain.MajorDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.domain.UserDomain;
-import com.cb.csystem.service.IClassService;
-import com.cb.csystem.service.ICollegeService;
-import com.cb.csystem.service.IGradeService;
-import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
 import com.cb.csystem.util.DBToExcelUtil;
-import com.cb.csystem.util.ExcelToDBUtil;
 import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;
-import com.cb.system.util.SelectItem;
 
 /**
  * 学生控制层
@@ -51,10 +38,6 @@ import com.cb.system.util.SelectItem;
 public class MStudentController {
 
 	@Resource private IUserService userService;
-	@Resource private IGradeService gradeService;
-	@Resource private IMajorService majorService;
-	@Resource private ICollegeService collegeService;
-	@Resource private IClassService classService;
 	@Resource private IStudentService studentService;
 	
 	/**
@@ -202,28 +185,6 @@ public class MStudentController {
 	}
 	
 	/**
-	 * 导出数据
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/studentDBToExcelView")
-	public String dostudentDBToExcelView(Model model)throws Exception{
-		
-		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
-		List<GradeDomain> gradeList=gradeService.doGetFilterList();
-		
-		model.addAttribute("collegeList", collegeList);
-		model.addAttribute("majorList", majorList);
-		model.addAttribute("classList", classList);
-		model.addAttribute("gradeList", gradeList);
-		
-		return "/monitorView/student/studentDBToExcelView";
-	}
-	
-	/**
 	 * 学生信息导出文件
 	 * @param gradeId
 	 * @param classId
@@ -262,92 +223,5 @@ public class MStudentController {
 	public void dodownloadStudentInfo(HttpServletResponse response)throws Exception{
 		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.STUDENT_EXCEL, Consts.STUDENT_EXCEL);
 	}
-	
-//	/**
-//	 * 删除单条数据
-//	 * @param id
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	@RequestMapping("/delete/{id}")
-//	@ResponseBody
-//	public String doDelete(@PathVariable String id)throws Exception{
-//		
-//		if(studentService.doDeleteById(id)){
-//			return Consts.SUCCESS;
-//		}
-//		
-//		return Consts.ERROR;
-//	}
-	
-//	/**
-//	 * 批量删除
-//	 * @param userIds
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	@RequestMapping("/deleteStudents")
-//	@ResponseBody
-//	public String doDeleteStudents(@RequestParam(value = "studentIds[]") String[] studentIds)throws Exception{
-//		
-//		if(studentService.doDeleteByIds(studentIds)){
-//			return Consts.SUCCESS;
-//		}
-//		
-//		return Consts.ERROR;
-//	}
-	
-//	/**
-//	 * 从excel中导入学生信息页面
-//	 * @param model
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	@RequestMapping("/studentExcelView")
-//	public String dostudentExcelView(Model model)throws Exception{
-//		
-//		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-//		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-//		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
-//		List<GradeDomain> gradeList=gradeService.doGetFilterList();
-//		
-//		model.addAttribute("collegeList", collegeList);
-//		model.addAttribute("majorList", majorList);
-//		model.addAttribute("classList", classList);
-//		model.addAttribute("gradeList", gradeList);
-//		
-//		return "/monitorView/student/studentExcelView";
-//	};
-	
-
-	
-//	/**
-//	 * 将excel文件中学生信息写入数据库
-//	 * @param request
-//	 * @return
-//	 */
-//	@RequestMapping("/studentExcelSave")
-//	@ResponseBody
-//	public String dostudentExcelSave(@RequestParam(value = "file", required = false) MultipartFile file,String classId)
-//	{
-//		try{
-//			ClassDomain classDomain=classService.doGetById(classId);
-//			ExcelToDBUtil.studentInfoexcelToDB(file,classDomain);
-//		}catch (Exception e) {
-//			return Consts.ERROR;
-//		}
-//		
-//		return Consts.SUCCESS;
-//	}
-	
-//	/**
-//	 * 下载模板
-//	 * @param response
-//	 * @throws Exception
-//	 */
-//	@RequestMapping("/downloadStudentExcel")
-//	public void dodownloadStudentExcel(HttpServletResponse response)throws Exception{
-//		FileUtil.fileDownload(response, Consts.DOWNLOAD_PATH+Consts.STUDENT_EXCEL, Consts.STUDENT_EXCEL);
-//	}
 
 }

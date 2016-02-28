@@ -66,7 +66,7 @@
 			</td>
 		</tr>
 	</table>
-	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 300px;" value="关闭"/>
+	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 270px;" value="关闭"/>
 
 <script>
 	

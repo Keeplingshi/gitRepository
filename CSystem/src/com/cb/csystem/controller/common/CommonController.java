@@ -1,7 +1,11 @@
 package com.cb.csystem.controller.common;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.csystem.domain.UserDomain;
+import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.EndecryptUtils;
+import com.cb.system.util.SelectItem;
 
 /**
  * 公共页面控制层
@@ -23,6 +29,7 @@ import com.cb.system.util.EndecryptUtils;
 public class CommonController {
 
 	@Resource private IUserService userService;
+	@Resource private IJobInfoService jobInfoService;
 	
 	/**
 	 * 修改用户密码界面
@@ -64,5 +71,23 @@ public class CommonController {
 			}			
 		}
 		return Consts.ERROR;
+	}
+	
+	/**
+	 * 根据签约状态获取协议书状态
+	 * @param model
+	 * @param college_id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getProtocalState")
+	@ResponseBody
+	public String doGetProtocalState(String contractStatusValue)throws Exception{
+		
+		List<SelectItem> protocalStateList=jobInfoService.doGetProtocalState(contractStatusValue);
+		
+		JSONArray jsonArray=JSONArray.fromObject(protocalStateList);
+		return jsonArray.toString();
+		
 	}
 }

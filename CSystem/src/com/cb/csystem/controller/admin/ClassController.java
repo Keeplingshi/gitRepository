@@ -52,7 +52,7 @@ public class ClassController {
 	 * 使@ModelAttribute("pageInfo") PageInfo pageInfo在前台使用name="pageInfo.currentPageNo"来进行传参数
 	 * @param binder
 	 */
-	@InitBinder("pageInfo")  
+	@InitBinder("pageInfo")
 	public void initPageInfoBinder(WebDataBinder binder) {  
 	    binder.setFieldDefaultPrefix("pageInfo.");
 	}

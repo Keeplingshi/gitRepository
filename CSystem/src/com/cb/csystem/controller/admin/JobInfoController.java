@@ -136,9 +136,6 @@ public class JobInfoController {
 	@RequestMapping("/jobInfoView/{id}")
 	public String dojobInfoView(Model model,@PathVariable String id) throws Exception{
 		
-		StudentDomain studentDomain=studentService.doGetById(id);
-		model.addAttribute("studentDomain", studentDomain);
-		
 		JobInfoDomain jobInfoDomain=jobInfoService.doGetById(id);
 		model.addAttribute("jobInfoDomain", jobInfoDomain);
 		

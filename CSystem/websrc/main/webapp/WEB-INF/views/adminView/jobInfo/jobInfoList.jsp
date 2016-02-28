@@ -264,6 +264,7 @@
 	    });
 	}
 	
+	//标记
 	function tagjobInfo(jobInfoId)
 	{
     	$.ajax({

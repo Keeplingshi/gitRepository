@@ -106,6 +106,7 @@
         <property name="filterChainDefinitions">  
             <value> 
                 /login=anon
+                /common/**=authc
                 /admin/**=authc,perms[0]
                 /monitor/**=authc,perms[3]
             </value>  
