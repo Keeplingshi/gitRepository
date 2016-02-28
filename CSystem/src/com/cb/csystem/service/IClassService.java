@@ -55,7 +55,7 @@ public interface IClassService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<ClassDomain> doSearchclassPageList(PageInfo pageInfo,
+	public List<ClassDomain> doSearchclassPageList(PageInfo pageInfo,String gradeId,
 			String collegeId,String majorId, String searchText)throws Exception;
 
 	/**
@@ -90,6 +90,16 @@ public interface IClassService {
 	 */
 	public List<ClassDomain> doGetClazzByGradeOrCollegeOrMajor(String gradeId,String collegeId,String majorId)throws Exception;
 
+	/**
+	 * 通过年级学院专业获取班级列表
+	 * @param gradeId
+	 * @param collegeId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<SelectItem> doGetClazzSelectItem(String gradeId,String collegeId,String majorId)throws Exception;
+
+	
 	/**
 	 * 设置班长
 	 * @param stuId

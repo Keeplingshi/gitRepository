@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,13 +16,9 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cb.csystem.domain.CollegeDomain;
-import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.JobInfoDomain;
-import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.ICollegeService;
@@ -33,12 +27,10 @@ import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.service.IUserService;
-import com.cb.csystem.util.CodeBookConsts;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
 import com.cb.csystem.util.DBToExcelUtil;
-import com.cb.csystem.util.bean.JobInfoCountBean;
 import com.cb.system.util.DateUtil;
 import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;

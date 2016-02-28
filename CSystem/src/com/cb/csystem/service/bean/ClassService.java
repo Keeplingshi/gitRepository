@@ -97,26 +97,29 @@ public class ClassService implements IClassService{
 	 * @see IClassService#doSearchclassPageList(PageInfo, String, String)
 	 */
 	@Override
-	public List<ClassDomain> doSearchclassPageList(PageInfo pageInfo,
+	public List<ClassDomain> doSearchclassPageList(PageInfo pageInfo,String gradeId,
 			String collegeId,String majorId, String searchText) throws Exception {
 		// TODO Auto-generated method stub
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(ClassDomain.class);
-		if(collegeId!=null&&!"".equals(collegeId)){
-			//多级查询
-			detachedCriteria.createAlias("major", "m");
-			detachedCriteria.createAlias("m.college", "c");
-			detachedCriteria.add(Restrictions.eq("c.id", collegeId));
-		}
-		if(majorId!=null&&!"".equals(majorId)){
+		if(ValidateUtil.notEmpty(majorId)){
 			detachedCriteria.add(Restrictions.eq("major.id", majorId));
+		}else{
+			if(ValidateUtil.notEmpty(collegeId)){
+				detachedCriteria.createAlias("major", "m");
+				detachedCriteria.createAlias("m.college", "c");
+				detachedCriteria.add(Restrictions.eq("c.id", collegeId));
+			}
 		}
-		if(searchText!=null&&!"".equals(searchText)){
+		if(ValidateUtil.notEmpty(gradeId)){
+			detachedCriteria.add(Restrictions.eq("grade.id", gradeId));
+		}
+		
+		if(ValidateUtil.notEmpty(searchText)){
 			detachedCriteria.add(Restrictions.like("name", "%"+searchText+"%"));
 		}
-		List<ClassDomain> classList=classDao.getPageList(detachedCriteria, pageInfo);
 		
-		return classList;
+		return classDao.getPageList(detachedCriteria, pageInfo);
 	}
 
 	/**
@@ -145,7 +148,7 @@ public class ClassService implements IClassService{
 		// TODO Auto-generated method stub
 		List<SelectItem> selectList=new ArrayList<>();
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(ClassDomain.class);
-		if(major_id!=null&&!"".equals(major_id)){
+		if(ValidateUtil.notEmpty(major_id)){
 			detachedCriteria.add(Restrictions.eq("major.id", major_id));
 		}
 		List<ClassDomain> classList=classDao.getFilterList(detachedCriteria);
@@ -166,7 +169,7 @@ public class ClassService implements IClassService{
 			if(Consts.IS_MONITOR_B.equals(studentDomain.getIsMonitor())){
 				return studentDomain;
 			}
-		}		
+		}
 		return null;
 	}
 
@@ -211,19 +214,50 @@ public class ClassService implements IClassService{
 			return false;
 		}
 		boolean b=false;
-		ClassDomain classDomain=studentService.doGetByStudentId(stuId).getClassDomain();
-		if(classId.equals(classDomain.getId())){
-			for(StudentDomain studentDomain:classDomain.getStudents()){
-				if(stuId.equals(studentDomain.getStuId())){
-					studentDomain.setIsMonitor(Consts.IS_MONITOR_B);
-					userService.doSetMonitorByClassDomain(studentDomain, classDomain);
-					b=true;
-				}else{
-					studentDomain.setIsMonitor(Consts.IS_MONITOR_A);
-				}
+		ClassDomain classDomain=doGetById(classId);
+		for(StudentDomain studentDomain:classDomain.getStudents()){
+			if(stuId.equals(studentDomain.getStuId())){
+				studentDomain.setIsMonitor(Consts.IS_MONITOR_B);
+				userService.doSetMonitorByClassDomain(studentDomain, classDomain);
+				b=true;
+			}else{
+				studentDomain.setIsMonitor(Consts.IS_MONITOR_A);
 			}
+			studentService.doSave(studentDomain);
 		}
 		
 		return b;
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IClassService#doGetClazzSelectItem(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<SelectItem> doGetClazzSelectItem(String gradeId,
+			String collegeId, String majorId) throws Exception {
+		// TODO Auto-generated method stub
+		List<SelectItem> selectList=new ArrayList<>();
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(ClassDomain.class);
+		if(ValidateUtil.notEmpty(gradeId)){
+			detachedCriteria.add(Restrictions.eq("grade.id", gradeId));
+		}
+		if(ValidateUtil.notEmpty(majorId)){
+			detachedCriteria.createAlias("major", "m");
+			detachedCriteria.add(Restrictions.eq("m.id", majorId));
+		}else{
+			if(ValidateUtil.notEmpty(collegeId)){
+				//多级查询
+				detachedCriteria.createAlias("major", "m");
+				detachedCriteria.createAlias("m.college", "c");
+				detachedCriteria.add(Restrictions.eq("c.id", collegeId));
+			}
+		}
+
+		List<ClassDomain> classList=classDao.getFilterList(detachedCriteria);
+		for(ClassDomain classDomain:classList){
+			selectList.add(new SelectItem(classDomain.getId(),classDomain.getName()));
+		}
+		
+		return selectList;
 	}
 }

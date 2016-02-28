@@ -8,9 +8,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
-<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
-<script src="${pageContext.request.contextPath}/resources/plugins/datePicker/WdatePicker.js"></script>
 
 	<table>
 		<tr>

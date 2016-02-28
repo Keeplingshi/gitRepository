@@ -65,7 +65,7 @@ public class MStudentController {
 		UserDomain userDomain=userService.doGetUserByUsername(username);
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
-				List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,null,null,userDomain.getClassDomain().getId(),null,null,null);
+				List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,null,null,null,userDomain.getClassDomain().getId(),null,null,null);
 				model.addAttribute("studentList", studentList);
 			}
 		}
@@ -92,7 +92,7 @@ public class MStudentController {
 		UserDomain userDomain=userService.doGetUserByUsername(username);
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
-				List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,null,null,userDomain.getClassDomain().getId(),searchText,sortMode,sortValue);
+				List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,null,null,null,userDomain.getClassDomain().getId(),searchText,sortMode,sortValue);
 				model.addAttribute("studentList", studentList);
 				
 				model.addAttribute("searchText", searchText);

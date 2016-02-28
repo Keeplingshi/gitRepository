@@ -1,42 +1,27 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>		
 
-<!-- 查看班级界面 -->
+<!-- 查看专业界面 -->
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
+	
 
 	<table>
 		<tr>
-			<td class="lesta-150">班级名称：</td>
+			<td class="lesta-150">专业名称：</td>
 			<td class="lestb">
-				${classDomain.name }
-			</td>
-		</tr>
-		<tr>
-			<td class="lesta-150">所在年级：</td>
-			<td class="lestb">
-				${classDomain.grade.grade }
-			</td>
-		</tr>
-		<tr>
-			<td class="lesta-150">所属专业：</td>
-			<td class="lestb">
-				${classDomain.major.name }
+				${majorDomain.name }
 			</td>
 		</tr>
 		<tr>
 			<td class="lesta-150">所属学院：</td>
 			<td class="lestb">
-				${classDomain.major.college.name }
+				${majorDomain.college.name }
 			</td>
 		</tr>
-		<tr>
-			<td class="lesta-150">班长：</td>
-			<td class="lestb">
-				${monitorName }
-			</td>
-		</tr>		
+		
 	</table>
 	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 140px;" value="关闭"/>
 

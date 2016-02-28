@@ -48,14 +48,17 @@ public interface IStudentService {
 	/**
 	 * 搜索功能
 	 * @param pageInfo
+	 * @param gradeId
 	 * @param collegeId
 	 * @param majorId
 	 * @param classId 
 	 * @param searchText
+	 * @param sortMode
+	 * @param sortValue
 	 * @return
 	 * @throws Exception
 	 */
-	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo, String collegeId, String majorId, String classId, String searchText,String sortMode,String sortValue)throws Exception;
+	public List<StudentDomain> doSearchstudentPageList(PageInfo pageInfo,String gradeId, String collegeId, String majorId, String classId, String searchText,String sortMode,String sortValue)throws Exception;
 
 	/**
 	 * 批量删除

@@ -102,7 +102,7 @@ public class StudentController {
 			,BindingResult bindingResult,Model model,String collegeId,String majorId
 			,String classId,String searchText,String sortMode,String sortValue)throws Exception{
 		
-		List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,collegeId,majorId,classId,searchText,sortMode,sortValue);
+		List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo,null,collegeId,majorId,classId,searchText,sortMode,sortValue);
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
 		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);

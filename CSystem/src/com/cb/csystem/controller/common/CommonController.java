@@ -10,12 +10,18 @@ import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cb.csystem.domain.ClassDomain;
 import com.cb.csystem.domain.UserDomain;
+import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.IJobInfoService;
+import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
+import com.cb.csystem.util.ExcelToDBUtil;
 import com.cb.system.util.EndecryptUtils;
 import com.cb.system.util.SelectItem;
 
@@ -30,6 +36,8 @@ public class CommonController {
 
 	@Resource private IUserService userService;
 	@Resource private IJobInfoService jobInfoService;
+	@Resource private IMajorService majorService;
+	@Resource private IClassService classService;
 	
 	/**
 	 * 修改用户密码界面
@@ -89,5 +97,60 @@ public class CommonController {
 		JSONArray jsonArray=JSONArray.fromObject(protocalStateList);
 		return jsonArray.toString();
 		
+	}
+	
+	/**
+	 * 根据学院查找专业
+	 * @param model
+	 * @param college_id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getMajorByCollege")
+	@ResponseBody
+	public String dogetMajorByCollege(Model model,String college_id)throws Exception{
+		
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(college_id);
+		
+		JSONArray jsonArray=JSONArray.fromObject(majorList);
+		return jsonArray.toString();
+		
+	}
+	
+	/**
+	 * 根据专业查找相应班级
+	 * @param model
+	 * @param major_id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getClassByMajor")
+	@ResponseBody
+	public String dogetClassByMajor(Model model,String major_id)throws Exception{
+		
+		List<SelectItem> classList=classService.dogetClasssByMajorId(major_id);
+		
+		JSONArray jsonArray=JSONArray.fromObject(classList);
+		return jsonArray.toString();
+		
+	}
+	
+	/**
+	 * 将excel文件中学生信息写入数据库
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/studentExcelSave")
+	@ResponseBody
+	public String dostudentExcelSave(@RequestParam(value = "file", required = false) MultipartFile file,String classId)
+	{
+		try{
+			ClassDomain classDomain=classService.doGetById(classId);
+			ExcelToDBUtil.studentInfoexcelToDB(file,classDomain);
+		}catch (Exception e) {
+			return Consts.ERROR;
+		}
+		
+		return Consts.SUCCESS;
 	}
 }

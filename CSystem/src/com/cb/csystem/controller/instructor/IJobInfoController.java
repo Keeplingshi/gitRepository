@@ -1,4 +1,4 @@
-package com.cb.csystem.controller.admin;
+package com.cb.csystem.controller.instructor;
 
 import java.util.List;
 
@@ -46,8 +46,8 @@ import com.cb.system.util.SelectItem;
  *
  */
 @Controller
-@RequestMapping("/admin/jobInfo")
-public class JobInfoController {
+@RequestMapping("/instructor/jobInfo")
+public class IJobInfoController {
 
 	@Resource private IJobInfoService jobInfoService;
 	@Resource private IStudentService studentService;
@@ -86,7 +86,7 @@ public class JobInfoController {
 		model.addAttribute("classList", classList);
 		model.addAttribute("gradeList", gradeList);
 		
-		return "/adminView/jobInfo/jobInfoList";
+		return "/instructorView/jobInfo/jobInfoList";
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class JobInfoController {
 		model.addAttribute("sortMode", sortMode);
 		model.addAttribute("sortValue", sortValue);
 		
-		return "/adminView/jobInfo/jobInfoList";
+		return "/instructorView/jobInfo/jobInfoList";
 	}
 	
 	/**
@@ -138,7 +138,7 @@ public class JobInfoController {
 		JobInfoDomain jobInfoDomain=jobInfoService.doGetById(id);
 		model.addAttribute("jobInfoDomain", jobInfoDomain);
 		
-		return "/adminView/jobInfo/jobInfoView";
+		return "/instructorView/jobInfo/jobInfoView";
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class JobInfoController {
 	@RequestMapping("/jobInfoAdd")
 	public String dojobInfoAdd(Model model)throws Exception{
 		
-		return "/adminView/jobInfo/jobInfoAdd";
+		return "/instructorView/jobInfo/jobInfoAdd";
 	}
 	
 	/**
@@ -169,7 +169,7 @@ public class JobInfoController {
 		model.addAttribute("protocalStateList", CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE));
 		model.addAttribute("nowStateList", CodeBookHelper.getCodeBookByType(CodeBookConstsType.NOWSTATE_TYPE));
 		
-		return "/adminView/jobInfo/jobInfoEdit";
+		return "/instructorView/jobInfo/jobInfoEdit";
 	}
 	
 	/**
@@ -301,7 +301,7 @@ public class JobInfoController {
 		model.addAttribute("classList", classList);
 		model.addAttribute("gradeList", gradeList);
 		
-		return "/adminView/jobInfo/jobInfoDBToExcelView";
+		return "/instructorView/jobInfo/jobInfoDBToExcelView";
 	}
 	
 	/**
@@ -366,7 +366,7 @@ public class JobInfoController {
 		model.addAttribute("classId", classId);
 		model.addAttribute("majorId", majorId);
 		
-		return "/adminView/jobInfo/jobInfoCountView";
+		return "/instructorView/jobInfo/jobInfoCountView";
 	}
 	
 	/**

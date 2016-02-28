@@ -1,8 +1,10 @@
-package com.cb.csystem.controller.admin;
+package com.cb.csystem.controller.instructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
@@ -19,18 +21,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.csystem.domain.ClassDomain;
-import com.cb.csystem.domain.CollegeDomain;
-import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.MajorDomain;
 import com.cb.csystem.domain.StudentDomain;
+import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.ICollegeService;
 import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IStudentService;
+import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
+import com.cb.system.util.ValidateUtil;
 
 /**
  * 班级控制层
@@ -38,9 +41,10 @@ import com.cb.system.util.SelectItem;
  *
  */
 @Controller
-@RequestMapping("/admin/class")
-public class ClassController {
+@RequestMapping("/instructor/class")
+public class IClassController {
 
+	@Resource private IUserService userService;
 	@Resource private IStudentService studentService;
 	@Resource private IMajorService majorService;
 	@Resource private ICollegeService collegeService;
@@ -65,17 +69,20 @@ public class ClassController {
 	 */
 	@RequestMapping("/classList")
 	public String getclassList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model)throws Exception{
+			,BindingResult bindingResult,Model model,HttpSession session)throws Exception{
 		
-		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-		List<ClassDomain> classList=classService.doGetPageList(pageInfo);
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(userDomain.getCollege().getId());
+				model.addAttribute("majorList", majorList);
+				List<ClassDomain> classList=classService.doSearchclassPageList(pageInfo, userDomain.getGrade().getId(),userDomain.getCollege().getId(), null, null);
+				model.addAttribute("classList", classList);
+			}
+		}
 		
-		model.addAttribute("collegeList", collegeList);
-		model.addAttribute("majorList", majorList);
-		model.addAttribute("classList", classList);
-		
-		return "/adminView/classinfo/classList";
+		return "/instructorView/classinfo/classList";
 	}
 	
 	/**
@@ -91,20 +98,28 @@ public class ClassController {
 	 */
 	@RequestMapping("/classSearchList")
 	public String doclassSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,String collegeId,String majorId,String searchText)throws Exception{
+			,BindingResult bindingResult,Model model,HttpSession session,String majorId,String searchText)throws Exception{
 		
-		List<ClassDomain> classList=classService.doSearchclassPageList(pageInfo,null,collegeId,majorId, searchText);
-		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
-		
-		model.addAttribute("collegeList", collegeList);
-		model.addAttribute("majorList", majorList);
-		model.addAttribute("classList", classList);
-		model.addAttribute("majorId", majorId);
-		model.addAttribute("collegeId", collegeId);
-		model.addAttribute("searchText", searchText);
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(userDomain.getCollege().getId());
+				List<ClassDomain> classList=new ArrayList<>();
+				if(ValidateUtil.isEmpty(majorId)){
+					classList=classService.doSearchclassPageList(pageInfo,userDomain.getGrade().getId(), userDomain.getCollege().getId(), null, searchText);
+				}else{
+					classList=classService.doSearchclassPageList(pageInfo,userDomain.getGrade().getId(), null, majorId, searchText);
+				}
+				
+				model.addAttribute("majorList", majorList);
+				model.addAttribute("classList", classList);
+				model.addAttribute("majorId", majorId);
+				model.addAttribute("searchText", searchText);
+			}
+		}
 	
-		return "/adminView/classinfo/classList";
+		return "/instructorView/classinfo/classList";
 	}
 	
 	/**
@@ -125,7 +140,7 @@ public class ClassController {
 			model.addAttribute("monitorName", monitorDomain.getName());
 		}
 		
-		return "/adminView/classinfo/classView";
+		return "/instructorView/classinfo/classView";
 	}
 	
 	/**
@@ -135,17 +150,19 @@ public class ClassController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/classAdd")
-	public String doclassAdd(Model model)throws Exception{
+	public String doclassAdd(Model model,HttpSession session)throws Exception{
 		
-		List<GradeDomain> gradeList=gradeService.doGetFilterList();
-		List<MajorDomain> majorList=majorService.doGetFilterList();
-		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(userDomain.getCollege().getId());
+				model.addAttribute("majorList", majorList);
+				model.addAttribute("userDomain", userDomain);
+			}
+		}
 		
-		model.addAttribute("gradeList", gradeList);
-		model.addAttribute("majorList", majorList);
-		model.addAttribute("collegeList", collegeList);
-		
-		return "/adminView/classinfo/classAdd";
+		return "/instructorView/classinfo/classAdd";
 	}
 	
 	/**
@@ -160,19 +177,15 @@ public class ClassController {
 		
 		//获取class信息
 		ClassDomain classDomain=classService.doGetById(id);
-		List<GradeDomain> gradeList=gradeService.doGetFilterList();
 		List<MajorDomain> majorList=majorService.doGetFilterList();
-		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		
 		model.addAttribute("classDomain", classDomain);
-		model.addAttribute("gradelist",gradeList);
 		model.addAttribute("majorList", majorList);
-		model.addAttribute("collegeList", collegeList);
 		StudentDomain monitorDomain=classService.doGetMonitor(classDomain);
 		if(monitorDomain!=null){
 			model.addAttribute("monitorName", monitorDomain.getName());
 		}
-		return "/adminView/classinfo/classEdit";
+		return "/instructorView/classinfo/classEdit";
 	}
 	
 	/**
@@ -239,9 +252,16 @@ public class ClassController {
 	 */
 	@RequestMapping("/getClassByMajor")
 	@ResponseBody
-	public String dogetClassByMajor(Model model,String major_id)throws Exception{
+	public String dogetClassByMajor(Model model,String major_id,HttpSession session)throws Exception{
 		
-		List<SelectItem> classList=classService.dogetClasssByMajorId(major_id);
+		List<SelectItem> classList=new ArrayList<>();
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				classList=classService.doGetClazzSelectItem(userDomain.getGrade().getId(), userDomain.getCollege().getId(), major_id);
+			}
+		}
 		
 		JSONArray jsonArray=JSONArray.fromObject(classList);
 		return jsonArray.toString();
@@ -258,9 +278,13 @@ public class ClassController {
 	@RequestMapping("/setmonitorView/{classId}")
 	public String docsetmonitor(Model model,@PathVariable String classId)throws Exception{
 		
+		StudentDomain monitorDomain=classService.doGetMonitor(classService.doGetById(classId));
+		if(monitorDomain!=null){
+			model.addAttribute("monitorId", monitorDomain.getStuId());
+		}
 		model.addAttribute("classId", classId);
 		
-		return "/adminView/classinfo/setMonitorView";
+		return "/instructorView/classinfo/setMonitorView";
 	}
 	
 	/**

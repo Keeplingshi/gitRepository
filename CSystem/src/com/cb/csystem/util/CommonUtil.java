@@ -25,7 +25,6 @@ public class CommonUtil {
 			if(studentDomain!=null){
 				return studentDomain.getName();
 			}
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
