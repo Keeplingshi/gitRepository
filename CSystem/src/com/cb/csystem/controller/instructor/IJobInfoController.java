@@ -17,18 +17,17 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cb.csystem.domain.CollegeDomain;
-import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.ICollegeService;
 import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IStudentService;
+import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.CodeBookConsts;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
@@ -49,6 +48,7 @@ import com.cb.system.util.SelectItem;
 @RequestMapping("/instructor/jobInfo")
 public class IJobInfoController {
 
+	@Resource private IUserService userService;
 	@Resource private IJobInfoService jobInfoService;
 	@Resource private IStudentService studentService;
 	@Resource private IMajorService majorService;
@@ -74,17 +74,24 @@ public class IJobInfoController {
 	 */
 	@RequestMapping("/jobInfoList")
 	public String getjobInfoList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model)throws Exception{
+			,BindingResult bindingResult,Model model,HttpSession session)throws Exception{
 		
-		List<JobInfoDomain> jobInfoList=jobInfoService.doGetPageList(pageInfo);
-		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
-		List<GradeDomain> gradeList=gradeService.doGetFilterList();
-		
-		model.addAttribute("jobInfoList", jobInfoList);
-		model.addAttribute("majorList", majorList);
-		model.addAttribute("classList", classList);
-		model.addAttribute("gradeList", gradeList);
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				
+				String collegeId=userDomain.getCollege().getId();
+				String gradeId=userDomain.getGrade().getId();
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
+				List<SelectItem> classList=classService.doGetClazzSelectItem(gradeId, collegeId, null);
+				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, gradeId,collegeId, null, null, null, null, null);
+				
+				model.addAttribute("jobInfoList", jobInfoList);
+				model.addAttribute("majorList", majorList);
+				model.addAttribute("classList", classList);
+			}
+		}
 		
 		return "/instructorView/jobInfo/jobInfoList";
 	}
@@ -102,25 +109,32 @@ public class IJobInfoController {
 	 */
 	@RequestMapping("/jobInfoSearchList")
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,String gradeId,String majorId
+			,BindingResult bindingResult,Model model,HttpSession session,String majorId
 			,String classId,String searchText,String sortMode,String sortValue)throws Exception{
 	
-		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,gradeId,majorId,classId,searchText, sortMode, sortValue);
-		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
-		List<GradeDomain> gradeList=gradeService.doGetFilterList();
-
-		model.addAttribute("jobInfoList", jobInfoList);
-		model.addAttribute("classList", classList);
-		model.addAttribute("majorList", majorList);
-		model.addAttribute("gradeList", gradeList);
-		
-		model.addAttribute("classId", classId);
-		model.addAttribute("majorId", majorId);
-		model.addAttribute("gradeId", gradeId);
-		model.addAttribute("searchText", searchText);
-		model.addAttribute("sortMode", sortMode);
-		model.addAttribute("sortValue", sortValue);
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				
+				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, userDomain.getGrade().getId()
+						, userDomain.getCollege().getId(), majorId, classId, searchText, sortMode, sortValue);
+				
+				//查询班级专业
+				List<SelectItem> classList=classService.doGetClazzSelectItem(userDomain.getGrade().getId(), userDomain.getCollege().getId(), majorId);
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(userDomain.getCollege().getId());
+				
+				model.addAttribute("majorList", majorList);
+				model.addAttribute("classList", classList);
+				model.addAttribute("jobInfoList", jobInfoList);
+				
+				model.addAttribute("classId", classId);
+				model.addAttribute("majorId", majorId);
+				model.addAttribute("searchText", searchText);
+				model.addAttribute("sortMode", sortMode);
+				model.addAttribute("sortValue", sortValue);
+			}
+		}
 		
 		return "/instructorView/jobInfo/jobInfoList";
 	}
@@ -139,18 +153,6 @@ public class IJobInfoController {
 		model.addAttribute("jobInfoDomain", jobInfoDomain);
 		
 		return "/instructorView/jobInfo/jobInfoView";
-	}
-	
-	/**
-	 * 新增就业页面
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/jobInfoAdd")
-	public String dojobInfoAdd(Model model)throws Exception{
-		
-		return "/instructorView/jobInfo/jobInfoAdd";
 	}
 	
 	/**
@@ -194,40 +196,6 @@ public class IJobInfoController {
 				return Consts.SUCCESS;
 			}
 		}
-		return Consts.ERROR;
-	}
-	
-	/**
-	 * 删除单条数据
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/delete/{id}")
-	@ResponseBody
-	public String doDelete(@PathVariable String id)throws Exception{
-		
-		if(jobInfoService.doDeleteById(id)){
-			return Consts.SUCCESS;
-		}
-		
-		return Consts.ERROR;
-	}
-	
-	/**
-	 * 批量删除
-	 * @param userIds
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/deleteJobInfos")
-	@ResponseBody
-	public String doDeleteJobInfos(@RequestParam(value = "jobInfoIds[]") String[] jobInfoIds)throws Exception{
-		
-		if(jobInfoService.doDeleteByIds(jobInfoIds)){
-			return Consts.SUCCESS;
-		}
-		
 		return Consts.ERROR;
 	}
 	
@@ -289,17 +257,20 @@ public class IJobInfoController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/jobInfoDBToExcelView")
-	public String doJobInfoDBToExcelView(Model model)throws Exception{
+	public String doJobInfoDBToExcelView(Model model,HttpSession session)throws Exception{
 		
-		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
-		List<GradeDomain> gradeList=gradeService.doGetFilterList();
-		
-		model.addAttribute("collegeList", collegeList);
-		model.addAttribute("majorList", majorList);
-		model.addAttribute("classList", classList);
-		model.addAttribute("gradeList", gradeList);
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(userDomain.getCollege().getId());
+				List<SelectItem> classList=classService.doGetClazzSelectItem(userDomain.getGrade().getId(), userDomain.getCollege().getId(), null);
+				
+				model.addAttribute("majorList", majorList);
+				model.addAttribute("classList", classList);
+			}
+		}
 		
 		return "/instructorView/jobInfo/jobInfoDBToExcelView";
 	}
@@ -315,11 +286,20 @@ public class IJobInfoController {
 	 */
 	@RequestMapping("/jobInfoDBToExcel")
 	@ResponseBody
-	public String dojobInfoDBToExcel(String gradeId,String collegeId,String majorId,String classId)throws Exception{
+	public String dojobInfoDBToExcel(HttpSession session,String majorId,String classId)throws Exception{
 		
-		List<JobInfoDomain> jobInfoDomains=jobInfoService.doSearchJobInfoList(gradeId,collegeId, majorId, classId);
-		List<SelectItem> selectItems=jobInfoService.doJobInfoCount(gradeId, collegeId, majorId, classId);
-		boolean b=DBToExcelUtil.jobInfoDBToExcel(jobInfoDomains, selectItems,Consts.DBTOEXCEL_PATH+Consts.JOBINFO_EXCEL);
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		boolean b=false;
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				String gradeId=userDomain.getGrade().getId();
+				String collegeId=userDomain.getCollege().getId();
+				List<JobInfoDomain> jobInfoDomains=jobInfoService.doSearchJobInfoList(gradeId,collegeId, majorId, classId);
+				List<SelectItem> selectItems=jobInfoService.doJobInfoCount(gradeId, collegeId, majorId, classId);
+				b=DBToExcelUtil.jobInfoDBToExcel(jobInfoDomains, selectItems,Consts.DBTOEXCEL_PATH+Consts.JOBINFO_EXCEL);
+			}
+		}
 		
 		if(b){
 			return Consts.SUCCESS;
@@ -345,26 +325,27 @@ public class IJobInfoController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/jobInfoCountView")
-	public String dojobInfoCountView(Model model,String gradeId,String collegeId,String majorId,String classId)throws Exception{
+	public String dojobInfoCountView(Model model,HttpSession session,String majorId,String classId)throws Exception{
 		
-		List<SelectItem> jobInfoCountList=jobInfoService.doJobInfoCount(gradeId, collegeId, majorId, classId);
-		
-		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
-		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
-		List<GradeDomain> gradeList=gradeService.doGetFilterList();
-		
-		model.addAttribute("jobInfoCountList", jobInfoCountList);
-		
-		model.addAttribute("collegeList", collegeList);
-		model.addAttribute("majorList", majorList);
-		model.addAttribute("classList", classList);
-		model.addAttribute("gradeList", gradeList);
-		
-		model.addAttribute("gradeId", gradeId);
-		model.addAttribute("collegeId", collegeId);
-		model.addAttribute("classId", classId);
-		model.addAttribute("majorId", majorId);
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				String gradeId=userDomain.getGrade().getId();
+				String collegeId=userDomain.getCollege().getId();
+				List<SelectItem> jobInfoCountList=jobInfoService.doJobInfoCount(gradeId, collegeId, majorId, classId);
+				
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
+				List<SelectItem> classList=classService.doGetClazzSelectItem(gradeId, collegeId, null);
+				
+				model.addAttribute("jobInfoCountList", jobInfoCountList);
+				
+				model.addAttribute("majorList", majorList);
+				model.addAttribute("classList", classList);
+				model.addAttribute("classId", classId);
+				model.addAttribute("majorId", majorId);
+			}
+		}
 		
 		return "/instructorView/jobInfo/jobInfoCountView";
 	}
@@ -378,11 +359,20 @@ public class IJobInfoController {
 	 */
 	@RequestMapping("/jobInfoCountDBToExcel")
 	@ResponseBody
-	public String dojobInfoCountDBToExcel(String gradeId,String collegeId)throws Exception{
+	public String dojobInfoCountDBToExcel(HttpSession session)throws Exception{
 		
-		List<JobInfoCountBean> jobInfoCountBeans=jobInfoService.doJobInfoCountByClassInfo(gradeId, collegeId);
-		if(DBToExcelUtil.jobInfoCountDBToExcel(jobInfoCountBeans, Consts.DBTOEXCEL_PATH+Consts.JOBCOUNT_EXCEL)){
-			return Consts.SUCCESS;
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				String gradeId=userDomain.getGrade().getId();
+				String collegeId=userDomain.getCollege().getId();
+				
+				List<JobInfoCountBean> jobInfoCountBeans=jobInfoService.doJobInfoCountByClassInfo(gradeId, collegeId);
+				if(DBToExcelUtil.jobInfoCountDBToExcel(jobInfoCountBeans, Consts.DBTOEXCEL_PATH+Consts.JOBCOUNT_EXCEL)){
+					return Consts.SUCCESS;
+				}
+			}
 		}
 		
 		return Consts.ERROR;

@@ -13,7 +13,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/validform/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
 
-<form id="jobInfoEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/admin/jobInfo/save" method="post">
+<form id="jobInfoEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/instructor/jobInfo/save" method="post">
 	<input type="hidden" id="id" name="id" value="${jobInfoDomain.id }" />
 	<input type="hidden" id="contractStatus" name="contractStatus" value="${jobInfoDomain.contractStatus }" />
 	<input type="hidden" id="protocalState" name="protocalState" value="${jobInfoDomain.protocalState }" />
@@ -170,11 +170,11 @@
 		
 	});
 
-	//选择学院，得到专业
+	//选择签约状态，得到签约书状态
 	function getProtocalState(contractStatus_value)
 	{
     	$.ajax({
-			url:'${pageContext.request.contextPath}/admin/jobInfo/getProtocalState?contractStatusValue='+contractStatus_value,
+			url:'${pageContext.request.contextPath}/instructor/jobInfo/getProtocalState?contractStatusValue='+contractStatus_value,
 			type:"post",
 			error:function(e){
 			},

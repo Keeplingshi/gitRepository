@@ -12,7 +12,6 @@
 
 <div>
 <form id="formId" action="${pageContext.request.contextPath}/instructor/jobInfo/jobInfoSearchList" method="post">
-	<input type="hidden" id="gradeId" name="gradeId" value="${gradeId }" />
 	<input type="hidden" id="majorId" name="majorId" value="${majorId }" />
 	<input type="hidden" id="classId" name="classId" value="${classId }" />
 	<input type="hidden" id="sortMode" name="sortMode" value="${sortMode }" />

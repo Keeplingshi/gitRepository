@@ -53,16 +53,20 @@ public interface IJobInfoService {
 	public boolean doDeleteById(String id) throws Exception;
 
 	/**
-	 * 搜索功能
+	 * 搜索
 	 * @param pageInfo
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
 	 * @param searchText
 	 * @param sortMode
 	 * @param sortValue
 	 * @return
 	 * @throws Exception
 	 */
-	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo,String gradeId,String majorId
-			,String classId,String searchText,String sortMode,String sortValue)throws Exception;
+	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo,String gradeId,String collegeId
+			,String majorId,String classId,String searchText,String sortMode,String sortValue)throws Exception;
 
 	/**
 	 * 批量删除

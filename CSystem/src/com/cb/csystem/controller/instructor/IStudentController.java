@@ -1,6 +1,5 @@
 package com.cb.csystem.controller.instructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -22,8 +21,6 @@ import com.cb.csystem.domain.CodeBookDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
-import com.cb.csystem.service.ICollegeService;
-import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.service.IUserService;
@@ -34,7 +31,6 @@ import com.cb.csystem.util.DBToExcelUtil;
 import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
-import com.cb.system.util.ValidateUtil;
 
 /**
  * 学生控制层
@@ -46,9 +42,7 @@ import com.cb.system.util.ValidateUtil;
 public class IStudentController {
 
 	@Resource private IUserService userService;
-	@Resource private IGradeService gradeService;
 	@Resource private IMajorService majorService;
-	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
 	@Resource private IStudentService studentService;
 	
@@ -112,20 +106,8 @@ public class IStudentController {
 		if(userDomain!=null){
 			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
 				
-				List<StudentDomain> studentList=new ArrayList<>();
-				//查询学生
-				if(ValidateUtil.isEmpty(classId)){
-					if(ValidateUtil.isEmpty(majorId)){
-						studentList=studentService.doSearchstudentPageList(pageInfo, userDomain.getGrade().getId() 
-								,userDomain.getCollege().getId(), null, null, searchText, sortMode, sortValue);
-					}else{
-						studentList=studentService.doSearchstudentPageList(pageInfo, userDomain.getGrade().getId() 
-								,null, majorId, null, searchText, sortMode, sortValue);
-					}
-				}else{
-					studentList=studentService.doSearchstudentPageList(pageInfo, null
-							,null, null, classId, searchText, sortMode, sortValue);
-				}
+				List<StudentDomain> studentList=studentService.doSearchstudentPageList(pageInfo, userDomain.getGrade().getId() 
+						,userDomain.getCollege().getId(), majorId, classId, searchText, sortMode, sortValue);
 				
 				//查询班级专业
 				List<SelectItem> classList=classService.doGetClazzSelectItem(userDomain.getGrade().getId(), userDomain.getCollege().getId(), majorId);

@@ -105,7 +105,7 @@ public class JobInfoController {
 			,BindingResult bindingResult,Model model,String gradeId,String majorId
 			,String classId,String searchText,String sortMode,String sortValue)throws Exception{
 	
-		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,gradeId,majorId,classId,searchText, sortMode, sortValue);
+		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null,gradeId,majorId,classId,searchText, sortMode, sortValue);
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
 		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
 		List<GradeDomain> gradeList=gradeService.doGetFilterList();

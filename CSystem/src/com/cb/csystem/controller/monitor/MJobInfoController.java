@@ -80,7 +80,7 @@ public class MJobInfoController {
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
 				
-				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, null, null, userDomain.getClassDomain().getId(), null, null, null);
+				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, null, null, null, userDomain.getClassDomain().getId(), null, null, null);
 				List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
 				
 				model.addAttribute("jobInfoList", jobInfoList);
@@ -117,9 +117,9 @@ public class MJobInfoController {
 				
 				List<JobInfoDomain> jobInfoList=new ArrayList<>();
 				if(ValidateUtil.isEmpty(classId)){
-					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, null, userDomain.getClassDomain().getMajor().getId(), null, searchText, sortMode, sortValue);
+					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, userDomain.getClassDomain().getMajor().getId(), null, searchText, sortMode, sortValue);
 				}else{
-					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, null, null, classId, searchText, sortMode, sortValue);
+					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, null, classId, searchText, sortMode, sortValue);
 				}
 				
 				List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());

@@ -6,30 +6,12 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 
-<form id="jobInfoDBtoExcelFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/admin/jobInfo/jobInfoDBToExcel" method="post">
-	<input type="hidden" id="gradeId" name="gradeId" value="" />
+<form id="jobInfoDBtoExcelFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/instructor/jobInfo/jobInfoDBToExcel" method="post">
 	<input type="hidden" id="classId" name="classId" value="" />
 	<input type="hidden" id="majorId" name="majorId" value="" />
-	<input type="hidden" id="collegeId" name="collegeId" value="" />
 	<table>
 		<tr style="height: 60px;">
 			<td>
-				<label style="margin-left: 15px;">年级：</label>
-				<select id="grade_DBtoExcel_select_id" class="select_style">
-					<option value="" selected="selected">全部</option>
-					<c:forEach items="${gradeList }" var="gradeDomain">
-						<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
-					</c:forEach>
-				</select>
-				
-				<label style="margin-left: 15px;">学院：</label>
-				<select id="college_DBtoExcel_select_id" class="select_style" onchange="getMajor(this.value)">
-					<option value="" selected="selected">全部</option>
-					<c:forEach items="${collegeList }" var="collegeDomain">
-						<option value="${collegeDomain.id }">${collegeDomain.name}</option>
-					</c:forEach>
-				</select>
-				
 				<label style="margin-left: 15px;">专业：</label>
 				<select id="major_DBtoExcel_select_id" class="select_style" onchange="getClass(this.value)">
 					<option value="" selected="selected">全部</option>
@@ -67,7 +49,7 @@
      		        time: 1500//1.5s后自动关闭
      		    });
 				
-				window.location="${pageContext.request.contextPath}/admin/jobInfo/downloadJobInfo";
+				window.location="${pageContext.request.contextPath}/instructor/jobInfo/downloadJobInfo";
 
 			}else{
 				parent.layer.msg('导出失败', {
@@ -96,37 +78,11 @@
 		$("#majorId").val(majorIdVal);
 	});
 	
-	//下拉框选择后给隐藏域赋值
-	$("#college_DBtoExcel_select_id").change(function(){
-		var collegeIdVal=$(this).children('option:selected').val();
-		$("#collegeId").val(collegeIdVal);
-	});
-
-	//选择学院，得到专业
-	function getMajor(college_id)
-	{
-		$.ajax({
-			url:'${pageContext.request.contextPath}/admin/major/getMajorByCollege?college_id='+college_id,
-			type:"post",
-			error:function(e){
-			},
-			success:function(data){
-				var json = new Function("return" + data)();
-				var major_select=$("#major_DBtoExcel_select_id");
-				major_select.empty();
-				major_select.append('<option value="">'+"全部"+'</option>');
-				for(var i=0;i<json.length;i++){
-					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
-				} 
-			}
-		});
-	}
-	
 	//选择专业，得到班级
 	function getClass(major_id)
 	{
 		$.ajax({
-			url:'${pageContext.request.contextPath}/admin/class/getClassByMajor?major_id='+major_id,
+			url:'${pageContext.request.contextPath}/instructor/class/getClassByMajor?major_id='+major_id,
 			type:"post",
 			error:function(e){
 			},

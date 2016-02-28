@@ -8,30 +8,12 @@
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 
 <div id="pop_content_page">
-	<form id="jobInfoCountFormId" action="${pageContext.request.contextPath}/admin/jobInfo/jobInfoCountView" method="post">
-		<input type="hidden" id="gradeId" name="gradeId" value="${gradeId }" />
+	<form id="jobInfoCountFormId" action="${pageContext.request.contextPath}/instructor/jobInfo/jobInfoCountView" method="post">
 		<input type="hidden" id="classId" name="classId" value="${classId }" />
 		<input type="hidden" id="majorId" name="majorId" value="${majorId }" />
-		<input type="hidden" id="collegeId" name="collegeId" value="${collegeId }" />
 		<table>
 			<tr style="height: 60px;">
 				<td>
-					<label style="margin-left: 15px;">年级：</label>
-					<select id="grade_jobCount_select_id" class="select_style">
-						<option value="" selected="selected">全部</option>
-						<c:forEach items="${gradeList }" var="gradeDomain">
-							<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
-						</c:forEach>
-					</select>
-					
-					<label style="margin-left: 15px;">学院：</label>
-					<select id="college_jobCount_select_id" class="select_style" onchange="getMajor(this.value)">
-						<option value="" selected="selected">全部</option>
-						<c:forEach items="${collegeList }" var="collegeDomain">
-							<option value="${collegeDomain.id }">${collegeDomain.name}</option>
-						</c:forEach>
-					</select>
-					
 					<label style="margin-left: 15px;">专业：</label>
 					<select id="major_jobCount_select_id" class="select_style" onchange="getClass(this.value)">
 						<option value="" selected="selected">全部</option>
@@ -51,7 +33,7 @@
 			</tr>
 			<tr>
 				<td>
-			<input type="button" id="jobInfoCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="查询"/>
+					<input type="button" id="jobInfoCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="查询"/>
 				</td>
 			</tr>
 		</table>
@@ -85,7 +67,7 @@
 		var collegeIdVal=$("#collegeId").val();
 		
 		$.ajax({
-			url : '${pageContext.request.contextPath}/admin/jobInfo/jobInfoCountDBToExcel?gradeId='+ gradeIdVal+'&collegeId='+collegeIdVal,
+			url : '${pageContext.request.contextPath}/instructor/jobInfo/jobInfoCountDBToExcel?gradeId='+ gradeIdVal+'&collegeId='+collegeIdVal,
 			type : "post",
 			error : function(e) {
 			
@@ -98,7 +80,7 @@
 	     		        time: 1500//1.5s后自动关闭
 	     		    });
 					
-					window.location="${pageContext.request.contextPath}/admin/jobInfo/downloadJobCount";
+					window.location="${pageContext.request.contextPath}/instructor/jobInfo/downloadJobCount";
 
 				}else{
 					parent.layer.msg('导出失败', {
@@ -112,8 +94,6 @@
 
 	//使下拉框默认选择
 	$(function() {
-		$("#grade_jobCount_select_id option[value='${gradeId}']").attr("selected", true);
-		$("#college_jobCount_select_id option[value='${collegeId}']").attr("selected", true);
 		$("#major_jobCount_select_id option[value='${majorId}']").attr("selected", true);
 		$("#class_jobCount_select_id option[value='${classId}']").attr("selected", true);
 	});
@@ -124,12 +104,6 @@
 		form.ajaxSubmit(function(data) {
 			$("#pop_content_page").html(data);
 		});
-	});
-
-	//下拉框选择后给隐藏域赋值
-	$("#grade_jobCount_select_id").change(function() {
-		var gradeIdVal = $(this).children('option:selected').val();
-		$("#gradeId").val(gradeIdVal);
 	});
 
 	//下拉框选择后给隐藏域赋值
@@ -144,36 +118,10 @@
 		$("#majorId").val(majorIdVal);
 	});
 
-	//下拉框选择后给隐藏域赋值
-	$("#college_jobCount_select_id").change(function() {
-		var collegeIdVal = $(this).children('option:selected').val();
-		$("#collegeId").val(collegeIdVal);
-	});
-
-	//选择学院，得到专业
-	function getMajor(college_id) {
-		$.ajax({
-			url : '${pageContext.request.contextPath}/admin/major/getMajorByCollege?college_id='+ college_id,
-			type : "post",
-			error : function(e) {
-			
-			},
-			success : function(data) {
-				var json = new Function("return" + data)();
-				var major_select = $("#major_jobCount_select_id");
-				major_select.empty();
-				major_select.append('<option value="">' + "全部"+ '</option>');
-				for (var i = 0; i < json.length; i++) {
-					major_select.append('<option value="'+json[i].selectText+'">'+ json[i].selectValue + '</option>');
-				}
-			}
-		});
-	}
-
 	//选择专业，得到班级
 	function getClass(major_id) {
 		$.ajax({
-			url : '${pageContext.request.contextPath}/admin/class/getClassByMajor?major_id='+ major_id,
+			url : '${pageContext.request.contextPath}/instructor/class/getClassByMajor?major_id='+ major_id,
 			type : "post",
 			error : function(e) {
 				

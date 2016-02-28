@@ -99,7 +99,7 @@ public class JobInfoService implements IJobInfoService{
 	 * @see com.cb.csystem.service.IJobInfoService#doSearchjobInfoPageList(com.cb.system.util.PageInfo, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo,String gradeId,String majorId
+	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo,String gradeId,String collegeId,String majorId
 			,String classId,String searchText,String sortMode,String sortValue)throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -114,6 +114,13 @@ public class JobInfoService implements IJobInfoService{
 				//专业过滤
 				detachedCriteria.createAlias("qclazz.major", "qmajor");
 				detachedCriteria.add(Restrictions.eq("qmajor.id", majorId));
+			}else{
+				if(ValidateUtil.notEmpty(collegeId)){
+					//学院过滤
+					detachedCriteria.createAlias("qclazz.major", "qmajor");
+					detachedCriteria.createAlias("qmajor.college", "qcollege");
+					detachedCriteria.add(Restrictions.eq("qcollege.id", collegeId));
+				}
 			}
 			if(ValidateUtil.notEmpty(gradeId)){
 				//年级过滤
