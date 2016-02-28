@@ -121,16 +121,16 @@ public class StudentService implements IStudentService{
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(StudentDomain.class);
 		
 		//班级过滤
-		if(classId!=null&&!"".equals(classId)){
+		if(ValidateUtil.notEmpty(classId)){
 			detachedCriteria.add(Restrictions.eq("classDomain.id", classId));
 		}else{
-			if(majorId!=null&&!"".equals(majorId)){
+			if(ValidateUtil.notEmpty(majorId)){
 				//专业过滤
 				detachedCriteria.createAlias("classDomain", "clazz");
 				detachedCriteria.createAlias("clazz.major", "qmajor");
 				detachedCriteria.add(Restrictions.eq("qmajor.id", majorId));
 			}else{
-				if(collegeId!=null&&!"".equals(collegeId)){
+				if(ValidateUtil.notEmpty(collegeId)){
 					//学院过滤
 					detachedCriteria.createAlias("classDomain", "clazz");
 					detachedCriteria.createAlias("clazz.major", "qmajor");
@@ -140,7 +140,7 @@ public class StudentService implements IStudentService{
 			}
 		}
 		
-		if(searchText!=null&&!"".equals(searchText)){
+		if(ValidateUtil.notEmpty(searchText)){
 			//多条件过滤，此处名字，宿舍，籍贯
 			Disjunction disjunction = Restrictions.disjunction();  
 			disjunction.add(Restrictions.like("name", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  

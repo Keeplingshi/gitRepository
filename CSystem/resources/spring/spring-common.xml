@@ -107,6 +107,7 @@
             <value> 
                 /login=anon
                 /admin/**=authc,perms[0]
+                /monitor/**=authc,perms[3]
             </value>  
         </property>
     </bean>  

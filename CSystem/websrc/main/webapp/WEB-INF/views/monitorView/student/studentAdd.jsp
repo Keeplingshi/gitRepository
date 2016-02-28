@@ -13,9 +13,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/validform/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
 
-<form id="studentAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/admin/student/save" method="post">
+<form id="studentAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/monitor/student/save" method="post">
 	<input type="hidden" id="politicalStatusId" name="politicalStatus" value=""/>
-	<input type="hidden" id="classId" name="classDomain.id" value=""/>
+	<input type="hidden" id="classId" name="classDomain.id" value="${userDomain.classDomain.id }"/>
 	<table>
 		<tr>
 			<td class="lesta-150">学号：</td>
@@ -24,12 +24,7 @@
 			</td>
 			<td class="lesta-150">年级：</td>
 			<td class="lestb">
-				<select id="grade_select_add_id" class="select_style">
-					<option value="" selected="selected">选择</option>
-					<c:forEach items="${gradeList }" var="gradeDomain">
-						<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
-					</c:forEach>
-				</select>
+				${userDomain.classDomain.grade.grade }
 			</td>
 		</tr>
 		<tr>
@@ -39,12 +34,7 @@
 			</td>
 			<td class="lesta-150">学院：</td>
 			<td class="lestb">
-				<select id="college_select_add_id" class="select_style" onchange="getMajor(this.value)">
-					<option value="" selected="selected">选择</option>
-					<c:forEach items="${collegeList }" var="collegeDomain">
-						<option value="${collegeDomain.id }">${collegeDomain.name}</option>
-					</c:forEach>
-				</select>
+				${userDomain.classDomain.major.college.name }
 			</td>
 		</tr>
 		<tr>
@@ -55,12 +45,7 @@
 			</td>
 			<td class="lesta-150">专业：</td>
 			<td class="lestb">
-				<select id="major_select_add_id" class="select_style" onchange="getClass(this.value)">
-					<option value="" selected="selected">选择</option>
-					<c:forEach items="${majorList }" var="majorDomain">
-						<option value="${majorDomain.id }">${majorDomain.name}</option>
-					</c:forEach>
-				</select>
+				${userDomain.classDomain.major.name }
 			</td>
 		</tr>
 		<tr>
@@ -70,12 +55,7 @@
 			</td>
 			<td class="lesta-150">班级：</td>
 			<td class="lestb">
-				<select id="class_select_add_id" class="select_style">
-					<option value="" selected="selected">选择</option>
-					<c:forEach items="${classList }" var="classDomain">
-						<option value="${classDomain.id }">${classDomain.name}</option>
-					</c:forEach>
-				</select>
+				${userDomain.classDomain.name }
 			</td>
 		</tr>
 		<tr>
@@ -90,7 +70,7 @@
 			</td>
 			<td class="lesta-150">电子邮件：</td>
 			<td class="lestb">
-				<input type="text" id="stuemail" name="email" class="input_text_a" datatype="e" ignore="ignore" placeholder="请输入邮箱" errormsg="请输入正确邮箱" />
+				<input type="text" id="stuemail" name="email" class="input_text_a" datatype="e" ignore="ignore" placeholder="请输入邮箱" errormsg="请输入正确邮箱"/>
 			</td>
 		</tr>
 		<tr>
@@ -110,7 +90,7 @@
 			</td>
 			<td class="lesta-150">手机号码：</td>
 			<td class="lestb">
-				<input type="text" id="stuCellphone" name="cellphone" class="input_text_a" datatype="m" ignore="ignore" placeholder="请输入手机号码" errormsg="请输入正确手机号" />
+				<input type="text" id="stuCellphone" name="cellphone" class="input_text_a" datatype="m" ignore="ignore" placeholder="请输入手机号码" errormsg="请输入正确手机号"/>
 			</td>
 		</tr>
 		<tr>
@@ -144,12 +124,6 @@
 		$("#politicalStatusId").val(politicalStatus_id);
 	});
 	
-	//下拉框选择后给隐藏域赋值
-	$("#class_select_add_id").change(function(){
-		var class_id=$(this).children('option:selected').val();
-		$("#classId").val(class_id);
-	});
-	
 	$("#saveButton").click(function(){
 		
 		var stuIdVal=$("#stuId").val();		//学号
@@ -162,14 +136,12 @@
 			layer.tips('姓名不能为空', '#stuId');
 			return;
 		}
-
 		if(stunameVal==null||stunameVal==''){
 			layer.tips('学号不能为空', '#stuname');
 			return;
 		}
-		
 		if(classIdVal==null||classIdVal==''){
-			layer.tips('班级不能为空', '#class_select_add_id');
+			layer.tips('您没有添加该同学权限', '#stuId');
 			return;
 		}
 		if(stuemailIdVal!=null&&stuemailIdVal!=''){
@@ -205,44 +177,4 @@
 		
 	});
 
-	//选择学院，得到专业
-	function getMajor(college_id)
-	{
-    	$.ajax({
-			url:'${pageContext.request.contextPath}/admin/major/getMajorByCollege?college_id='+college_id,
-			type:"post",
-			error:function(e){
-			},
-			success:function(data){
-				var json = new Function("return" + data)();
- 				var major_select=$("#major_select_add_id");
-				major_select.empty();
-				major_select.append('<option value="">'+"选择"+'</option>');
-				for(var i=0;i<json.length;i++){
-					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
-				} 
-			}
-		});
-	}
-	
-	//选择专业，得到班级
-	function getClass(major_id)
-	{
-    	$.ajax({
-			url:'${pageContext.request.contextPath}/admin/class/getClassByMajor?major_id='+major_id,
-			type:"post",
-			error:function(e){
-			},
-			success:function(data){
-				var json = new Function("return" + data)();
- 				var class_select=$("#class_select_add_id");
-				class_select.empty();
-				class_select.append('<option value="">'+"选择"+'</option>');
-				for(var i=0;i<json.length;i++){
-					class_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
-				} 
-			}
-		});
-	}
-	
 </script>

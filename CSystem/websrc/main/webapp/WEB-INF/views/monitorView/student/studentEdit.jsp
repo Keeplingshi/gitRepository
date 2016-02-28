@@ -13,7 +13,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/validform/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
 
-<form id="studentEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/admin/student/save" method="post">
+<form id="studentEditFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/monitor/student/save" method="post">
 	<input type="hidden" id="id" name="id" value="${studentDomain.id }"/>
 	<input type="hidden" id="stuId" name="stuId" value="${studentDomain.stuId }"/>
 	<input type="hidden" id="politicalStatusId" name="politicalStatus" value="${studentDomain.politicalStatus }"/>
@@ -27,12 +27,7 @@
 			</td>
 			<td class="lesta-150">年级：</td>
 			<td class="lestb">
-				<select id="grade_select_edit_id" class="select_style">
-					<option value="" selected="selected">选择</option>
-					<c:forEach items="${gradeList }" var="gradeDomain">
-						<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
-					</c:forEach>
-				</select>
+				${studentDomain.classDomain.grade.grade }
 			</td>
 		</tr>
 		<tr>
@@ -42,12 +37,7 @@
 			</td>
 			<td class="lesta-150">学院：</td>
 			<td class="lestb">
-				<select id="college_select_edit_id" class="select_style" onchange="getMajor(this.value)">
-					<option value="" selected="selected">选择</option>
-					<c:forEach items="${collegeList }" var="collegeDomain">
-						<option value="${collegeDomain.id }">${collegeDomain.name}</option>
-					</c:forEach>
-				</select>
+				${studentDomain.classDomain.major.college.name }
 			</td>
 		</tr>
 		<tr>
@@ -64,12 +54,7 @@
 			</td>
 			<td class="lesta-150">专业：</td>
 			<td class="lestb">
-				<select id="major_select_edit_id" class="select_style" onchange="getClass(this.value)">
-					<option value="" selected="selected">选择</option>
-					<c:forEach items="${majorList }" var="majorDomain">
-						<option value="${majorDomain.id }">${majorDomain.name}</option>
-					</c:forEach>
-				</select>
+				${studentDomain.classDomain.major.name }
 			</td>
 		</tr>
 		<tr>
@@ -79,12 +64,7 @@
 			</td>
 			<td class="lesta-150">班级：</td>
 			<td class="lestb">
-				<select id="class_select_edit_id" class="select_style">
-					<option value="" selected="selected">选择</option>
-					<c:forEach items="${classList }" var="classDomain">
-						<option value="${classDomain.id }">${classDomain.name}</option>
-					</c:forEach>
-				</select>
+				${studentDomain.classDomain.name }
 			</td>
 		</tr>
 		<tr>
@@ -99,7 +79,7 @@
 			</td>
 			<td class="lesta-150">电子邮件：</td>
 			<td class="lestb">
-				<input type="text" id="stuemail" name="email" class="input_text_a" datatype="e" ignore="ignore" errormsg="请输入正确邮箱" placeholder="请输入邮箱" value="${studentDomain.email }"/>
+				<input type="text" id="stuemail" name="email" class="input_text_a"  datatype="e" ignore="ignore" errormsg="请输入正确邮箱" placeholder="请输入邮箱" value="${studentDomain.email }"/>
 			</td>
 		</tr>
 		<tr>
@@ -136,10 +116,6 @@
 
 	$(function(){
 		$("#politicalStatus_select_edit_id option[value='${studentDomain.politicalStatus}']").attr("selected",true);
-		$("#class_select_edit_id option[value='${studentDomain.classDomain.id}']").attr("selected",true);
-		$("#college_select_edit_id option[value='${studentDomain.classDomain.major.college.id}']").attr("selected",true);
-		$("#major_select_edit_id option[value='${studentDomain.classDomain.major.id}']").attr("selected",true);
-		$("#grade_select_edit_id option[value='${studentDomain.classDomain.grade.id}']").attr("selected",true);
 	});
 
 	//表单验证
@@ -159,12 +135,6 @@
 	$("#politicalStatus_select_edit_id").change(function(){
 		var politicalStatus_id=$(this).children('option:selected').val();
 		$("#politicalStatusId").val(politicalStatus_id);
-	});
-	
-	//下拉框选择后给隐藏域赋值
-	$("#class_select_edit_id").change(function(){
-		var class_id=$(this).children('option:selected').val();
-		$("#classId").val(class_id);
 	});
 	
 	$("#saveButton").click(function(){
@@ -215,45 +185,5 @@
 		});
 		
 	});
-
-	//选择学院，得到专业
-	function getMajor(college_id)
-	{
-    	$.ajax({
-			url:'${pageContext.request.contextPath}/admin/major/getMajorByCollege?college_id='+college_id,
-			type:"post",
-			error:function(e){
-			},
-			success:function(data){
-				var json = new Function("return" + data)();
- 				var major_select=$("#major_select_edit_id");
-				major_select.empty();
-				major_select.append('<option value="">'+"选择"+'</option>');
-				for(var i=0;i<json.length;i++){
-					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
-				} 
-			}
-		});
-	}
-	
-	//选择专业，得到班级
-	function getClass(major_id)
-	{
-    	$.ajax({
-			url:'${pageContext.request.contextPath}/admin/class/getClassByMajor?major_id='+major_id,
-			type:"post",
-			error:function(e){
-			},
-			success:function(data){
-				var json = new Function("return" + data)();
- 				var class_select=$("#class_select_edit_id");
-				class_select.empty();
-				class_select.append('<option value="">'+"选择"+'</option>');
-				for(var i=0;i<json.length;i++){
-					class_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
-				} 
-			}
-		});
-	}
 	
 </script>
