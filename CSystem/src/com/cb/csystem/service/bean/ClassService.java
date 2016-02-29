@@ -223,7 +223,7 @@ public class ClassService implements IClassService{
 			}else{
 				studentDomain.setIsMonitor(Consts.IS_MONITOR_A);
 			}
-			studentService.doSave(studentDomain);
+			studentService.doSaveStuAndJob(studentDomain);
 		}
 		
 		return b;

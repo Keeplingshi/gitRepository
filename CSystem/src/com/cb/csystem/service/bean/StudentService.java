@@ -69,10 +69,10 @@ public class StudentService implements IStudentService{
 	}
 
 	/**
-	 * @see com.cb.csystem.service.IStudentService#doSave(com.cb.csystem.domain.StudentDomain)
+	 * @see com.cb.csystem.service.IStudentService#doSaveStuAndJob(com.cb.csystem.domain.StudentDomain)
 	 */
 	@Override
-	public boolean doSave(StudentDomain studentDomain) throws Exception {
+	public boolean doSaveStuAndJob(StudentDomain studentDomain) throws Exception {
 		// TODO Auto-generated method stub
 		if(studentDomain.getId()==null){
 			JobInfoDomain jobInfoDomain=new JobInfoDomain();
@@ -230,6 +230,19 @@ public class StudentService implements IStudentService{
 		}
 		
 		return studentDao.getFilterList(detachedCriteria);
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IStudentService#doSave(com.cb.csystem.domain.StudentDomain)
+	 */
+	@Override
+	public boolean doSave(StudentDomain studentDomain) throws Exception {
+		// TODO Auto-generated method stub
+		if(studentDomain.getId()==null){
+			return studentDao.save(studentDomain);
+		}else{
+			return studentDao.update(studentDomain);
+		}
 	}
 
 }

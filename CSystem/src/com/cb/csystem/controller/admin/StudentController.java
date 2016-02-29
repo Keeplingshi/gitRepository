@@ -205,7 +205,7 @@ public class StudentController {
 			System.out.println(result);
 			return Consts.ERROR;
 		} else {
-			if(studentService.doSave(domain)){
+			if(studentService.doSaveStuAndJob(domain)){
 				return Consts.SUCCESS;
 			}
 		}
@@ -266,7 +266,7 @@ public class StudentController {
 		model.addAttribute("gradeList", gradeList);
 		
 		return "/adminView/student/studentExcelView";
-	};
+	}
 	
 	/**
 	 * 导出数据

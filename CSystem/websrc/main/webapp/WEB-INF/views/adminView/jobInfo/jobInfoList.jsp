@@ -53,6 +53,7 @@
 	<div class="breadcrumbs">
 		<input id="jobInfoCountButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="统计信息"/>
 		<input id="jobInfoDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
+		<input id="jobInfoExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导入数据"/>
 	</div>
 	<div class="table-responsive">
 		<table id="sample-table-2" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
@@ -229,6 +230,23 @@
 	        area : ['700px' , '500px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/admin/jobInfo/jobInfoCountView'
+	    });
+	});
+	
+	$("#jobInfoExcelToDBButton").click(function(){
+		    parent.layer.open({
+	        type: 2,
+	        title: '从excel中导入就业信息',
+	        shadeClose: true,
+	        area : ['700px' , '500px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/admin/jobInfo/jobInfoExcelView',
+	        end: function(){
+	        	//默认加载用户列表
+	        	$("#formId").ajaxSubmit(function(data){
+	        	 	$("#content_page").html(data);
+	    		});
+	        }
 	    });
 	});
 	

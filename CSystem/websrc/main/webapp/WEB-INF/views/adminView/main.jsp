@@ -142,12 +142,6 @@
 							</ul>
 							
 						</li>
-						<li id="test_manage">
-							<a href="javascript:void(0);">
-								<i class="icon-dashboard"></i>
-								<span class="menu-text"> 测试界面 </span>
-							</a>
-						</li>
 					</ul>
 				</div>
 
@@ -244,13 +238,6 @@
 		$("#grade_manage").click(function(){
 			
 			$.post("${pageContext.request.contextPath}/admin/grade/gradeList", function(result){
-				$("#content_page").empty();
-				$("#content_page").html(result);
-			});
-		});
-		
-		$("#test_manage").click(function(){
-			$.post("${pageContext.request.contextPath}/test/test", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});

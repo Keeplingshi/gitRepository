@@ -30,8 +30,16 @@ public interface IStudentService {
 	public List<StudentDomain> doGetPageList(PageInfo pageInfo)throws Exception;
 	
 	/**
-	 * 保存学生
+	 * 保存学生，新增就业
 	 * @param StudentDomain
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doSaveStuAndJob(StudentDomain studentDomain) throws Exception;
+	
+	/**
+	 * 保存学生
+	 * @param studentDomain
 	 * @return
 	 * @throws Exception
 	 */

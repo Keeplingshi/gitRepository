@@ -153,4 +153,23 @@ public class CommonController {
 		
 		return Consts.SUCCESS;
 	}
+	
+	/**
+	 * 将excel文件中就业信息写入数据库
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/jobInfoExcelSave")
+	@ResponseBody
+	public String dojobInfoExcelSave(@RequestParam(value = "file", required = false) MultipartFile file,String classId)
+	{
+		try{
+			ClassDomain classDomain=classService.doGetById(classId);
+			ExcelToDBUtil.jobInfoexcelToDB(file,classDomain);
+		}catch (Exception e) {
+			return Consts.ERROR;
+		}
+		
+		return Consts.SUCCESS;
+	}
 }
