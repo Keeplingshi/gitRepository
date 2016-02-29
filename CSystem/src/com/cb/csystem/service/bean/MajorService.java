@@ -112,7 +112,7 @@ public class MajorService implements IMajorService{
 	public List<SelectItem> dogetMajorsByCollegeId(String collegeId) {
 		// TODO Auto-generated method stub
 		
-		List<SelectItem> selectList=new ArrayList<SelectItem>();
+		List<SelectItem> selectList=new ArrayList<>();
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(MajorDomain.class);
 		if(collegeId!=null&&!"".equals(collegeId)){
 			detachedCriteria.add(Restrictions.eq("college.id", collegeId));

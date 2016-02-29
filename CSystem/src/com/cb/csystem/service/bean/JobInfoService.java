@@ -175,7 +175,7 @@ public class JobInfoService implements IJobInfoService{
 			throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<SelectItem> selectList=new ArrayList<SelectItem>();
+		List<SelectItem> selectList=new ArrayList<>();
 		//查询类型为 签约书状态
 		List<CodeBookDomain> codeBookDomains=codeBookService.doGetCodeBookListByParent(contractStatusValue, CodeBookConstsType.CONTRACTSTATUS_TYPE, CodeBookConstsType.PROTOCALSTATE_TYPE);
 		for(CodeBookDomain codeBookDomain:codeBookDomains){
@@ -322,7 +322,7 @@ public class JobInfoService implements IJobInfoService{
 			}
 		}
 		
-		List<SelectItem> selectList=new ArrayList<SelectItem>();
+		List<SelectItem> selectList=new ArrayList<>();
 		selectList.add(new SelectItem("查询人数",String.valueOf(jobInfoDao.getTotalCount(detachedCriteria))));
 		
 		detachedCriteria_C.add(Restrictions.eq("contractStatus", Integer.parseInt(CodeBookConsts.CONTRACTSTATUS_TYPE_C)));
@@ -358,7 +358,7 @@ public class JobInfoService implements IJobInfoService{
 			String collegeId) throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<JobInfoCountBean> jobInfoCountBeans=new ArrayList<JobInfoCountBean>();
+		List<JobInfoCountBean> jobInfoCountBeans=new ArrayList<>();
 		List<ClassDomain> classDomains=classService.doGetClazzByGradeOrCollegeOrMajor(gradeId, collegeId, null);
 		
 		for(ClassDomain classDomain:classDomains){
