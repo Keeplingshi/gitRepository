@@ -105,7 +105,7 @@ public class IClassController {
 		if(userDomain!=null){
 			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
 				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(userDomain.getCollege().getId());
-				List<ClassDomain> classList=new ArrayList<>();
+				List<ClassDomain> classList=new ArrayList<ClassDomain>();
 				if(ValidateUtil.isEmpty(majorId)){
 					classList=classService.doSearchclassPageList(pageInfo,userDomain.getGrade().getId(), userDomain.getCollege().getId(), null, searchText);
 				}else{
@@ -254,7 +254,7 @@ public class IClassController {
 	@ResponseBody
 	public String dogetClassByMajor(Model model,String major_id,HttpSession session)throws Exception{
 		
-		List<SelectItem> classList=new ArrayList<>();
+		List<SelectItem> classList=new ArrayList<SelectItem>();
 		String username=(String)session.getAttribute(Consts.CURRENT_USER);
 		UserDomain userDomain=userService.doGetUserByUsername(username);
 		if(userDomain!=null){

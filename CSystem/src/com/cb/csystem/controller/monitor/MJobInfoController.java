@@ -115,7 +115,7 @@ public class MJobInfoController {
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
 				
-				List<JobInfoDomain> jobInfoList=new ArrayList<>();
+				List<JobInfoDomain> jobInfoList=new ArrayList<JobInfoDomain>();
 				if(ValidateUtil.isEmpty(classId)){
 					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, userDomain.getClassDomain().getMajor().getId(), null, searchText, sortMode, sortValue);
 				}else{
@@ -273,7 +273,7 @@ public class MJobInfoController {
 		UserDomain userDomain=userService.doGetUserByUsername(username);
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
-				List<SelectItem> jobInfoCountList=new ArrayList<>();
+				List<SelectItem> jobInfoCountList=new ArrayList<SelectItem>();
 				if(ValidateUtil.isEmpty(classId)){
 					jobInfoCountList=jobInfoService.doJobInfoCount(null, null, userDomain.getClassDomain().getMajor().getId(), null);
 				}else{
