@@ -103,13 +103,37 @@
 							<a href="#" class="dropdown-toggle">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text">
+									成长档案
+									<span class="badge badge-primary ">2</span>
+								</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu" id="submenu">
+								<li id="discipline_manage">
+									<a href="javascript:void(0);">
+										<i class="icon-double-angle-right"></i>
+										违纪管理
+									</a>
+								</li>
+								<li id="disciplineType_manage">
+									<a href="javascript:void(0);">
+										<i class="icon-double-angle-right"></i>
+										违纪类型管理
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text">
 									学校管理
 									<span class="badge badge-primary ">4</span>
 								</span>
 
 								<b class="arrow icon-angle-down"></b>
 							</a>
-							
 							<ul class="submenu" id="submenu">
 								<li id="grade_manage">
 									<a href="javascript:void(0);">
@@ -117,21 +141,18 @@
 										年级管理
 									</a>
 								</li>
-							
 								<li id="college_manage">
 									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
 										学院管理
 									</a>
 								</li>
-
 								<li id="major_manage">
 									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
 										专业管理
 									</a>
 								</li>
-
 								<li id="class_manage">
 									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
@@ -140,7 +161,6 @@
 								</li>
 
 							</ul>
-							
 						</li>
 					</ul>
 				</div>
@@ -238,6 +258,14 @@
 		$("#grade_manage").click(function(){
 			
 			$.post("${pageContext.request.contextPath}/admin/grade/gradeList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		//违纪管理
+		$("#disciplineType_manage").click(function(){
+			$.post("${pageContext.request.contextPath}/admin/disciplineType/disciplineTypeList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});
