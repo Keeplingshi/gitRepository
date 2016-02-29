@@ -52,7 +52,6 @@ public class DisciplineController {
 			,BindingResult bindingResult,Model model)throws Exception{
 		
 		List<DisciplineDomain> disciplineList=disciplineService.doGetPageList(pageInfo);
-		
 		model.addAttribute("disciplineList", disciplineList);
 		
 		return "/adminView/discipline/disciplineList";
@@ -107,7 +106,6 @@ public class DisciplineController {
 		
 		//获取discipline信息
 		DisciplineDomain disciplineDomain=disciplineService.doGetById(id);
-		
 		model.addAttribute("disciplineDomain", disciplineDomain);
 		
 		return "/adminView/discipline/disciplineEdit";

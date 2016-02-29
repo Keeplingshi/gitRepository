@@ -263,6 +263,13 @@
 			});
 		});
 		
+		$("#discipline_manage").click(function(){
+			$.post("${pageContext.request.contextPath}/admin/discipline/disciplineList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
 		//违纪管理
 		$("#disciplineType_manage").click(function(){
 			$.post("${pageContext.request.contextPath}/admin/disciplineType/disciplineTypeList", function(result){
