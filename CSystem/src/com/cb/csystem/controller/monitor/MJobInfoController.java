@@ -21,11 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
-import com.cb.csystem.service.ICollegeService;
-import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IJobInfoService;
-import com.cb.csystem.service.IMajorService;
-import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
@@ -48,12 +44,7 @@ public class MJobInfoController {
 
 	@Resource private IUserService userService;
 	@Resource private IJobInfoService jobInfoService;
-	@Resource private IStudentService studentService;
-	@Resource private IMajorService majorService;
-	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
-	@Resource private IGradeService gradeService;
-	
 	/**
 	 * 过滤起前台pageInfo
 	 * 使@ModelAttribute("pageInfo") PageInfo pageInfo在前台使用name="pageInfo.currentPageNo"来进行传参数
@@ -115,7 +106,7 @@ public class MJobInfoController {
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
 				
-				List<JobInfoDomain> jobInfoList=new ArrayList<>();
+				List<JobInfoDomain> jobInfoList=new ArrayList<JobInfoDomain>();
 				if(ValidateUtil.isEmpty(classId)){
 					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, userDomain.getClassDomain().getMajor().getId(), null, searchText, sortMode, sortValue);
 				}else{
@@ -273,7 +264,7 @@ public class MJobInfoController {
 		UserDomain userDomain=userService.doGetUserByUsername(username);
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
-				List<SelectItem> jobInfoCountList=new ArrayList<>();
+				List<SelectItem> jobInfoCountList=new ArrayList<SelectItem>();
 				if(ValidateUtil.isEmpty(classId)){
 					jobInfoCountList=jobInfoService.doJobInfoCount(null, null, userDomain.getClassDomain().getMajor().getId(), null);
 				}else{

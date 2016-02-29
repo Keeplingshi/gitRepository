@@ -146,7 +146,7 @@ public class ClassService implements IClassService{
 	public List<SelectItem> dogetClasssByMajorId(String major_id)
 			throws Exception {
 		// TODO Auto-generated method stub
-		List<SelectItem> selectList=new ArrayList<>();
+		List<SelectItem> selectList=new ArrayList<SelectItem>();
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(ClassDomain.class);
 		if(ValidateUtil.notEmpty(major_id)){
 			detachedCriteria.add(Restrictions.eq("major.id", major_id));
@@ -236,7 +236,7 @@ public class ClassService implements IClassService{
 	public List<SelectItem> doGetClazzSelectItem(String gradeId,
 			String collegeId, String majorId) throws Exception {
 		// TODO Auto-generated method stub
-		List<SelectItem> selectList=new ArrayList<>();
+		List<SelectItem> selectList=new ArrayList<SelectItem>();
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(ClassDomain.class);
 		if(ValidateUtil.notEmpty(gradeId)){
 			detachedCriteria.add(Restrictions.eq("grade.id", gradeId));

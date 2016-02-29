@@ -1,0 +1,6 @@
+JDK_INSTALLATION_NAME=jdk1.6.0_43
+SERVER_ENABLEMENT=true
+TOMCAT_BASE=D\:\\tomcat6\\apache-tomcat-6.0.36
+TOMCAT_HOME=D\:\\tomcat6\\apache-tomcat-6.0.36
+TOMCAT_TEMP=D\:\\tomcat6\\apache-tomcat-6.0.36\\temp
+eclipse.preferences.version=1

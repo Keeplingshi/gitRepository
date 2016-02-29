@@ -26,7 +26,7 @@ public class CopyUtil {
 		for(Object entityObj:entityList){
 			try {
 				domainObj = domainClazz.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			BeanUtils.copyProperties(entityObj, domainObj);

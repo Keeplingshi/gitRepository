@@ -25,10 +25,7 @@ import com.cb.csystem.domain.MajorDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
-import com.cb.csystem.service.ICollegeService;
-import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
-import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
@@ -45,12 +42,8 @@ import com.cb.system.util.ValidateUtil;
 public class IClassController {
 
 	@Resource private IUserService userService;
-	@Resource private IStudentService studentService;
 	@Resource private IMajorService majorService;
-	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
-	@Resource private IGradeService gradeService;
-	
 	/**
 	 * 过滤起前台pageInfo
 	 * 使@ModelAttribute("pageInfo") PageInfo pageInfo在前台使用name="pageInfo.currentPageNo"来进行传参数
@@ -105,7 +98,7 @@ public class IClassController {
 		if(userDomain!=null){
 			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
 				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(userDomain.getCollege().getId());
-				List<ClassDomain> classList=new ArrayList<>();
+				List<ClassDomain> classList=new ArrayList<ClassDomain>();
 				if(ValidateUtil.isEmpty(majorId)){
 					classList=classService.doSearchclassPageList(pageInfo,userDomain.getGrade().getId(), userDomain.getCollege().getId(), null, searchText);
 				}else{
@@ -254,7 +247,7 @@ public class IClassController {
 	@ResponseBody
 	public String dogetClassByMajor(Model model,String major_id,HttpSession session)throws Exception{
 		
-		List<SelectItem> classList=new ArrayList<>();
+		List<SelectItem> classList=new ArrayList<SelectItem>();
 		String username=(String)session.getAttribute(Consts.CURRENT_USER);
 		UserDomain userDomain=userService.doGetUserByUsername(username);
 		if(userDomain!=null){
