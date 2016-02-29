@@ -2,18 +2,43 @@
 
 <!-- 增加违纪类型界面 -->
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 
-<form id="disciplineTypeAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/admin/disciplineType/save" method="post">
+<form id="disciplineAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/admin/discipline/save" method="post">
+	<input type="hidden" id="stuId" name="student.id" value=""/>
+	<input type="hidden" id="disciplineTypeId" name="disciplineType.id" value=""/>
 	<table>
 		<tr>
-			<td class="lesta-150">违纪类型名称：</td>
+			<td class="lesta-150">学生：</td>
 			<td class="lestb">
-				<input type="text" id="disciplineTypename" name="name" class="input_text_a" placeholder="请输入违纪类型" style="ime-mode:disabled" onkeydown="if(event.keyCode==13)event.keyCode=9" onkeypress="if ((event.keyCode<48 || event.keyCode>57)) event.returnValue=false"/>
+				<input type="text" id="stuname" class="input_text_a" placeholder="请选择学生" readonly="readonly"/>
+				<input type="button" id="chooseStudentButton" class="button button-primary button-rounded button-small" value="选择">
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">违纪类型：</td>
+			<td class="lestb">
+				<select id="disciplineType_select_add_id" class="select_style" onchange="getProtocalState(this.value)">
+					<option value="" selected="selected">选择</option>
+					<c:forEach items="${disciplineTypeList }" var="disciplineTypeDomain">
+						<option value="${disciplineTypeDomain.id }">${disciplineTypeDomain.name}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">时间：</td>
+			<td class="lestb">
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">备注：</td>
+			<td class="lestb">
 			</td>
 		</tr>
 	</table>
@@ -22,15 +47,32 @@
 
 <script>
 	
+	$("#chooseStudentButton").click(function(){
+/* 	    parent.layer.open({
+	        type: 2,
+	        title: '新增违纪',
+	        shadeClose: true, //点击遮罩关闭层
+	        area : ['500px' , '400px'],
+	        offset: '130px',
+	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineAdd',
+	        end: function(){
+				//默认加载违纪类型列表
+	    		$("#formId").ajaxSubmit(function(data){
+	        	 	$("#content_page").html(data);
+	    		});
+	        }
+	    }); */
+	});
+	
 	$("#saveButton").click(function(){
 		
-		var disciplineTypenameVal=$("#disciplineTypename").val();
-		if(disciplineTypenameVal==null||disciplineTypenameVal==''){
-			layer.tips('违纪类型不能为空', '#disciplineTypename');
+		var disciplinenameVal=$("#disciplinename").val();
+		if(disciplinenameVal==null||disciplinenameVal==''){
+			layer.tips('违纪类型不能为空', '#disciplinename');
 			return;
 		}
 		
-		var form = $("#disciplineTypeAddFormId");
+		var form = $("#disciplineAddFormId");
 		form.ajaxSubmit(function(result){
 			if(result=='success'){
 

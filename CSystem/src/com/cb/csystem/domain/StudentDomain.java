@@ -1,14 +1,18 @@
 package com.cb.csystem.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -42,6 +46,7 @@ public class StudentDomain {
 	private String cellphone;	//手机
 	private Integer isMonitor;	//是否为班长，0否1是
 	private JobInfoDomain jobInfo;
+	private Set<DisciplineDomain> disciplines=new HashSet<>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -177,5 +182,14 @@ public class StudentDomain {
 	public void setJobInfo(JobInfoDomain jobInfo) {
 		this.jobInfo = jobInfo;
 	}
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student", fetch = FetchType.LAZY)
+	public Set<DisciplineDomain> getDisciplines() {
+		return disciplines;
+	}
+	public void setDisciplines(Set<DisciplineDomain> disciplines) {
+		this.disciplines = disciplines;
+	}
 
+	
 }

@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.csystem.domain.DisciplineDomain;
+import com.cb.csystem.domain.DisciplineTypeDomain;
 import com.cb.csystem.service.IDisciplineService;
+import com.cb.csystem.service.IDisciplineTypeService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 
@@ -30,6 +32,7 @@ import com.cb.system.util.PageInfo;
 public class DisciplineController {
 
 	@Resource private IDisciplineService disciplineService;
+	@Resource private IDisciplineTypeService disciplineTypeService;
 	
 	/**
 	 * 过滤起前台pageInfo
@@ -61,7 +64,6 @@ public class DisciplineController {
 	public String dodisciplineSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
 			,BindingResult bindingResult,Model model,String collegeId,String searchText)throws Exception{
 		
-		
 		return "/adminView/discipline/disciplineList";
 	}
 	
@@ -90,6 +92,9 @@ public class DisciplineController {
 	 */
 	@RequestMapping("/disciplineAdd")
 	public String dodisciplineAdd(Model model)throws Exception{
+		
+		List<DisciplineTypeDomain> disciplineTypeList=disciplineTypeService.doGetFilterList();
+		model.addAttribute("disciplineTypeList", disciplineTypeList);
 		
 		return "/adminView/discipline/disciplineAdd";
 	}

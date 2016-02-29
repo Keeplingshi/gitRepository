@@ -2,10 +2,13 @@ package com.cb.csystem.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -20,8 +23,10 @@ import org.hibernate.annotations.GenericGenerator;
 public class DisciplineDomain {
 
 	private String id;
-	private String studentId;	//学生
-	private String disciplineTypeId;	//违纪类型
+	//private String studentId;	//学生
+	private StudentDomain student;	
+	//private String disciplineTypeId;	//违纪类型
+	private DisciplineTypeDomain disciplineType;
 	private Date time;	//时间
 	private String note;	//备注
 	
@@ -37,24 +42,46 @@ public class DisciplineDomain {
 		this.id = id;
 	}
 	
-	@Column(name = "STUDENTID", nullable = false, length = 200)
-	public String getStudentId() {
-		return studentId;
-	}
 	
-	public void setStudentId(String studentId) {
-		this.studentId = studentId;
-	}
 	
-	@Column(name = "DISCIPLINETYPEID", nullable = false, length = 200)
-	public String getDisciplineTypeId() {
-		return disciplineTypeId;
-	}
+//	@Column(name = "STUDENTID", nullable = false, length = 200)
+//	public String getStudentId() {
+//		return studentId;
+//	}
+//	
+//	public void setStudentId(String studentId) {
+//		this.studentId = studentId;
+//	}
 	
-	public void setDisciplineTypeId(String disciplineTypeId) {
-		this.disciplineTypeId = disciplineTypeId;
-	}
+//	@Column(name = "DISCIPLINETYPEID", nullable = false, length = 200)
+//	public String getDisciplineTypeId() {
+//		return disciplineTypeId;
+//	}
+//	
+//	public void setDisciplineTypeId(String disciplineTypeId) {
+//		this.disciplineTypeId = disciplineTypeId;
+//	}
 	
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "STUDENTID")
+	public StudentDomain getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentDomain student) {
+		this.student = student;
+	}
+
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "DISCIPLINETYPEID")
+	public DisciplineTypeDomain getDisciplineType() {
+		return disciplineType;
+	}
+
+	public void setDisciplineType(DisciplineTypeDomain disciplineType) {
+		this.disciplineType = disciplineType;
+	}
+
 	@Column(name = "TIME", nullable = true, length = 200)
 	public Date getTime() {
 		return time;

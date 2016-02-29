@@ -1,9 +1,15 @@
 package com.cb.csystem.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -19,6 +25,7 @@ public class DisciplineTypeDomain {
 
 	private String id;	//ID
 	private String name;	//名称
+	private Set<DisciplineDomain> disciplines=new HashSet<>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -40,5 +47,15 @@ public class DisciplineTypeDomain {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplineType", fetch = FetchType.LAZY)
+	public Set<DisciplineDomain> getDisciplines() {
+		return disciplines;
+	}
+
+	public void setDisciplines(Set<DisciplineDomain> disciplines) {
+		this.disciplines = disciplines;
+	}
+	
 	
 }

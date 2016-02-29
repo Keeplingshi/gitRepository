@@ -51,9 +51,9 @@
 	$("#disciplineAddButton").click(function(){
 	    parent.layer.open({
 	        type: 2,
-	        title: '新增违纪类型',
+	        title: '新增违纪',
 	        shadeClose: true, //点击遮罩关闭层
-	        area : ['400px' , '240px'],
+	        area : ['500px' , '400px'],
 	        offset: '130px',
 	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineAdd',
 	        end: function(){
