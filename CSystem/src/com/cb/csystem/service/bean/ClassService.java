@@ -15,7 +15,6 @@ import com.cb.csystem.dao.IClassDao;
 import com.cb.csystem.domain.ClassDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IClassService;
-import com.cb.csystem.service.IRoleService;
 import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
@@ -34,7 +33,6 @@ public class ClassService implements IClassService{
 
 	@Resource private IClassDao classDao;
 	@Resource private IStudentService studentService;
-	@Resource private IRoleService roleService;
 	@Resource private IUserService userService;
 	
 	/**

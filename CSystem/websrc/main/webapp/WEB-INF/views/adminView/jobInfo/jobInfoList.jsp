@@ -53,7 +53,7 @@
 	<div class="breadcrumbs">
 		<input id="jobInfoCountButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="统计信息"/>
 		<input id="jobInfoDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
-		<input id="jobInfoExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导入数据"/>
+		<!-- <input id="jobInfoExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导入数据"/> -->
 	</div>
 	<div class="table-responsive">
 		<table id="sample-table-2" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
@@ -233,7 +233,7 @@
 	    });
 	});
 	
-	$("#jobInfoExcelToDBButton").click(function(){
+/* 	$("#jobInfoExcelToDBButton").click(function(){
 		    parent.layer.open({
 	        type: 2,
 	        title: '从excel中导入就业信息',
@@ -248,7 +248,7 @@
 	    		});
 	        }
 	    });
-	});
+	}); */
 	
 	//list中修改就业信息按钮
 	function updatejobInfo(jobInfoId)
@@ -257,7 +257,7 @@
 	        type: 2,
 	        title: '修改就业信息',
 	        shadeClose: true,
-	        area : ['630px' , '480px'],
+	        area : ['700px' , '520px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/admin/jobInfo/jobInfoEdit/'+jobInfoId,
 	        end: function(){
@@ -276,7 +276,7 @@
 	        type: 2,
 	        title: '查看就业信息',
 	        shadeClose: true,
-	        area : ['630px' , '480px'],
+	        area : ['700px' , '520px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/admin/jobInfo/jobInfoView/'+jobInfoId
 	    });

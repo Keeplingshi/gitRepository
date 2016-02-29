@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.cb.csystem.domain.ClassDomain;
 import com.cb.csystem.domain.CollegeDomain;
 import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.JobInfoDomain;
@@ -30,13 +27,11 @@ import com.cb.csystem.service.ICollegeService;
 import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.service.IMajorService;
-import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.CodeBookConsts;
 import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
 import com.cb.csystem.util.DBToExcelUtil;
-import com.cb.csystem.util.ExcelToDBUtil;
 import com.cb.csystem.util.bean.JobInfoCountBean;
 import com.cb.system.util.DateUtil;
 import com.cb.system.util.FileUtil;
@@ -53,7 +48,6 @@ import com.cb.system.util.SelectItem;
 public class JobInfoController {
 
 	@Resource private IJobInfoService jobInfoService;
-	@Resource private IStudentService studentService;
 	@Resource private IMajorService majorService;
 	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
@@ -424,7 +418,7 @@ public class JobInfoController {
 	}
 	
 	/**
-	 * 下载学生信息
+	 * 下载就业信息
 	 * @param response
 	 * @throws Exception
 	 */

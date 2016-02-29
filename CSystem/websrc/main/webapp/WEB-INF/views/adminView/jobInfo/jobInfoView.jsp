@@ -51,8 +51,10 @@
 			<td class="lestb">
 				${jobInfoDomain.salary }
 			</td>
-			<td class="lesta-150">城市：</td>
-			<td class="lestb">
+		</tr>
+		<tr>
+			<td class="lesta-150">派遣地址：</td>
+			<td class="lestb" colspan="3">
 				${jobInfoDomain.city }
 			</td>
 		</tr>
@@ -63,7 +65,7 @@
 			</td>
 		</tr>
 	</table>
-	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 270px;" value="关闭"/>
+	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 290px;" value="关闭"/>
 
 <script>
 	

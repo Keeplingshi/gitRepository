@@ -30,7 +30,6 @@ public class DBToExcelUtil {
 	 * @param studentDomains
 	 * @return
 	 */
-	@SuppressWarnings("resource")
 	public static boolean studnetinfoDBToExcel(List<StudentDomain> studentDomains,String path)
 	{
 		boolean b=false;
@@ -101,11 +100,10 @@ public class DBToExcelUtil {
 	 * @param path
 	 * @return
 	 */
-	@SuppressWarnings("resource")
 	public static boolean jobInfoDBToExcel(List<JobInfoDomain> jobInfoDomains,List<SelectItem> selectList,String path)
 	{
 		boolean b=false;
-		String[] headers = { "学号", "姓名", "性别", "签约状态","签约单位","协议书状态","当前状态","城市","薪金/月","备注"};
+		String[] headers = { "学号", "姓名", "性别", "签约状态","签约单位","协议书状态","当前状态","派遣地址","薪金/月","备注"};
 		int columnNum=headers.length;
 		// 声明一个工作薄
 		HSSFWorkbook workbook = new HSSFWorkbook();
@@ -204,7 +202,6 @@ public class DBToExcelUtil {
 	 * @param path
 	 * @return
 	 */
-	@SuppressWarnings("resource")
 	public static boolean jobInfoCountDBToExcel(List<JobInfoCountBean> jobInfoCountBeans,String path)
 	{
 		boolean b=false;

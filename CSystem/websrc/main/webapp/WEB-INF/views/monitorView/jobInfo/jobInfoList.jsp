@@ -206,7 +206,7 @@
 	        type: 2,
 	        title: '修改就业信息',
 	        shadeClose: true,
-	        area : ['630px' , '480px'],
+	        area : ['700px' , '520px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/monitor/jobInfo/jobInfoEdit/'+jobInfoId,
 	        end: function(){
@@ -225,7 +225,7 @@
 	        type: 2,
 	        title: '查看就业信息',
 	        shadeClose: true,
-	        area : ['630px' , '480px'],
+	        area : ['700px' , '520px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/monitor/jobInfo/jobInfoView/'+jobInfoId
 	    });

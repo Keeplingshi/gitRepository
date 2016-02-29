@@ -22,11 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
-import com.cb.csystem.service.ICollegeService;
-import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IJobInfoService;
 import com.cb.csystem.service.IMajorService;
-import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.CodeBookConsts;
 import com.cb.csystem.util.CodeBookConstsType;
@@ -50,12 +47,8 @@ public class IJobInfoController {
 
 	@Resource private IUserService userService;
 	@Resource private IJobInfoService jobInfoService;
-	@Resource private IStudentService studentService;
 	@Resource private IMajorService majorService;
-	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
-	@Resource private IGradeService gradeService;
-	
 	/**
 	 * 过滤起前台pageInfo
 	 * 使@ModelAttribute("pageInfo") PageInfo pageInfo在前台使用name="pageInfo.currentPageNo"来进行传参数

@@ -27,7 +27,6 @@ import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.ICollegeService;
 import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
-import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
@@ -41,7 +40,6 @@ import com.cb.system.util.SelectItem;
 @RequestMapping("/admin/class")
 public class ClassController {
 
-	@Resource private IStudentService studentService;
 	@Resource private IMajorService majorService;
 	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;

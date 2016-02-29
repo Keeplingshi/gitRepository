@@ -51,8 +51,10 @@
 			<td class="lestb">
 				${jobInfoDomain.salary }
 			</td>
-			<td class="lesta-150">城市：</td>
-			<td class="lestb">
+		</tr>
+		<tr>
+			<td class="lesta-150">派遣地址：</td>
+			<td class="lestb" colspan="3">
 				${jobInfoDomain.city }
 			</td>
 		</tr>

@@ -76,9 +76,11 @@
 			<td class="lestb">
 				<input type="text" id="salary" name="salary" class="input_text_a" datatype="n" ignore="ignore" placeholder="请输入薪水" value="${jobInfoDomain.salary }" />
 			</td>
-			<td class="lesta-150">城市：</td>
-			<td class="lestb">
-				<input type="text" id="city" name="city" class="input_text_a" placeholder="便于统计档案派遣" value="${jobInfoDomain.city }" />
+		</tr>
+		<tr>
+			<td class="lesta-150">派遣地址：</td>
+			<td class="lestb" colspan="3">
+				<input type="text" id="city" name="city" class="input_text_a" placeholder="便于统计档案派遣" value="${jobInfoDomain.city }" style="width:300px;"/>
 			</td>
 		</tr>
 		<tr>

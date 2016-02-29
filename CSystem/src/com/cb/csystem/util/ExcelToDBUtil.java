@@ -185,6 +185,7 @@ public class ExcelToDBUtil {
 	}
 
 	/**
+	 * excel录入就业信息
 	 * @param file
 	 * @param classDomain
 	 */

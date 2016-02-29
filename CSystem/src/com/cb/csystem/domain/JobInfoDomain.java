@@ -97,7 +97,7 @@ public class JobInfoDomain {
 		this.nowState = nowState;
 	}
 	
-	@Column(name = "CITY", nullable = true, length = 100)
+	@Column(name = "CITY", nullable = true, length = 200)
 	public String getCity() {
 		return city;
 	}
