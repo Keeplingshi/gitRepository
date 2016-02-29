@@ -44,6 +44,7 @@ import com.cb.system.util.ValidateUtil;
 @RequestMapping("/instructor/class")
 public class IClassController {
 
+	//service服务
 	@Resource private IUserService userService;
 	@Resource private IStudentService studentService;
 	@Resource private IMajorService majorService;
