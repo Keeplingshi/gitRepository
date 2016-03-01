@@ -53,7 +53,7 @@
 	        type: 2,
 	        title: '新增违纪',
 	        shadeClose: true, //点击遮罩关闭层
-	        area : ['500px' , '400px'],
+	        area : ['800px' , '650px'],
 	        offset: '130px',
 	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineAdd',
 	        end: function(){

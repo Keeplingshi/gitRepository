@@ -25,7 +25,7 @@ public class DisciplineTypeDomain {
 
 	private String id;	//ID
 	private String name;	//名称
-	private Set<DisciplineDomain> disciplines=new HashSet<>(0);
+	private Set<DisciplineDomain> disciplines=new HashSet<DisciplineDomain>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")

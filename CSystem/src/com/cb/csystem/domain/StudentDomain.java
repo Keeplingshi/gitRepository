@@ -46,7 +46,7 @@ public class StudentDomain {
 	private String cellphone;	//手机
 	private Integer isMonitor;	//是否为班长，0否1是
 	private JobInfoDomain jobInfo;
-	private Set<DisciplineDomain> disciplines=new HashSet<>(0);
+	private Set<DisciplineDomain> disciplines=new HashSet<DisciplineDomain>(0);
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")

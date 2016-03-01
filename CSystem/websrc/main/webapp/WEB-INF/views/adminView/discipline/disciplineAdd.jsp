@@ -23,7 +23,7 @@
 		<tr>
 			<td class="lesta-150">违纪类型：</td>
 			<td class="lestb">
-				<select id="disciplineType_select_add_id" class="select_style" onchange="getProtocalState(this.value)">
+				<select id="disciplineType_select_choose_id" class="select_style" onchange="getProtocalState(this.value)">
 					<option value="" selected="selected">选择</option>
 					<c:forEach items="${disciplineTypeList }" var="disciplineTypeDomain">
 						<option value="${disciplineTypeDomain.id }">${disciplineTypeDomain.name}</option>
@@ -47,21 +47,28 @@
 
 <script>
 	
+	//选择学生
 	$("#chooseStudentButton").click(function(){
-/* 	    parent.layer.open({
+ 	    layer.open({
 	        type: 2,
-	        title: '新增违纪',
+	        title: '选择学生',
 	        shadeClose: true, //点击遮罩关闭层
-	        area : ['500px' , '400px'],
-	        offset: '130px',
-	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineAdd',
+	        area : ['800px' , '650px'],
+	        offset: '-40px',
+	        content: '${pageContext.request.contextPath}/admin/student/studentChooseView',
 	        end: function(){
 				//默认加载违纪类型列表
 	    		$("#formId").ajaxSubmit(function(data){
 	        	 	$("#content_page").html(data);
 	    		});
 	        }
-	    }); */
+	    }); 
+	});
+	
+	//违纪类型选择
+	$("#disciplineType_select_choose_id").click(function(){
+		var disciplineType_id=$(this).children('option:selected').val();
+		$("#disciplineTypeId").val(disciplineType_id);
 	});
 	
 	$("#saveButton").click(function(){

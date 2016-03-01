@@ -63,6 +63,11 @@ public class StudentController {
 	    binder.setFieldDefaultPrefix("pageInfo.");
 	}
 	
+	@InitBinder("pagedialogInfo")  
+	public void initPageDialogInfoBinder(WebDataBinder binder) {  
+	    binder.setFieldDefaultPrefix("pagedialogInfo.");
+	}
+	
 	/**
 	 * 学生列表
 	 * @param model
@@ -352,4 +357,33 @@ public class StudentController {
 	public void dodownloadStudentInfo(HttpServletResponse response)throws Exception{
 		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.STUDENT_EXCEL, Consts.STUDENT_EXCEL);
 	}
+	
+	/**
+	 * 学生选择页面
+	 * @param pageInfo
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/studentChooseView")
+	public String dostudentChooseView(@ModelAttribute("pagedialogInfo") PageInfo pagedialogInfo,Model model,
+			String collegeId,String majorId,String classId,String searchText)throws Exception{
+		
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
+		List<StudentDomain> studentList=studentService.doSearchstudentPageList(pagedialogInfo, null, collegeId, majorId, classId, searchText, null, null);
+		
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("studentList", studentList);
+		model.addAttribute("classId", classId);
+		model.addAttribute("majorId", majorId);
+		model.addAttribute("collegeId", collegeId);
+		model.addAttribute("searchText", searchText);
+		
+		return "/adminView/student/studentChooseView";
+	}
+	
 }
