@@ -32,8 +32,10 @@
 	
 						<td style="width: 260px">
 							<input type="button" class="btn_list_view" value="查看" onclick="viewdisciplineType('${disciplineTypeDomain.id }')"/>
-							<input type="button" class="btn_list_update" value="修改" onclick="updatedisciplineType('${disciplineTypeDomain.id }')"/>
-							<input type="button" class="btn_list_delete" value="删除" onclick="deletedisciplineType('${disciplineTypeDomain.id }')"/>
+							<c:if test="${disciplineTypeDomain.id!='1' }">
+								<input type="button" class="btn_list_update" value="修改" onclick="updatedisciplineType('${disciplineTypeDomain.id }')"/>
+								<input type="button" class="btn_list_delete" value="删除" onclick="deletedisciplineType('${disciplineTypeDomain.id }')"/>
+							</c:if>
 						</td>
 					</tr>
 				</c:forEach>

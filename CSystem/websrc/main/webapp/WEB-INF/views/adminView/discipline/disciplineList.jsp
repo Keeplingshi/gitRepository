@@ -4,6 +4,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@	taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 
@@ -12,18 +13,18 @@
 		<input id="disciplineAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 	</div>
 	<div class="table-responsive">
-		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+		<table id="sample-table-1" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
 			<thead>
 				<tr>
 					<th class="center" style="width: 80px;">
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
-					<th>学号</th>
-					<th>姓名</th>
-					<th>违纪</th>
-					<th>班级</th>
-					<th>时间</th>
-					<th>备注</th>
+					<th style="width: 100px;">学号</th>
+					<th style="width: 100px;">姓名</th>
+					<th style="width: 100px;">违纪</th>
+					<th style="width: 120px;">班级</th>
+					<th style="width: 100px;">时间</th>
+					<th style="width: 400px;">备注</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -49,6 +50,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<div id="pageId"><tags:paged /></div>
 	</div>
 </form>
 
@@ -79,8 +81,8 @@
 	        type: 2,
 	        title: '查看违纪',
 	        shadeClose: true,
-	        area : ['600px' , '450px'],
-	        offset: ['150px'],
+	        area : ['600px' , '470px'],
+	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineView/'+disciplineId
 	    });
 	}
@@ -92,8 +94,8 @@
 	        type: 2,
 	        title: '修改违纪类型',
 	        shadeClose: true,
-	        area : ['380px' , '300px'],
-	        offset: ['150px'],
+	        area : ['600px' , '470px'],
+	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineEdit/'+disciplineId,
 	        end: function(){
 	        	//默认加载用户列表

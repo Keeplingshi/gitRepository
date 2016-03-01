@@ -3,6 +3,7 @@
 <!-- 修改违纪界面 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
@@ -11,13 +12,13 @@
 
 	<table>
 		<tr>
-			<td class="lesta-150">学号：</td>
-			<td class="lestb">
-				${disciplineDomain.student.stuId }
-			</td>
 			<td class="lesta-150">姓名：</td>
 			<td class="lestb">
 				${disciplineDomain.student.name }
+			</td>
+			<td class="lesta-150">学号：</td>
+			<td class="lestb">
+				${disciplineDomain.student.stuId }
 			</td>
 		</tr>
 		<tr>
@@ -25,29 +26,29 @@
 			<td class="lestb">
 				${disciplineDomain.disciplineType.name }
 			</td>
-		</tr>
-		<tr>
 			<td class="lesta-150">班级：</td>
 			<td class="lestb">
 				${disciplineDomain.student.classDomain.name }
 			</td>
 		</tr>
-		<tr>
-			<td class="lesta-150">课程名称：</td>
-				<td class="lestb">
-					
-				</td>
-			</tr>
+		<c:if test="${disciplineDomain.disciplineType.id=='1' }">
 			<tr>
-				<td class="lesta-150">任课教师：</td>
-				<td class="lestb">
-					
-				</td>
-			</tr>
+				<td class="lesta-150">课程名称：</td>
+					<td class="lestb">
+						${disciplineDomain.courseName }
+					</td>
+				</tr>
+				<tr>
+					<td class="lesta-150">任课教师：</td>
+					<td class="lestb">
+						${disciplineDomain.courseTeacher }
+					</td>
+				</tr>		
+		</c:if>
 		<tr>
 			<td class="lesta-150">时间：</td>
 			<td class="lestb">
-				<td><fmt:formatDate value="${disciplineDomain.time }" type="date"/></td>
+				<fmt:formatDate value="${disciplineDomain.time }" type="date"/>
 			</td>
 		</tr>
 		<tr>
@@ -58,7 +59,7 @@
 		</tr>
 	</table>
 		
-	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 200px;" value="关闭"/>
+	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 240px;" value="关闭"/>
 
 <script>
 	

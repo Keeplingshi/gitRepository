@@ -112,6 +112,8 @@ public class DisciplineController {
 		//获取discipline信息
 		DisciplineDomain disciplineDomain=disciplineService.doGetById(id);
 		model.addAttribute("disciplineDomain", disciplineDomain);
+		List<DisciplineTypeDomain> disciplineTypeList=disciplineTypeService.doGetFilterList();
+		model.addAttribute("disciplineTypeList", disciplineTypeList);
 		
 		return "/adminView/discipline/disciplineEdit";
 	}

@@ -106,9 +106,15 @@
 	
 	$("#saveButton").click(function(){
 		
+		var stuIdVal=$("#stuId").val();
+		if(stuIdVal==null||stuIdVal==''){
+			layer.tips('请选择学生', '#stuname');
+			return;
+		}
+		
 		var disciplineTypeVal=$("#disciplineTypeId").val();
 		if(disciplineTypeVal==null||disciplineTypeVal==''){
-			layer.tips('违纪类型不能为空', '#disciplineTypeId');
+			layer.tips('违纪类型不能为空', '#disciplineType_select_choose_id');
 			return;
 		}
 		
