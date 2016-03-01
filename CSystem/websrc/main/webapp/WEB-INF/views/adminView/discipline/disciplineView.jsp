@@ -1,7 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>		
 
-<!-- 修改违纪类型界面 -->
+<!-- 修改违纪界面 -->
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
@@ -10,13 +11,54 @@
 
 	<table>
 		<tr>
-			<td class="lesta-150">违纪类型名称：</td>
+			<td class="lesta-150">学号：</td>
 			<td class="lestb">
-				${disciplineTypeDomain.name }
+				${disciplineDomain.student.stuId }
+			</td>
+			<td class="lesta-150">姓名：</td>
+			<td class="lestb">
+				${disciplineDomain.student.name }
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">违纪：</td>
+			<td class="lestb">
+				${disciplineDomain.disciplineType.name }
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">班级：</td>
+			<td class="lestb">
+				${disciplineDomain.student.classDomain.name }
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">课程名称：</td>
+				<td class="lestb">
+					
+				</td>
+			</tr>
+			<tr>
+				<td class="lesta-150">任课教师：</td>
+				<td class="lestb">
+					
+				</td>
+			</tr>
+		<tr>
+			<td class="lesta-150">时间：</td>
+			<td class="lestb">
+				<td><fmt:formatDate value="${disciplineDomain.time }" type="date"/></td>
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150">备注：</td>
+			<td class="lestb" colspan="3" rowspan="2">
+				<textarea rows="5" cols="50" readonly="readonly" style="margin-top: 20px;">${disciplineDomain.note }</textarea>
 			</td>
 		</tr>
 	</table>
-	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 120px;" value="关闭"/>
+		
+	<input id="closeButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 200px;" value="关闭"/>
 
 <script>
 	

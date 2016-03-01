@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 违纪表
@@ -27,8 +28,11 @@ public class DisciplineDomain {
 	private StudentDomain student;	
 	//private String disciplineTypeId;	//违纪类型
 	private DisciplineTypeDomain disciplineType;
+	@DateTimeFormat( pattern = "yyyy-MM-dd" )
 	private Date time;	//时间
 	private String note;	//备注
+	private String courseName;	//课程名称
+	private String courseTeacher;	//课程老师
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -99,5 +103,24 @@ public class DisciplineDomain {
 	public void setNote(String note) {
 		this.note = note;
 	}
+
+	@Column(name = "COURSENAME", nullable = true, length = 100)
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	@Column(name = "COURSETEACHER", nullable = true, length = 100)
+	public String getCourseTeacher() {
+		return courseTeacher;
+	}
+
+	public void setCourseTeacher(String courseTeacher) {
+		this.courseTeacher = courseTeacher;
+	}
+	
 	
 }

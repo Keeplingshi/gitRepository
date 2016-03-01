@@ -3,6 +3,7 @@
 <!-- 违纪类型列表页面 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
 
@@ -14,11 +15,13 @@
 		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
-					<th class="center">
+					<th class="center" style="width: 80px;">
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
+					<th>学号</th>
 					<th>姓名</th>
-					<th>违纪名称</th>
+					<th>违纪</th>
+					<th>班级</th>
 					<th>时间</th>
 					<th>备注</th>
 					<th>操作</th>
@@ -31,8 +34,12 @@
 						<td class="center">
 						<label> <input type="checkbox" class="ace" value="${disciplineDomain.id }"/> <span class="lbl"></span></label>
 						</td>
-						<td>${disciplineDomain.name }</td>
-	
+						<td>${disciplineDomain.student.stuId }</td>
+						<td>${disciplineDomain.student.name }</td>
+						<td>${disciplineDomain.disciplineType.name }</td>
+						<td>${disciplineDomain.student.classDomain.name }</td>
+						<td><fmt:formatDate value="${disciplineDomain.time }" type="date"/></td>
+						<td>${disciplineDomain.note }</td>
 						<td style="width: 260px">
 							<input type="button" class="btn_list_view" value="查看" onclick="viewdiscipline('${disciplineDomain.id }')"/>
 							<input type="button" class="btn_list_update" value="修改" onclick="updatediscipline('${disciplineDomain.id }')"/>
@@ -70,9 +77,9 @@
 	{
 	    parent.layer.open({
 	        type: 2,
-	        title: '查看违纪类型',
+	        title: '查看违纪',
 	        shadeClose: true,
-	        area : ['340px' , '200px'],
+	        area : ['600px' , '450px'],
 	        offset: ['150px'],
 	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineView/'+disciplineId
 	    });
