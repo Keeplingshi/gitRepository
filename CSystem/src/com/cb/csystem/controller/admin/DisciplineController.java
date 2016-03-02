@@ -87,12 +87,14 @@ public class DisciplineController {
 	 */
 	@RequestMapping("/disciplineSearchList")
 	public String getdisciplineSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo,Model model
-			,String gradeId,String collegeId,String majorId,String classId
+			,String gradeId,String collegeId,String majorId,String classId,String disciplineTypeId
 			,@RequestParam(value ="beginTime") @DateTimeFormat(pattern="yyyy-MM-dd") Date beginTime
 			,@RequestParam(value ="endTime") @DateTimeFormat(pattern="yyyy-MM-dd") Date endTime
 			,String searchText,String sortMode,String sortValue)throws Exception{
 		
-		List<DisciplineDomain> disciplineList=disciplineService.doGetPageList(pageInfo);
+		//List<DisciplineDomain> disciplineList=disciplineService.doGetPageList(pageInfo);
+		List<DisciplineDomain> disciplineList=disciplineService.doSearchPageList(pageInfo,gradeId
+				,collegeId,majorId,classId,disciplineTypeId,beginTime,endTime,searchText,sortMode,sortValue);
 		List<DisciplineTypeDomain> disciplineTypeList=disciplineTypeService.doGetFilterList();
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
@@ -110,6 +112,7 @@ public class DisciplineController {
 		model.addAttribute("collegeId", collegeId);
 		model.addAttribute("majorId", majorId);
 		model.addAttribute("classId", classId);
+		model.addAttribute("disciplineTypeId", disciplineTypeId);
 		model.addAttribute("beginTime", beginTime);
 		model.addAttribute("endTime", endTime);
 		model.addAttribute("searchText", searchText);

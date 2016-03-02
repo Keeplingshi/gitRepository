@@ -148,8 +148,7 @@ public class JobInfoService implements IJobInfoService{
 			}
 		}
 		
-		
-		
+		//排序
 		if(ValidateUtil.notEmpty(sortValue)){
 			if(Consts.SORT_ASC.equals(sortMode)){
 				detachedCriteria.addOrder(Order.asc(sortValue));

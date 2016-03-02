@@ -1,5 +1,6 @@
 package com.cb.csystem.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cb.csystem.domain.DisciplineDomain;
@@ -48,5 +49,25 @@ public interface IDisciplineService {
 	 * @throws Exception
 	 */
 	public boolean doDeleteById(String id) throws Exception;
+
+	/**
+	 * 违纪搜索
+	 * @param pageInfo
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @param disciplineTypeId
+	 * @param beginTime
+	 * @param endTime
+	 * @param searchText
+	 * @param sortMode
+	 * @param sortValue
+	 * @return
+	 */
+	public List<DisciplineDomain> doSearchPageList(PageInfo pageInfo,
+			String gradeId, String collegeId, String majorId, String classId,
+			String disciplineTypeId, Date beginTime, Date endTime,
+			String searchText, String sortMode, String sortValue) throws Exception;
 	
 }

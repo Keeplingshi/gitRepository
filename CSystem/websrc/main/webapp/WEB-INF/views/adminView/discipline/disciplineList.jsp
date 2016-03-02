@@ -16,6 +16,7 @@
 	<input type="hidden" id="collegeId" name="collegeId" value="${collegeId }" />
 	<input type="hidden" id="majorId" name="majorId" value="${majorId }" />
 	<input type="hidden" id="classId" name="classId" value="${classId }" />
+	<input type="hidden" id="disciplineTypeId" name="disciplineTypeId" value="${disciplineTypeId }" />
 	<input type="hidden" id="sortMode" name="sortMode" value="${sortMode }" />
 	<input type="hidden" id="sortValue" name="sortValue" value="${sortValue }" />
 
@@ -25,7 +26,12 @@
 			<input type="text" id="nav-search-input" name="searchText" placeholder="Search ..." class="nav-search-input" autocomplete="off" value="${searchText }"/> 
 			<i class="icon-search nav-search-icon"></i>
 		</span>
-
+		
+		<input id="disciplineDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
+		<input id="disciplineAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
+		<input id="disciplineQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
+	</div>
+	<div class="breadcrumbs">
 		<label style="margin-left: 20px;">年级：</label>
 		<select id="grade_select_id" style="width: 100px;" onchange="getMajor(this.value)">
 			<option value="" selected="selected">全部</option>
@@ -57,10 +63,6 @@
 				<option value="${classItem.selectText }">${classItem.selectValue}</option>
 			</c:forEach>
 		</select>
-		
-		<input id="disciplineDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
-		<input id="disciplineAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
-		<input id="disciplineQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	</div>
 	<div class="breadcrumbs">
 			<label style="margin-left: 20px;">起始时间：</label>
@@ -73,7 +75,7 @@
               onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginTime\')}'})">
  	
 		<label style="margin-left: 20px;">违纪类型：</label>
-		<select id="class_select_id" style="width: 100px;">
+		<select id="disciplineType_select_id" style="width: 100px;">
 			<option value="" selected="selected">全部</option>
 			<c:forEach items="${disciplineTypeList }" var="disciplineTypeItem">
 				<option value="${disciplineTypeItem.id }">${disciplineTypeItem.name}</option>
@@ -137,7 +139,6 @@
 <script type="text/javascript">
 
 	$("#sample-table-1 thead tr th img").click(function(){
-		console.info("211111");
 		var sortValueVal=$(this)[0].id.split("_")[1];
 		var sortModeVal=$(this)[0].id.split("_")[2];
 		$("#sortValue").val(sortValueVal);
@@ -159,6 +160,7 @@
 		$("#college_select_id option[value='${collegeId}']").attr("selected",true);
 		$("#major_select_id option[value='${majorId}']").attr("selected",true);
 		$("#class_select_id option[value='${classId}']").attr("selected",true);
+		$("#disciplineType_select_id option[value='${disciplineTypeId}']").attr("selected",true);
 	});
 	
 	 	//下拉框选择后给隐藏域赋值
@@ -177,6 +179,10 @@
 	$("#grade_select_id").change(function(){
 		var gradeIdVal=$(this).children('option:selected').val();
 		$("#gradeId").val(gradeIdVal);
+	});
+	$("#disciplineType_select_id").change(function(){
+		var disciplineTypeIdVal=$(this).children('option:selected').val();
+		$("#disciplineTypeId").val(disciplineTypeIdVal);
 	});
 	
 	//查询
