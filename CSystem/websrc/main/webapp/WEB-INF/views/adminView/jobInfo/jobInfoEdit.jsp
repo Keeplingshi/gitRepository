@@ -172,7 +172,7 @@
 		
 	});
 
-	//选择学院，得到专业
+	//选择签约状态，得到签约书
 	function getProtocalState(contractStatus_value)
 	{
     	$.ajax({

@@ -51,7 +51,7 @@
 		<table id="sample-table-2" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
 			<thead>
 				<tr>
-					<th class="center">
+					<th class="center" style="width: 80px;">
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
 					<th style="width: 120px;">学号

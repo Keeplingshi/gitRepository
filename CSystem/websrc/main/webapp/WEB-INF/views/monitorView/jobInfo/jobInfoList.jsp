@@ -13,6 +13,8 @@
 <div>
 <form id="formId" action="${pageContext.request.contextPath}/monitor/jobInfo/jobInfoSearchList" method="post">
 	<input type="hidden" id="classId" name="classId" value="${classId }" />
+	<input type="hidden" id="contractStatusId" name="contractStatusId" value="${contractStatusId }" />
+	<input type="hidden" id="protocalStateId" name="protocalStateId" value="${protocalStateId }" />
 	<input type="hidden" id="sortMode" name="sortMode" value="${sortMode }" />
 	<input type="hidden" id="sortValue" name="sortValue" value="${sortValue }" />
 	<div class="breadcrumbs" id="jobInfoListToolbar">
@@ -27,6 +29,22 @@
 			<option value="" selected="selected">全部</option>
 			<c:forEach items="${classList }" var="classItem">
 				<option value="${classItem.selectText }">${classItem.selectValue}</option>
+			</c:forEach>
+		</select>
+	
+		<label style="margin-left: 20px;">签约状态：</label>
+		<select id="contractStatus_select_id" class="select_style" onchange="getProtocalState(this.value)">
+			<option value="" selected="selected">选择</option>
+			<c:forEach items="${contractStatusList }" var="contractStatusDomain">
+				<option value="${contractStatusDomain.value }">${contractStatusDomain.name}</option>
+			</c:forEach>
+		</select>
+	
+		<label style="margin-left: 20px;">协议书：</label>
+		<select id="protocalState_select_id" class="select_style">
+			<option value="" selected="selected">选择</option>
+			<c:forEach items="${protocalStateList }" var="protocalStateDomain">
+				<option value="${protocalStateDomain.value }">${protocalStateDomain.name}</option>
 			</c:forEach>
 		</select>
 	
@@ -141,12 +159,26 @@
 	//使下拉框默认选择
 	$(function(){
 		$("#class_select_id option[value='${classId}']").attr("selected",true);
+		$("#contractStatus_select_id option[value='${contractStatusId}']").attr("selected",true);
+		$("#protocalState_select_id option[value='${protocalStateId}']").attr("selected",true);
 	});
 	
 		//下拉框选择后给隐藏域赋值
 	$("#class_select_id").change(function(){
 		var classIdVal=$(this).children('option:selected').val();
 		$("#classId").val(classIdVal);
+	});
+	
+	//下拉框选择后给隐藏域赋值
+	$("#contractStatus_select_id").change(function(){
+		var contractStatus_value=$(this).children('option:selected').val();
+		$("#contractStatusId").val(contractStatus_value);
+	});
+	
+	//下拉框选择后给隐藏域赋值
+	$("#protocalState_select_id").change(function(){
+		var protocalState_value=$(this).children('option:selected').val();
+		$("#protocalStateId").val(protocalState_value);
 	});
 	
 	//查询
@@ -229,6 +261,27 @@
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/monitor/jobInfo/jobInfoView/'+jobInfoId
 	    });
+	}
+
+	//选择签约状态，得到签约书
+	function getProtocalState(contractStatus_value)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/common/getProtocalState?contractStatusValue='+contractStatus_value,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var major_select=$("#protocalState_select_id");
+				major_select.empty();
+				major_select.append('<option value="">'+"选择"+'</option>');
+				for(var i=0;i<json.length;i++){
+					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				}
+				$("#protocalState").val('');
+			}
+		});
 	}
 
 </script>

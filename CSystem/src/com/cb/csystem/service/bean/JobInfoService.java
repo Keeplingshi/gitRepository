@@ -100,7 +100,7 @@ public class JobInfoService implements IJobInfoService{
 	 */
 	@Override
 	public List<JobInfoDomain> doSearchjobInfoPageList(PageInfo pageInfo,String gradeId,String collegeId,String majorId
-			,String classId,String searchText,String sortMode,String sortValue)throws Exception {
+			,String classId,String contractStatusId,String protocalStateId,String searchText,String sortMode,String sortValue)throws Exception {
 		// TODO Auto-generated method stub
 		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(JobInfoDomain.class);
@@ -129,15 +129,26 @@ public class JobInfoService implements IJobInfoService{
 			}
 		}
 		
+		
 		if(ValidateUtil.notEmpty(searchText)){
 			//多条件过滤，此处名字，学号，公司
 			Disjunction disjunction = Restrictions.disjunction();
 			disjunction.add(Restrictions.like("qstu.name", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
 			disjunction.add(Restrictions.like("qstu.stuId", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
-			disjunction.add(Restrictions.like("company", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
-			
+			disjunction.add(Restrictions.like("company", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase()); 
 			detachedCriteria.add(disjunction);
 		}
+		
+		//判断签约状态和协议书状态
+		if(ValidateUtil.notEmpty(protocalStateId)){
+			detachedCriteria.add(Restrictions.eq("protocalState", Integer.valueOf(protocalStateId)));  
+		}else{
+			if(ValidateUtil.notEmpty(contractStatusId)){
+				detachedCriteria.add(Restrictions.eq("contractStatus", Integer.valueOf(contractStatusId)));  
+			}
+		}
+		
+		
 		
 		if(ValidateUtil.notEmpty(sortValue)){
 			if(Consts.SORT_ASC.equals(sortMode)){
@@ -178,8 +189,11 @@ public class JobInfoService implements IJobInfoService{
 		List<SelectItem> selectList=new ArrayList<SelectItem>();
 		//查询类型为 签约书状态
 		List<CodeBookDomain> codeBookDomains=codeBookService.doGetCodeBookListByParent(contractStatusValue, CodeBookConstsType.CONTRACTSTATUS_TYPE, CodeBookConstsType.PROTOCALSTATE_TYPE);
-		for(CodeBookDomain codeBookDomain:codeBookDomains){
-			selectList.add(new SelectItem(codeBookDomain.getValue(),codeBookDomain.getName()));
+		
+		if(codeBookDomains!=null){
+			for(CodeBookDomain codeBookDomain:codeBookDomains){
+				selectList.add(new SelectItem(codeBookDomain.getValue(),codeBookDomain.getName()));
+			}
 		}
 		
 		return selectList;

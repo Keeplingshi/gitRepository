@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cb.csystem.domain.CodeBookDomain;
 import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
@@ -78,11 +79,15 @@ public class IJobInfoController {
 				String gradeId=userDomain.getGrade().getId();
 				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
 				List<SelectItem> classList=classService.doGetClazzSelectItem(gradeId, collegeId, null);
-				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, gradeId,collegeId, null, null, null, null, null);
+				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, gradeId,collegeId, null, null,null,null, null, null, null);
+				List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);
+				List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 				
 				model.addAttribute("jobInfoList", jobInfoList);
 				model.addAttribute("majorList", majorList);
 				model.addAttribute("classList", classList);
+				model.addAttribute("contractStatusList", contractStatusList);
+				model.addAttribute("protocalStateList", protocalStateList);
 			}
 		}
 		
@@ -102,8 +107,8 @@ public class IJobInfoController {
 	 */
 	@RequestMapping("/jobInfoSearchList")
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,HttpSession session,String majorId
-			,String classId,String searchText,String sortMode,String sortValue)throws Exception{
+			,BindingResult bindingResult,Model model,HttpSession session,String majorId,String contractStatusId
+			,String protocalStateId,String classId,String searchText,String sortMode,String sortValue)throws Exception{
 	
 		String username=(String)session.getAttribute(Consts.CURRENT_USER);
 		UserDomain userDomain=userService.doGetUserByUsername(username);
@@ -111,16 +116,23 @@ public class IJobInfoController {
 			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
 				
 				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, userDomain.getGrade().getId()
-						, userDomain.getCollege().getId(), majorId, classId, searchText, sortMode, sortValue);
+						, userDomain.getCollege().getId(), majorId, classId,contractStatusId,protocalStateId, searchText, sortMode, sortValue);
 				
 				//查询班级专业
 				List<SelectItem> classList=classService.doGetClazzSelectItem(userDomain.getGrade().getId(), userDomain.getCollege().getId(), majorId);
 				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(userDomain.getCollege().getId());
+				List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);
+				List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 				
 				model.addAttribute("majorList", majorList);
 				model.addAttribute("classList", classList);
 				model.addAttribute("jobInfoList", jobInfoList);
 				
+				model.addAttribute("contractStatusList", contractStatusList);
+				model.addAttribute("protocalStateList", protocalStateList);
+				
+				model.addAttribute("contractStatusId", contractStatusId);
+				model.addAttribute("protocalStateId", protocalStateId);
 				model.addAttribute("classId", classId);
 				model.addAttribute("majorId", majorId);
 				model.addAttribute("searchText", searchText);

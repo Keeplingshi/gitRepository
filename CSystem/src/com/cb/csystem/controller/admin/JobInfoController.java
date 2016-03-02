@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cb.csystem.domain.CodeBookDomain;
 import com.cb.csystem.domain.CollegeDomain;
 import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.JobInfoDomain;
@@ -77,11 +79,15 @@ public class JobInfoController {
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
 		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
 		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);
+		List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 		
 		model.addAttribute("jobInfoList", jobInfoList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("classList", classList);
 		model.addAttribute("gradeList", gradeList);
+		model.addAttribute("contractStatusList", contractStatusList);
+		model.addAttribute("protocalStateList", protocalStateList);
 		
 		return "/adminView/jobInfo/jobInfoList";
 	}
@@ -99,22 +105,29 @@ public class JobInfoController {
 	 */
 	@RequestMapping("/jobInfoSearchList")
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,String gradeId,String majorId
-			,String classId,String searchText,String sortMode,String sortValue)throws Exception{
+			,BindingResult bindingResult,Model model,String gradeId,String majorId,String classId,String contractStatusId
+			,String protocalStateId,String searchText,String sortMode,String sortValue)throws Exception{
 	
-		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null,gradeId,majorId,classId,searchText, sortMode, sortValue);
+		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null,gradeId,majorId,classId
+				,contractStatusId,protocalStateId,searchText, sortMode, sortValue);
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
 		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
 		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);
+		List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 
 		model.addAttribute("jobInfoList", jobInfoList);
 		model.addAttribute("classList", classList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("gradeList", gradeList);
+		model.addAttribute("contractStatusList", contractStatusList);
+		model.addAttribute("protocalStateList", protocalStateList);
 		
 		model.addAttribute("classId", classId);
 		model.addAttribute("majorId", majorId);
 		model.addAttribute("gradeId", gradeId);
+		model.addAttribute("contractStatusId", contractStatusId);
+		model.addAttribute("protocalStateId", protocalStateId);
 		model.addAttribute("searchText", searchText);
 		model.addAttribute("sortMode", sortMode);
 		model.addAttribute("sortValue", sortValue);

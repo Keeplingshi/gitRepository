@@ -178,14 +178,14 @@ public class CodeBookService implements ICodeBookService{
 			String parentType, String childType) throws Exception {
 		// TODO Auto-generated method stub
 		
-		if(ValidateUtil.isEmpty(parentValue)||ValidateUtil.isEmpty(parentType)||ValidateUtil.isEmpty(childType)){
-			return null;
-		}
-		
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(CodeBookDomain.class);
-		detachedCriteria.add(Restrictions.eq("parentId", doGetIdByValueAndType(parentValue,parentType)));
 		
+		//如果不为空，添加父节点过滤
+		if(ValidateUtil.notEmpty(parentValue)&&ValidateUtil.notEmpty(parentType)){
+			detachedCriteria.add(Restrictions.eq("parentId", doGetIdByValueAndType(parentValue,parentType)));
+		}
 		detachedCriteria.add(Restrictions.eq("type", childType));
+		
 		List<CodeBookDomain> codeBookList=codeBookDao.getFilterList(detachedCriteria);
 		
 		return codeBookList;

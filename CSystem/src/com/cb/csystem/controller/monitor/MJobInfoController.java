@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cb.csystem.domain.CodeBookDomain;
 import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
@@ -71,9 +72,13 @@ public class MJobInfoController {
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
 				
-				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, null, null, null, userDomain.getClassDomain().getId(), null, null, null);
+				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, null, null, null, userDomain.getClassDomain().getId(),null,null, null, null, null);
 				List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
+				List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);
+				List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 				
+				model.addAttribute("contractStatusList", contractStatusList);
+				model.addAttribute("protocalStateList", protocalStateList);
 				model.addAttribute("jobInfoList", jobInfoList);
 				model.addAttribute("classList", classList);
 				model.addAttribute("classId", userDomain.getClassDomain().getId());
@@ -97,8 +102,8 @@ public class MJobInfoController {
 	 */
 	@RequestMapping("/jobInfoSearchList")
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,HttpSession session,String classId,
-			String searchText,String sortMode,String sortValue)throws Exception{
+			,BindingResult bindingResult,Model model,HttpSession session,String classId,String contractStatusId
+			,String protocalStateId,String searchText,String sortMode,String sortValue)throws Exception{
 	
 		//获取当前登录用户名
 		String username=(String)session.getAttribute(Consts.CURRENT_USER);
@@ -108,13 +113,20 @@ public class MJobInfoController {
 				
 				List<JobInfoDomain> jobInfoList=new ArrayList<JobInfoDomain>();
 				if(ValidateUtil.isEmpty(classId)){
-					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, userDomain.getClassDomain().getMajor().getId(), null, searchText, sortMode, sortValue);
+					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, userDomain.getClassDomain().getMajor().getId(),contractStatusId,protocalStateId, null, searchText, sortMode, sortValue);
 				}else{
-					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, null, classId, searchText, sortMode, sortValue);
+					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, null, classId,contractStatusId,protocalStateId, searchText, sortMode, sortValue);
 				}
 				
 				List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
+				List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);
+				List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 				
+				model.addAttribute("contractStatusList", contractStatusList);
+				model.addAttribute("protocalStateList", protocalStateList);
+				
+				model.addAttribute("contractStatusId", contractStatusId);
+				model.addAttribute("protocalStateId", protocalStateId);
 				model.addAttribute("jobInfoList", jobInfoList);
 				model.addAttribute("classList", classList);
 				model.addAttribute("classId", classId);
