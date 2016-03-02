@@ -104,7 +104,7 @@
 								<i class="icon-dashboard"></i>
 								<span class="menu-text">
 									成长档案
-									<span class="badge badge-primary ">2</span>
+									<span class="badge badge-primary ">1</span>
 								</span>
 
 								<b class="arrow icon-angle-down"></b>
@@ -116,12 +116,6 @@
 										违纪管理
 									</a>
 								</li>
-								<li id="disciplineType_manage">
-									<a href="javascript:void(0);">
-										<i class="icon-double-angle-right"></i>
-										违纪类型管理
-									</a>
-								</li>
 							</ul>
 						</li>
 						<li>
@@ -129,7 +123,7 @@
 								<i class="icon-dashboard"></i>
 								<span class="menu-text">
 									学校管理
-									<span class="badge badge-primary ">4</span>
+									<span class="badge badge-primary ">5</span>
 								</span>
 
 								<b class="arrow icon-angle-down"></b>
@@ -159,7 +153,12 @@
 										班级管理
 									</a>
 								</li>
-
+								<li id="disciplineType_manage">
+									<a href="javascript:void(0);">
+										<i class="icon-double-angle-right"></i>
+										违纪类型管理
+									</a>
+								</li>
 							</ul>
 						</li>
 					</ul>

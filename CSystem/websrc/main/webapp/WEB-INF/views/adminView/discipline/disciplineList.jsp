@@ -7,10 +7,78 @@
 <%@	taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/globle.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/datePicker/WdatePicker.js"></script>
 
-<form id="formId" action="${pageContext.request.contextPath}/admin/discipline/disciplineList" method="post">
+<form id="formId" action="${pageContext.request.contextPath}/admin/discipline/disciplineSearchList" method="post">
+	<input type="hidden" id="gradeId" name="gradeId" value="${gradeId }" />
+	<input type="hidden" id="collegeId" name="collegeId" value="${collegeId }" />
+	<input type="hidden" id="majorId" name="majorId" value="${majorId }" />
+	<input type="hidden" id="classId" name="classId" value="${classId }" />
+	<input type="hidden" id="sortMode" name="sortMode" value="${sortMode }" />
+	<input type="hidden" id="sortValue" name="sortValue" value="${sortValue }" />
+
 	<div class="breadcrumbs" id="disciplineListToolbar">
+	
+		<span class="input-icon" style="margin: 5px;">
+			<input type="text" id="nav-search-input" name="searchText" placeholder="Search ..." class="nav-search-input" autocomplete="off" value="${searchText }"/> 
+			<i class="icon-search nav-search-icon"></i>
+		</span>
+
+		<label style="margin-left: 20px;">年级：</label>
+		<select id="grade_select_id" style="width: 100px;" onchange="getMajor(this.value)">
+			<option value="" selected="selected">全部</option>
+			<c:forEach items="${gradeList }" var="gradeDomain">
+				<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
+			</c:forEach>
+		</select>
+
+		<label style="margin-left: 20px;">学院：</label>
+		<select id="college_select_id" style="width: 100px;" onchange="getMajor(this.value)">
+			<option value="" selected="selected">全部</option>
+			<c:forEach items="${collegeList }" var="collegeDomain">
+				<option value="${collegeDomain.id }">${collegeDomain.name}</option>
+			</c:forEach>
+		</select>
+		
+		<label style="margin-left: 20px;">专业：</label>
+		<select id="major_select_id" style="width: 100px;" onchange="getClass(this.value)">
+			<option value="" selected="selected">全部</option>
+			<c:forEach items="${majorList }" var="majorItem">
+				<option value="${majorItem.selectText }">${majorItem.selectValue}</option>
+			</c:forEach>
+		</select>
+	
+		<label style="margin-left: 20px;">班级：</label>
+		<select id="class_select_id" style="width: 100px;">
+			<option value="" selected="selected">全部</option>
+			<c:forEach items="${classList }" var="classItem">
+				<option value="${classItem.selectText }">${classItem.selectValue}</option>
+			</c:forEach>
+		</select>
+		
+		<input id="disciplineDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
 		<input id="disciplineAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
+		<input id="disciplineQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
+	</div>
+	<div class="breadcrumbs">
+			<label style="margin-left: 20px;">起始时间：</label>
+            <input type="text" id="beginTime" name="beginTime" placeholder="起始时间"
+              class="Wdate" style="width: 150px;height: 30px;" value="<fmt:formatDate value="${beginTime }" pattern="yyyy-MM-dd"/>"
+              onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})">
+            <label style="margin-left: 20px;">结束时间：</label>
+            <input type="text" id="endTime" name="endTime" placeholder="结束时间"
+              class="Wdate" style="width: 150px;height: 30px;" value="<fmt:formatDate value="${endTime }" pattern="yyyy-MM-dd"/>"
+              onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginTime\')}'})">
+ 	
+		<label style="margin-left: 20px;">违纪类型：</label>
+		<select id="class_select_id" style="width: 100px;">
+			<option value="" selected="selected">全部</option>
+			<c:forEach items="${disciplineTypeList }" var="disciplineTypeItem">
+				<option value="${disciplineTypeItem.id }">${disciplineTypeItem.name}</option>
+			</c:forEach>
+		</select>
 	</div>
 	<div class="table-responsive">
 		<table id="sample-table-1" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
@@ -23,7 +91,19 @@
 					<th style="width: 100px;">姓名</th>
 					<th style="width: 100px;">违纪</th>
 					<th style="width: 120px;">班级</th>
-					<th style="width: 100px;">时间</th>
+					<th style="width: 100px;">时间
+					<c:choose>
+						<c:when test="${sortMode=='asc'&&sortValue=='time' }">
+							<img id="img_time_asc" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_up_24.png">
+						</c:when>
+						<c:when test="${sortMode=='desc'&&sortValue=='time' }">
+							<img id="img_time_desc" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_down_24.png">
+						</c:when>
+						<c:otherwise>
+							<img id="img_time" style="float: right;" src="${pageContext.request.contextPath}/resources/images/sorticon/table_sort_24.png">
+						</c:otherwise>
+					</c:choose>
+					</th>
 					<th style="width: 400px;">备注</th>
 					<th>操作</th>
 				</tr>
@@ -55,6 +135,57 @@
 </form>
 
 <script type="text/javascript">
+
+	$("#sample-table-1 thead tr th img").click(function(){
+		console.info("211111");
+		var sortValueVal=$(this)[0].id.split("_")[1];
+		var sortModeVal=$(this)[0].id.split("_")[2];
+		$("#sortValue").val(sortValueVal);
+		if(sortModeVal=='asc'){
+			$("#sortMode").val('desc');
+		}else{
+			$("#sortMode").val('asc');
+		}
+		
+ 		//默认加载学生列表
+		$("#formId").ajaxSubmit(function(data){
+    	 	$("#content_page").html(data);
+		}); 
+	});
+
+	//使下拉框默认选择
+	$(function(){
+		$("#grade_select_id option[value='${gradeId}']").attr("selected",true);
+		$("#college_select_id option[value='${collegeId}']").attr("selected",true);
+		$("#major_select_id option[value='${majorId}']").attr("selected",true);
+		$("#class_select_id option[value='${classId}']").attr("selected",true);
+	});
+	
+	 	//下拉框选择后给隐藏域赋值
+ 	$("#class_select_id").change(function(){
+		var classIdVal=$(this).children('option:selected').val();
+		$("#classId").val(classIdVal);
+	});
+	$("#major_select_id").change(function(){
+		var majorIdVal=$(this).children('option:selected').val();
+		$("#majorId").val(majorIdVal);
+	});
+	$("#college_select_id").change(function(){
+		var collegeIdVal=$(this).children('option:selected').val();
+		$("#collegeId").val(collegeIdVal);
+	});
+	$("#grade_select_id").change(function(){
+		var gradeIdVal=$(this).children('option:selected').val();
+		$("#gradeId").val(gradeIdVal);
+	});
+	
+	//查询
+	$("#disciplineQueryButton").click(function(){
+		//加载列表
+		$("#formId").ajaxSubmit(function(data){
+	    	$("#content_page").html(data);
+		});	
+	});
 
 	//新增违纪类型按钮
 	$("#disciplineAddButton").click(function(){
@@ -147,5 +278,45 @@
 			$(this).closest('tr').toggleClass('selected');
 		});
 	});
+
+	//选择学院，得到专业
+	function getMajor(college_id)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/admin/major/getMajorByCollege?college_id='+college_id,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var major_select=$("#major_select_id");
+				major_select.empty();
+				major_select.append('<option value="">'+"全部"+'</option>');
+				for(var i=0;i<json.length;i++){
+					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				} 
+			}
+		});
+	}
+	
+	//选择专业，得到班级
+	function getClass(major_id)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/admin/class/getClassByMajor?major_id='+major_id,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var class_select=$("#class_select_id");
+				class_select.empty();
+				class_select.append('<option value="">'+"全部"+'</option>');
+				for(var i=0;i<json.length;i++){
+					class_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				} 
+			}
+		});
+	}
 
 	</script>

@@ -35,7 +35,7 @@
 		<tr>
 			<td class="lesta-150">时间：</td>
 			<td class="lestb">
-				<input type="text" name="time" class="Wdate" readonly="readonly" placeholder="出生日期" onfocus="WdatePicker()" style="width: 150px;height: 30px;"/> 
+				<input type="text" name="time" class="Wdate" readonly="readonly" placeholder="日期" onfocus="WdatePicker()" style="width: 150px;height: 30px;"/> 
 			</td>
 		</tr>
 		<tr>
