@@ -213,4 +213,21 @@ public class DisciplineController {
 		return Consts.ERROR;
 	}
 	
+	/**
+	 * 批量删除
+	 * @param userIds
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/deleteDisciplines")
+	@ResponseBody
+	public String dodeleteDisciplines(@RequestParam(value = "disciplineIds[]") String[] disciplineIds)throws Exception{
+		
+		if(disciplineService.doDeleteByIds(disciplineIds)){
+			return Consts.SUCCESS;
+		}
+		
+		return Consts.ERROR;
+	}
+	
 }

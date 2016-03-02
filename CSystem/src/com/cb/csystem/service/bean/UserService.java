@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -172,7 +173,7 @@ public class UserService implements IUserService{
 			detachedCriteria.add(Restrictions.eq("role.id", roleId));
 		}
 		if(ValidateUtil.notEmpty(searchText)){
-			detachedCriteria.add(Restrictions.like("username", "%"+searchText+"%"));
+			detachedCriteria.add(Restrictions.like("username", searchText,MatchMode.ANYWHERE).ignoreCase());
 		}
 		
 		List<UserDomain> userList=userDao.getPageList(detachedCriteria, pageInfo);

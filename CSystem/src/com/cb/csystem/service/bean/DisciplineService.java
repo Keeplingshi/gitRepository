@@ -122,8 +122,8 @@ public class DisciplineService implements IDisciplineService {
 		if(ValidateUtil.notEmpty(searchText)){
 			//多条件过滤，此处名字，学号，公司
 			Disjunction disjunction = Restrictions.disjunction();
-			disjunction.add(Restrictions.like("qstu.name", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
-			disjunction.add(Restrictions.like("qstu.stuId", "%"+searchText+"%",MatchMode.ANYWHERE).ignoreCase());  
+			disjunction.add(Restrictions.like("qstu.name", searchText,MatchMode.ANYWHERE).ignoreCase());  
+			disjunction.add(Restrictions.like("qstu.stuId", searchText,MatchMode.ANYWHERE).ignoreCase());  
 			detachedCriteria.add(disjunction);
 		}
 		//违纪类型
@@ -151,6 +151,22 @@ public class DisciplineService implements IDisciplineService {
 		}
 		
 		return disciplineDao.getPageList(detachedCriteria, pageInfo);
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IDisciplineService#doDeleteByIds(java.lang.String[])
+	 */
+	@Override
+	public boolean doDeleteByIds(String[] disciplineIds) throws Exception {
+		// TODO Auto-generated method stub
+		boolean b=false;
+		for(String id:disciplineIds){
+			b=disciplineDao.deleteById(id);
+			if(!b){
+				return false;
+			}
+		}
+		return b;
 	}
 
 }

@@ -69,5 +69,12 @@ public interface IDisciplineService {
 			String gradeId, String collegeId, String majorId, String classId,
 			String disciplineTypeId, Date beginTime, Date endTime,
 			String searchText, String sortMode, String sortValue) throws Exception;
+
+	/**
+	 * 批量删除
+	 * @param disciplineIds
+	 * @return
+	 */
+	public boolean doDeleteByIds(String[] disciplineIds)throws Exception;
 	
 }

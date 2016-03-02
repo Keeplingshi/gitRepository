@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -98,7 +99,7 @@ public class MajorService implements IMajorService{
 			detachedCriteria.add(Restrictions.eq("college.id", collegeId));
 		}
 		if(searchText!=null&&!"".equals(searchText)){
-			detachedCriteria.add(Restrictions.like("name", "%"+searchText+"%"));
+			detachedCriteria.add(Restrictions.like("name", searchText,MatchMode.ANYWHERE).ignoreCase());
 		}
 		
 		List<MajorDomain> majorList=majorDao.getPageList(detachedCriteria, pageInfo);

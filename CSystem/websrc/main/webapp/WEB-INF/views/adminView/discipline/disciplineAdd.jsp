@@ -41,7 +41,7 @@
 		<tr>
 			<td class="lesta-150">备注：</td>
 			<td class="lestb" colspan="3" rowspan="2">
-				<textarea rows="5" cols="50" id="note" name="note" style="margin-top: 20px;"></textarea>
+				<textarea rows="5" cols="50" id="note" name="note" style="margin-top: 20px;" maxlength="200"></textarea>
 			</td>
 		</tr>
 	</table>
@@ -51,13 +51,13 @@
 			<tr>
 				<td class="lesta-150">课程名称：</td>
 				<td class="lestb">
-					<input type="text" id="courseName" name="courseName" class="input_text_a" placeholder="请输入课程名称" />
+					<input type="text" id="courseName" name="courseName" class="input_text_a" maxlength="30" placeholder="请输入课程名称" style="width: 300px;"/>
 				</td>
 			</tr>
 			<tr>
 				<td class="lesta-150">任课教师：</td>
 				<td class="lestb">
-					<input type="text" id="courseTeacher" name="courseTeacher" class="input_text_a" placeholder="请输入任课教师" />
+					<input type="text" id="courseTeacher" name="courseTeacher" class="input_text_a" maxlength="30" placeholder="请输入任课教师" />
 				</td>
 			</tr>
 		</table>

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -114,7 +115,7 @@ public class ClassService implements IClassService{
 		}
 		
 		if(ValidateUtil.notEmpty(searchText)){
-			detachedCriteria.add(Restrictions.like("name", "%"+searchText+"%"));
+			detachedCriteria.add(Restrictions.like("name", searchText,MatchMode.ANYWHERE).ignoreCase());
 		}
 		
 		return classDao.getPageList(detachedCriteria, pageInfo);

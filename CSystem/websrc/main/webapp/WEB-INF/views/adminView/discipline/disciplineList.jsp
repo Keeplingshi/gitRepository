@@ -106,7 +106,7 @@
 						</c:otherwise>
 					</c:choose>
 					</th>
-					<th style="width: 400px;">备注</th>
+					<th>备注</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -272,8 +272,65 @@
 		}, function(){
 			
 		});
-		
 	}
+	
+	//多选删除
+	$("#disciplineDeleteButton").click(function(){
+		var checkBoxs=$("table tbody input:checkbox");
+		var disciplineIds=new Array();
+		for(var i=0;i<checkBoxs.length;i++)
+		{
+			var checkBox=checkBoxs[i];
+			if(checkBox.checked){
+				disciplineIds.push(checkBox.value);
+			}
+		}
+		if(disciplineIds.length=='0'){
+			layer.msg('请至少选择一个',{
+				offset: ['260px']
+			});
+			return;
+		}
+		
+		//询问框
+		layer.confirm('是否确定删除这些学生？', {
+			offset: ['260px'],
+		    btn: ['确定','取消'] //按钮
+		}, function(){
+			$.ajax({
+				url : "${pageContext.request.contextPath}/admin/discipline/deleteDisciplines",
+				async: false,
+				data : {
+					"disciplineIds" : disciplineIds
+				},
+				dataType : "text",
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					layer.msg('删除失败',{
+						offset: ['260px']
+					});
+                },
+				success : function(result) {
+					if(result=='success'){
+						//默认加载用户列表
+			        	$("#formId").ajaxSubmit(function(data){
+			        	 	$("#content_page").html(data);
+			    		});
+						parent.layer.msg('删除成功', {
+							offset: ['260px'],
+		     		        time: 1500//1.5s后自动关闭
+		     		    });
+					}else{
+						layer.msg('删除失败',{
+							offset: ['260px']
+						});
+					}
+				}
+			});
+			
+		}, function(){
+			
+		});
+	});
 
 	//点击表格标题栏，选中所有checkbox框
 	$('table th input:checkbox').on('click' , function(){
