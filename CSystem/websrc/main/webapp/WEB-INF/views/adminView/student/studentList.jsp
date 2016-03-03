@@ -23,7 +23,13 @@
 			<input type="text" id="nav-search-input" name="searchText" placeholder="Search ..." class="nav-search-input" autocomplete="off" value="${searchText }"/> 
 			<i class="icon-search nav-search-icon"></i>
 		</span>
-
+	
+		<input id="studentDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
+		<input id="studentAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
+		<input id="studentQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
+	</div>
+	<div class="breadcrumbs">
+	
 		<label style="margin-left: 20px;">学院：</label>
 		<select id="college_select_id" style="width: 100px;" onchange="getMajor(this.value)">
 			<option value="" selected="selected">全部</option>
@@ -47,20 +53,16 @@
 				<option value="${classItem.selectText }">${classItem.selectValue}</option>
 			</c:forEach>
 		</select>
-	
-		<input id="studentDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
-		<input id="studentAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
-		<input id="studentQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
-	</div>
-	<div class="breadcrumbs">
+		
 		<input id="studentExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="从excel中导入数据"/>
 		<input id="studentDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
+	
 	</div>
 	<div class="table-responsive">
 		<table id="sample-table-2" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
 			<thead>
 				<tr>
-					<th class="center">
+					<th class="center" style="width: 60px;">
 						<label> <input id="theadCheckbox" type="checkbox" class="ace" /> <span class="lbl"></span></label>
 					</th>
 					<th style="width: 120px;">学号

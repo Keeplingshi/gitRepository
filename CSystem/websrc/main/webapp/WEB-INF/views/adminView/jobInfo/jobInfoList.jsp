@@ -26,6 +26,13 @@
 			<i class="icon-search nav-search-icon"></i>
 		</span>
 		
+		<input id="jobInfoCountButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="统计信息"/>
+		<input id="jobInfoDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
+	
+		<input id="jobInfoQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
+	</div>
+	<div class="breadcrumbs">
+	
 		<label style="margin-left: 20px;">年级：</label>
 		<select id="grade_select_id" style="width: 100px;">
 			<option value="" selected="selected">全部</option>
@@ -50,10 +57,6 @@
 			</c:forEach>
 		</select>
 	
-		<input id="jobInfoQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
-	</div>
-	<div class="breadcrumbs">
-	
 		<label style="margin-left: 20px;">签约状态：</label>
 		<select id="contractStatus_select_id" class="select_style" onchange="getProtocalState(this.value)">
 			<option value="" selected="selected">选择</option>
@@ -70,8 +73,6 @@
 			</c:forEach>
 		</select>
 	
-		<input id="jobInfoCountButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="统计信息"/>
-		<input id="jobInfoDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导出数据"/>
 		<!-- <input id="jobInfoExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导入数据"/> -->
 	</div>
 	<div class="table-responsive">
@@ -103,7 +104,7 @@
 					<th>签约单位</th>
 					<th>协议书</th>
 					<th>当前状态</th>
-					<th>薪水
+					<th style="width:80px;">薪水
 						<span>
 							<c:choose>
 								<c:when test="${sortMode=='asc'&&sortValue=='salary' }">

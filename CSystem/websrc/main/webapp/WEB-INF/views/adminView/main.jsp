@@ -14,7 +14,8 @@
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/bootstrap.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/ace.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
-	
+		<script src="${pageContext.request.contextPath}/resources/ace/assets/js/ace-extra.min.js"></script>
+		
 		<title>CSystem管理系统</title>
 	
 		<script type="text/javascript">
@@ -162,6 +163,9 @@
 							</ul>
 						</li>
 					</ul>
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
 				</div>
 
 				<div class="main-content">

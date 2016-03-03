@@ -135,6 +135,7 @@ public class JobInfoService implements IJobInfoService{
 			Disjunction disjunction = Restrictions.disjunction();
 			disjunction.add(Restrictions.like("qstu.name", searchText,MatchMode.ANYWHERE).ignoreCase());  
 			disjunction.add(Restrictions.like("qstu.stuId", searchText,MatchMode.ANYWHERE).ignoreCase());  
+			disjunction.add(Restrictions.like("qstu.teachClass", searchText,MatchMode.ANYWHERE).ignoreCase());  
 			disjunction.add(Restrictions.like("company", searchText,MatchMode.ANYWHERE).ignoreCase()); 
 			detachedCriteria.add(disjunction);
 		}
