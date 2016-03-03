@@ -143,8 +143,8 @@ public class ExcelToDBUtil {
 					cell = row.getCell(i, Row.CREATE_NULL_AS_BLANK); 
 					cell.setCellType(Cell.CELL_TYPE_STRING);  
 					content=cell.getStringCellValue().trim();
-					if(content!=null&&!"".equals(content)){
-						studentDomain.setTelephone(content);
+					if(ValidateUtil.notEmpty(content)){
+						studentDomain.setTeachClass(content);
 					}
 					i++;
 				case 10:
@@ -171,7 +171,7 @@ public class ExcelToDBUtil {
 				studentExistsDomain.setDormitory(studentDomain.getDormitory());
 				studentExistsDomain.setClassDomain(classDomain);
 				studentExistsDomain.setEmail(studentDomain.getEmail());
-				studentExistsDomain.setTelephone(studentDomain.getTelephone());
+				studentExistsDomain.setTeachClass(studentDomain.getTeachClass());
 				studentExistsDomain.setCellphone(studentDomain.getCellphone());
 				studentService.doSaveStuAndJob(studentExistsDomain);
 			}else{
@@ -328,7 +328,7 @@ public class ExcelToDBUtil {
 				studentExistsDomain.setDormitory(studentDomain.getDormitory());
 				studentExistsDomain.setClassDomain(classDomain);
 				studentExistsDomain.setEmail(studentDomain.getEmail());
-				studentExistsDomain.setTelephone(studentDomain.getTelephone());
+				studentExistsDomain.setTeachClass(studentDomain.getTeachClass());
 				studentExistsDomain.setCellphone(studentDomain.getCellphone());
 				studentService.doSaveStuAndJob(studentExistsDomain);	//update
 			}else{

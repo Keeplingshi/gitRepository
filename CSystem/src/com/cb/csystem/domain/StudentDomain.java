@@ -42,7 +42,8 @@ public class StudentDomain {
 	//private String classId;		//班级，通过班级可以查到专业学院
 	private ClassDomain classDomain;	//班级,通过班级可以查到专业学院所处年级
 	private String email;	//电子邮件
-	private String telephone;	//联系电话
+	private String teachClass;
+	//private String telephone;	//联系电话
 	private String cellphone;	//手机
 	private Integer isMonitor;	//是否为班长，0否1是
 	private JobInfoDomain jobInfo;
@@ -149,12 +150,21 @@ public class StudentDomain {
 		this.email = email;
 	}
 	
-	@Column(name = "TELEPHONE", nullable = true, length = 100)
-	public String getTelephone() {
-		return telephone;
+//	@Column(name = "TELEPHONE", nullable = true, length = 100)
+//	public String getTelephone() {
+//		return telephone;
+//	}
+//	public void setTelephone(String telephone) {
+//		this.telephone = telephone;
+//	}
+	
+	@Column(name = "TEACHCLASS", nullable = true, length = 100)
+	public String getTeachClass() {
+		return teachClass;
 	}
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+
+	public void setTeachClass(String teachClass) {
+		this.teachClass = teachClass;
 	}
 	
 	@Column(name = "CELLPHONE", nullable = true, length = 100)

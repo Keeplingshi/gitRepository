@@ -33,7 +33,7 @@ public class DBToExcelUtil {
 	public static boolean studnetinfoDBToExcel(List<StudentDomain> studentDomains,String path)
 	{
 		boolean b=false;
-		String[] headers = { "学号", "姓名", "性别", "出生日期","政治面貌","身份证号","籍贯","宿舍号","班级","电子邮件","联系电话","手机号" };
+		String[] headers = { "学号", "姓名", "性别", "出生日期","政治面貌","身份证号","籍贯","宿舍号","行政班级","电子邮件","教学班级","手机号" };
 		int columnNum=headers.length;
 		// 声明一个工作薄
 		HSSFWorkbook workbook = new HSSFWorkbook();
@@ -73,7 +73,7 @@ public class DBToExcelUtil {
 			cells[7].setCellValue(studentDomain.getDormitory());
 			cells[8].setCellValue(studentDomain.getClassDomain().getName());
 			cells[9].setCellValue(studentDomain.getEmail());
-			cells[10].setCellValue(studentDomain.getTelephone());
+			cells[10].setCellValue(studentDomain.getTeachClass());
 			cells[11].setCellValue(studentDomain.getCellphone());
 			
 		}

@@ -98,9 +98,9 @@
 			<td class="lestb">
 				<input type="text" id="stuIDnumber" name="IDnumber" class="input_text_a" placeholder="请输入身份证号" />
 			</td>
-			<td class="lesta-150">联系电话：</td>
+			<td class="lesta-150">教学班级：</td>
 			<td class="lestb">
-				<input type="text" id="stuTelephone" name="telephone" class="input_text_a" placeholder="请输入联系电话" />
+				<input type="text" id="stuteachClass" name="teachClass" class="input_text_a" placeholder="请输入教学班级" />
 			</td>
 		</tr>
 		<tr>

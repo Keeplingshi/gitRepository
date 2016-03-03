@@ -69,9 +69,9 @@
 			<td class="lestb" style="width:150px;">
 				${studentDomain.IDnumber }
 			</td>
-			<td class="lesta-150">联系电话：</td>
+			<td class="lesta-150">教学班级：</td>
 			<td class="lestb" style="width:150px;">
-				${studentDomain.telephone }
+				${studentDomain.teachClass }
 			</td>
 		</tr>
 		<tr>

@@ -94,8 +94,8 @@
 <!-- 					<th>院系</th>
 					<th>专业</th> -->
 					<th>班级</th>
-					<th>电子邮件</th>
-					<!-- <th>联系电话</th> -->
+					<!-- <th>电子邮件</th> -->
+					<th>教学班级</th>
 					<!-- <th>手机</th> -->
 					<th>操作</th>
 				</tr>
@@ -119,8 +119,8 @@
 <%-- 						<td>${studentDomain.classDomain.major.college.name }</td>
 						<td>${studentDomain.classDomain.major.name }</td> --%>
 						<td>${studentDomain.classDomain.name }</td>
-						<td style="overflow:hidden;text-overflow:ellipsis;">${studentDomain.email }</td>
-						<%-- <td>${studentDomain.telephone }</td> --%>
+						<%-- <td style="overflow:hidden;text-overflow:ellipsis;">${studentDomain.email }</td> --%>
+						<td>${studentDomain.teachClass }</td>
 						<%-- <td>${studentDomain.cellphone }</td> --%>
 						<td>
 							<input type="button" class="btn_list_view" value="查看" onclick="viewstudent('${studentDomain.id }')"/>
