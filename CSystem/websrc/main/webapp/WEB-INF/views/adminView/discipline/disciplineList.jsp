@@ -67,13 +67,13 @@
 	</div>
 	<div class="breadcrumbs">
 			<label style="margin-left: 20px;">起始时间：</label>
-            <input type="text" id="beginTime" name="beginTime" placeholder="起始时间"
-              class="Wdate" style="width: 150px;height: 30px;" value="<fmt:formatDate value="${beginTime }" pattern="yyyy-MM-dd"/>"
-              onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})">
+            <input type="text" id="beginTime" name="beginTime" placeholder="起始时间" class="Wdate" 
+            	style="width: 150px;height: 30px;cursor: pointer;" value="<fmt:formatDate value="${beginTime }" pattern="yyyy-MM-dd"/>"
+              	onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})">
             <label style="margin-left: 20px;">结束时间：</label>
-            <input type="text" id="endTime" name="endTime" placeholder="结束时间"
-              class="Wdate" style="width: 150px;height: 30px;" value="<fmt:formatDate value="${endTime }" pattern="yyyy-MM-dd"/>"
-              onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginTime\')}'})">
+            <input type="text" id="endTime" name="endTime" placeholder="结束时间" class="Wdate" 
+            	style="width: 150px;height: 30px;cursor: pointer;" value="<fmt:formatDate value="${endTime }" pattern="yyyy-MM-dd"/>"
+              	onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginTime\')}'})">
  	
 		<label style="margin-left: 20px;">违纪类型：</label>
 		<select id="disciplineType_select_id" style="width: 100px;">
@@ -192,6 +192,13 @@
 		$("#formId").ajaxSubmit(function(data){
 	    	$("#content_page").html(data);
 		});	
+	});
+	
+	//报表
+	$("#disciplineReportButton").click(function(){
+		layer.tips("正在开发","#disciplineReportButton",{
+		    tips: 3
+		});
 	});
 
 	//新增违纪类型按钮
