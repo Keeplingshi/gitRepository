@@ -76,6 +76,7 @@ public class JobInfoController {
 			,BindingResult bindingResult,Model model)throws Exception{
 		
 		List<JobInfoDomain> jobInfoList=jobInfoService.doGetPageList(pageInfo);
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
 		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
 		List<GradeDomain> gradeList=gradeService.doGetFilterList();
@@ -83,6 +84,7 @@ public class JobInfoController {
 		List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 		
 		model.addAttribute("jobInfoList", jobInfoList);
+		model.addAttribute("collegeList", collegeList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("classList", classList);
 		model.addAttribute("gradeList", gradeList);
@@ -105,11 +107,12 @@ public class JobInfoController {
 	 */
 	@RequestMapping("/jobInfoSearchList")
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,String gradeId,String majorId,String classId,String contractStatusId
+			,BindingResult bindingResult,Model model,String gradeId,String collegeId,String majorId,String classId,String contractStatusId
 			,String protocalStateId,String searchText,String sortMode,String sortValue)throws Exception{
 	
-		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null,gradeId,majorId,classId
+		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,gradeId,collegeId,majorId,classId
 				,contractStatusId,protocalStateId,searchText, sortMode, sortValue);
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
 		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
 		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
 		List<GradeDomain> gradeList=gradeService.doGetFilterList();
@@ -117,6 +120,7 @@ public class JobInfoController {
 		List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 
 		model.addAttribute("jobInfoList", jobInfoList);
+		model.addAttribute("collegeList", collegeList);
 		model.addAttribute("classList", classList);
 		model.addAttribute("majorList", majorList);
 		model.addAttribute("gradeList", gradeList);
@@ -126,6 +130,7 @@ public class JobInfoController {
 		model.addAttribute("classId", classId);
 		model.addAttribute("majorId", majorId);
 		model.addAttribute("gradeId", gradeId);
+		model.addAttribute("collegeId", collegeId);
 		model.addAttribute("contractStatusId", contractStatusId);
 		model.addAttribute("protocalStateId", protocalStateId);
 		model.addAttribute("searchText", searchText);

@@ -44,7 +44,7 @@
 		<tr>
 			<td class="lesta-150">时间：</td>
 			<td class="lestb">
-				<input type="text" name="time" class="Wdate" readonly="readonly" placeholder="请输入时间" onfocus="WdatePicker()" style="width: 150px;height: 30px;" value="<fmt:formatDate value="${disciplineDomain.time }" type="date"/>"/> 
+				<input type="text" name="time" class="Wdate" readonly="readonly" placeholder="请输入时间" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" style="width: 150px;height: 30px;" value="<fmt:formatDate value="${disciplineDomain.time }" type="date"/>"/> 
 			</td>
 		</tr>
 		<tr>

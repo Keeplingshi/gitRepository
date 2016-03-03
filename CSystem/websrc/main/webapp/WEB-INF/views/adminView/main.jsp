@@ -5,6 +5,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
+	
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/bootstrap.min.css" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/font-awesome.min.css" rel="stylesheet"/>
 		<link href="${pageContext.request.contextPath}/resources/ace/assets/css/ace.min.css" rel="stylesheet"/>
@@ -73,7 +76,11 @@
 		</div>
 
 		<div class="main-container" id="main-container">
+			
 			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
 				<div class="sidebar" id="sidebar">
 					<ul id="menulist" class="nav nav-list">
 						<li>

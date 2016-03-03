@@ -13,6 +13,7 @@
 <div>
 <form id="formId" action="${pageContext.request.contextPath}/admin/jobInfo/jobInfoSearchList" method="post">
 	<input type="hidden" id="gradeId" name="gradeId" value="${gradeId }" />
+	<input type="hidden" id="collegeId" name="collegeId" value="${collegeId }" />
 	<input type="hidden" id="majorId" name="majorId" value="${majorId }" />
 	<input type="hidden" id="classId" name="classId" value="${classId }" />
 	<input type="hidden" id="contractStatusId" name="contractStatusId" value="${contractStatusId }" />
@@ -41,6 +42,14 @@
 			</c:forEach>
 		</select>
 		
+		<label style="margin-left: 20px;">学院：</label>
+		<select id="college_select_id" class="select_style" onchange="getMajor(this.value)">
+			<option value="" selected="selected">选择</option>
+			<c:forEach items="${collegeList }" var="collegeDomain">
+				<option value="${collegeDomain.id }">${collegeDomain.name}</option>
+			</c:forEach>
+		</select>
+		
 		<label style="margin-left: 20px;">专业：</label>
 		<select id="major_select_id" style="width: 100px;" onchange="getClass(this.value)">
 			<option value="" selected="selected">全部</option>
@@ -56,6 +65,10 @@
 				<option value="${classItem.selectText }">${classItem.selectValue}</option>
 			</c:forEach>
 		</select>
+	
+		<!-- <input id="jobInfoExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导入数据"/> -->
+	</div>
+	<div class="breadcrumbs">
 	
 		<label style="margin-left: 20px;">签约状态：</label>
 		<select id="contractStatus_select_id" class="select_style" onchange="getProtocalState(this.value)">
@@ -204,6 +217,7 @@
 	//使下拉框默认选择
 	$(function(){
 		$("#grade_select_id option[value='${gradeId}']").attr("selected",true);
+		$("#college_select_id option[value='${collegeId}']").attr("selected",true);
 		$("#major_select_id option[value='${majorId}']").attr("selected",true);
 		$("#class_select_id option[value='${classId}']").attr("selected",true);
 		$("#contractStatus_select_id option[value='${contractStatusId}']").attr("selected",true);
@@ -223,7 +237,10 @@
 		var gradeIdVal=$(this).children('option:selected').val();
 		$("#gradeId").val(gradeIdVal);
 	});
-	
+	$("#college_select_id").change(function(){
+		var collegeIdVal=$(this).children('option:selected').val();
+		$("#collegeId").val(collegeIdVal);
+	});
 	//下拉框选择后给隐藏域赋值
 	$("#contractStatus_select_id").change(function(){
 		var contractStatus_value=$(this).children('option:selected').val();
@@ -334,6 +351,26 @@
 			}
 		});
 	}
+	
+	//选择学院，得到专业
+	function getMajor(college_id)
+	{
+    	$.ajax({
+			url:'${pageContext.request.contextPath}/admin/major/getMajorByCollege?college_id='+college_id,
+			type:"post",
+			error:function(e){
+			},
+			success:function(data){
+				var json = new Function("return" + data)();
+ 				var major_select=$("#major_select_id");
+				major_select.empty();
+				major_select.append('<option value="">'+"全部"+'</option>');
+				for(var i=0;i<json.length;i++){
+					major_select.append('<option value="'+json[i].selectText+'">'+json[i].selectValue+'</option>');
+				} 
+			}
+		});
+	}
 
 	//选择专业，得到班级
 	function getClass(major_id)
@@ -375,4 +412,5 @@
 			}
 		});
 	}
+	
 </script>

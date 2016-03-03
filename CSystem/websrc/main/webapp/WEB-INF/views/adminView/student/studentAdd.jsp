@@ -66,7 +66,7 @@
 		<tr>
 			<td class="lesta-150">出生日期：</td>
 			<td class="lestb">
-				<input type="text" name="birthday" class="Wdate" readonly="readonly" placeholder="出生日期" onfocus="WdatePicker()" style="width: 150px;height: 30px;"/> 
+				<input type="text" name="birthday" class="Wdate" readonly="readonly" placeholder="出生日期" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" style="width: 150px;height: 30px;"/> 
 			</td>
 			<td class="lesta-150">班级：</td>
 			<td class="lestb">

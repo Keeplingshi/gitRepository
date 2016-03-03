@@ -27,6 +27,7 @@
 			<i class="icon-search nav-search-icon"></i>
 		</span>
 		
+		<input id="disciplineReportButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="违纪报表"/>
 		<input id="disciplineDeleteButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="删除"/>
 		<input id="disciplineAddButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="新增"/>
 		<input id="disciplineQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
