@@ -130,11 +130,13 @@
 			var checkBox=checkBoxs[i];
 			if(checkBox.checked){
 				studentId=checkBox.value;
+				console.info(checkBox.parentNode.parentNode.parentNode);
 				//获取学生姓名方法
-				var tr=checkBox.closest("tr");
+				//var tr=checkBox.closest("tr");	//这种方法360浏览器不支持
+				//获取tr父节点
+				var tr=checkBox.parentNode.parentNode.parentNode;
 				var td_stuname=$(tr)[0].children[2];
 				studentName=$(td_stuname)[0].innerText;
-				
 				//给父窗口赋值
 				parent.$('#stuId').val(studentId);
 				parent.$('#stuname').val(studentName);
