@@ -169,4 +169,61 @@ public class DisciplineService implements IDisciplineService {
 		return b;
 	}
 
+	/**
+	 * @see com.cb.csystem.service.IDisciplineService#doSeearchList(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date, java.util.Date)
+	 */
+	@Override
+	public List<DisciplineDomain> doSeearchList(String gradeId,
+			String collegeId, String majorId, String classId,
+			String disciplineTypeId, Date beginTime, Date endTime)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(DisciplineDomain.class);
+		detachedCriteria.createAlias("student", "qstu");
+		detachedCriteria.createAlias("qstu.classDomain", "qclazz");
+		//班级过滤
+		if(ValidateUtil.notEmpty(classId)){
+			detachedCriteria.add(Restrictions.eq("qclazz.id", classId));
+		}else{
+			if(ValidateUtil.notEmpty(majorId)){
+				//专业过滤
+				detachedCriteria.createAlias("qclazz.major", "qmajor");
+				detachedCriteria.add(Restrictions.eq("qmajor.id", majorId));
+			}else{
+				if(ValidateUtil.notEmpty(collegeId)){
+					//学院过滤
+					detachedCriteria.createAlias("qclazz.major", "qmajor");
+					detachedCriteria.createAlias("qmajor.college", "qcollege");
+					detachedCriteria.add(Restrictions.eq("qcollege.id", collegeId));
+				}
+			}
+			if(ValidateUtil.notEmpty(gradeId)){
+				//年级过滤
+				detachedCriteria.createAlias("qclazz.grade", "qgrade");
+				detachedCriteria.add(Restrictions.eq("qgrade.id", gradeId));
+			}
+		}
+
+		//违纪类型
+		if(ValidateUtil.notEmpty(disciplineTypeId)){
+			detachedCriteria.add(Restrictions.eq("disciplineType.id", disciplineTypeId));
+		}
+		
+		//时间
+		if(beginTime!=null){
+			//大于等于
+			detachedCriteria.add(Restrictions.ge("time", beginTime));
+		}
+		if(endTime!=null){
+			//小于等于
+			detachedCriteria.add(Restrictions.le("time", endTime));
+		}
+		
+		//排序
+		detachedCriteria.addOrder(Order.asc("time"));
+		
+		return disciplineDao.getFilterList(detachedCriteria);
+	}
+
 }

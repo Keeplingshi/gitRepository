@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.cb.csystem.domain.DisciplineDomain;
 import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.util.bean.JobInfoCountBean;
@@ -270,4 +271,79 @@ public class DBToExcelUtil {
 		
 		return b;
 	}
+	
+	/**
+	 * 违纪统计
+	 * @param disciplineDomains
+	 * @param path  文件路径包含文件名称
+	 * @param filename  文件名称
+	 * @return
+	 */
+	public static String disciplineCountDBToExcel(List<DisciplineDomain> disciplineDomains,String path,String filename)
+	{
+		String[] headers = { "年级", "学号", "班级", "姓名","时间","课程","课程老师","类型","备注"};
+		// 声明一个工作薄
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		// 生成一个表格
+		HSSFSheet sheet = workbook.createSheet("违纪统计信息");
+		// 设置表格默认列宽度为15个字节
+		sheet.setDefaultColumnWidth(15);
+		
+		// 产生表格标题行
+		int columnNum=headers.length;
+		//第0行，文档标题
+		
+		//从第一行开始标题
+		HSSFRow row = sheet.createRow(1);
+		for (int i = 0; i < columnNum; i++) {
+			HSSFCell cell = row.createCell(i);
+			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+			cell.setCellValue(text);
+		}
+		
+		//文档内容
+		int index=1;
+		HSSFCell[] cells=new HSSFCell[columnNum];
+		for(DisciplineDomain disciplineDomain:disciplineDomains)
+		{
+			index++;
+			row = sheet.createRow(index);
+			for(int i=0;i<columnNum;i++){
+				cells[i]=row.createCell(i);
+			}
+			//年级
+			cells[0].setCellValue(disciplineDomain.getStudent().getClassDomain().getGrade().getGrade());
+			//学号
+			cells[1].setCellValue(disciplineDomain.getStudent().getStuId());
+			//班级
+			cells[2].setCellValue(disciplineDomain.getStudent().getClassDomain().getName());
+			//姓名
+			cells[3].setCellValue(disciplineDomain.getStudent().getName());
+			//时间
+			cells[4].setCellValue(DateUtil.getDayFormat(disciplineDomain.getTime()));
+			//课程
+			cells[5].setCellValue(disciplineDomain.getCourseName());
+			//课程老师
+			cells[6].setCellValue(disciplineDomain.getCourseTeacher());
+			//类型
+			cells[7].setCellValue(disciplineDomain.getDisciplineType().getName());
+			//备注
+			cells[8].setCellValue(disciplineDomain.getNote());
+		}
+		
+		try {
+			//首先创建文件
+			if(FileUtil.createFile(path)){
+				OutputStream out = new FileOutputStream(path);
+				workbook.write(out);
+				out.close();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			filename=null;
+		}
+		
+		return filename;
+	}
+	
 }

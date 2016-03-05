@@ -10,7 +10,7 @@
 <script src="${pageContext.request.contextPath}/resources/plugins/datePicker/WdatePicker.js"></script>
 
 <div id="pop_content_page">
-	<form id="disciplineCountFormId" action="${pageContext.request.contextPath}/admin/discipline/disciplineCountView" method="post">
+	<form id="disciplineCountFormId" action="${pageContext.request.contextPath}/admin/discipline/disciplineExcel" method="post">
 		<input type="hidden" id="gradeId" name="gradeId" value="${gradeId }" />
 		<input type="hidden" id="classId" name="classId" value="${classId }" />
 		<input type="hidden" id="majorId" name="majorId" value="${majorId }" />
@@ -93,51 +93,28 @@
 	</form>
 
 <script>
-/* 
-	$("#disciplineCountDBToExcelButton").click(function(){
-		
-		var gradeIdVal=$("#gradeId").val();
-		var collegeIdVal=$("#collegeId").val();
-		
-		$.ajax({
-			url : '${pageContext.request.contextPath}/admin/discipline/disciplineCountDBToExcel?gradeId='+ gradeIdVal+'&collegeId='+collegeIdVal,
-			type : "post",
-			error : function(e) {
-			
-			},
-			success : function(result) {
-				if(result=='success'){
-
-					parent.layer.msg('导出成功', {
-						offset: ['260px'],
-	     		        time: 1500//1.5s后自动关闭
-	     		    });
-					
-					window.location="${pageContext.request.contextPath}/admin/discipline/downloaddiscipline";
-
-				}else{
-					parent.layer.msg('导出失败', {
-						offset: ['260px'],
-	     		        time: 1500//1.5s后自动关闭
-	     		    });
-				}
-			}
-		});
-	}); */
-
-	//使下拉框默认选择
-	$(function() {
-		$("#grade_discipline_select_id option[value='${gradeId}']").attr("selected", true);
-		$("#college_discipline_select_id option[value='${collegeId}']").attr("selected", true);
-		$("#major_discipline_select_id option[value='${majorId}']").attr("selected", true);
-		$("#class_discipline_select_id option[value='${classId}']").attr("selected", true);
-	});
 
 	//查询按钮
 	$("#disciplineCountButton").click(function() {
+		console.info('dasfdasdfsa');
 		var form = $("#disciplineCountFormId");
 		form.ajaxSubmit(function(data) {
-			$("#pop_content_page").html(data);
+			console.info(data);
+			if(data=='error'){
+				console.info(data);
+				layer.msg("遇到未知错误，请重新查询！", {
+					offset: ['260px'],
+					time: 1500//1.5s后自动关闭
+				});
+			}else{
+				console.info(data);
+				parent.layer.msg('导出成功', {
+					offset: ['260px'],
+     		        time: 1500//1.5s后自动关闭
+     		    });
+				
+				window.location="${pageContext.request.contextPath}/admin/discipline/"+data+"/downloadDisciplineInfo";
+			};
 		});
 	});
 
@@ -164,15 +141,17 @@
 		var collegeIdVal = $(this).children('option:selected').val();
 		$("#collegeId").val(collegeIdVal);
 	});
+	
+	$("#type_discipline_select_id").change(function() {
+		var disciplineTypeIdVal = $(this).children('option:selected').val();
+		$("#disciplineTypeId").val(disciplineTypeIdVal);
+	});
 
 	//选择学院，得到专业
 	function getMajor(college_id) {
 		$.ajax({
 			url : '${pageContext.request.contextPath}/admin/major/getMajorByCollege?college_id='+ college_id,
-			type : "post",
-			error : function(e) {
-			
-			},
+			type : 'post',
 			success : function(data) {
 				var json = new Function("return" + data)();
 				var major_select = $("#major_discipline_select_id");
@@ -189,10 +168,7 @@
 	function getClass(major_id) {
 		$.ajax({
 			url : '${pageContext.request.contextPath}/admin/class/getClassByMajor?major_id='+ major_id,
-			type : "post",
-			error : function(e) {
-				
-			},
+			type : 'post',
 			success : function(data) {
 				var json = new Function("return" + data)();
 				var class_select = $("#class_discipline_select_id");

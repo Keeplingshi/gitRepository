@@ -77,4 +77,19 @@ public interface IDisciplineService {
 	 */
 	public boolean doDeleteByIds(String[] disciplineIds)throws Exception;
 	
+	/**
+	 * 搜索
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @param disciplineTypeId
+	 * @param beginTime
+	 * @param endTime
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DisciplineDomain> doSeearchList(String gradeId, String collegeId, String majorId, String classId,
+			String disciplineTypeId, Date beginTime, Date endTime)throws Exception;
+	
 }

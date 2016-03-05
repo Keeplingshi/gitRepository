@@ -79,7 +79,7 @@
 			</td>
 			<td class="lesta-150">电子邮件：</td>
 			<td class="lestb">
-				<input type="text" id="stuemail" name="email" class="input_text_a"  datatype="e" ignore="ignore" errormsg="请输入正确邮箱" placeholder="请输入邮箱" value="${studentDomain.email }"/>
+				<input type="text" id="stuemail" name="email" class="input_text_a" datatype="e" ignore="ignore" errormsg="请输入正确邮箱" placeholder="请输入邮箱" value="${studentDomain.email }"/>
 			</td>
 		</tr>
 		<tr>
@@ -99,7 +99,7 @@
 			</td>
 			<td class="lesta-150">手机号码：</td>
 			<td class="lestb">
-				<input type="text" id="stuCellphone" name="cellphone" class="input_text_a" datatype="m" ignore="ignore" placeholder="请输入手机号码" errormsg="请输入正确手机号" value="${studentDomain.cellphone }"/>
+				<input type="text" id="stuCellphone" name="cellphone" class="input_text_a" ignore="ignore" placeholder="请输入手机号码" value="${studentDomain.cellphone }"/>
 			</td>
 		</tr>
 		<tr>
@@ -141,8 +141,6 @@
 		
 		var stunameVal=$("#stuname").val();	//姓名
 		var classIdVal=$("#classId").val();	//班级
-		var stuemailIdVal=$("#stuemail").val();	//邮箱
-		var stuCellphoneIdVal=$("#stuCellphone").val();	//手机号
 		
 		if(stunameVal==null||stunameVal==''){
 			layer.tips('姓名不能为空', '#stuname');
@@ -151,18 +149,6 @@
 		if(classIdVal==null||classIdVal==''){
 			layer.tips('班级不能为空', '#class_select_edit_id');
 			return;
-		}
-		if(stuemailIdVal!=null&&stuemailIdVal!=''){
-			if(!isEmail(stuemailIdVal)){
-				layer.tips('请输入正确邮箱', '#stuemail');
-				return;
-			}
-		}
-		if(stuCellphoneIdVal!=null&&stuCellphoneIdVal!=''){
-			if(!checkMobile(stuCellphoneIdVal)){
-				layer.tips('请输入正确手机号', '#stuCellphone');
-				return;
-			}
 		}
 		
 		var form = $("#studentEditFormId");

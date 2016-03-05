@@ -151,7 +151,7 @@ public class ExcelToDBUtil {
 					cell = row.getCell(i, Row.CREATE_NULL_AS_BLANK); 
 					cell.setCellType(Cell.CELL_TYPE_STRING);  
 					content=cell.getStringCellValue().trim();
-					if(ValidateUtil.checkMobileNumber(content)){
+					if(ValidateUtil.notEmpty(content)){
 						studentDomain.setCellphone(content);
 					}
 					i++;

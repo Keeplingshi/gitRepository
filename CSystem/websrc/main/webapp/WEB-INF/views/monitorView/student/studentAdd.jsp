@@ -90,7 +90,7 @@
 			</td>
 			<td class="lesta-150">手机号码：</td>
 			<td class="lestb">
-				<input type="text" id="stuCellphone" name="cellphone" class="input_text_a" datatype="m" ignore="ignore" placeholder="请输入手机号码" errormsg="请输入正确手机号"/>
+				<input type="text" id="stuCellphone" name="cellphone" class="input_text_a" ignore="ignore" placeholder="请输入手机号码" />
 			</td>
 		</tr>
 		<tr>
@@ -129,8 +129,6 @@
 		var stuIdVal=$("#stuId").val();		//学号
 		var stunameVal=$("#stuname").val();	//姓名
 		var classIdVal=$("#classId").val();	//班级
-		var stuemailIdVal=$("#stuemail").val();	//邮箱
-		var stuCellphoneIdVal=$("#stuCellphone").val();	//手机号
 		
 		if(stuIdVal==null||stuIdVal==''){
 			layer.tips('姓名不能为空', '#stuId');
@@ -143,18 +141,6 @@
 		if(classIdVal==null||classIdVal==''){
 			layer.tips('您没有添加该同学权限', '#stuId');
 			return;
-		}
-		if(stuemailIdVal!=null&&stuemailIdVal!=''){
-			if(!isEmail(stuemailIdVal)){
-				layer.tips('请输入正确邮箱', '#stuemail');
-				return;
-			}
-		}
-		if(stuCellphoneIdVal!=null&&stuCellphoneIdVal!=''){
-			if(!checkMobile(stuCellphoneIdVal)){
-				layer.tips('请输入正确手机号', '#stuCellphone');
-				return;
-			}
 		}
 		
 		var form = $("#studentAddFormId");

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,6 +31,9 @@ import com.cb.csystem.service.IDisciplineTypeService;
 import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.util.Consts;
+import com.cb.csystem.util.DBToExcelUtil;
+import com.cb.system.util.DateUtil;
+import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
 
@@ -254,4 +259,45 @@ public class DisciplineController {
 		return "/adminView/discipline/disciplineCountView";
 	}
 	
+	/**
+	 * 导出excel报表
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/disciplineExcel")
+	@ResponseBody
+	public String dodisciplineExcel(Model model,HttpServletResponse response,HttpSession session
+			,String gradeId,String collegeId,String majorId,String classId,String disciplineTypeId
+			,@RequestParam(value ="countView_beginTime") @DateTimeFormat(pattern="yyyy-MM-dd") Date countView_beginTime
+			,@RequestParam(value ="countView_endTime") @DateTimeFormat(pattern="yyyy-MM-dd") Date countView_endTime)throws Exception{
+		
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		String filename=username+"_"+System.currentTimeMillis()+".xls";
+		
+		if(countView_beginTime==null&&countView_endTime==null){
+			countView_beginTime=DateUtil.getTimesWeekmorning();
+			countView_endTime=DateUtil.getTimesWeeknight();
+		}
+		
+		List<DisciplineDomain> disciplineDomains=disciplineService.doSeearchList(gradeId, collegeId, majorId, classId, disciplineTypeId, countView_beginTime, countView_endTime);
+		
+		String fileOutputName=DBToExcelUtil.disciplineCountDBToExcel(disciplineDomains, Consts.DBTOEXCEL_PATH+filename, filename);
+		if(fileOutputName.equals(filename)){
+			return fileOutputName;
+		}
+		
+		return Consts.ERROR;
+	}
+	
+	/**
+	 * 下载违纪报表
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/{fileOutputName}/downloadDisciplineInfo")
+	public void dodownloadDisciplineInfo(HttpServletResponse response,@PathVariable String fileOutputName)throws Exception{
+		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+fileOutputName, "违纪报表.xls");
+		FileUtil.delFile(Consts.DBTOEXCEL_PATH+fileOutputName);
+	}
 }
