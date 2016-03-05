@@ -10,6 +10,8 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.Region;
 
 import com.cb.csystem.domain.DisciplineDomain;
 import com.cb.csystem.domain.JobInfoDomain;
@@ -279,7 +281,7 @@ public class DBToExcelUtil {
 	 * @param filename  文件名称
 	 * @return
 	 */
-	public static String disciplineCountDBToExcel(List<DisciplineDomain> disciplineDomains,String path,String filename)
+	public static String disciplineCountDBToExcel(List<DisciplineDomain> disciplineDomains,String path,String filename,String title)
 	{
 		String[] headers = { "年级", "学号", "班级", "姓名","时间","课程","课程老师","类型","备注"};
 		// 声明一个工作薄
@@ -291,12 +293,16 @@ public class DBToExcelUtil {
 		
 		// 产生表格标题行
 		int columnNum=headers.length;
+		HSSFRow row = sheet.createRow(0);
 		//第0行，文档标题
+		HSSFCell cell = row.createCell(0);
+		cell.setCellValue(title);
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, columnNum));
 		
 		//从第一行开始标题
-		HSSFRow row = sheet.createRow(1);
+		row = sheet.createRow(1);
 		for (int i = 0; i < columnNum; i++) {
-			HSSFCell cell = row.createCell(i);
+			cell = row.createCell(i);
 			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
 			cell.setCellValue(text);
 		}

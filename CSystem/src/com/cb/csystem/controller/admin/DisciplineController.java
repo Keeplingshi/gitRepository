@@ -282,7 +282,8 @@ public class DisciplineController {
 		
 		List<DisciplineDomain> disciplineDomains=disciplineService.doSeearchList(gradeId, collegeId, majorId, classId, disciplineTypeId, countView_beginTime, countView_endTime);
 		
-		String fileOutputName=DBToExcelUtil.disciplineCountDBToExcel(disciplineDomains, Consts.DBTOEXCEL_PATH+filename, filename);
+		String title="违纪信息（"+DateUtil.getDayFormat(countView_beginTime)+"至"+DateUtil.getDayFormat(countView_endTime)+"）";
+		String fileOutputName=DBToExcelUtil.disciplineCountDBToExcel(disciplineDomains, Consts.DBTOEXCEL_PATH+filename, filename,title);
 		if(fileOutputName.equals(filename)){
 			return fileOutputName;
 		}
