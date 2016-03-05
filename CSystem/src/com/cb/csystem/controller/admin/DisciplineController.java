@@ -36,7 +36,6 @@ import com.cb.system.util.DateUtil;
 import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 /**
  * 违纪控制层
@@ -277,8 +276,8 @@ public class DisciplineController {
 		String filename=username+"_"+System.currentTimeMillis()+".xls";
 		
 		if(countView_beginTime==null&&countView_endTime==null){
-			countView_beginTime=DateUtil.getTimesWeekmorning();
-			countView_endTime=DateUtil.getTimesWeeknight();
+			countView_beginTime=DateUtil.getTimesWeekMonday();
+			countView_endTime=DateUtil.getTimesWeekSunday();
 		}
 		
 		List<DisciplineDomain> disciplineDomains=disciplineService.doSeearchList(gradeId, collegeId, majorId, classId, disciplineTypeId, countView_beginTime, countView_endTime);
