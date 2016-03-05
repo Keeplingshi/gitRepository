@@ -196,9 +196,17 @@
 	
 	//报表
 	$("#disciplineReportButton").click(function(){
-		layer.tips("正在开发","#disciplineReportButton",{
+		parent.layer.open({
+	        type: 2,
+	        title: '违纪信息统计',
+	        shadeClose: true,
+	        area : ['700px' , '500px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineCountView'
+	    });
+/* 		layer.tips("正在开发","#disciplineReportButton",{
 		    tips: 3
-		});
+		}); */
 	});
 
 	//新增违纪类型按钮

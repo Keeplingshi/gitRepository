@@ -230,4 +230,28 @@ public class DisciplineController {
 		return Consts.ERROR;
 	}
 	
+	/**
+	 * 违纪统计报表页面
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/disciplineCountView")
+	public String dodisciplineCountView(Model model)throws Exception{
+		
+		List<DisciplineTypeDomain> disciplineTypeList=disciplineTypeService.doGetFilterList();
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		
+		model.addAttribute("disciplineTypeList", disciplineTypeList);
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("gradeList", gradeList);
+		
+		return "/adminView/discipline/disciplineCountView";
+	}
+	
 }
