@@ -36,6 +36,7 @@ import com.cb.system.util.DateUtil;
 import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 /**
  * 违纪控制层
@@ -298,7 +299,7 @@ public class DisciplineController {
 	 */
 	@RequestMapping("/{fileOutputName}/downloadDisciplineInfo")
 	public void dodownloadDisciplineInfo(HttpServletResponse response,@PathVariable String fileOutputName)throws Exception{
-		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+fileOutputName, "违纪报表.xls");
+		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+fileOutputName, Consts.DISCIPLINE_EXCEL);
 		FileUtil.delFile(Consts.DBTOEXCEL_PATH+fileOutputName);
 	}
 }

@@ -85,7 +85,7 @@
 			</tr>
 			<tr>
 			<td>
-				<input type="button" id="disciplineCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="查询"/>
+				<input type="button" id="disciplineCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="导出违纪报表"/>
 			</td>
 			</tr>
 		</table>

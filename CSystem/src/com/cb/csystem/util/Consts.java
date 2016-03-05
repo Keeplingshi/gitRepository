@@ -39,6 +39,8 @@ public class Consts {
 	 */
 	public static final String JOBCOUNT_EXCEL="jobcount.xls";
 	
+	public static final String DISCIPLINE_EXCEL="违纪报表.xls";
+	
 	/**
 	 * student表下载模板
 	 */

@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -45,12 +47,23 @@ public class DBToExcelUtil {
 		// 设置表格默认列宽度为15个字节
 		sheet.setDefaultColumnWidth(15);
 		
+		//表格样式
+		HSSFCellStyle style = workbook.createCellStyle();
+		HSSFFont font  = workbook.createFont();
+		//设置字体
+		font.setFontHeightInPoints((short)12);
+		font.setFontName("宋体");
+		style.setFont(font);
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中       
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//上下居中     
+		
 		// 产生表格标题行
 		HSSFRow row = sheet.createRow(0);
 		for (int i = 0; i < columnNum; i++) {
 			HSSFCell cell = row.createCell(i);
 			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
 			cell.setCellValue(text);
+			cell.setCellStyle(style);
 		}
 
 		int index=0;
@@ -61,6 +74,7 @@ public class DBToExcelUtil {
 			row = sheet.createRow(index);
 			for(int i=0;i<columnNum;i++){
 				cells[i]=row.createCell(i);
+				cells[i].setCellStyle(style);
 			}
 			cells[0].setCellValue(studentDomain.getStuId());
 			cells[1].setCellValue(studentDomain.getName());
@@ -115,12 +129,23 @@ public class DBToExcelUtil {
 		// 设置表格默认列宽度为15个字节
 		sheet.setDefaultColumnWidth(15);
 		
+		//表格样式
+		HSSFCellStyle style = workbook.createCellStyle();
+		HSSFFont font  = workbook.createFont();
+		//设置字体
+		font.setFontHeightInPoints((short)12);
+		font.setFontName("宋体");
+		style.setFont(font);
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中       
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//上下居中     
+		
 		// 产生表格标题行
 		HSSFRow row = sheet.createRow(0);
 		for (int i = 0; i < columnNum; i++) {
 			HSSFCell cell = row.createCell(i);
 			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
 			cell.setCellValue(text);
+			cell.setCellStyle(style);
 		}
 
 		int index=0;
@@ -131,6 +156,7 @@ public class DBToExcelUtil {
 			row = sheet.createRow(index);
 			for(int i=0;i<columnNum;i++){
 				cells[i]=row.createCell(i);
+				cells[i].setCellStyle(style);
 			}
 			StudentDomain studentDomain=jobInfoDomain.getStudent();
 			if(studentDomain!=null){
@@ -173,6 +199,7 @@ public class DBToExcelUtil {
 		for(int i=0;i<selectList.size();i++)
 		{
 			cells[i]=row.createCell(i);
+			cells[i].setCellStyle(style);
 			cells[i].setCellValue(selectList.get(i).getSelectText());
 		}
 		index++;
@@ -180,6 +207,7 @@ public class DBToExcelUtil {
 		for(int i=0;i<selectList.size();i++)
 		{
 			cells[i]=row.createCell(i);
+			cells[i].setCellStyle(style);
 			cells[i].setCellValue(selectList.get(i).getSelectValue());
 		}
 		
@@ -215,12 +243,21 @@ public class DBToExcelUtil {
 		HSSFSheet sheet = workbook.createSheet("就业统计信息");
 		// 设置表格默认列宽度为15个字节
 		sheet.setDefaultColumnWidth(15);
+		//表格样式
+		HSSFCellStyle style = workbook.createCellStyle();
+		HSSFFont font  = workbook.createFont();
+		//设置字体
+		font.setFontHeightInPoints((short)12);
+		font.setFontName("宋体");
+		style.setFont(font);
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中       
 		
 		// 产生表格标题行
 		int columnNum=headers.length;
 		HSSFRow row = sheet.createRow(0);
 		for (int i = 0; i < columnNum; i++) {
 			HSSFCell cell = row.createCell(i);
+			cell.setCellStyle(style);
 			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
 			cell.setCellValue(text);
 		}
@@ -233,6 +270,7 @@ public class DBToExcelUtil {
 			row = sheet.createRow(index);
 			for(int i=0;i<columnNum;i++){
 				cells[i]=row.createCell(i);
+				cells[i].setCellStyle(style);
 			}
 			
 			//班级名称
@@ -296,15 +334,36 @@ public class DBToExcelUtil {
 		HSSFRow row = sheet.createRow(0);
 		//第0行，文档标题
 		HSSFCell cell = row.createCell(0);
+		//表格样式
+		HSSFCellStyle titlestyle = workbook.createCellStyle();
+		HSSFFont titlefont  = workbook.createFont();
+		//设置字体
+		titlefont.setFontHeightInPoints((short) 18);
+		titlefont.setFontName("宋体");
+		titlestyle.setFont(titlefont);
+		titlestyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中       
+		titlestyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//上下居中      
+		cell.setCellStyle(titlestyle);
+		//标题行内容
 		cell.setCellValue(title);
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, columnNum));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, columnNum-1));
 		
 		//从第一行开始标题
 		row = sheet.createRow(1);
+		//表格样式
+		HSSFCellStyle style = workbook.createCellStyle();
+		HSSFFont font  = workbook.createFont();
+		//设置字体
+		font.setFontHeightInPoints((short)12);
+		font.setFontName("宋体");
+		style.setFont(font);
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中       
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//上下居中      
 		for (int i = 0; i < columnNum; i++) {
 			cell = row.createCell(i);
 			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
 			cell.setCellValue(text);
+			cell.setCellStyle(style);
 		}
 		
 		//文档内容
@@ -316,6 +375,7 @@ public class DBToExcelUtil {
 			row = sheet.createRow(index);
 			for(int i=0;i<columnNum;i++){
 				cells[i]=row.createCell(i);
+				cells[i].setCellStyle(style);
 			}
 			//年级
 			cells[0].setCellValue(disciplineDomain.getStudent().getClassDomain().getGrade().getGrade());
