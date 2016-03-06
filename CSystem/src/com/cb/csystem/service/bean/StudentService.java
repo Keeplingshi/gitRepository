@@ -15,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.csystem.dao.IStudentDao;
 import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.csystem.domain.PatyDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IJobInfoService;
+import com.cb.csystem.service.IPatyService;
 import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.PageInfo;
@@ -33,6 +35,7 @@ public class StudentService implements IStudentService{
 
 	private @Resource IStudentDao studentDao;
 	private @Resource IJobInfoService jobInfoService;
+	private @Resource IPatyService patyService;
 	
 	/**
 	 * @see com.cb.csystem.service.IStudentService#doGetById(java.lang.String)
@@ -69,15 +72,18 @@ public class StudentService implements IStudentService{
 	}
 
 	/**
-	 * @see com.cb.csystem.service.IStudentService#doSaveStuAndJob(com.cb.csystem.domain.StudentDomain)
+	 * @see com.cb.csystem.service.IStudentService#doSaveStuAndOthers(com.cb.csystem.domain.StudentDomain)
 	 */
 	@Override
-	public boolean doSaveStuAndJob(StudentDomain studentDomain) throws Exception {
+	public boolean doSaveStuAndOthers(StudentDomain studentDomain) throws Exception {
 		// TODO Auto-generated method stub
 		if(studentDomain.getId()==null){
 			JobInfoDomain jobInfoDomain=new JobInfoDomain();
 			jobInfoDomain.setStudent(studentDomain);
 			jobInfoService.doSave(jobInfoDomain);
+			PatyDomain patyDomain=new PatyDomain();
+			patyDomain.setStudent(studentDomain);
+			patyService.doSave(patyDomain);
 			return studentDao.save(studentDomain);
 		}else{
 			return studentDao.update(studentDomain);

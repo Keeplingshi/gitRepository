@@ -107,6 +107,10 @@
 			<td class="lestb">
 				<input type="text" id="stuDormitory" name="dormitory" class="input_text_a" placeholder="请输入宿舍号" value="${studentDomain.dormitory }"/>
 			</td>
+			<td class="lesta-150">民族：</td>
+			<td class="lestb">
+				<input type="text" id="nationality" name="nationality" class="input_text_a" ignore="ignore" placeholder="请输入民族" value="${studentDomain.nationality }"/>
+			</td>
 		</tr>
 	</table>
 	<input id="saveButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 300px;" value="确定"/>

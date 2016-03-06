@@ -89,6 +89,10 @@
 			<td class="lestb" style="width:150px;">
 				${studentDomain.dormitory }
 			</td>
+			<td class="lesta-150">民族：</td>
+			<td class="lestb" style="width:150px;">
+				${studentDomain.nationality }
+			</td>
 		</tr>
 	</table>
 

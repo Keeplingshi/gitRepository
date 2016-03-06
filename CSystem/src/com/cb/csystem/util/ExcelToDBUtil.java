@@ -173,10 +173,10 @@ public class ExcelToDBUtil {
 				studentExistsDomain.setEmail(studentDomain.getEmail());
 				studentExistsDomain.setTeachClass(studentDomain.getTeachClass());
 				studentExistsDomain.setCellphone(studentDomain.getCellphone());
-				studentService.doSaveStuAndJob(studentExistsDomain);
+				studentService.doSaveStuAndOthers(studentExistsDomain);
 			}else{
 				studentDomain.setClassDomain(classDomain);
-				studentService.doSaveStuAndJob(studentDomain);
+				studentService.doSaveStuAndOthers(studentDomain);
 			}
 			
 		}
@@ -330,7 +330,7 @@ public class ExcelToDBUtil {
 				studentExistsDomain.setEmail(studentDomain.getEmail());
 				studentExistsDomain.setTeachClass(studentDomain.getTeachClass());
 				studentExistsDomain.setCellphone(studentDomain.getCellphone());
-				studentService.doSaveStuAndJob(studentExistsDomain);	//update
+				studentService.doSaveStuAndOthers(studentExistsDomain);	//update
 			}else{
 				//如果学生不存在，则创建就业信息
 				JobInfoDomain jobInfoDomain=new JobInfoDomain();

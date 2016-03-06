@@ -35,7 +35,7 @@ public interface IStudentService {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean doSaveStuAndJob(StudentDomain studentDomain) throws Exception;
+	public boolean doSaveStuAndOthers(StudentDomain studentDomain) throws Exception;
 	
 	/**
 	 * 保存学生

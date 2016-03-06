@@ -214,7 +214,7 @@ public class IStudentController {
 			System.out.println(result);
 			return Consts.ERROR;
 		} else {
-			if(studentService.doSaveStuAndJob(domain)){
+			if(studentService.doSaveStuAndOthers(domain)){
 				return Consts.SUCCESS;
 			}
 		}

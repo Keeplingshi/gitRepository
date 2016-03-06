@@ -177,7 +177,7 @@ public class MStudentController {
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
-			if(studentService.doSaveStuAndJob(domain)){
+			if(studentService.doSaveStuAndOthers(domain)){
 				return Consts.SUCCESS;
 			}
 		}

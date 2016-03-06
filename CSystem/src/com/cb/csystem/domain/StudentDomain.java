@@ -35,6 +35,7 @@ public class StudentDomain {
 	private Integer sex;	//性别 0,男性   1,女性
 	@DateTimeFormat( pattern = "yyyy-MM-dd" )
 	private Date birthday;	//出生日期
+	private String nationality;	//民族
 	private Integer politicalStatus;	//政治面貌
 	private String IDnumber;	//身份证号
 	private String nativePlace;	//籍贯
@@ -46,7 +47,8 @@ public class StudentDomain {
 	//private String telephone;	//联系电话
 	private String cellphone;	//手机
 	private Integer isMonitor;	//是否为班长，0否1是
-	private JobInfoDomain jobInfo;
+	private JobInfoDomain jobInfo;	//就业
+	private PatyDomain paty;	//党建
 	private Set<DisciplineDomain> disciplines=new HashSet<DisciplineDomain>(0);
 	
 	@Id
@@ -183,7 +185,6 @@ public class StudentDomain {
 		this.isMonitor = isMonitor;
 	}
 	
-	//@OneToOne(mappedBy="student",cascade=CascadeType.ALL,fetch=FetchType.LAZY,targetEntity=JobInfoDomain.class)
 	@OneToOne(targetEntity=JobInfoDomain.class, cascade=CascadeType.ALL)  
     @PrimaryKeyJoinColumn
 	public JobInfoDomain getJobInfo() {
@@ -193,12 +194,31 @@ public class StudentDomain {
 		this.jobInfo = jobInfo;
 	}
 	
+	@OneToOne(targetEntity=PatyDomain.class, cascade=CascadeType.ALL)  
+    @PrimaryKeyJoinColumn
+	public PatyDomain getPaty() {
+		return paty;
+	}
+	
+	public void setPaty(PatyDomain paty) {
+		this.paty = paty;
+	}
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student", fetch = FetchType.LAZY)
 	public Set<DisciplineDomain> getDisciplines() {
 		return disciplines;
 	}
 	public void setDisciplines(Set<DisciplineDomain> disciplines) {
 		this.disciplines = disciplines;
+	}
+	
+	@Column(name = "NATIONALITY", nullable = true, length = 100)
+	public String getNationality() {
+		return nationality;
+	}
+	
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
 	}
 
 	

@@ -113,7 +113,7 @@ public class JobInfoController {
 		List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,gradeId,collegeId,majorId,classId
 				,contractStatusId,protocalStateId,searchText, sortMode, sortValue);
 		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
 		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
 		List<GradeDomain> gradeList=gradeService.doGetFilterList();
 		List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);

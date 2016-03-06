@@ -112,7 +112,7 @@
 								<i class="icon-dashboard"></i>
 								<span class="menu-text">
 									成长档案
-									<span class="badge badge-primary ">1</span>
+									<span class="badge badge-primary ">2</span>
 								</span>
 
 								<b class="arrow icon-angle-down"></b>
@@ -122,6 +122,12 @@
 									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
 										违纪管理
+									</a>
+								</li>
+								<li id="paty_manage">
+									<a href="javascript:void(0);">
+										<i class="icon-double-angle-right"></i>
+										党建管理
 									</a>
 								</li>
 							</ul>
@@ -283,6 +289,14 @@
 		//违纪管理
 		$("#disciplineType_manage").click(function(){
 			$.post("${pageContext.request.contextPath}/admin/disciplineType/disciplineTypeList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		//党建管理
+		$("#paty_manage").click(function(){
+			$.post("${pageContext.request.contextPath}/admin/paty/patyList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});
