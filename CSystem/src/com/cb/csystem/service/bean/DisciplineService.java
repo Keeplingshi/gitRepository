@@ -170,10 +170,10 @@ public class DisciplineService implements IDisciplineService {
 	}
 
 	/**
-	 * @see com.cb.csystem.service.IDisciplineService#doSeearchList(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date, java.util.Date)
+	 * @see com.cb.csystem.service.IDisciplineService#doSearchList(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date, java.util.Date)
 	 */
 	@Override
-	public List<DisciplineDomain> doSeearchList(String gradeId,
+	public List<DisciplineDomain> doSearchList(String gradeId,
 			String collegeId, String majorId, String classId,
 			String disciplineTypeId, Date beginTime, Date endTime)
 			throws Exception {
@@ -222,6 +222,19 @@ public class DisciplineService implements IDisciplineService {
 		
 		//排序
 		detachedCriteria.addOrder(Order.asc("time"));
+		
+		return disciplineDao.getFilterList(detachedCriteria);
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IDisciplineService#doSearchByStudent(java.lang.String)
+	 */
+	@Override
+	public List<DisciplineDomain> doSearchByStudent(String studentId)
+			throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(DisciplineDomain.class);
+		detachedCriteria.add(Restrictions.eq("student.id", studentId));
 		
 		return disciplineDao.getFilterList(detachedCriteria);
 	}

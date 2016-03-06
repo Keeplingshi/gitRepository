@@ -24,12 +24,14 @@ import com.cb.csystem.domain.CollegeDomain;
 import com.cb.csystem.domain.DisciplineDomain;
 import com.cb.csystem.domain.DisciplineTypeDomain;
 import com.cb.csystem.domain.GradeDomain;
+import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IClassService;
 import com.cb.csystem.service.ICollegeService;
 import com.cb.csystem.service.IDisciplineService;
 import com.cb.csystem.service.IDisciplineTypeService;
 import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
+import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.util.Consts;
 import com.cb.csystem.util.DBToExcelUtil;
 import com.cb.system.util.DateUtil;
@@ -52,6 +54,7 @@ public class DisciplineController {
 	@Resource private IMajorService majorService;
 	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
+	@Resource private IStudentService studentService;
 	
 	/**
 	 * 过滤起前台pageInfo
@@ -61,6 +64,11 @@ public class DisciplineController {
 	@InitBinder("pageInfo")  
 	public void initPageInfoBinder(WebDataBinder binder) {  
 	    binder.setFieldDefaultPrefix("pageInfo.");
+	}
+	
+	@InitBinder("pagedialogInfo")  
+	public void initPageDialogInfoBinder(WebDataBinder binder) {  
+	    binder.setFieldDefaultPrefix("pagedialogInfo.");
 	}
 	
 	@RequestMapping("/disciplineList")
@@ -280,7 +288,7 @@ public class DisciplineController {
 			countView_endTime=DateUtil.getTimesWeekSunday();
 		}
 		
-		List<DisciplineDomain> disciplineDomains=disciplineService.doSeearchList(gradeId, collegeId, majorId, classId, disciplineTypeId, countView_beginTime, countView_endTime);
+		List<DisciplineDomain> disciplineDomains=disciplineService.doSearchList(gradeId, collegeId, majorId, classId, disciplineTypeId, countView_beginTime, countView_endTime);
 		
 		String title="违纪信息（"+DateUtil.getDayFormat(countView_beginTime)+"至"+DateUtil.getDayFormat(countView_endTime)+"）";
 		String fileOutputName=DBToExcelUtil.disciplineCountDBToExcel(disciplineDomains, Consts.DBTOEXCEL_PATH+filename, filename,title);
@@ -301,4 +309,65 @@ public class DisciplineController {
 		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+fileOutputName, Consts.DISCIPLINE_EXCEL);
 		FileUtil.delFile(Consts.DBTOEXCEL_PATH+fileOutputName);
 	}
+	
+	/**
+	 * 学生违纪查询
+	 * @param pagedialogInfo
+	 * @param model
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @param searchText
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/studentDiscipline")
+	public String dostudentDiscipline(@ModelAttribute("pagedialogInfo") PageInfo pagedialogInfo,Model model,
+			String gradeId,String collegeId,String majorId,String classId,String searchText)throws Exception{
+		
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(majorId);
+		List<StudentDomain> studentList=studentService.doSearchstudentPageList(pagedialogInfo, gradeId, collegeId, majorId, classId, searchText, null, null);
+		
+		model.addAttribute("gradeList", gradeList);
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("studentList", studentList);
+		model.addAttribute("classId", classId);
+		model.addAttribute("majorId", majorId);
+		model.addAttribute("collegeId", collegeId);
+		model.addAttribute("searchText", searchText);
+		
+		return "/adminView/discipline/studentDiscipline";
+	}
+	
+	/**
+	 * 导出excel报表
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/studentDisciplineExcel/{studentId}")
+	@ResponseBody
+	public String dostudentDisciplineExcel(Model model,HttpServletResponse response,HttpSession session,@PathVariable String studentId)throws Exception{
+		
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		String filename=username+"_"+System.currentTimeMillis()+".xls";
+		
+		List<DisciplineDomain> disciplineDomains=disciplineService.doSearchByStudent(studentId);
+		String studnetname=studentService.doGetById(studentId).getName();
+		
+		String title=studnetname+"违纪信息";
+		String fileOutputName=DBToExcelUtil.disciplineCountDBToExcel(disciplineDomains, Consts.DBTOEXCEL_PATH+filename, filename,title);
+		if(fileOutputName.equals(filename)){
+			return fileOutputName;
+		}
+		
+		return Consts.ERROR;
+	}
+	
 }

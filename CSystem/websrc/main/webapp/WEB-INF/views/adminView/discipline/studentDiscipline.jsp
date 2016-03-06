@@ -15,7 +15,8 @@
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 
 <div id="dialog_content_page">
-<form id="dialogFormId" action="${pageContext.request.contextPath}/admin/student/studentChooseView" method="post">
+<form id="dialogFormId" action="${pageContext.request.contextPath}/admin/discipline/studentDiscipline" method="post">
+	<input type="hidden" id="gradeId" name="gradeId" value="${gradeId }" />
 	<input type="hidden" id="majorId" name="majorId" value="${majorId }" />
 	<input type="hidden" id="collegeId" name="collegeId" value="${collegeId }" />
 	<input type="hidden" id="classId" name="classId" value="${classId }" />
@@ -25,6 +26,18 @@
 			<input type="text" id="nav-search-input" name="searchText" placeholder="Search ..." class="nav-search-input" autocomplete="off" value="${searchText }"/> 
 			<i class="icon-search nav-search-icon"></i>
 		</span>
+	
+		<input id="dialog_query_btn" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
+	</div>
+	<div class="breadcrumbs" id="studentListToolbar">
+
+		<label style="margin-left: 20px;">年级：</label>
+		<select id="grade_select_id" style="width: 100px;">
+			<option value="" selected="selected">全部</option>
+			<c:forEach items="${gradeList }" var="gradeDomain">
+				<option value="${gradeDomain.id }">${gradeDomain.grade}</option>
+			</c:forEach>
+		</select>
 
 		<label style="margin-left: 20px;">学院：</label>
 		<select id="college_select_id" style="width: 100px;" onchange="getMajor(this.value)">
@@ -50,7 +63,6 @@
 			</c:forEach>
 		</select>
 	
-		<input id="dialog_query_btn" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	</div>
 	<div class="table-responsive">
 		<table id="sample-table-3" class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
@@ -95,12 +107,17 @@
 
 	//使下拉框默认选择
 	$(function(){
+		$("#grade_select_id option[value='${gradeId}']").attr("selected",true);
 		$("#college_select_id option[value='${collegeId}']").attr("selected",true);
 		$("#major_select_id option[value='${majorId}']").attr("selected",true);
 		$("#class_select_id option[value='${classId}']").attr("selected",true);
 	});
 
  	//下拉框选择后给隐藏域赋值
+	$("#grade_select_id").change(function(){
+		var gradeIdVal=$(this).children('option:selected').val();
+		$("#gradeId").val(gradeIdVal);
+	});
  	$("#class_select_id").change(function(){
 		var classIdVal=$(this).children('option:selected').val();
 		$("#classId").val(classIdVal);
@@ -124,25 +141,35 @@
 	$("#yesBtn").click(function(){
 		var checkBoxs=$("table tbody input:checkbox");
 		var studentId=null;
-		var studentName=null;
 		for(var i=0;i<checkBoxs.length;i++)
 		{
 			var checkBox=checkBoxs[i];
 			if(checkBox.checked){
+				//学生id
 				studentId=checkBox.value;
-				//获取学生姓名方法
-				//var tr=checkBox.closest("tr");	//这种方法360浏览器不支持
-				//获取tr父节点
-				var tr=checkBox.parentNode.parentNode.parentNode;
-				var td_stuname=$(tr)[0].children[2];
-				studentName=$(td_stuname)[0].innerText;
-				//给父窗口赋值
-				parent.$('#stuId').val(studentId);
-				parent.$('#stuname').val(studentName);
 				
-				//关闭
-			    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-			    parent.layer.close(index);
+				$.ajax({
+					type: "POST",
+					async: false,
+             		url: "${pageContext.request.contextPath}/admin/discipline/studentDisciplineExcel/"+studentId,
+             		success: function(data){
+						if(data=='error'){
+							layer.msg("遇到未知错误，请重新查询！", {
+								offset: ['260px'],
+								time: 1500//1.5s后自动关闭
+							});
+						}else{
+							parent.layer.msg('导出成功', {
+								offset: ['260px'],
+			     		        time: 1500//1.5s后自动关闭
+			     		    });
+							
+							window.location="${pageContext.request.contextPath}/admin/discipline/"+data+"/downloadDisciplineInfo";
+							
+						};
+                    }
+         		});
+
 			}
 		}
 		if(studentId==null||studentId==''){

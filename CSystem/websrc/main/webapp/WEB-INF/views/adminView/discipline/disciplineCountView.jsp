@@ -85,7 +85,12 @@
 			</tr>
 			<tr>
 			<td>
-				<input type="button" id="disciplineCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="导出违纪报表"/>
+				<input type="button" id="disciplineCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 285px;" value="导出违纪报表"/>
+			</td>
+			</tr>
+			<tr>
+			<td>
+				<input type="button" id="studentQueryButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 270px;" value="学生个人违纪报表"/>
 			</td>
 			</tr>
 		</table>
@@ -94,25 +99,37 @@
 
 <script>
 
+	//学生个人违纪查询
+	$("#studentQueryButton").click(function(){
+	 	parent.layer.open({
+	        type: 2,
+	        title: '选择学生',
+	        shadeClose: true, //点击遮罩关闭层
+	        area : ['800px' , '650px'],
+	        offset: '100px',
+	        moveOut: true,
+	        scrollbar: false,
+	        content: '${pageContext.request.contextPath}/admin/discipline/studentDiscipline',
+	        end: function(){
+				
+	        }
+	    });
+	});
+
 	//查询按钮
 	$("#disciplineCountButton").click(function() {
-		console.info('dasfdasdfsa');
 		var form = $("#disciplineCountFormId");
 		form.ajaxSubmit(function(data) {
-			console.info(data);
 			if(data=='error'){
-				console.info(data);
 				layer.msg("遇到未知错误，请重新查询！", {
 					offset: ['260px'],
 					time: 1500//1.5s后自动关闭
 				});
 			}else{
-				console.info(data);
 				parent.layer.msg('导出成功', {
 					offset: ['260px'],
      		        time: 1500//1.5s后自动关闭
      		    });
-				
 				window.location="${pageContext.request.contextPath}/admin/discipline/"+data+"/downloadDisciplineInfo";
 			};
 		});

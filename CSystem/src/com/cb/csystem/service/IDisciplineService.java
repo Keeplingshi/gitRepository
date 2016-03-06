@@ -89,7 +89,15 @@ public interface IDisciplineService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<DisciplineDomain> doSeearchList(String gradeId, String collegeId, String majorId, String classId,
+	public List<DisciplineDomain> doSearchList(String gradeId, String collegeId, String majorId, String classId,
 			String disciplineTypeId, Date beginTime, Date endTime)throws Exception;
+	
+	/**
+	 * 根据学生查询违纪
+	 * @param studentId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DisciplineDomain> doSearchByStudent(String studentId)throws Exception;
 	
 }
