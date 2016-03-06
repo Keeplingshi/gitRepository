@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 
-<!-- 就业列表页面 -->
+<!-- 党建列表页面 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -160,12 +160,12 @@
 		});  */
 	});
 	
-	//list中修改就业信息按钮
+	//list中修改党建信息按钮
 	function updatepaty(patyId)
 	{
 	    parent.layer.open({
 	        type: 2,
-	        title: '修改就业信息',
+	        title: '修改党建信息',
 	        shadeClose: true,
 	        area : ['700px' , '520px'],
 	        offset: ['100px'],
@@ -179,12 +179,12 @@
 	    });
 	}
 	
-	//list中查看就业信息按钮
+	//list中查看党建信息按钮
 	function viewpaty(patyId)
 	{
 	    parent.layer.open({
 	        type: 2,
-	        title: '查看就业信息',
+	        title: '查看党建信息',
 	        shadeClose: true,
 	        area : ['700px' , '520px'],
 	        offset: ['100px'],
