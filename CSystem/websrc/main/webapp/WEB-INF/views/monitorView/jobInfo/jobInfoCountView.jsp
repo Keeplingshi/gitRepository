@@ -9,7 +9,7 @@
 
 <div id="pop_content_page">
 	<form id="jobInfoCountFormId" action="${pageContext.request.contextPath}/monitor/jobInfo/jobInfoCountView" method="post">
-		<input type="hidden" id="classId" name="classId" value="${classId }" />
+<%-- 		<input type="hidden" id="classId" name="classId" value="${classId }" />
 		<table>
 			<tr style="height: 60px;">
 				<td>
@@ -27,7 +27,7 @@
 			<input type="button" id="jobInfoCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 300px;" value="查询"/>
 				</td>
 			</tr>
-		</table>
+		</table> --%>
 
 		<table class="table table-bordered table-striped" style="margin-top: 30px;">
 			<thead class="thin-border-bottom">
@@ -51,10 +51,10 @@
 
 <script>
 
-	//使下拉框默认选择
+/* 	//使下拉框默认选择
 	$(function() {
 		$("#class_jobCount_select_id option[value='${classId}']").attr("selected", true);
-	});
+	}); */
 
 	//查询按钮
 	$("#jobInfoCountButton").click(function() {
@@ -64,11 +64,11 @@
 		});
 	});
 
-	//下拉框选择后给隐藏域赋值
+/* 	//下拉框选择后给隐藏域赋值
 	$("#class_jobCount_select_id").change(function() {
 		var classIdVal = $(this).children('option:selected').val();
 		$("#classId").val(classIdVal);
-	});
+	}); */
 
 </script>
 

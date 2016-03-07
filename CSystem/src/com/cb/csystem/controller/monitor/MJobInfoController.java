@@ -73,14 +73,14 @@ public class MJobInfoController {
 			if(userDomain.getClassDomain()!=null){
 				
 				List<JobInfoDomain> jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo, null, null, null, userDomain.getClassDomain().getId(),null,null, null, null, null);
-				List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
+				//List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
 				List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);
 				List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 				
 				model.addAttribute("contractStatusList", contractStatusList);
 				model.addAttribute("protocalStateList", protocalStateList);
 				model.addAttribute("jobInfoList", jobInfoList);
-				model.addAttribute("classList", classList);
+				//model.addAttribute("classList", classList);
 				model.addAttribute("classId", userDomain.getClassDomain().getId());
 				model.addAttribute("userDomain", userDomain);
 			}
@@ -102,7 +102,7 @@ public class MJobInfoController {
 	 */
 	@RequestMapping("/jobInfoSearchList")
 	public String dojobInfoSearchList(@ModelAttribute("pageInfo") PageInfo pageInfo
-			,BindingResult bindingResult,Model model,HttpSession session,String classId,String contractStatusId
+			,BindingResult bindingResult,Model model,HttpSession session,String contractStatusId
 			,String protocalStateId,String searchText,String sortMode,String sortValue)throws Exception{
 	
 		//获取当前登录用户名
@@ -112,13 +112,13 @@ public class MJobInfoController {
 			if(userDomain.getClassDomain()!=null){
 				
 				List<JobInfoDomain> jobInfoList=new ArrayList<JobInfoDomain>();
-				if(ValidateUtil.isEmpty(classId)){
-					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, userDomain.getClassDomain().getMajor().getId(),contractStatusId,protocalStateId, null, searchText, sortMode, sortValue);
-				}else{
-					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, null, classId,contractStatusId,protocalStateId, searchText, sortMode, sortValue);
-				}
-				
-				List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
+//				if(ValidateUtil.isEmpty(classId)){
+//					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, userDomain.getClassDomain().getMajor().getId(),contractStatusId,protocalStateId, null, searchText, sortMode, sortValue);
+//				}else{
+//					jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, null, classId,contractStatusId,protocalStateId, searchText, sortMode, sortValue);
+//				}
+				jobInfoList=jobInfoService.doSearchjobInfoPageList(pageInfo,null, null, null,userDomain.getClassDomain().getId(),contractStatusId, protocalStateId, searchText, sortMode, sortValue);
+				//List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
 				List<CodeBookDomain> contractStatusList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.CONTRACTSTATUS_TYPE);
 				List<CodeBookDomain> protocalStateList=CodeBookHelper.getCodeBookByType(CodeBookConstsType.PROTOCALSTATE_TYPE);
 				
@@ -128,8 +128,8 @@ public class MJobInfoController {
 				model.addAttribute("contractStatusId", contractStatusId);
 				model.addAttribute("protocalStateId", protocalStateId);
 				model.addAttribute("jobInfoList", jobInfoList);
-				model.addAttribute("classList", classList);
-				model.addAttribute("classId", classId);
+//				model.addAttribute("classList", classList);
+//				model.addAttribute("classId", classId);
 				model.addAttribute("searchText", searchText);
 				model.addAttribute("sortMode", sortMode);
 				model.addAttribute("sortValue", sortValue);
@@ -270,23 +270,23 @@ public class MJobInfoController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/jobInfoCountView")
-	public String dojobInfoCountView(Model model,HttpSession session,String classId)throws Exception{
+	public String dojobInfoCountView(Model model,HttpSession session)throws Exception{
 		
 		String username=(String)session.getAttribute(Consts.CURRENT_USER);
 		UserDomain userDomain=userService.doGetUserByUsername(username);
 		if(userDomain!=null){
 			if(userDomain.getClassDomain()!=null){
-				List<SelectItem> jobInfoCountList=new ArrayList<SelectItem>();
-				if(ValidateUtil.isEmpty(classId)){
-					jobInfoCountList=jobInfoService.doJobInfoCount(null, null, userDomain.getClassDomain().getMajor().getId(), null);
-				}else{
-					jobInfoCountList=jobInfoService.doJobInfoCount(null, null, null, classId);
-				}
-				List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
+				List<SelectItem> jobInfoCountList=jobInfoService.doJobInfoCount(null, null, null, userDomain.getClassDomain().getId());
+//				if(ValidateUtil.isEmpty(classId)){
+//					jobInfoCountList=jobInfoService.doJobInfoCount(null, null, userDomain.getClassDomain().getMajor().getId(), null);
+//				}else{
+//					jobInfoCountList=jobInfoService.doJobInfoCount(null, null, null, classId);
+//				}
+				//List<SelectItem> classList=classService.dogetClasssByMajorId(userDomain.getClassDomain().getMajor().getId());
 				
 				model.addAttribute("jobInfoCountList", jobInfoCountList);
-				model.addAttribute("classList", classList);
-				model.addAttribute("classId", classId);
+				//model.addAttribute("classList", classList);
+				//model.addAttribute("classId", classId);
 			}
 		}
 		

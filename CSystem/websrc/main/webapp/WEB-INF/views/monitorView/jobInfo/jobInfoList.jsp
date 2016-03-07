@@ -12,7 +12,7 @@
 
 <div>
 <form id="formId" action="${pageContext.request.contextPath}/monitor/jobInfo/jobInfoSearchList" method="post">
-	<input type="hidden" id="classId" name="classId" value="${classId }" />
+	<%-- <input type="hidden" id="classId" name="classId" value="${classId }" /> --%>
 	<input type="hidden" id="contractStatusId" name="contractStatusId" value="${contractStatusId }" />
 	<input type="hidden" id="protocalStateId" name="protocalStateId" value="${protocalStateId }" />
 	<input type="hidden" id="sortMode" name="sortMode" value="${sortMode }" />
@@ -24,13 +24,13 @@
 			<i class="icon-search nav-search-icon"></i>
 		</span>
 	
-		<label style="margin-left: 20px;">班级：</label>
+<%-- 		<label style="margin-left: 20px;">班级：</label>
 		<select id="class_select_id" style="width: 100px;">
 			<option value="" selected="selected">全部</option>
 			<c:forEach items="${classList }" var="classItem">
 				<option value="${classItem.selectText }">${classItem.selectValue}</option>
 			</c:forEach>
-		</select>
+		</select> --%>
 	
 		<label style="margin-left: 20px;">签约状态：</label>
 		<select id="contractStatus_select_id" class="select_style" onchange="getProtocalState(this.value)">
@@ -158,16 +158,16 @@
 	
 	//使下拉框默认选择
 	$(function(){
-		$("#class_select_id option[value='${classId}']").attr("selected",true);
+		//$("#class_select_id option[value='${classId}']").attr("selected",true);
 		$("#contractStatus_select_id option[value='${contractStatusId}']").attr("selected",true);
 		$("#protocalState_select_id option[value='${protocalStateId}']").attr("selected",true);
 	});
 	
 		//下拉框选择后给隐藏域赋值
-	$("#class_select_id").change(function(){
+/* 	$("#class_select_id").change(function(){
 		var classIdVal=$(this).children('option:selected').val();
 		$("#classId").val(classIdVal);
-	});
+	}); */
 	
 	//下拉框选择后给隐藏域赋值
 	$("#contractStatus_select_id").change(function(){
@@ -225,7 +225,7 @@
 	        type: 2,
 	        title: '就业信息统计',
 	        shadeClose: true,
-	        area : ['700px' , '500px'],
+	        area : ['700px' , '300px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/monitor/jobInfo/jobInfoCountView'
 	    });
