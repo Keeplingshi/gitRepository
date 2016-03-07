@@ -27,6 +27,7 @@ import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
 import com.cb.system.util.EndecryptUtils;
 import com.cb.system.util.PageInfo;
+import com.cb.system.util.ValidateUtil;
 
 /**
  * 用户控制层
@@ -168,6 +169,13 @@ public class UserController {
 		if (result.hasErrors()) {// 如果校验失败,则返回
 			return Consts.ERROR;
 		} else {
+			
+			if(domain.getCollege()==null||ValidateUtil.isEmpty(domain.getCollege().getId())){
+				domain.setCollege(null);
+			}
+			if(domain.getGrade()==null||ValidateUtil.isEmpty(domain.getGrade().getId())){
+				domain.setGrade(null);
+			}
 			//设置md5加密
 			domain.setPassword(EndecryptUtils.md5(domain.getPassword()));
 			if(userService.doSave(domain)){

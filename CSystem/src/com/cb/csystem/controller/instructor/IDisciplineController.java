@@ -20,24 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cb.csystem.domain.CodeBookDomain;
-import com.cb.csystem.domain.CollegeDomain;
 import com.cb.csystem.domain.DisciplineDomain;
 import com.cb.csystem.domain.DisciplineTypeDomain;
-import com.cb.csystem.domain.GradeDomain;
-import com.cb.csystem.domain.JobInfoDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
-import com.cb.csystem.service.ICollegeService;
 import com.cb.csystem.service.IDisciplineService;
 import com.cb.csystem.service.IDisciplineTypeService;
-import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IStudentService;
 import com.cb.csystem.service.IUserService;
-import com.cb.csystem.util.CodeBookConstsType;
-import com.cb.csystem.util.CodeBookHelper;
 import com.cb.csystem.util.Consts;
 import com.cb.csystem.util.DBToExcelUtil;
 import com.cb.system.util.DateUtil;
@@ -57,9 +49,7 @@ public class IDisciplineController {
 	@Resource private IUserService userService;
 	@Resource private IDisciplineService disciplineService;
 	@Resource private IDisciplineTypeService disciplineTypeService;
-	@Resource private IGradeService gradeService;
 	@Resource private IMajorService majorService;
-	@Resource private ICollegeService collegeService;
 	@Resource private IClassService classService;
 	@Resource private IStudentService studentService;
 	
@@ -103,13 +93,11 @@ public class IDisciplineController {
 				List<DisciplineTypeDomain> disciplineTypeList=disciplineTypeService.doGetFilterList();
 				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
 				List<SelectItem> classList=classService.doGetClazzSelectItem(gradeId, collegeId, null);
-				List<GradeDomain> gradeList=gradeService.doGetFilterList();
 				
 				model.addAttribute("disciplineList", disciplineList);
 				model.addAttribute("disciplineTypeList", disciplineTypeList);
 				model.addAttribute("majorList", majorList);
 				model.addAttribute("classList", classList);
-				model.addAttribute("gradeList", gradeList);
 				
 			}
 		}
@@ -144,17 +132,13 @@ public class IDisciplineController {
 				List<DisciplineDomain> disciplineList=disciplineService.doSearchPageList(pageInfo,gradeId
 						,collegeId,majorId,classId,disciplineTypeId,beginTime,endTime,searchText,sortMode,sortValue);
 				List<DisciplineTypeDomain> disciplineTypeList=disciplineTypeService.doGetFilterList();
-				List<CollegeDomain> collegeList=collegeService.doGetFilterList();
-				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
-				List<SelectItem> classList=classService.dogetClasssByMajorId(null);
-				List<GradeDomain> gradeList=gradeService.doGetFilterList();
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
+				List<SelectItem> classList=classService.doGetClazzSelectItem(gradeId, collegeId, null);
 				
 				model.addAttribute("disciplineList", disciplineList);
 				model.addAttribute("disciplineTypeList", disciplineTypeList);
-				model.addAttribute("collegeList", collegeList);
 				model.addAttribute("majorList", majorList);
 				model.addAttribute("classList", classList);
-				model.addAttribute("gradeList", gradeList);
 				
 				model.addAttribute("majorId", majorId);
 				model.addAttribute("classId", classId);

@@ -9,10 +9,10 @@
 <script src="${pageContext.request.contextPath}/resources/layer/layer.js"></script>
 
 <form id="userAddFormId" modelAttribute="domain" action="${pageContext.request.contextPath}/admin/user/save" method="post">
-	<input type="hidden" id="roleId" name="role.id" value="" />
-	<input type="hidden" id="roleAuthority" value="" />
-	<input type="hidden" id="collegeId" name="college.id" value="" />
-	<input type="hidden" id="gradeId" name="grade.id" value="" />
+	<input type="hidden" id="roleId" name="role.id" />
+	<input type="hidden" id="roleAuthority" />
+	<input type="hidden" id="collegeId" name="college.id" />
+	<input type="hidden" id="gradeId" name="grade.id" />
 	<table>
 		<tr>
 			<td class="lesta-150">账号：</td>
