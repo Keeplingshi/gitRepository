@@ -22,6 +22,27 @@ public class DateUtil {
 			"yyyy-MM-dd HH:mm:ss");
 	
 	/**
+	 * 获取今天日期
+	 * @return
+	 */
+	public static Date getToday(){
+		return new Date();
+	}
+	
+	/**
+	 * 获取前后几日的日期
+	 * @param date
+	 * @param i
+	 * @return
+	 */
+	public static Date getDayAfterBeforeToday(Date date,int i){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DAY_OF_MONTH, i);
+		return cal.getTime();
+	}
+	
+	/**
 	 * 获取本周一
 	 * @return
 	 */
@@ -217,5 +238,6 @@ public class DateUtil {
         
         return dateStr;
     }
+    
 
 }

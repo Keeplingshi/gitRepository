@@ -121,4 +121,14 @@ public class CodeBookConsts {
 	 * 是否积极：8006  1-积极  2-不积极
 	 */
 	public static final String ISPOSITIVE_TYPE_B="2";
+	
+	/**
+	 * 中党是否通过：8007  1-通过 2-不通过
+	 */
+	public static final String ISPASSACTIVE_TYPE_A="1";
+	
+	/**
+	 * 中党是否通过：8007  1-通过 2-不通过
+	 */
+	public static final String ISPASSACTIVE_TYPE_B="2";
 }

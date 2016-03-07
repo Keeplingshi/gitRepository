@@ -36,4 +36,9 @@ public class CodeBookConstsType {
 	 * 是否积极：8006
 	 */
 	public static final String ISPOSITIVE_TYPE="8006";
+	
+	/**
+	 * 中党是否通过
+	 */
+	public static final String ISPASSACTIVE_TYPE="8007";
 }

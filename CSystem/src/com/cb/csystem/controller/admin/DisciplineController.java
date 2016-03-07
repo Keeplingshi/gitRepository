@@ -282,11 +282,11 @@ public class DisciplineController {
 		
 		String username=(String)session.getAttribute(Consts.CURRENT_USER);
 		String filename=username+"_"+System.currentTimeMillis()+".xls";
-		
+		/*
 		if(countView_beginTime==null&&countView_endTime==null){
 			countView_beginTime=DateUtil.getTimesWeekMonday();
 			countView_endTime=DateUtil.getTimesWeekSunday();
-		}
+		}*/
 		
 		List<DisciplineDomain> disciplineDomains=disciplineService.doSearchList(gradeId, collegeId, majorId, classId, disciplineTypeId, countView_beginTime, countView_endTime);
 		

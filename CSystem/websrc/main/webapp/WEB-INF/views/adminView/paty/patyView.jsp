@@ -33,13 +33,37 @@
 		<tr>
 			<td class="lesta-150" colspan="2">提交入党申请书日期：</td>
 			<td class="lestb">
-				${patyDomain.student.classDomain.name }
+				<fmt:formatDate value="${patyDomain.applicationDate }" type="date"/>
 			</td>
 		</tr>
 		<tr>
 			<td class="lesta-150" colspan="2">确定积极份子日期：</td>
 			<td class="lestb">
-				${patyDomain.student.classDomain.name }
+				<fmt:formatDate value="${patyDomain.activeDate }" type="date"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150" colspan="2">中党是否通过：</td>
+			<td class="lestb">
+				${cusfun:getNameByValueAndType(patyDomain.isPassActive,"8007")} 
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150" colspan="2">确定发展对象日期：</td>
+			<td class="lestb">
+				<fmt:formatDate value="${patyDomain.developDate }" type="date"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150" colspan="2">入党日期：</td>
+			<td class="lestb">
+				<fmt:formatDate value="${patyDomain.joinpatyDate }" type="date"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="lesta-150" colspan="2">转正日期：</td>
+			<td class="lestb">
+				<fmt:formatDate value="${patyDomain.confirmDate }" type="date"/>
 			</td>
 		</tr>
 		<tr>

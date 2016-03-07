@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="com.cb.system.util.DateUtil"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addEditView.css" />
@@ -69,29 +70,25 @@
 			<tr style="height: 60px;">
 				<td>
 				<label style="margin-left: 20px;">起始时间：</label>
+				
 	            <input type="text" id="countView_beginTime" name="countView_beginTime" placeholder="起始时间" class="Wdate" 
-	            	style="width: 150px;height: 30px;cursor: pointer;" value="<fmt:formatDate value="${countView_beginTime }" pattern="yyyy-MM-dd"/>"
+	            	style="width: 150px;height: 30px;cursor: pointer;" value="<fmt:formatDate value="<%=DateUtil.getDayAfterBeforeToday(DateUtil.getToday(), -7) %>" pattern="yyyy-MM-dd"/>"
 	              	onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'countView_endTime\')}'})">
 	            <label style="margin-left: 20px;">结束时间：</label>
 	            <input type="text" id="countView_endTime" name="countView_endTime" placeholder="结束时间" class="Wdate" 
-	            	style="width: 150px;height: 30px;cursor: pointer;" value="<fmt:formatDate value="${countView_endTime }" pattern="yyyy-MM-dd"/>"
+	            	style="width: 150px;height: 30px;cursor: pointer;" value="<fmt:formatDate value="<%=DateUtil.getToday() %>" pattern="yyyy-MM-dd"/>"
 	              	onfocus="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'countView_beginTime\')}'})">
 				</td>
 			</tr>
 			<tr>
-			<td>
-			<span style="margin-left: 40px;color: red;">默认导出本周违纪情况</span>
-			</td>
+				<td>
+					<input type="button" id="disciplineCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 285px;" value="导出违纪报表"/>
+				</td>
 			</tr>
 			<tr>
-			<td>
-				<input type="button" id="disciplineCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 285px;" value="导出违纪报表"/>
-			</td>
-			</tr>
-			<tr>
-			<td>
-				<input type="button" id="studentQueryButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 270px;" value="学生个人违纪报表"/>
-			</td>
+				<td>
+					<input type="button" id="studentQueryButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 270px;" value="学生个人违纪报表"/>
+				</td>
 			</tr>
 		</table>
 		

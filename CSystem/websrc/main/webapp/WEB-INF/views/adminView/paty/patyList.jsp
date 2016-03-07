@@ -88,11 +88,11 @@
 						<td>${patyDomain.student.name }</td>
 						<td>${cusfun:getNameByValueAndType(patyDomain.student.sex,"8002")}</td>
 						<td>${patyDomain.student.classDomain.name }</td>
-						<td>${patyDomain.applicationDate }</td>
-						<td>${patyDomain.activeDate }</td>
-						<td>${patyDomain.developDate }</td>
-						<td>${patyDomain.joinpatyDate }</td>
-						<td>${patyDomain.confirmDate }</td>
+						<td><fmt:formatDate value="${patyDomain.applicationDate }" type="date"/></td>
+						<td><fmt:formatDate value="${patyDomain.activeDate }" type="date"/></td>
+						<td><fmt:formatDate value="${patyDomain.developDate }" type="date"/></td>
+						<td><fmt:formatDate value="${patyDomain.joinpatyDate }" type="date"/></td>
+						<td><fmt:formatDate value="${patyDomain.confirmDate }" type="date"/></td>
 						<td>
 							<input type="button" class="btn_list_view" value="查看" onclick="viewpaty('${patyDomain.id }')"/>
 							<input type="button" class="btn_list_update" value="修改" onclick="updatepaty('${patyDomain.id }')"/>
@@ -167,7 +167,7 @@
 	        type: 2,
 	        title: '修改党建信息',
 	        shadeClose: true,
-	        area : ['700px' , '520px'],
+	        area : ['700px' , '600px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/admin/paty/patyEdit/'+patyId,
 	        end: function(){
@@ -186,7 +186,7 @@
 	        type: 2,
 	        title: '查看党建信息',
 	        shadeClose: true,
-	        area : ['700px' , '520px'],
+	        area : ['700px' , '600px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/admin/paty/patyView/'+patyId
 	    });
