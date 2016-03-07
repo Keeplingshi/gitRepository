@@ -142,7 +142,19 @@
 	});
 	
 	$("#patyExcelToDBButton").click(function(){
-		layer.tips('正在开发','#patyExcelToDBButton');
+		//layer.tips('正在开发','#patyExcelToDBButton');
+		parent.layer.open({
+	        type: 2,
+	        title: '导入党建信息',
+	        shadeClose: true,
+	        area : ['600px' , '500px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/admin/paty/patyExcelToDBView',
+	        end: function(){
+	        
+	        }
+	    });
+		
 	});
 	
 	//测试

@@ -14,9 +14,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cb.csystem.domain.ClassDomain;
 import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.csystem.domain.PatyDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IJobInfoService;
+import com.cb.csystem.service.IPatyService;
 import com.cb.csystem.service.IStudentService;
+import com.cb.system.util.DateUtil;
 import com.cb.system.util.SpringContextUtil;
 import com.cb.system.util.ValidateUtil;
 
@@ -29,6 +32,7 @@ public class ExcelToDBUtil {
 
 	private static IStudentService studentService=(IStudentService)SpringContextUtil.getBean("studentService");
 	private static IJobInfoService jobInfoService=(IJobInfoService)SpringContextUtil.getBean("jobInfoService");
+	private static IPatyService patyService=(IPatyService)SpringContextUtil.getBean("patyService");
 	
 	/**
 	 * 从excel中录入学生信息
@@ -407,6 +411,166 @@ public class ExcelToDBUtil {
 
 		}
 		
+	}
+	
+	/**
+	 * 党建信息导入数据库
+	 * @param file
+	 * @return
+	 * @throws Exception
+	 */
+	public static String patyExcelToDB(MultipartFile file)throws Exception
+	{
+		Workbook workbook=null;
+		
+		try {
+			workbook = WorkbookFactory.create(file.getInputStream());
+		} catch (EncryptedDocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//获取excel的sheet
+		Sheet sheet = workbook.getSheetAt(0);
+		//日期格式化
+		int allNum=0;
+		int successNum=0;
+		
+		for(Row row:sheet){
+			if(row.getRowNum()==0){
+				continue;
+			}
+			allNum++;
+			String content=null;
+			Cell cell=null;
+			
+			//第0列，学号
+			cell = row.getCell(0, Row.CREATE_NULL_AS_BLANK); 
+			cell.setCellType(Cell.CELL_TYPE_STRING);
+			content=cell.getStringCellValue().trim();
+			
+			if(ValidateUtil.notEmpty(content)){
+				//通过学号获取学生
+				StudentDomain studentDomain=studentService.doGetByStudentId(content);
+				if(studentDomain!=null)
+				{
+					PatyDomain patyDomain=studentDomain.getPaty();
+					if(patyDomain!=null)
+					{
+						//提交入党申请书日期
+						cell = row.getCell(4, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						if(ValidateUtil.notEmpty(content)){
+							patyDomain.setApplicationDate(DateUtil.parseDate(content));
+						}
+						
+						//确定积极份子日期
+						cell = row.getCell(5, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						if(ValidateUtil.notEmpty(content)){
+							patyDomain.setActiveDate(DateUtil.parseDate(content));
+						}
+						
+						
+						//确定发展对象日期
+						cell = row.getCell(6, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						if(ValidateUtil.notEmpty(content)){
+							patyDomain.setDevelopDate(DateUtil.parseDate(content));
+						}
+						
+						//入党日期
+						cell = row.getCell(7, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						if(ValidateUtil.notEmpty(content)){
+							patyDomain.setJoinpatyDate(DateUtil.parseDate(content));
+						}
+						
+						//转正日期
+						cell = row.getCell(8, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						if(ValidateUtil.notEmpty(content)){
+							patyDomain.setConfirmDate(DateUtil.parseDate(content));
+						}
+						
+						//备注
+						cell = row.getCell(9, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						if(ValidateUtil.notEmpty(content)){
+							patyDomain.setNote(content);
+						}
+						
+						if(patyService.doSave(patyDomain)){
+							successNum++;
+						}
+						
+					}else{
+						patyDomain=new PatyDomain();
+						//提交入党申请书日期
+						cell = row.getCell(4, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						patyDomain.setApplicationDate(DateUtil.parseDate(content));
+						
+						//确定积极份子日期
+						cell = row.getCell(5, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						patyDomain.setActiveDate(DateUtil.parseDate(content));
+						
+						//确定发展对象日期
+						cell = row.getCell(6, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						patyDomain.setDevelopDate(DateUtil.parseDate(content));
+						
+						//入党日期
+						cell = row.getCell(7, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						patyDomain.setJoinpatyDate(DateUtil.parseDate(content));
+						
+						//转正日期
+						cell = row.getCell(8, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						patyDomain.setConfirmDate(DateUtil.parseDate(content));
+						
+						//备注
+						cell = row.getCell(9, Row.CREATE_NULL_AS_BLANK); 
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						content=cell.getStringCellValue().trim();
+						patyDomain.setNote(content);
+						
+						patyDomain.setStudent(studentDomain);
+						if(patyService.doSave(patyDomain)){
+							successNum++;
+						}
+						studentDomain.setPaty(patyDomain);
+						studentService.doSave(studentDomain);	//save
+					}
+					
+				}
+				
+			}
+		
+		}
+		
+		String result="共"+allNum+"条数据，导入成功"+successNum+"条";
+		
+		return result;
 	}
 	
 }

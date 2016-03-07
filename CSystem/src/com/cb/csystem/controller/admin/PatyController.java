@@ -204,20 +204,32 @@ public class PatyController {
 	}
 	
 	/**
+	 * 党建上传文件页面
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/test")
-	@ResponseBody
-	public String doTest()throws Exception{
+	@RequestMapping("/patyExcelToDBView")
+	public String dopatyExcelToDBView()throws Exception{
 		
-		List<StudentDomain> studentDomains=studentService.doGetFilterList();
-		for(StudentDomain studentDomain:studentDomains){
-			PatyDomain patyDomain=new PatyDomain();
-			patyDomain.setStudent(studentDomain);
-			patyService.doSave(patyDomain);
-		}
-		
-		return Consts.SUCCESS;
+		return "/adminView/paty/patyExcelToDBView";
 	}
+	
+	
+//	/**
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	@RequestMapping("/test")
+//	@ResponseBody
+//	public String doTest()throws Exception{
+//		
+//		List<StudentDomain> studentDomains=studentService.doGetFilterList();
+//		for(StudentDomain studentDomain:studentDomains){
+//			PatyDomain patyDomain=new PatyDomain();
+//			patyDomain.setStudent(studentDomain);
+//			patyService.doSave(patyDomain);
+//		}
+//		
+//		return Consts.SUCCESS;
+//	}
 }

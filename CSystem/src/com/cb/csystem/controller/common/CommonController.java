@@ -3,6 +3,7 @@ package com.cb.csystem.controller.common;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
@@ -23,6 +24,7 @@ import com.cb.csystem.service.IUserService;
 import com.cb.csystem.util.Consts;
 import com.cb.csystem.util.ExcelToDBUtil;
 import com.cb.system.util.EndecryptUtils;
+import com.cb.system.util.FileUtil;
 import com.cb.system.util.SelectItem;
 
 /**
@@ -172,4 +174,34 @@ public class CommonController {
 		
 		return Consts.SUCCESS;
 	}
+	
+	/**
+	 * 下载党建信息导入模板
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/paty/downloadPatyExcel")
+	public void dodownloadStudentExcel(HttpServletResponse response)throws Exception{
+		FileUtil.fileDownload(response, Consts.DOWNLOAD_PATH+Consts.PATY_EXCEL, Consts.PATY_EXCEL);
+	}
+	
+	/**
+	 * 党建导入信息
+	 * @param file
+	 * @return
+	 */
+	@RequestMapping("/paty/patyExcelSave")
+	@ResponseBody
+	public String dopatyExcelSave(@RequestParam(value = "file", required = false) MultipartFile file)
+	{
+		String result=null;
+		try{
+			result=ExcelToDBUtil.patyExcelToDB(file);
+		}catch (Exception e) {
+			return Consts.ERROR;
+		}
+		
+		return result;
+	}
+	
 }

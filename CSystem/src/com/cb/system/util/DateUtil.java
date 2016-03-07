@@ -21,6 +21,85 @@ public class DateUtil {
 	private final static SimpleDateFormat sdfTime = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
 	
+	
+	/**
+	 * 从字符串中分析日期
+	 * @param dateStr
+	 * @return
+	 * @throws ParseException
+	 */
+    public static Date parseDate(String dateStr) throws ParseException {
+        Date date=null;
+        String[] dateArray = dateStr.split("\\D+");     //+防止多个非数字字符在一起时导致解析错误
+        int dateLen = dateArray.length;
+        int dateStrLen=dateStr.length();
+        if(dateLen>0){
+            if(dateLen==1&&dateStrLen>4){
+                if(dateStrLen=="yyyyMMddHHmmss".length()){
+                    //如果字符串长度为14位并且不包含其他非数字字符，则按照（yyyyMMddHHmmss）格式解析
+                    date=parseDate(dateStr,"yyyyMMddHHmmss");
+                }else if(dateStrLen=="yyyyMMddHHmm".length()){
+                    date=parseDate(dateStr,"yyyyMMddHHmm");
+                }else if(dateStrLen=="yyyyMMddHH".length()){
+                    date=parseDate(dateStr,"yyyyMMddHH");
+                }else if(dateStrLen=="yyyyMMdd".length()){
+                    date=parseDate(dateStr,"yyyyMMdd");
+                }else if(dateStrLen=="yyyyMM".length()){
+                    date=parseDate(dateStr,"yyyyMM");
+                }
+            }else{
+                String fDateStr=dateArray[0];
+                for(int i=1;i<dateLen;i++){
+                    //左补齐是防止十位数省略的情况
+                    fDateStr+=leftPad(dateArray[i],"0",2);
+                }
+                 
+                if(dateStr.trim().matches("^\\d{1,2}:\\d{1,2}(:\\d{1,2})?$")){
+                    //补充年月日3个字段
+                    dateLen+=3;
+                    fDateStr=formatDate(new Date(),"yyyyMMdd")+fDateStr;
+                }
+                 
+                date=parseDate(fDateStr,"yyyyMMddHHmmss".substring(0, (dateLen-1)*2+4));
+            }
+        }
+         
+        return date;
+    }
+    
+    /**
+     * 按照给定的格式化字符串解析日期
+     * 使用方法：  Date date=DateUtil.parseDate("20130803", "yyyyMMdd");
+     * @param dateStr
+     * @param formatStr
+     * @return
+     * @throws ParseException
+     */
+    public static Date parseDate(String dateStr, String formatStr) throws ParseException {
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
+        date = sdf.parse(dateStr);
+        return date;
+    }
+    
+  //左补齐
+    public static String leftPad(String str,String pad,int len){
+        String newStr=(str==null?"":str);
+        while(newStr.length()<len){
+            newStr=pad+newStr;
+        }
+        if(newStr.length()>len){
+            newStr=newStr.substring(newStr.length()-len);
+        }
+        return newStr;
+    }
+    
+  //按照给定的格式化字符串格式化日期
+    public static String formatDate(Date date, String formatStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
+        return sdf.format(date);
+    }
+	
 	/**
 	 * 获取今天日期
 	 * @return

@@ -39,7 +39,15 @@ public class Consts {
 	 */
 	public static final String JOBCOUNT_EXCEL="jobcount.xls";
 	
+	/**
+	 * 违纪报表导出文件
+	 */
 	public static final String DISCIPLINE_EXCEL="违纪报表.xls";
+	
+	/**
+	 * 党建信息导入模板
+	 */
+	public static final String PATY_EXCEL="党建信息导入模板.xls";
 	
 	/**
 	 * student表下载模板
