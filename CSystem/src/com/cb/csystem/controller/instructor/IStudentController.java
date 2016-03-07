@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.cb.csystem.domain.CodeBookDomain;
+import com.cb.csystem.domain.CollegeDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.domain.UserDomain;
 import com.cb.csystem.service.IClassService;
@@ -355,5 +356,40 @@ public class IStudentController {
 	@RequestMapping("/downloadStudentInfo")
 	public void dodownloadStudentInfo(HttpServletResponse response)throws Exception{
 		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+Consts.STUDENT_EXCEL, Consts.STUDENT_EXCEL);
+	}
+	
+	/**
+	 * 学生选择页面
+	 * @param pageInfo
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/studentChooseView")
+	public String dostudentChooseView(@ModelAttribute("pagedialogInfo") PageInfo pagedialogInfo,Model model,
+			HttpSession session,String majorId,String classId,String searchText)throws Exception{
+		
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		UserDomain userDomain=userService.doGetUserByUsername(username);
+		if(userDomain!=null){
+			if(userDomain.getCollege()!=null&&userDomain.getGrade()!=null){
+				
+				String collegeId=userDomain.getCollege().getId();
+				String gradeId=userDomain.getGrade().getId();
+				
+				List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(collegeId);
+				List<SelectItem> classList=classService.doGetClazzSelectItem(gradeId, collegeId, majorId);
+				List<StudentDomain> studentList=studentService.doSearchstudentPageList(pagedialogInfo, gradeId, collegeId, majorId, classId, searchText, null, null);
+				
+				model.addAttribute("majorList", majorList);
+				model.addAttribute("classList", classList);
+				model.addAttribute("studentList", studentList);
+				model.addAttribute("classId", classId);
+				model.addAttribute("majorId", majorId);
+				model.addAttribute("searchText", searchText);
+			}
+		}
+		
+		return "/instructorView/student/studentChooseView";
 	}
 }

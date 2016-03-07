@@ -80,10 +80,7 @@
 	        scrollbar: false,
 	        content: '${pageContext.request.contextPath}/admin/student/studentChooseView',
 	        end: function(){
-				//默认加载违纪类型列表
-	    		$("#formId").ajaxSubmit(function(data){
-	        	 	$("#content_page").html(data);
-	    		});
+				
 	        }
 	    }); 
 	});

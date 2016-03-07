@@ -98,6 +98,31 @@
 							<a href="#" class="dropdown-toggle">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text">
+									成长档案
+									<span class="badge badge-primary ">2</span>
+								</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu" id="submenu">
+								<li id="paty_manage">
+									<a href="javascript:void(0);">
+										<i class="icon-double-angle-right"></i>
+										党建管理
+									</a>
+								</li>
+								<li id="discipline_manage">
+									<a href="javascript:void(0);">
+										<i class="icon-double-angle-right"></i>
+										违纪管理
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text">
 									学院管理
 									<span class="badge badge-primary ">2</span>
 								</span>
@@ -199,6 +224,22 @@
 		
 		$("#job_manage").click(function(){
 			$.post("${pageContext.request.contextPath}/instructor/jobInfo/jobInfoList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+
+		//违纪管理
+		$("#discipline_manage").click(function(){
+			$.post("${pageContext.request.contextPath}/instructor/discipline/disciplineList", function(result){
+				$("#content_page").empty();
+				$("#content_page").html(result);
+			});
+		});
+		
+		//党建管理
+		$("#paty_manage").click(function(){
+			$.post("${pageContext.request.contextPath}/instructor/paty/patyList", function(result){
 				$("#content_page").empty();
 				$("#content_page").html(result);
 			});

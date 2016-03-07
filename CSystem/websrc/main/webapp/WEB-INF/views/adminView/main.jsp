@@ -118,16 +118,16 @@
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu" id="submenu">
-								<li id="discipline_manage">
-									<a href="javascript:void(0);">
-										<i class="icon-double-angle-right"></i>
-										违纪管理
-									</a>
-								</li>
 								<li id="paty_manage">
 									<a href="javascript:void(0);">
 										<i class="icon-double-angle-right"></i>
 										党建管理
+									</a>
+								</li>
+								<li id="discipline_manage">
+									<a href="javascript:void(0);">
+										<i class="icon-double-angle-right"></i>
+										违纪管理
 									</a>
 								</li>
 							</ul>

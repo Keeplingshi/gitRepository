@@ -200,13 +200,10 @@
 	        type: 2,
 	        title: '违纪信息统计',
 	        shadeClose: true,
-	        area : ['700px' , '500px'],
+	        area : ['600px' , '400px'],
 	        offset: ['100px'],
 	        content: '${pageContext.request.contextPath}/admin/discipline/disciplineCountView'
 	    });
-/* 		layer.tips("正在开发","#disciplineReportButton",{
-		    tips: 3
-		}); */
 	});
 
 	//新增违纪类型按钮
@@ -309,7 +306,7 @@
 		}
 		
 		//询问框
-		layer.confirm('是否确定删除这些学生？', {
+		layer.confirm('是否确定删除这些记录？', {
 			offset: ['260px'],
 		    btn: ['确定','取消'] //按钮
 		}, function(){

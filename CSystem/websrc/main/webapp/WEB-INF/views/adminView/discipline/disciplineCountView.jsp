@@ -82,12 +82,8 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="button" id="disciplineCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 285px;" value="导出违纪报表"/>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="button" id="studentQueryButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 270px;" value="学生个人违纪报表"/>
+					<input type="button" id="disciplineCountButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 140px;" value="导出违纪报表"/>
+					<input type="button" id="studentQueryButton" class="button button-primary button-rounded button-small" style="margin-top: 30px;margin-left: 30px;" value="学生个人违纪报表"/>
 				</td>
 			</tr>
 		</table>
