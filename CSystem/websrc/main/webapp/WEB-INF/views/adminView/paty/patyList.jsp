@@ -26,7 +26,7 @@
 		</span>
 		
 		<!-- <input id="testBtn" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="测试"/> -->
-		<input id="patyExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导入党建信息"/>
+		<!-- <input id="patyExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导入党建信息"/> -->
 		<input id="patyQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	</div>
 	<div class="breadcrumbs">

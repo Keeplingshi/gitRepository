@@ -409,6 +409,13 @@ public class JobInfoService implements IJobInfoService{
 				detachedCriteria_E.add(Restrictions.eq("qclazz.id", classId));
 				detachedCriteria_F.add(Restrictions.eq("qclazz.id", classId));
 				
+				detachedCriteria_C.add(Restrictions.eq("contractStatus", Integer.parseInt(CodeBookConsts.CONTRACTSTATUS_TYPE_C)));
+				detachedCriteria_D.add(Restrictions.eq("contractStatus", Integer.parseInt(CodeBookConsts.CONTRACTSTATUS_TYPE_D)));
+				detachedCriteria_A.add(Restrictions.eq("contractStatus", Integer.parseInt(CodeBookConsts.CONTRACTSTATUS_TYPE_A)));
+				detachedCriteria_B.add(Restrictions.eq("contractStatus", Integer.parseInt(CodeBookConsts.CONTRACTSTATUS_TYPE_B)));
+				detachedCriteria_E.add(Restrictions.eq("contractStatus", Integer.parseInt(CodeBookConsts.CONTRACTSTATUS_TYPE_E)));
+				detachedCriteria_F.add(Restrictions.eq("contractStatus", Integer.parseInt(CodeBookConsts.CONTRACTSTATUS_TYPE_F)));
+				
 				JobInfoCountBean jobInfoCountBean=new JobInfoCountBean();
 				jobInfoCountBean.setClassName(classDomain.getName());
 				jobInfoCountBean.setClassMemberNum(jobInfoDao.getTotalCount(detachedCriteria));
