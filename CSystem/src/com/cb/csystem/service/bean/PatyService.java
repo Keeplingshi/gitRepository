@@ -14,7 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cb.csystem.dao.IPatyDao;
 import com.cb.csystem.domain.PatyDomain;
+import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.service.IPatyService;
+import com.cb.csystem.service.IStudentService;
+import com.cb.csystem.util.CodeBookConsts;
+import com.cb.csystem.util.CodeBookConstsType;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.ValidateUtil;
 
@@ -28,6 +32,7 @@ import com.cb.system.util.ValidateUtil;
 public class PatyService implements IPatyService{
 
 	@Resource private IPatyDao patyDao;
+	@Resource private IStudentService studentService;
 	
 	/**
 	 * @see com.cb.csystem.service.IPatyService#doGetById(java.lang.String)
@@ -64,6 +69,25 @@ public class PatyService implements IPatyService{
 	@Override
 	public boolean doSave(PatyDomain patyDomain) throws Exception {
 		// TODO Auto-generated method stub
+		
+//		StudentDomain studentDomain=patyDomain.getStudent();
+//		
+//		if(patyDomain.getConfirmDate()!=null){
+//			//转正，党员
+//			studentDomain.setPoliticalStatus(Integer.valueOf(CodeBookConsts.POLITICALSTATUE_TYPE_A));
+//		}else{
+//			if(patyDomain.getJoinpatyDate()!=null){
+//				//预备党员
+//				studentDomain.setPoliticalStatus(Integer.valueOf(CodeBookConsts.POLITICALSTATUE_TYPE_B));
+//			}else{
+//				if(patyDomain.getActiveDate()!=null){
+//					
+//				}
+//				
+//			}
+//			
+//		}
+		
 		if(patyDomain.getId()==null){
 			return patyDao.save(patyDomain);
 		}else{
@@ -125,6 +149,43 @@ public class PatyService implements IPatyService{
 		}
 		
 		return patyDao.getPageList(detachedCriteria, pageInfo);
+	}
+
+	/**
+	 * @see com.cb.csystem.service.IPatyService#doSearchPatyList(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<PatyDomain> doSearchPatyList(String gradeId, String collegeId,
+			String majorId, String classId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(PatyDomain.class);
+		detachedCriteria.createAlias("student", "qstu");
+		detachedCriteria.createAlias("qstu.classDomain", "qclazz");
+		//班级过滤
+		if(ValidateUtil.notEmpty(classId)){
+			detachedCriteria.add(Restrictions.eq("qclazz.id", classId));
+		}else{
+			if(ValidateUtil.notEmpty(majorId)){
+				//专业过滤
+				detachedCriteria.createAlias("qclazz.major", "qmajor");
+				detachedCriteria.add(Restrictions.eq("qmajor.id", majorId));
+			}else{
+				if(ValidateUtil.notEmpty(collegeId)){
+					//学院过滤
+					detachedCriteria.createAlias("qclazz.major", "qmajor");
+					detachedCriteria.createAlias("qmajor.college", "qcollege");
+					detachedCriteria.add(Restrictions.eq("qcollege.id", collegeId));
+				}
+			}
+			if(ValidateUtil.notEmpty(gradeId)){
+				//年级过滤
+				detachedCriteria.createAlias("qclazz.grade", "qgrade");
+				detachedCriteria.add(Restrictions.eq("qgrade.id", gradeId));
+			}
+		}
+		
+		return patyDao.getFilterList(detachedCriteria);
 	}
 
 }

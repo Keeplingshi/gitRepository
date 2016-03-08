@@ -17,6 +17,7 @@ import org.apache.poi.ss.util.Region;
 
 import com.cb.csystem.domain.DisciplineDomain;
 import com.cb.csystem.domain.JobInfoDomain;
+import com.cb.csystem.domain.PatyDomain;
 import com.cb.csystem.domain.StudentDomain;
 import com.cb.csystem.util.bean.JobInfoCountBean;
 import com.cb.system.util.DateUtil;
@@ -395,6 +396,115 @@ public class DBToExcelUtil {
 			cells[7].setCellValue(disciplineDomain.getDisciplineType().getName());
 			//备注
 			cells[8].setCellValue(disciplineDomain.getNote());
+		}
+		
+		try {
+			//首先创建文件
+			if(FileUtil.createFile(path)){
+				OutputStream out = new FileOutputStream(path);
+				workbook.write(out);
+				out.close();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			filename=null;
+		}
+		
+		return filename;
+	}
+
+	/**
+	 * 导出党建信息
+	 * @param patyDomains
+	 * @param string
+	 * @param filename
+	 * @param title
+	 * @return
+	 */
+	public static String patyDBToExcel(List<PatyDomain> patyDomains,
+			String path, String filename, String title) {
+		// TODO Auto-generated method stub
+		
+		String[] headers = { "学号", "姓名", "性别","班级","民族","提交入党申请书日期","确定积极分子日期","确定发展对象日期","入党日期","转正日期","备注"};
+		// 声明一个工作薄
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		// 生成一个表格
+		HSSFSheet sheet = workbook.createSheet("党建信息");
+		// 设置表格默认列宽度为15个字节
+		sheet.setDefaultColumnWidth(15);
+		
+		// 产生表格标题行
+		int columnNum=headers.length;
+		HSSFRow row = sheet.createRow(0);
+		//第0行，文档标题
+		HSSFCell cell = row.createCell(0);
+		//表格样式
+		HSSFCellStyle titlestyle = workbook.createCellStyle();
+		HSSFFont titlefont  = workbook.createFont();
+		//设置字体
+		titlefont.setFontHeightInPoints((short) 18);
+		titlefont.setFontName("宋体");
+		titlestyle.setFont(titlefont);
+		titlestyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中       
+		titlestyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//上下居中      
+		cell.setCellStyle(titlestyle);
+		//标题行内容
+		cell.setCellValue(title);
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, columnNum-1));
+		
+		//从第一行开始标题
+		row = sheet.createRow(1);
+		//表格样式
+		HSSFCellStyle style = workbook.createCellStyle();
+		HSSFFont font  = workbook.createFont();
+		//设置字体
+		font.setFontHeightInPoints((short)12);
+		font.setFontName("宋体");
+		style.setFont(font);
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中       
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//上下居中      
+		for (int i = 0; i < columnNum; i++) {
+			cell = row.createCell(i);
+			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+			cell.setCellValue(text);
+			cell.setCellStyle(style);
+		}
+		
+		//文档内容
+		int index=1;
+		HSSFCell[] cells=new HSSFCell[columnNum];
+		for(PatyDomain patyDomain:patyDomains)
+		{
+			index++;
+			row = sheet.createRow(index);
+			for(int i=0;i<columnNum;i++){
+				cells[i]=row.createCell(i);
+				cells[i].setCellStyle(style);
+			}
+			//{ "学号", "姓名", "性别","班级","民族","提交入党申请书日期","确定积极分子日期","确定发展对象日期","入党日期","转正日期","备注"};
+			//学号
+			cells[0].setCellValue(patyDomain.getStudent().getStuId());
+			//姓名
+			cells[1].setCellValue(patyDomain.getStudent().getName());
+			//性别
+			cells[2].setCellValue(CodeBookHelper.getNameByValueAndType(String.valueOf(patyDomain.getStudent().getSex()), CodeBookConstsType.SEX_TYPE));
+			//班级
+			cells[3].setCellValue(patyDomain.getStudent().getClassDomain().getName());
+			//民族
+			cells[4].setCellValue(patyDomain.getStudent().getNationality());
+			//提交入党申请书日期
+			cells[5].setCellValue(DateUtil.getDayFormat(patyDomain.getApplicationDate()));
+			//确定积极分子日期
+			cells[6].setCellValue(DateUtil.getDayFormat(patyDomain.getActiveDate()));
+			//确定发展对象日期
+			cells[7].setCellValue(DateUtil.getDayFormat(patyDomain.getDevelopDate()));
+			//入党日期
+			cells[8].setCellValue(DateUtil.getDayFormat(patyDomain.getJoinpatyDate()));
+			//转正日期
+			cells[9].setCellValue(DateUtil.getDayFormat(patyDomain.getConfirmDate()));
+			//备注
+			cells[10].setCellValue(patyDomain.getNote());
+			
 		}
 		
 		try {

@@ -1,11 +1,14 @@
 package com.cb.csystem.controller.admin;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,9 +17,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cb.csystem.domain.CollegeDomain;
+import com.cb.csystem.domain.DisciplineDomain;
 import com.cb.csystem.domain.GradeDomain;
 import com.cb.csystem.domain.PatyDomain;
 import com.cb.csystem.domain.StudentDomain;
@@ -26,7 +31,11 @@ import com.cb.csystem.service.IGradeService;
 import com.cb.csystem.service.IMajorService;
 import com.cb.csystem.service.IPatyService;
 import com.cb.csystem.service.IStudentService;
+import com.cb.csystem.util.CodeBookConsts;
 import com.cb.csystem.util.Consts;
+import com.cb.csystem.util.DBToExcelUtil;
+import com.cb.system.util.DateUtil;
+import com.cb.system.util.FileUtil;
 import com.cb.system.util.PageInfo;
 import com.cb.system.util.SelectItem;
 
@@ -214,22 +223,91 @@ public class PatyController {
 		return "/adminView/paty/patyExcelToDBView";
 	}
 	
+	/**
+	 * 党建导出信息文件
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/patyDBToExcelView")
+	public String dopatyDBToExcelView(Model model)throws Exception{
+		
+		List<CollegeDomain> collegeList=collegeService.doGetFilterList();
+		List<SelectItem> majorList=majorService.dogetMajorsByCollegeId(null);
+		List<SelectItem> classList=classService.dogetClasssByMajorId(null);
+		List<GradeDomain> gradeList=gradeService.doGetFilterList();
+		
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("majorList", majorList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("gradeList", gradeList);
+		
+		return "/adminView/paty/patyDBToExcelView";
+	}
 	
-//	/**
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	@RequestMapping("/test")
-//	@ResponseBody
-//	public String doTest()throws Exception{
-//		
-//		List<StudentDomain> studentDomains=studentService.doGetFilterList();
-//		for(StudentDomain studentDomain:studentDomains){
-//			PatyDomain patyDomain=new PatyDomain();
-//			patyDomain.setStudent(studentDomain);
-//			patyService.doSave(patyDomain);
-//		}
-//		
-//		return Consts.SUCCESS;
-//	}
+	/**
+	 * 导出党建信息
+	 * @param session
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/patyExcelSave")
+	@ResponseBody
+	public String dopatyExcelSave(HttpSession session,String gradeId
+			,String collegeId,String majorId,String classId)throws Exception{
+		
+		String username=(String)session.getAttribute(Consts.CURRENT_USER);
+		String filename=username+"_"+System.currentTimeMillis()+".xls";
+		
+		List<PatyDomain> patyDomains=patyService.doSearchPatyList(gradeId, collegeId, majorId, classId);
+		
+		String title="党建信息";
+		String fileOutputName=DBToExcelUtil.patyDBToExcel(patyDomains, Consts.DBTOEXCEL_PATH+filename, filename,title);
+		if(fileOutputName.equals(filename)){
+			return fileOutputName;
+		}
+		
+		return Consts.ERROR;
+	}
+	
+	/**
+	 * 下载党建报表
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/{fileOutputName}/downloadPatyExcel")
+	public void dodownloadPatyExcel(HttpServletResponse response,@PathVariable String fileOutputName)throws Exception{
+		FileUtil.fileDownload(response, Consts.DBTOEXCEL_PATH+fileOutputName, Consts.PATYOUT_EXCEL);
+		FileUtil.delFile(Consts.DBTOEXCEL_PATH+fileOutputName);
+	}
+	
+	
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/test")
+	@ResponseBody
+	public String doTest()throws Exception{
+		
+		List<StudentDomain> studentDomains=studentService.doGetFilterList();
+		for(StudentDomain studentDomain:studentDomains){
+			PatyDomain patyDomain=studentDomain.getPaty();
+			if(patyDomain.getConfirmDate()!=null){
+				studentDomain.setPoliticalStatus(Integer.valueOf(CodeBookConsts.POLITICALSTATUE_TYPE_A));
+			}else if(patyDomain.getJoinpatyDate()!=null){
+				studentDomain.setPoliticalStatus(Integer.valueOf(CodeBookConsts.POLITICALSTATUE_TYPE_B));
+			}else if(patyDomain.getActiveDate()!=null||patyDomain.getDevelopDate()!=null){
+				studentDomain.setPoliticalStatus(Integer.valueOf(CodeBookConsts.POLITICALSTATUE_TYPE_C));
+			}else{
+				studentDomain.setPoliticalStatus(Integer.valueOf(CodeBookConsts.POLITICALSTATUE_TYPE_D));
+			}
+			studentService.doSave(studentDomain);
+		}
+		
+		return Consts.SUCCESS;
+	}
 }

@@ -65,5 +65,16 @@ public interface IPatyService {
 	public List<PatyDomain> doSearchPatyPageList(PageInfo pageInfo,String gradeId,String collegeId
 			,String majorId,String classId,String searchText,String sortMode,String sortValue)throws Exception;
 
+	/**
+	 * 查询列表
+	 * @param gradeId
+	 * @param collegeId
+	 * @param majorId
+	 * @param classId
+	 * @return
+	 */
+	public List<PatyDomain> doSearchPatyList(String gradeId, String collegeId,
+			String majorId, String classId)throws Exception;
+
 	
 }

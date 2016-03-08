@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-
 <!-- 党建列表页面 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -27,6 +26,7 @@
 		
 		<!-- <input id="testBtn" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="测试"/> -->
 		<!-- <input id="patyExcelToDBButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="导入党建信息"/> -->
+		<input id="patyDBToExcelButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="信息导出"/>
 		<input id="patyQueryButton" type="button" class="button button-primary button-rounded button-small" style="margin: 5px;float: right;" value="查询"/>
 	</div>
 	<div class="breadcrumbs">
@@ -89,7 +89,12 @@
 						<td>${cusfun:getNameByValueAndType(patyDomain.student.sex,"8002")}</td>
 						<td>${patyDomain.student.classDomain.name }</td>
 						<td><fmt:formatDate value="${patyDomain.applicationDate }" type="date"/></td>
-						<td><fmt:formatDate value="${patyDomain.activeDate }" type="date"/></td>
+						<c:if test="${patyDomain.isPassActive=='1'}">
+							<td><fmt:formatDate value="${patyDomain.activeDate }" type="date"/></td>
+						</c:if>
+						<c:if test="${patyDomain.isPassActive!='1'}">
+							<td style="color: red;"><fmt:formatDate value="${patyDomain.activeDate }" type="date"/></td>
+						</c:if>
 						<td><fmt:formatDate value="${patyDomain.developDate }" type="date"/></td>
 						<td><fmt:formatDate value="${patyDomain.joinpatyDate }" type="date"/></td>
 						<td><fmt:formatDate value="${patyDomain.confirmDate }" type="date"/></td>
@@ -141,7 +146,22 @@
 		});
 	});
 	
-	$("#patyExcelToDBButton").click(function(){
+	//党建信息导出
+	$("#patyDBToExcelButton").click(function(){
+		parent.layer.open({
+	        type: 2,
+	        title: '导入党建信息',
+	        shadeClose: true,
+	        area : ['600px' , '350px'],
+	        offset: ['100px'],
+	        content: '${pageContext.request.contextPath}/admin/paty/patyDBToExcelView',
+	        end: function(){
+	        
+	        }
+	    });
+	});
+	
+/* 	$("#patyExcelToDBButton").click(function(){
 		//layer.tips('正在开发','#patyExcelToDBButton');
 		parent.layer.open({
 	        type: 2,
@@ -156,12 +176,11 @@
 	    });
 		
 	});
-	
+	 */
 	//测试
 	$("#testBtn").click(function(){
 	
-		layer.tips('正在开发','#testBtn');
-/*     	$.ajax({
+      	$.ajax({
 			url:'${pageContext.request.contextPath}/admin/paty/test',
 			type:"post",
 			error:function(e){
@@ -169,7 +188,7 @@
 			success:function(data){
 				console.info(data);
 			}
-		});  */
+		}); 
 	});
 	
 	//list中修改党建信息按钮
