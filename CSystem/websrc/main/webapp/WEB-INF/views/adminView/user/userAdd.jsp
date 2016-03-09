@@ -40,7 +40,7 @@
 			</td>
 		</tr>
 	</table>
-	<div id="college_grade_div" style="display: none">
+	<div id="college_div" style="display: none">
 		<table>
 			<tr>
 				<td class="lesta-150">学院：</td>
@@ -53,6 +53,10 @@
 					</select>
 				</td>
 			</tr>
+		</table>
+	</div>
+	<div id="grade_div" style="display: none">
+		<table>
 			<tr>
 				<td class="lesta-150">年级：</td>
 				<td class="lestb">
@@ -66,6 +70,7 @@
 			</tr>
 		</table>
 	</div>
+	
 	<input id="saveButton" type="button" class="button button-highlight button-rounded button-small" style="margin-top:20px; margin-left: 140px;" value="确定"/>
 </form>
 
@@ -78,13 +83,20 @@
 		var role_authorty=roleselectVal.split('_')[1];
 		if(role_authorty=='1'){
 			//辅导员
-			$("#college_grade_div").show();
+			$("#college_div").show();
+			$("#grade_div").show();
 		}else if(role_authorty=='2'){
 			//老师
-			$("#college_grade_div").show();
+			$("#college_div").show();
+			$("#grade_div").show();
+			
+		}else if(role_authorty=='5'){
+			//违纪管理员
+			$("#college_div").show();
 		}else{
 			//清空学院，年级值
-			$("#college_grade_div").hide();
+			$("#college_div").hide();
+			$("#grade_div").hide();
 			$("#college_select_add_id").val('');
 			$("#grade_select_add_id").val('');
 			$("#collegeId").val(null);
@@ -121,6 +133,13 @@
 			}
 			if(gradeIdVal==null||gradeIdVal==''){
 				layer.tips('请选择年级', '#grade_select_add_id');
+				return;
+			}
+			
+		}else if(roleAuthorityVal=='5'){
+			var collegeIdVal=$("#collegeId").val();
+			if(collegeIdVal==null||collegeIdVal==''){
+				layer.tips('请选择学院', '#college_select_add_id');
 				return;
 			}
 			

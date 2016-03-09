@@ -85,27 +85,33 @@ public class Consts {
 	public static final Integer IS_MONITOR_B=1;
 	
 	/**
-	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生  5-违纪管理员
 	 */
 	public static final Integer AUTHORITY_ADMIN=0;
 	
 	/**
-	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生  5-违纪管理员
 	 */
 	public static final Integer AUTHORITY_INSTRUCTOR=1;
 	
 	/**
-	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生  5-违纪管理员
 	 */
 	public static final Integer AUTHORITY_TEACHER=2;
 	
 	/**
-	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生  5-违纪管理员
 	 */
 	public static final Integer AUTHORITY_MONITOR=3;
 	
 	/**
-	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生  5-违纪管理员
 	 */
 	public static final Integer AUTHORITY_STUDENT=4;
+	
+	/**
+	 * 权限  0-管理员  1-辅导员  2-老师  3-班长  4-学生  5-违纪管理员
+	 */
+	public static final Integer AUTHORITY_DISCIPLINEADMIN=5;
+	
 }

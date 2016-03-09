@@ -110,6 +110,7 @@
                 /admin/**=authc,perms[0]
                 /instructor/**=authc,perms[1]
                 /monitor/**=authc,perms[3]
+                /disciplineAdmin/**=authc,perms[5]
             </value>  
         </property>
     </bean>  

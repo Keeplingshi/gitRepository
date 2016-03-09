@@ -77,6 +77,9 @@ public class LoginController {
             	}else if(authority==Consts.AUTHORITY_STUDENT){
             		//学生界面
             		return "/studentView/main";
+            	}else if(authority==Consts.AUTHORITY_DISCIPLINEADMIN){
+            		//违纪管理员
+            		return "/disciplineAdminView/main";
             	}
         	}
            // 验证通过
